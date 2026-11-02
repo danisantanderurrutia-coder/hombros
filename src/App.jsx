@@ -8,6 +8,7 @@ import DeepDiveCasesView from './components/DeepDiveCasesView';
 import ScenarioSimulator from './components/ScenarioSimulator';
 import DataSourcesView from './components/DataSourcesView';
 import TheoryView from './components/TheoryView';
+import SolarpunkAtlasCanvas from './components/SolarpunkAtlasCanvas';
 import { INITIAL_TERRITORIES } from './models/territories';
 import { evaluateTerritoryState } from './models/mechanics';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
@@ -33,8 +34,8 @@ function AppContent() {
 
   return (
     <div className="min-h-screen transition-colors duration-500 flex flex-col justify-between bg-biodigital-canvas text-slate-800 font-sans relative overflow-x-hidden">
-      {/* Dynamic Starlight Field */}
-      <div className="fixed inset-0 cosmos-stars pointer-events-none z-0" />
+      {/* Solarpunk Atlas Canvas Vivo & Dinámico ("Formal Increíble") */}
+      <SolarpunkAtlasCanvas />
 
       <div className="relative z-10">
         <Navbar 
