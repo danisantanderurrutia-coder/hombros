@@ -1,5 +1,6 @@
 import React from 'react';
 import { Activity, Globe, Layers, Database, BookOpen, GitCompare } from 'lucide-react';
+import { getAssetUrl } from '../utils/assets';
 
 export default function Navbar({ activeTab, setActiveTab }) {
   const navItems = [
@@ -23,7 +24,7 @@ export default function Navbar({ activeTab, setActiveTab }) {
           >
             <div className="relative flex items-center justify-center">
               <img 
-                src="/art/hombros_logo.png" 
+                src={getAssetUrl('art/hombros_logo.png')} 
                 alt="Hombros" 
                 className="h-12 w-auto object-contain filter drop-shadow-[0_2px_8px_rgba(72,112,117,0.25)] group-hover:scale-105 transition-all duration-300"
               />

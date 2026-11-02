@@ -1,3 +1,5 @@
+import { getAssetUrl } from '../utils/assets';
+
 /**
  * Comprehensive Territories Database - HOMBROS Metabolic Platform
  * Chilean & International Cities with Scope 1, 2, 3 Emissions & Public Open Data
@@ -27,7 +29,7 @@ export const INITIAL_TERRITORIES = [
     bioregion: 'Mediterráneo Centro-Sur (Bosque Esclerófilo - Costa)',
     description: 'Municipio rural costero de la Región del Maule. Territorio ancla del modelo Hombros. Sometido a fuerte presión hídrica por monocultivo forestal de pino y eucalipto sobre cuencas de cabecera, con baja renta per cápita pero notable tejido comunitario y conocimientos ancestrales de secano.',
     population: 9500,
-    artImage: '/art/solarpunk_citadel.jpg',
+    artImage: getAssetUrl('art/solarpunk_citadel.jpg'),
     artCaption: 'Ciudadela Bioclimática de Chanco: Acueductos de infiltración comunitaria, cúpulas geodésicas y regeneración del bosque nativo.',
     badgeAccent: '#15803d',
 
@@ -157,7 +159,7 @@ export const INITIAL_TERRITORIES = [
     bioregion: 'Mar Báltico / Cuenca del Øresund',
     description: 'Capital danesa pionera en el plan climático CPH 2025. Ha reducido drásticamente sus emisiones territoriales (Scope 1 y 2) mediante calefacción distrital con biomasa, turbinas eólicas offshore y más de un 62% de viajes en bicicleta. Sin embargo, su estándar de vida genera una enorme huella de importación de bienes (Scope 3 = 11.8 t/capita), ejemplificando la externalización metabólica hacia el Sur Global.',
     population: 650000,
-    artImage: '/art/solarpunk_alley.jpg',
+    artImage: getAssetUrl('art/solarpunk_alley.jpg'),
     artCaption: 'Ecobarrios de Copenhague: Movilidad ciclista protegida, fachadas vegetales y microrredes térmicas de distrito.',
     badgeAccent: '#0ea5e9',
 
@@ -284,7 +286,7 @@ export const INITIAL_TERRITORIES = [
     bioregion: 'Mediterráneo Occidental (Cuencas Besòs y Llobregat)',
     description: 'Cuna de la ecología urbana moderna de la mano de Salvador Rueda y su Agència d’Ecologia Urbana. Pionera en las "Superilles" (Superbloques) que pacifican el 70% del asfalto para vegetación y cohesión ciudadana. Sin embargo, sufre una megasequía estructural en las cuencas catalanas y una tremenda presión turística sobre el parque habitacional y el consumo de recursos.',
     population: 1636000,
-    artImage: '/art/solarpunk_vignette.png',
+    artImage: getAssetUrl('art/solarpunk_vignette.png'),
     artCaption: 'Superilles Solarpunk en el Eixample: Espacio público recuperado para huertos comunitarios, pérgolas fotovoltaicas y juegos vecinales.',
     badgeAccent: '#f59e0b',
 
@@ -411,7 +413,7 @@ export const INITIAL_TERRITORIES = [
     bioregion: 'Cornisa Cantábrica (Valle del Ibaizabal-Nervión)',
     description: 'El caso más celebrado de regeneración urbana e industrial del mundo. Tras el colapso del acero y la construcción naval en los años 80 y la contaminación terminal de la Ría del Nervión, articuló una transición integral basada en cohesión institucional, saneamiento ecológico y desarrollo tecnológico. Conexión directa con la escuela de Economía Ecológica de la UPV/EHU (Eneko Garmendia).',
     population: 345000,
-    artImage: '/art/solarpunk_citadel.jpg',
+    artImage: getAssetUrl('art/solarpunk_citadel.jpg'),
     artCaption: 'Ría del Nervión Sintrópica: Pasarelas peatonales verdes, tranvías solares y recuperación de la biodiversidad estuarina.',
     badgeAccent: '#10b981',
 
@@ -538,7 +540,7 @@ export const INITIAL_TERRITORIES = [
     bioregion: 'Delta del Rin-Mosa-Escalda / Pólders Litorales',
     description: 'Primera ciudad del mundo en adoptar oficialmente el modelo de la "Economía del Donut" de Kate Raworth (2020) para operar dentro de los límites planetarios y garantizar una base social digna. Su puerto es un nodo hiper-global de carbón, combustibles y cacao, generando una colosal huella de importación y exportación de materiales (Scope 3).',
     population: 882000,
-    artImage: '/art/solarpunk_citadel.jpg',
+    artImage: getAssetUrl('art/solarpunk_citadel.jpg'),
     artCaption: 'Ámsterdam Circular: Canales renaturalizados, arquitectura flotante en madera y economía donut libre de residuos.',
     badgeAccent: '#8b5cf6',
 
@@ -665,7 +667,7 @@ export const INITIAL_TERRITORIES = [
     bioregion: 'Llanura del Norte de Europa (Valle proglacial del Spree y Havel)',
     description: 'Capital alemana inmersa en la salida definitiva del carbón (Energiewende) y la transformación de su enorme red de calefacción urbana. Caracterizada por una vibrante cultura de autogestión, cooperativas de vivienda (Genossenschaften), huertos urbanos y el parque Tempelhofer Feld como símbolo de soberanía comunitaria sobre el suelo.',
     population: 3755000,
-    artImage: '/art/solarpunk_alley.jpg',
+    artImage: getAssetUrl('art/solarpunk_alley.jpg'),
     artCaption: 'Berlín Energiewende: Centrales térmicas reconvertidas a biomasa y geotermia, techos solares masivos y movilidad peatonal libre.',
     badgeAccent: '#e11d48',
 
@@ -792,7 +794,7 @@ export const INITIAL_TERRITORIES = [
     bioregion: 'Valle Central Semiárido (Cuenca del Río Aconcagua)',
     description: 'Cuenca agroexportadora clave bajo megasequía prolongada y sobre-otorgamiento histórico de derechos de aprovechamiento de aguas para paltos y cítricos. Posee una de las mayores radiaciones solares del país y una encrucijada entre el extractivismo hídrico y la transición sintrópica solar.',
     population: 78000,
-    artImage: '/art/solarpunk_alley.jpg',
+    artImage: getAssetUrl('art/solarpunk_alley.jpg'),
     artCaption: 'Cañón Sintrópico Aconcagua: Viaductos férreos solares, doseles fotovoltaicos y recuperación de riberas.',
     badgeAccent: '#d97706',
 
@@ -919,7 +921,7 @@ export const INITIAL_TERRITORIES = [
     bioregion: 'Hinterland Costero (Ecosistema Dunar y Humedal Estuarino)',
     description: 'Enclave costero de extraordinaria biodiversidad botánica (lúcumo silvestre) y marina, amenazado por la expansión inmobiliaria sobre su humedal urbano y campo dunar. La comunidad y los pescadores artesanales ejercen una activa defensa territorial y gobernanza comunitaria de los recursos bentónicos.',
     population: 3200,
-    artImage: '/art/solarpunk_citadel.jpg',
+    artImage: getAssetUrl('art/solarpunk_citadel.jpg'),
     artCaption: 'Pasarelas del Maritorio: Arquitectura vertical en madera, linternas cálidas y custodia comunitaria del humedal costero.',
     badgeAccent: '#0284c7',
 
@@ -1046,7 +1048,7 @@ export const INITIAL_TERRITORIES = [
     bioregion: 'Bahía de Quintero / Borde Costero Central',
     description: 'El caso paradigmático de zona de sacrificio en Chile. Concentra 16 industrias de alto impacto en una misma bahía: 4 termoeléctricas a carbón (AES Andes), la fundición de cobre Ventanas (Codelco/ENAMI), refinerías de petróleo (ENAP) y químicos. Es el polo que provee energía barata (Scope 2) y cobre al resto del país y al mercado global, a expensas del envenenamiento crónico de niños y ancianos por SO2 y metales pesados.',
     population: 48000,
-    artImage: '/art/solarpunk_citadel.jpg',
+    artImage: getAssetUrl('art/solarpunk_citadel.jpg'),
     artCaption: 'Horizonte de Transición Justa para Quintero: Desmantelamiento del carbón, descontaminación del lecho marino y restauración comunitaria.',
     badgeAccent: '#475569',
 
@@ -1173,7 +1175,7 @@ export const INITIAL_TERRITORIES = [
     bioregion: 'Valle de Aburrá (Bosque Húmedo Premontano Tropical)',
     description: 'Valle interandino densamente poblado. Ha desplegado una red de 30 corredores verdes interconectados con más de 880.000 árboles que redujeron las islas de calor en hasta 3.5°C, auditados por la red pública de sensores meteorológicos SIATA.',
     population: 2569000,
-    artImage: '/art/solarpunk_citadel.jpg',
+    artImage: getAssetUrl('art/solarpunk_citadel.jpg'),
     artCaption: 'Corredores bioclimáticos de ladera en Medellín y red pública SIATA.',
     badgeAccent: '#10b981',
 
@@ -1298,7 +1300,7 @@ export const INITIAL_TERRITORIES = [
     bioregion: 'Cuenca del Sena (Templado Oceánico)',
     description: 'Capital francesa que ha transformado su morfología urbana bajo la tesis de Carlos Moreno: la Ciudad de los 15 minutos. Mide de forma auditada el tiempo de acceso a pie/bici a las 6 funciones sociales de la vida urbana y la transformación de patios escolares en refugios bioclimáticos.',
     population: 2148000,
-    artImage: '/art/solarpunk_citadel.jpg',
+    artImage: getAssetUrl('art/solarpunk_citadel.jpg'),
     artCaption: 'Eje del Sena peatonalizado, ciclovías coronapistes y cours oasis.',
     badgeAccent: '#6366f1',
 
@@ -1423,7 +1425,7 @@ export const INITIAL_TERRITORIES = [
     bioregion: 'Trópico Ecuatorial del Sudeste Asiático',
     description: 'Ciudad-estado insular de extrema densidad (8.000 hab/km²). Pionera en el estándar obligatorio Green Plot Ratio (GnPR) que exige que el follaje vegetal vertical triplique la huella construida del lote, y en la producción del 40% de su agua potable mediante purificación molecular circular NEWater.',
     population: 5918000,
-    artImage: '/art/solarpunk_citadel.jpg',
+    artImage: getAssetUrl('art/solarpunk_citadel.jpg'),
     artCaption: 'Supertree Grove y fachadas vegetales densas con GnPR en Marina Bay.',
     badgeAccent: '#059669',
 
@@ -1548,7 +1550,7 @@ export const INITIAL_TERRITORIES = [
     bioregion: 'Mata Atlántica & Planalto Paranaense',
     description: 'Capital ecológica pionera de Sudamérica. Diseñó el programa Câmbio Verde, donde familias canjean 4 kg de residuos reciclables por 1 kg de frutas y verduras frescas de la agricultura familiar periurbana, alcanzando 52 m² de área verde por habitante (5x la recomendación OMS).',
     population: 1963000,
-    artImage: '/art/solarpunk_citadel.jpg',
+    artImage: getAssetUrl('art/solarpunk_citadel.jpg'),
     artCaption: 'Jardín Botánico de Curitiba, parques lineales inundables y red Câmbio Verde.',
     badgeAccent: '#16a34a',
 
@@ -1673,7 +1675,7 @@ export const INITIAL_TERRITORIES = [
     bioregion: 'Montañas Templadas de Shikoku',
     description: 'Pueblo montañoso rural pionero en el protocolo de basura cero (Zero Waste) sin incineradores. La comunidad segrega todos los materiales en 45 categorías individuales, alcanzando una tasa de desvío de vertedero superior al 81% y una economía de reciclaje circular cerrada (Mottainai).',
     population: 1450,
-    artImage: '/art/solarpunk_citadel.jpg',
+    artImage: getAssetUrl('art/solarpunk_citadel.jpg'),
     artCaption: 'Centro Zero Waste de Kamikatsu construido con madera local y ventanas reutilizadas.',
     badgeAccent: '#0284c7',
 

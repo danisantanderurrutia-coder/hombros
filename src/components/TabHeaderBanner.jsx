@@ -1,12 +1,13 @@
 import React from 'react';
 import { Activity, Globe, GitCompare, Layers, Database, BookOpen, Compass, Sparkles } from 'lucide-react';
+import { getAssetUrl } from '../utils/assets';
 
 const TAB_METADATA = {
   core: {
     tag: 'AGROECOLOGÍA & SINTROPÍA TERRITORIAL',
     title: 'El Organismo Territorial y sus Tres Hombros',
     subtitle: 'Laboratorio cibernético universal: palancas de soporte socioecológico, capacidad portante y balance metabólico en tiempo real.',
-    image: '/art/header_core_agroecology.jpg',
+    image: getAssetUrl('art/header_core_agroecology.jpg'),
     icon: Activity,
     accent: '#7DB2B2',
   },
@@ -14,7 +15,7 @@ const TAB_METADATA = {
     tag: 'OBSERVATORIO GEODÉSICO DE CUENCAS',
     title: 'Cartografía Territorial y Flujos Metabólicos',
     subtitle: 'Telemetría biofísica comparada: emisiones de alcance 1, 2 y 3, biomasa activa y balances de huella hídrica por bioregión.',
-    image: '/art/header_world_watershed.jpg',
+    image: getAssetUrl('art/header_world_watershed.jpg'),
     icon: Globe,
     accent: '#487075',
   },
@@ -22,7 +23,7 @@ const TAB_METADATA = {
     tag: 'TALLER DE INGENIERÍA ECOLÓGICA',
     title: 'Contraste Multimodelo y Diagnóstico de Resiliencia',
     subtitle: 'Evaluación comparativa entre modelos tradicionales de vulnerabilidad y la mecánica de medios continuos de Hombros.',
-    image: '/art/header_cases_metrics.jpg',
+    image: getAssetUrl('art/header_cases_metrics.jpg'),
     icon: GitCompare,
     accent: '#927660',
   },
@@ -30,7 +31,7 @@ const TAB_METADATA = {
     tag: 'PROSPECTIVA Y RESTAURACIÓN DE PAISAJES',
     title: 'Simulador de Escenarios y Transición Regenerativa',
     subtitle: 'Proyecciones estocásticas ante shocks climáticos, variación de precipitaciones y desescalada extractiva.',
-    image: '/art/header_scenarios_future.jpg',
+    image: getAssetUrl('art/header_scenarios_future.jpg'),
     icon: Layers,
     accent: '#C86D51',
   },
@@ -38,7 +39,7 @@ const TAB_METADATA = {
     tag: 'ESTACIÓN HIDROLÓGICA Y AMBIENTAL',
     title: 'Fuentes de Datos Abiertos y Trazabilidad Empírica',
     subtitle: 'Monitoreo territorial grounded: registros climáticos, sensores de cuenca y metadatos verificados.',
-    image: '/art/header_data_sources.jpg',
+    image: getAssetUrl('art/header_data_sources.jpg'),
     icon: Database,
     accent: '#28475A',
   },
@@ -46,7 +47,7 @@ const TAB_METADATA = {
     tag: 'BIBLIOTECA VIVA DEL BOSQUE',
     title: 'Marco Epistémico y Genealogía de Pensamiento',
     subtitle: 'Sustento conceptual sobre hombros de gigantes: bioeconomía, termodinámica abierta, buen vivir y ecología política.',
-    image: '/art/header_theory_library.jpg',
+    image: getAssetUrl('art/header_theory_library.jpg'),
     icon: BookOpen,
     accent: '#BFA588',
   },
@@ -65,9 +66,9 @@ export default function TabHeaderBanner({ activeTab }) {
           alt={meta.title} 
           className="w-full h-full object-cover filter brightness-[0.98] contrast-[1.05] group-hover:scale-102 transition-transform duration-700"
           onError={(e) => {
-            // Fallback to core agroecology if other hasn't loaded yet
-            if (e.target.src !== '/art/header_core_agroecology.jpg') {
-              e.target.src = '/art/header_core_agroecology.jpg';
+            const fallback = getAssetUrl('art/header_core_agroecology.jpg');
+            if (e.target.src !== fallback) {
+              e.target.src = fallback;
             }
           }}
         />

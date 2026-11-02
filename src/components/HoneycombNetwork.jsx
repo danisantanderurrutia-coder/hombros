@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Hexagon, ArrowRight, ShieldCheck, ArrowLeftRight, Check, X, RefreshCw, Sparkles, Activity } from 'lucide-react';
 import { evaluateTerritoryState, validateIntercellTrade } from '../models/mechanics';
+import { getAssetUrl } from '../utils/assets';
 
 export default function HoneycombNetwork({ territories, globalModifiers }) {
   const territoryStates = {};
@@ -119,7 +120,7 @@ export default function HoneycombNetwork({ territories, globalModifiers }) {
 
           <div className="md:col-span-4 relative min-h-[180px] md:min-h-full overflow-hidden bg-black/40 border-t md:border-t-0 md:border-l border-white/10">
             <img 
-              src="/art/solarpunk_alley.jpg" 
+              src={getAssetUrl('art/solarpunk_alley.jpg')} 
               alt="Mercado Bio-Digital"
               className="absolute inset-0 w-full h-full object-cover object-center filter saturate-90 brightness-75 hover:scale-105 transition-transform duration-700 opacity-60"
             />

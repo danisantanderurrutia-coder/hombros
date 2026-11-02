@@ -1,5 +1,6 @@
 import React from 'react';
 import { Sparkles, Compass, Heart, Globe, Flame, Shield, Sun, Feather } from 'lucide-react';
+import { getAssetUrl } from '../utils/assets';
 
 export default function HombrosDeGigantes() {
   const pillars = [
@@ -125,7 +126,7 @@ export default function HombrosDeGigantes() {
       <div className="mt-6 p-5 rounded-2xl bg-gradient-to-r from-blue-950/60 via-purple-950/40 to-emerald-950/60 border border-amber-400/30 flex flex-col sm:flex-row items-center gap-5 shadow-xl">
         <div className="w-20 h-20 rounded-2xl overflow-hidden flex-shrink-0 border border-white/20 shadow-md bg-black/60">
           <img 
-            src="/art/hombros_logo.png" 
+            src={getAssetUrl('art/hombros_logo.png')} 
             alt="Atlas & Sísifo Colectivos" 
             className="w-full h-full object-cover filter contrast-110"
           />
