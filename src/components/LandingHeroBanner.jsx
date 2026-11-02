@@ -121,6 +121,11 @@ export default function LandingHeroBanner({ onNavigate }) {
             <div className="bg-black/60 px-3 py-1.5 rounded-xl border border-white/10 backdrop-blur-md text-slate-300">
               Elevación Celeste: <strong className="text-[#38BDF8]">{liftElevationPercent}%</strong>
             </div>
+            <div className="bg-black/60 px-3 py-1.5 rounded-xl border border-white/10 backdrop-blur-md text-slate-300">
+              Pendiente del Cerro: <strong className={1 - H > 0.5 ? 'text-rose-400' : 'text-[#F5D061]'}>
+                {Math.round((0.07 + 0.2 * (1 - H)) * 100)}% {1 - H > 0.5 ? '(Entropía)' : '(Sintropía)'}
+              </strong>
+            </div>
           </div>
         </div>
 
@@ -137,7 +142,7 @@ export default function LandingHeroBanner({ onNavigate }) {
                 </h2>
               </div>
               <p className="text-xs text-slate-400 mt-1 font-mono">
-                Mueve las variables E, S y K: observa cómo se ensanchan los hombros y cómo la esfera se eleva hacia las estrellas.
+                Mueve las variables E, S y K: observa cómo se ensanchan los hombros, cómo la esfera se eleva hacia las estrellas y cómo la pendiente se allana con la sintropía.
               </p>
             </div>
 

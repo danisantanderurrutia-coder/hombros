@@ -14,7 +14,6 @@ import React, { useMemo } from 'react';
 
 const CX = 450;
 const R = 108;
-const ground = (x) => 760 - 0.19 * x;
 
 const f = (n) => n.toFixed(1);
 const P = (x, y) => `${f(x)},${f(y)}`;
@@ -92,6 +91,15 @@ export default function GoldenAtlasHillAscent({ E = 0.7, S = 0.65, K = 0.68, cla
   const H = Math.cbrt(e * s * k);
   const avg = (e + s + k) / 3;
   const sw = 2 + 1.6 * avg; // grosor de línea
+
+  // --- Entropía / sintropía: la pendiente se empina cuando H es bajo y se suaviza cuando es alto ---
+  const entropy = 1 - H;
+  const m = 0.07 + 0.2 * entropy;                 // pendiente
+  const ground = (x) => 674.5 - m * (x - CX);
+  const ridgeCol = entropy > 0.5 ? '#E0745A' : '#F2C94C';
+  const nRocks = Math.round(9 * Math.max(0, entropy - 0.15) / 0.85);   // entropía: rocas que ruedan cuesta abajo
+  const nSprouts = Math.round(11 * Math.max(0, H - 0.35) / 0.65);      // sintropía: brotes cuesta arriba
+  const tilt = -Math.atan(m) * (180 / Math.PI) * 0.35;
 
   // --- Esfera ---
   const sy = 300 - 100 * H;
@@ -206,10 +214,44 @@ export default function GoldenAtlasHillAscent({ E = 0.7, S = 0.65, K = 0.68, cla
 
         {/* ================= CERRO ================= */}
         <polygon points={`0,800 0,${ground(0)} 900,${ground(900)} 900,800`} fill="url(#hillGrad)" />
+        {/* Tinte según régimen: rojizo (entropía) o verde-azulado (sintropía) */}
+        <polygon points={`0,800 0,${ground(0)} 900,${ground(900)} 900,800`} fill={entropy > 0.5 ? '#C86D51' : '#7DB2B2'} fillOpacity={Math.abs(H - 0.5) * 0.22} />
         {[28, 70, 112, 160].map((d, i) => (
           <path key={i} d={`M0 ${ground(0) + d} L900 ${ground(900) + d}`} stroke="#D4A373" strokeOpacity={0.28 - i * 0.04} strokeWidth="1.2" strokeDasharray={i % 2 ? '2 7' : '8 6'} />
         ))}
-        <path d={`M-10 ${ground(-10)} L910 ${ground(910)}`} stroke="url(#goldV)" strokeWidth="3" filter="url(#glow)" />
+        <path d={`M-10 ${ground(-10)} L910 ${ground(910)}`} stroke={entropy > 0.5 ? ridgeCol : 'url(#goldV)'} strokeWidth="3" filter="url(#glow)" />
+        {/* Entropía: rocas que se desprenden y ruedan cuesta abajo */}
+        {Array.from({ length: nRocks }, (_, i) => {
+          const x0 = 560 + ((i * 97) % 300);
+          const y0 = ground(x0) - 4;
+          const dur = 3 + (i % 4) * 0.7;
+          return (
+            <g key={`r${i}`} opacity="0.9">
+              <polygon points="-5,-2 0,-6 6,-1 3,5 -4,4" fill="#3A2F2C" stroke="#E0745A" strokeWidth="1" transform={`translate(${x0} ${y0})`}>
+                <animateTransform attributeName="transform" type="translate" additive="replace"
+                  values={`${x0} ${y0};${x0 - 170} ${y0 + 170 * m}`} dur={`${dur}s`} begin={`${-i * 0.6}s`} repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0;1;1;0" dur={`${dur}s`} begin={`${-i * 0.6}s`} repeatCount="indefinite" />
+              </polygon>
+            </g>
+          );
+        })}
+        {/* Sintropía: brotes dorados y verdes que crecen sobre el sendero */}
+        {Array.from({ length: nSprouts }, (_, i) => {
+          const x = 520 + i * 32;
+          const y = ground(x);
+          const h = 10 + 10 * H + (i % 3) * 3;
+          return (
+            <g key={`s${i}`} transform={`translate(${x} ${y})`}>
+              <path d={`M0 0 Q ${i % 2 ? 3 : -3} ${-h / 2} 0 ${-h}`} stroke="#7DB2B2" strokeWidth="1.6" fill="none" />
+              <ellipse cx={-4} cy={-h * 0.65} rx="2.4" ry="5" transform={`rotate(-40 -4 ${-h * 0.65})`} fill="#7DB2B2" />
+              <ellipse cx={4} cy={-h * 0.85} rx="2.4" ry="5" transform={`rotate(40 4 ${-h * 0.85})`} fill="#F2C94C" />
+              <circle cx="0" cy={-h - 4} r="1.6" fill="#FFF4CC">
+                <animate attributeName="cy" values={`${-h - 2};${-h - 24}`} dur={`${2 + (i % 3)}s`} repeatCount="indefinite" />
+                <animate attributeName="opacity" values="1;0" dur={`${2 + (i % 3)}s`} repeatCount="indefinite" />
+              </circle>
+            </g>
+          );
+        })}
         {/* Rocas de apoyo */}
         <polygon points={pts([LFoot[0] - 26, ground(LFoot[0]) + 14], [LFoot[0] - 6, ground(LFoot[0]) - 2], [LFoot[0] + 48, ground(LFoot[0]) + 4], [LFoot[0] + 40, ground(LFoot[0]) + 22])} fill="#17283A" stroke="#D4A373" strokeOpacity="0.8" />
         <polygon points={pts([RFoot[0] - 22, ground(RFoot[0]) + 14], [RFoot[0] - 2, ground(RFoot[0]) - 3], [RFoot[0] + 52, ground(RFoot[0]) + 2], [RFoot[0] + 42, ground(RFoot[0]) + 22])} fill="#17283A" stroke="#F2C94C" strokeOpacity="0.9" />
@@ -240,7 +282,7 @@ export default function GoldenAtlasHillAscent({ E = 0.7, S = 0.65, K = 0.68, cla
         </g>
 
         {/* ================= ATLAS DORADO ================= */}
-        <g transform={`rotate(-3 ${CX} 690)`} filter="url(#glow)">
+        <g transform={`rotate(${tilt} ${CX} 690)`} filter="url(#glow)">
           {/* Pierna trasera (abajo del cerro) */}
           <Limb g={LS} sw={sw} o={0.15} />
           <Limb g={LT} sw={sw} o={0.2} />
