@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import Navbar from './components/Navbar';
+import LandingView from './components/LandingView';
 import TabHeaderBanner from './components/TabHeaderBanner';
 import CoreDashboard from './components/CoreDashboard';
 import WorldTerritoriesMap from './components/WorldTerritoriesMap';
@@ -14,7 +15,7 @@ import { ThemeProvider, useTheme } from './context/ThemeContext';
 function AppContent() {
   const [territories] = useState(INITIAL_TERRITORIES);
   const [selectedTerritoryId, setSelectedTerritoryId] = useState('chanco');
-  const [activeTab, setActiveTab] = useState('core');
+  const [activeTab, setActiveTab] = useState('landing');
 
   const [modifiers, setModifiers] = useState({
     climateShock: 0,
@@ -42,7 +43,13 @@ function AppContent() {
         />
 
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <TabHeaderBanner activeTab={activeTab} />
+          {activeTab !== 'landing' && (
+            <TabHeaderBanner activeTab={activeTab} />
+          )}
+
+          {activeTab === 'landing' && (
+            <LandingView onNavigate={setActiveTab} />
+          )}
 
           {activeTab === 'core' && (
             <CoreDashboard />

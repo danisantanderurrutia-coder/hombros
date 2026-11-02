@@ -1,9 +1,10 @@
 import React from 'react';
-import { Activity, Globe, Layers, Database, BookOpen, GitCompare } from 'lucide-react';
+import { Activity, Globe, Layers, Database, BookOpen, GitCompare, Sparkles } from 'lucide-react';
 import { getAssetUrl } from '../utils/assets';
 
 export default function Navbar({ activeTab, setActiveTab }) {
   const navItems = [
+    { id: 'landing', label: 'Inicio', icon: Sparkles },
     { id: 'core', label: 'El Núcleo', icon: Activity },
     { id: 'world_map', label: 'Mapa Mundi & Datos Crudos', icon: Globe },
     { id: 'cases', label: 'Contraste de Métricas', icon: GitCompare },
@@ -19,7 +20,7 @@ export default function Navbar({ activeTab, setActiveTab }) {
           
           {/* Unboxed, Liberated Logo Brand */}
           <div 
-            onClick={() => setActiveTab('core')}
+            onClick={() => setActiveTab('landing')}
             className="flex items-center gap-3.5 cursor-pointer group"
           >
             <div className="relative flex items-center justify-center">

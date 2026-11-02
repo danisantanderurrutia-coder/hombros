@@ -211,6 +211,17 @@ export default function CoreDashboard() {
     });
   };
 
+  // Direct interactive adjustment of stress σ on the rheological curve
+  const handleStressChange = (targetSigma) => {
+    const targetD = targetSigma * santanderState.H;
+    const newD1 = Math.max(0.1, Math.min(3.0, (targetD * 3) - customPressures.d2 - customPressures.d3));
+    setCustomPressures(prev => ({
+      ...prev,
+      d1: parseFloat(newD1.toFixed(2))
+    }));
+    setSelectedPresetId('custom');
+  };
+
   const handleModifierChange = (key, val) => {
     setModifiers(prev => ({ ...prev, [key]: parseFloat(val) }));
   };
@@ -872,8 +883,12 @@ export default function CoreDashboard() {
               {/* Balanza Mecánica con Inclinación Física y Fluidéz Orgánica */}
               <MechanicalBalance santanderState={santanderState} />
               
-              {/* Curva de Esfuerzo-Deformación Conectada Directamente a sigma = D / H (Debajo de la Balanza) */}
-              <StressStrainCurve state={coupledMechanicsState} territory={syntheticTerritory} />
+              {/* Curva de Esfuerzo-Deformación Conectada Directamente a sigma = D / H (Debajo de la Balanza e Interactiva) */}
+              <StressStrainCurve 
+                state={coupledMechanicsState} 
+                territory={syntheticTerritory} 
+                onStressChange={handleStressChange}
+              />
             </div>
 
             {/* 2.3 Panel de Reología & Histéresis Territorial */}
