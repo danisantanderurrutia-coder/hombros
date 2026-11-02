@@ -3,7 +3,7 @@ import { Activity, Globe, Layers, Database, BookOpen, GitCompare } from 'lucide-
 
 export default function Navbar({ activeTab, setActiveTab }) {
   const navItems = [
-    { id: 'core', label: 'El Núcleo (Organismo)', icon: Activity },
+    { id: 'core', label: 'El Núcleo', icon: Activity },
     { id: 'world_map', label: 'Mapa Mundi & Datos Crudos', icon: Globe },
     { id: 'cases', label: 'Contraste de Métricas', icon: GitCompare },
     { id: 'scenarios', label: 'Simulador Prospectivo', icon: Layers },
