@@ -12,7 +12,7 @@ export default function Navbar({ activeTab, setActiveTab }) {
   ];
 
   return (
-    <header className="border-b border-white/10 bg-[#160c22]/90 backdrop-blur-xl text-slate-100 sticky top-0 z-50 shadow-2xl transition-all duration-300">
+    <header className="border-b border-[#D4C9B8]/80 bg-[#FAF7F0]/95 backdrop-blur-xl text-slate-800 sticky top-0 z-50 shadow-sm transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20 py-2 gap-4">
           
@@ -25,24 +25,27 @@ export default function Navbar({ activeTab, setActiveTab }) {
               <img 
                 src="/art/hombros_logo.png" 
                 alt="Hombros" 
-                className="h-12 w-auto object-contain filter drop-shadow-[0_4px_16px_rgba(216,63,135,0.45)] group-hover:scale-108 transition-all duration-300"
+                className="h-12 w-auto object-contain filter drop-shadow-[0_2px_8px_rgba(72,112,117,0.25)] group-hover:scale-105 transition-all duration-300"
               />
             </div>
 
             <div>
               <div className="flex items-center gap-2">
-                <span className="tracking-wide text-2xl font-bold font-serif text-white tracking-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
+                <span className="tracking-wide text-2xl font-bold font-serif text-slate-900 tracking-tight">
                   HOMBROS
                 </span>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full uppercase tracking-wider font-bold bg-[#7DB2B2]/20 text-[#487075] border border-[#7DB2B2]/50">
+                  Solarpunk
+                </span>
               </div>
-              <p className="text-[11px] hidden sm:block text-[#A4B3B6] font-mono font-medium">
+              <p className="text-[11px] hidden sm:block text-[#64748B] font-mono font-medium">
                 Desarrollo Sostenido sobre Autosustento Sintrópico
               </p>
             </div>
           </div>
 
-          {/* Navigation Links (5 Focused Tabs) */}
-          <nav className="hidden lg:flex items-center gap-2 p-1.5 rounded-2xl border border-white/10 bg-[#221434]/80 shadow-inner">
+          {/* Navigation Links */}
+          <nav className="hidden lg:flex items-center gap-2 p-1.5 rounded-2xl border border-[#D4C9B8]/70 bg-[#EDE8DC]/80 shadow-inner">
             {navItems.map(item => {
               const Icon = item.icon;
               const isActive = activeTab === item.id;
@@ -52,11 +55,11 @@ export default function Navbar({ activeTab, setActiveTab }) {
                   onClick={() => setActiveTab(item.id)}
                   className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs transition-all ${
                     isActive
-                      ? 'bg-gradient-to-r from-[#D83F87] via-[#8D69A6] to-[#376E6F] text-white font-serif font-bold shadow-lg shadow-[#D83F87]/30 border border-white/20'
-                      : 'text-slate-300 hover:text-white hover:bg-white/10 font-medium'
+                      ? 'bg-gradient-to-r from-[#487075] to-[#28475A] text-white font-serif font-bold shadow-md shadow-[#487075]/25 border border-white/30'
+                      : 'text-slate-700 hover:text-slate-900 hover:bg-white/80 font-medium'
                   }`}
                 >
-                  <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-white' : 'text-[#DA7B93]'}`} />
+                  <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-white' : 'text-[#487075]'}`} />
                   {item.label}
                 </button>
               );
@@ -66,7 +69,7 @@ export default function Navbar({ activeTab, setActiveTab }) {
         </div>
 
         {/* Mobile Navigation Tabs */}
-        <div className="flex lg:hidden overflow-x-auto py-2.5 gap-2 border-t border-white/10">
+        <div className="flex lg:hidden overflow-x-auto py-2.5 gap-2 border-t border-[#D4C9B8]/60">
           {navItems.map(item => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
@@ -76,8 +79,8 @@ export default function Navbar({ activeTab, setActiveTab }) {
                 onClick={() => setActiveTab(item.id)}
                 className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all ${
                   isActive
-                    ? 'bg-gradient-to-r from-[#D83F87] to-[#376E6F] text-white font-bold shadow-md'
-                    : 'text-slate-300 bg-[#221434]/80 hover:bg-white/10'
+                    ? 'bg-gradient-to-r from-[#487075] to-[#28475A] text-white font-bold shadow-md'
+                    : 'text-slate-700 bg-white/70 hover:bg-white'
                 }`}
               >
                 <Icon className="w-3.5 h-3.5" />

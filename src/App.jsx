@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import Navbar from './components/Navbar';
+import TabHeaderBanner from './components/TabHeaderBanner';
 import CoreDashboard from './components/CoreDashboard';
 import WorldTerritoriesMap from './components/WorldTerritoriesMap';
 import DeepDiveCasesView from './components/DeepDiveCasesView';
@@ -30,9 +31,9 @@ function AppContent() {
   }, [currentTerritory, modifiers]);
 
   return (
-    <div className="min-h-screen transition-colors duration-500 flex flex-col justify-between bg-biodigital-canvas text-slate-100 font-sans relative overflow-x-hidden">
+    <div className="min-h-screen transition-colors duration-500 flex flex-col justify-between bg-biodigital-canvas text-slate-800 font-sans relative overflow-x-hidden">
       {/* Dynamic Starlight Field */}
-      <div className="fixed inset-0 cosmos-stars pointer-events-none z-0 opacity-70" />
+      <div className="fixed inset-0 cosmos-stars pointer-events-none z-0" />
 
       <div className="relative z-10">
         <Navbar 
@@ -40,7 +41,9 @@ function AppContent() {
           setActiveTab={setActiveTab} 
         />
 
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <TabHeaderBanner activeTab={activeTab} />
+
           {activeTab === 'core' && (
             <CoreDashboard />
           )}
@@ -83,17 +86,17 @@ function AppContent() {
         </main>
       </div>
 
-      {/* Footer */}
-      <footer className="border-t py-6 mt-12 transition-colors duration-400 text-xs border-white/10 bg-brand-deep/90 text-slate-400 backdrop-blur-md">
+      {/* Footer Solarpunk Travertino */}
+      <footer className="border-t py-6 mt-12 transition-colors duration-400 text-xs border-[#D4C9B8]/70 bg-[#FAF7F0]/95 text-slate-600 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full inline-block bg-brand-primary animate-pulse"></span>
+            <span className="w-2.5 h-2.5 rounded-full inline-block bg-[#487075] animate-pulse"></span>
             <span>
-              <strong className="font-serif font-bold text-slate-100 tracking-wide">HOMBROS</strong> · Sistema Metabólico Territorial & Autosustento Sintrópico
+              <strong className="font-serif font-bold text-slate-900 tracking-wide">HOMBROS</strong> · Sistema Metabólico Territorial & Autosustento Sintrópico
             </span>
           </div>
-          <div className="text-[11px] font-mono text-brand-primary">
-            [ FCINQ / HAUS Design Edition · Cono Sur & Europa ]
+          <div className="text-[11px] font-mono text-[#487075] font-bold">
+            [ Solarpunk Travertino & Celadón Edition · Cono Sur & Europa ]
           </div>
         </div>
       </footer>

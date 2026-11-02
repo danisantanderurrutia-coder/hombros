@@ -3,192 +3,257 @@
 @tailwind utilities;
 
 :root {
-  /* Blended FCINQ + HAUS Palette Tokens */
-  --c-magenta: #D83F87;
-  --c-violet: #2A1B3D;
-  --c-indigo: #44318D;
-  --c-lavender: #8D69A6;
-  --c-mist: #A4B3B6;
-  --c-rose: #DA7B93;
-  --c-teal: #376E6F;
-  --c-slate: #2F4454;
-  --c-plum: #2E151B;
-  --c-pine: #1C3334;
+  /* Solarpunk Travertino & Celadón Palette Tokens (Inspirada en solarpunk_bridges) */
+  --c-travertino: #F5F2EB;
+  --c-celadon: #7DB2B2;
+  --c-teal-deep: #487075;
+  --c-timber: #927660;
+  --c-clay: #C86D51;
+  --c-slate-deep: #28475A;
+  --c-slate-ink: #1E293B;
+  --c-brass: #D4A373;
   
-  --canvas-bg: #110b1a;
-  --brand-deep: #1d132b;
+  --canvas-bg: #F5F2EB;
+  --brand-deep: #EDE8DC;
+  --text-main: #1E293B;
+  --text-muted: #475569;
 }
 
 @layer base {
   body {
     background-color: var(--canvas-bg);
-    color: #f8fafc;
+    color: var(--text-main);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 }
 
-/* HIGH-CONTRAST BLENDED CANVAS CON PROFUNDIDAD CÓSMICA */
+/* =========================================================================
+   SOLARPUNK TRAVERTINO CANVAS (FONDO CLARO, CÁLIDO Y REALISTA)
+   ========================================================================= */
 .bg-biodigital-canvas {
-  background-color: #0b0713;
+  background-color: #F5F2EB;
   background-image: 
-    radial-gradient(ellipse 90% 60% at 50% -10%, rgba(216, 63, 135, 0.22) 0%, transparent 60%),
-    radial-gradient(circle 900px at 15% 25%, rgba(55, 110, 111, 0.28) 0%, transparent 55%),
-    radial-gradient(circle 900px at 85% 65%, rgba(68, 49, 141, 0.30) 0%, transparent 60%),
-    radial-gradient(circle 700px at 50% 85%, rgba(11, 25, 44, 0.50) 0%, transparent 65%),
-    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    radial-gradient(ellipse 90% 60% at 50% -10%, rgba(125, 178, 178, 0.22) 0%, transparent 60%),
+    radial-gradient(circle 900px at 10% 25%, rgba(200, 109, 81, 0.12) 0%, transparent 55%),
+    radial-gradient(circle 900px at 90% 70%, rgba(72, 112, 117, 0.18) 0%, transparent 60%),
+    radial-gradient(circle 700px at 50% 85%, rgba(212, 163, 115, 0.14) 0%, transparent 65%),
+    linear-gradient(to right, rgba(146, 118, 96, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(146, 118, 96, 0.05) 1px, transparent 1px);
   background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 48px 48px, 48px 48px;
   position: relative;
 }
 
-/* Starfield Cosmos Animation Layer */
+/* Capa de atmósfera solar matinal */
 .cosmos-stars {
   background-image: 
-    radial-gradient(1.5px 1.5px at 40px 60px, rgba(255, 255, 255, 0.85), rgba(0,0,0,0)),
-    radial-gradient(1.2px 1.2px at 180px 120px, rgba(245, 197, 66, 0.9), rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 320px 240px, rgba(255, 255, 255, 0.7), rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 450px 80px, rgba(164, 179, 182, 0.8), rgba(0,0,0,0)),
-    radial-gradient(1.5px 1.5px at 600px 320px, rgba(245, 197, 66, 0.8), rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 780px 160px, rgba(255, 255, 255, 0.9), rgba(0,0,0,0)),
-    radial-gradient(1.8px 1.8px at 920px 280px, rgba(216, 63, 135, 0.85), rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 1080px 90px, rgba(55, 110, 111, 0.9), rgba(0,0,0,0)),
-    radial-gradient(1.5px 1.5px at 1200px 220px, rgba(255, 255, 255, 0.8), rgba(0,0,0,0));
+    radial-gradient(2px 2px at 40px 60px, rgba(72, 112, 117, 0.25), rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 180px 120px, rgba(200, 109, 81, 0.25), rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 320px 240px, rgba(125, 178, 178, 0.3), rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 450px 80px, rgba(146, 118, 96, 0.25), rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 780px 160px, rgba(72, 112, 117, 0.25), rgba(0,0,0,0));
   background-repeat: repeat;
   background-size: 600px 400px;
-  animation: cosmosTwinkle 8s ease-in-out infinite alternate;
+  opacity: 0.35;
   pointer-events: none;
 }
 
-@keyframes cosmosTwinkle {
-  0% { opacity: 0.35; transform: scale(1); }
-  50% { opacity: 0.85; transform: scale(1.008); }
-  100% { opacity: 0.45; transform: scale(1); }
-}
-
-@keyframes haloPulse {
-  0%, 100% { box-shadow: 0 0 25px -5px rgba(245, 197, 66, 0.25), 0 0 50px -10px rgba(55, 110, 111, 0.3); }
-  50% { box-shadow: 0 0 40px 0px rgba(245, 197, 66, 0.45), 0 0 75px 5px rgba(55, 110, 111, 0.45); }
-}
-
-.glow-halo-pulse {
-  animation: haloPulse 5s ease-in-out infinite;
-}
+/* =========================================================================
+   PANELES Y TARJETAS PARTICULARES (NO HOMOGÉNEAS, RICAS EN IDENTIDAD)
+   ========================================================================= */
 
 /* Base Glass HUD Panel */
 .bio-hud-panel {
-  background: rgba(24, 15, 36, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(216, 63, 135, 0.32);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(72, 112, 117, 0.25);
   box-shadow: 
-    0 20px 50px -12px rgba(0, 0, 0, 0.75),
-    0 0 25px -4px rgba(216, 63, 135, 0.18),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    0 16px 36px -10px rgba(40, 71, 90, 0.08),
+    0 0 20px -4px rgba(125, 178, 178, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  color: #1E293B;
+  transition: all 0.3s ease;
+}
+
+/* 1. Celadón & Agua (Hombro Ecológico & Resiliencia) */
+.card-teal {
+  background: linear-gradient(145deg, #F4F8F8 0%, #E8F1F1 100%);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(72, 112, 117, 0.32);
+  box-shadow: 0 10px 28px -6px rgba(72, 112, 117, 0.10);
+  color: #1E293B;
+}
+.card-teal:hover {
+  border-color: #487075;
+  box-shadow: 0 14px 34px -6px rgba(72, 112, 117, 0.20);
+}
+
+/* 2. Terracota & Arcilla Viva (Hombro Social & Cuidados) */
+.card-rose {
+  background: linear-gradient(145deg, #FBF4F0 0%, #F5EAE3 100%);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(200, 109, 81, 0.32);
+  box-shadow: 0 10px 28px -6px rgba(200, 109, 81, 0.10);
+  color: #1E293B;
+}
+.card-rose:hover {
+  border-color: #C86D51;
+  box-shadow: 0 14px 34px -6px rgba(200, 109, 81, 0.20);
+}
+
+/* 3. Travertino & Caliza Cálida (Mecánica de Medios Continuos) */
+.card-slate {
+  background: linear-gradient(145deg, #FCFBF7 0%, #F4EFE6 100%);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(146, 118, 96, 0.28);
+  box-shadow: 0 10px 28px -6px rgba(146, 118, 96, 0.08);
+  color: #1E293B;
+}
+.card-slate:hover {
+  border-color: #927660;
+  box-shadow: 0 14px 34px -6px rgba(146, 118, 96, 0.18);
+}
+
+/* 4. Pizarra Azul & Río (Hombro Cognitivo & Ciencia Abierta) */
+.card-indigo {
+  background: linear-gradient(145deg, #F2F6F9 0%, #E6EDF3 100%);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(40, 71, 90, 0.30);
+  box-shadow: 0 10px 28px -6px rgba(40, 71, 90, 0.10);
+  color: #1E293B;
+}
+.card-indigo:hover {
+  border-color: #28475A;
+  box-shadow: 0 14px 34px -6px rgba(40, 71, 90, 0.20);
+}
+
+/* 5. Cerise Solar (Presiones & Telemetría LNM) */
+.card-magenta {
+  background: linear-gradient(145deg, #FAF2F5 0%, #F3E5EB 100%);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(216, 63, 135, 0.30);
+  box-shadow: 0 10px 28px -6px rgba(216, 63, 135, 0.10);
+  color: #1E293B;
+}
+.card-magenta:hover {
+  border-color: #D83F87;
+  box-shadow: 0 14px 34px -6px rgba(216, 63, 135, 0.20);
+}
+
+/* 6. Madera Tostada & Humus (Intensidad Extractiva) */
+.card-plum {
+  background: linear-gradient(145deg, #F8F3F0 0%, #EFE5DF 100%);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(98, 79, 68, 0.30);
+  box-shadow: 0 10px 28px -6px rgba(98, 79, 68, 0.10);
+  color: #1E293B;
+}
+.card-plum:hover {
+  border-color: #624F44;
+  box-shadow: 0 14px 34px -6px rgba(98, 79, 68, 0.20);
+}
+
+/* General bio-card */
+.bio-card {
+  background: rgba(255, 255, 255, 0.90);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(146, 118, 96, 0.20);
+  box-shadow: 0 8px 24px -4px rgba(72, 112, 117, 0.08);
+  color: #1E293B;
   transition: all 0.3s ease;
 }
 
 /* =========================================================================
-   INDIVIDUAL PARTICULAR CARD STYLES (ELIMINATING HOMOGENEITY)
+   CONTRASTE DE TEXTO Y CONTENEDORES PARA TEMA CLARO
    ========================================================================= */
 
-/* 1. Magenta Cerise Card (FCINQ Lead) */
-.card-magenta {
-  background: linear-gradient(145deg, rgba(46, 24, 60, 0.90) 0%, rgba(30, 16, 42, 0.92) 100%);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(216, 63, 135, 0.38);
-  box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.6), 0 0 16px -2px rgba(216, 63, 135, 0.22);
-}
-.card-magenta:hover {
-  border-color: rgba(216, 63, 135, 0.70);
-  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.7), 0 0 24px 0 rgba(216, 63, 135, 0.35);
-}
-
-/* 2. Teal Pine Card (HAUS Lead) */
-.card-teal {
-  background: linear-gradient(145deg, rgba(23, 49, 50, 0.90) 0%, rgba(15, 33, 34, 0.92) 100%);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(55, 110, 111, 0.45);
-  box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.6), 0 0 16px -2px rgba(55, 110, 111, 0.22);
-}
-.card-teal:hover {
-  border-color: rgba(55, 110, 111, 0.80);
-  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.7), 0 0 24px 0 rgba(55, 110, 111, 0.35);
+/* Asegurar contraste máximo para encabezados y textos oscuros */
+.card-magenta h1, .card-magenta h2, .card-magenta h3, .card-magenta h4,
+.card-teal h1, .card-teal h2, .card-teal h3, .card-teal h4,
+.card-rose h1, .card-rose h2, .card-rose h3, .card-rose h4,
+.card-indigo h1, .card-indigo h2, .card-indigo h3, .card-indigo h4,
+.card-slate h1, .card-slate h2, .card-slate h3, .card-slate h4,
+.card-plum h1, .card-plum h2, .card-plum h3, .card-plum h4,
+.bio-hud-panel h1, .bio-hud-panel h2, .bio-hud-panel h3, .bio-hud-panel h4 {
+  color: #0F172A !important;
 }
 
-/* 3. Dusty Rose Card (HAUS Accent) */
-.card-rose {
-  background: linear-gradient(145deg, rgba(48, 27, 36, 0.90) 0%, rgba(32, 17, 24, 0.92) 100%);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(218, 123, 147, 0.40);
-  box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.6), 0 0 16px -2px rgba(218, 123, 147, 0.22);
-}
-.card-rose:hover {
-  border-color: rgba(218, 123, 147, 0.75);
-  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.7), 0 0 24px 0 rgba(218, 123, 147, 0.35);
+.card-magenta .text-white,
+.card-teal .text-white,
+.card-rose .text-white,
+.card-indigo .text-white,
+.card-slate .text-white,
+.card-plum .text-white,
+.bio-hud-panel .text-white {
+  color: #0F172A !important;
 }
 
-/* 4. Royal Indigo Card (FCINQ Deep) */
-.card-indigo {
-  background: linear-gradient(145deg, rgba(38, 28, 70, 0.90) 0%, rgba(22, 16, 46, 0.92) 100%);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(68, 49, 141, 0.45);
-  box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.6), 0 0 16px -2px rgba(68, 49, 141, 0.25);
-}
-.card-indigo:hover {
-  border-color: rgba(141, 105, 166, 0.75);
-  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.7), 0 0 24px 0 rgba(68, 49, 141, 0.40);
-}
-
-/* 5. Petrol Slate Card (HAUS Foundation) */
-.card-slate {
-  background: linear-gradient(145deg, rgba(35, 52, 64, 0.90) 0%, rgba(22, 34, 43, 0.92) 100%);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(164, 179, 182, 0.32);
-  box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.6), 0 0 16px -2px rgba(164, 179, 182, 0.15);
-}
-.card-slate:hover {
-  border-color: rgba(164, 179, 182, 0.65);
-  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.7), 0 0 24px 0 rgba(164, 179, 182, 0.25);
+.card-magenta .text-slate-200,
+.card-magenta .text-slate-300,
+.card-teal .text-slate-200,
+.card-teal .text-slate-300,
+.card-rose .text-slate-200,
+.card-rose .text-slate-300,
+.card-indigo .text-slate-200,
+.card-indigo .text-slate-300,
+.card-slate .text-slate-200,
+.card-slate .text-slate-300,
+.card-plum .text-slate-200,
+.card-plum .text-slate-300,
+.bio-hud-panel .text-slate-200,
+.bio-hud-panel .text-slate-300 {
+  color: #334155 !important;
 }
 
-/* 6. Dark Plum Card (HAUS Sienna/Berry) */
-.card-plum {
-  background: linear-gradient(145deg, rgba(46, 21, 27, 0.92) 0%, rgba(26, 12, 16, 0.95) 100%);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(218, 123, 147, 0.32);
-  box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.6);
-}
-.card-plum:hover {
-  border-color: rgba(218, 123, 147, 0.60);
-}
-
-/* General bio-card fallback */
-.bio-card {
-  background: rgba(30, 20, 44, 0.85);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(216, 63, 135, 0.25);
-  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.5);
-  transition: all 0.3s ease;
+.card-magenta .text-slate-400,
+.card-teal .text-slate-400,
+.card-rose .text-slate-400,
+.card-indigo .text-slate-400,
+.card-slate .text-slate-400,
+.card-plum .text-slate-400,
+.bio-hud-panel .text-slate-400 {
+  color: #64748B !important;
 }
 
-/* Leaflet Container Dark Override */
+/* Fondos oscuros internos adaptados a superficies de soporte claras */
+.card-magenta .bg-black\/40,
+.card-teal .bg-black\/40,
+.card-rose .bg-black\/40,
+.card-indigo .bg-black\/40,
+.card-slate .bg-black\/40,
+.card-plum .bg-black\/40,
+.bio-hud-panel .bg-black\/40,
+.card-magenta .bg-black\/60,
+.card-teal .bg-black\/60,
+.card-rose .bg-black\/60,
+.card-indigo .bg-black\/60,
+.card-slate .bg-black\/60,
+.card-plum .bg-black\/60,
+.bio-hud-panel .bg-black\/60 {
+  background-color: rgba(255, 255, 255, 0.75) !important;
+  border-color: rgba(146, 118, 96, 0.20) !important;
+  color: #1E293B !important;
+}
+
+/* Sliders / Ranges adaptados a fondo claro */
+input[type="range"] {
+  background-color: #DCD6C9 !important;
+}
+
+/* Leaflet Container en tema claro */
 .leaflet-container {
   font-family: inherit;
   outline: none;
-  background: #110a19 !important;
-}
-
-.custom-hombros-pin {
-  background: transparent !important;
-  border: none !important;
+  background: #EAE6DC !important;
 }
 
 .custom-leaflet-tooltip {
-  background: rgba(30, 20, 44, 0.95) !important;
+  background: rgba(255, 255, 255, 0.95) !important;
   backdrop-filter: blur(14px) !important;
-  border: 1px solid rgba(216, 63, 135, 0.6) !important;
+  border: 1px solid #487075 !important;
   border-radius: 12px !important;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7), 0 0 15px rgba(216, 63, 135, 0.3) !important;
-  color: #ffffff !important;
+  box-shadow: 0 10px 25px rgba(72, 112, 117, 0.15) !important;
+  color: #1E293B !important;
   padding: 8px 12px !important;
 }
