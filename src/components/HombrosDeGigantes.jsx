@@ -63,21 +63,21 @@ export default function HombrosDeGigantes() {
   return (
     <div className="bio-hud-panel rounded-3xl p-6 shadow-2xl relative">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-emerald-500/20">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-[#D4C9B8]">
         <div>
-          <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border bg-cyan-950/60 text-cyan-300 border-cyan-500/40">
+          <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#487075] text-white shadow-xs">
             Marco Epistémico (Lámina 25)
           </span>
-          <h3 className="text-xl font-serif font-bold text-white tracking-tight mt-1.5 flex items-center gap-2">
+          <h3 className="text-xl sm:text-2xl font-serif font-extrabold text-black tracking-tight mt-1.5 flex items-center gap-2">
             Construir sobre Hombros de Gigantes
           </h3>
-          <p className="text-xs text-slate-300 mt-0.5">
+          <p className="text-xs sm:text-sm text-black font-medium mt-0.5">
             Las corrientes de pensamiento, luchas y sabidurías que nutren el modelo de autosustento sintrópico
           </p>
         </div>
 
-        <div className="flex items-center gap-1.5 text-xs font-mono bg-bio-void/80 px-3 py-1.5 rounded-xl border border-cyan-500/30 text-cyan-300 shadow-inner">
-          <Feather className="w-4 h-4 text-cyan-400" />
+        <div className="flex items-center gap-1.5 text-xs font-mono bg-[#C86D51] text-white px-3 py-1.5 rounded-xl font-bold shadow-xs">
+          <Feather className="w-4 h-4 text-white" />
           <span>9 Pilares Fundacionales</span>
         </div>
       </div>
@@ -96,24 +96,36 @@ export default function HombrosDeGigantes() {
             'card-indigo',
             'card-magenta'
           ];
+          const badgeColors = [
+            'bg-[#C86D51] text-white',
+            'bg-[#487075] text-white',
+            'bg-[#28475A] text-white',
+            'bg-[#D83F87] text-white',
+            'bg-[#927660] text-white',
+            'bg-[#624F44] text-white',
+            'bg-[#487075] text-white',
+            'bg-[#28475A] text-white',
+            'bg-[#C86D51] text-white'
+          ];
           const currentCardClass = cardThemes[idx % cardThemes.length];
+          const currentBadgeColor = badgeColors[idx % badgeColors.length];
 
           return (
             <div 
               key={idx}
-              className={`p-4 rounded-2xl transition-all duration-300 flex flex-col justify-between group shadow-lg ${currentCardClass}`}
+              className={`p-4 rounded-2xl transition-all duration-300 flex flex-col justify-between group shadow-sm hover:shadow-md border border-black/10 ${currentCardClass}`}
             >
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-2xl filter drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">{p.icon}</span>
-                  <span className="text-[9px] font-mono px-2 py-0.5 rounded-full border bg-black/40 border-white/20 text-white font-semibold">
+                  <span className="text-2xl filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.15)]">{p.icon}</span>
+                  <span className={`text-[9px] font-mono px-2 py-0.5 rounded-full font-bold shadow-xs ${currentBadgeColor}`}>
                     {p.badge}
                   </span>
                 </div>
-                <h4 className="text-xs font-bold font-serif text-white mb-1.5 transition-colors">
+                <h4 className="text-xs font-bold font-serif text-black mb-1.5 transition-colors">
                   {p.title}
                 </h4>
-                <p className="text-[11px] text-slate-200 leading-relaxed font-sans">
+                <p className="text-[11px] text-black leading-relaxed font-sans font-medium">
                   {p.content}
                 </p>
               </div>
@@ -123,8 +135,8 @@ export default function HombrosDeGigantes() {
       </div>
 
       {/* Resignificación de Atlas y Sísifo */}
-      <div className="mt-6 p-5 rounded-2xl bg-gradient-to-r from-blue-950/60 via-purple-950/40 to-emerald-950/60 border border-amber-400/30 flex flex-col sm:flex-row items-center gap-5 shadow-xl">
-        <div className="w-20 h-20 rounded-2xl overflow-hidden flex-shrink-0 border border-white/20 shadow-md bg-black/60">
+      <div className="mt-6 p-5 rounded-2xl bg-gradient-to-r from-[#FAF7F0] via-[#E2F4F2] to-[#FEECE8] border border-[#D4C9B8] flex flex-col sm:flex-row items-center gap-5 shadow-sm">
+        <div className="w-20 h-20 rounded-2xl overflow-hidden flex-shrink-0 border border-[#927660]/40 shadow-sm bg-white">
           <img 
             src={getAssetUrl('art/hombros_logo.png')} 
             alt="Atlas & Sísifo Colectivos" 
@@ -132,13 +144,13 @@ export default function HombrosDeGigantes() {
           />
         </div>
         <div className="space-y-1">
-          <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-300">
+          <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#C86D51]">
             Axioma de la Resignificación Mítica
           </span>
-          <h4 className="font-serif font-bold text-white text-sm">
+          <h4 className="font-serif font-extrabold text-black text-sm sm:text-base">
             De la Condena Solitaria al Triunfo Colectivo
           </h4>
-          <p className="text-xs text-slate-300 leading-relaxed font-sans">
+          <p className="text-xs text-black leading-relaxed font-sans font-medium">
             Atlas ya no sufre un castigo titánico en soledad, ni la roca de Sísifo vuelve a caer al abismo. En <strong>HOMBROS</strong>, la comunidad comparte la elevación del desarrollo territorial: las manos se entrelazan y la roca en la cumbre echa raíces, floreciendo en una biósfera sintrópica bajo el cielo estrellado.
           </p>
         </div>

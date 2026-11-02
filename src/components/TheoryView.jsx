@@ -8,6 +8,7 @@ import {
   Maximize2, ChevronRight, Play, Eye, FileCode, CheckCircle
 } from 'lucide-react';
 import HombrosDeGigantes from './HombrosDeGigantes';
+import { getAssetUrl } from '../utils/assets';
 
 export default function TheoryView() {
   const [activeTab, setActiveTab] = useState('paper'); // 'paper' | 'figures' | 'scripts_hub' | 'episteme'
@@ -26,7 +27,7 @@ export default function TheoryView() {
       number: 'Figura 1',
       title: 'Ley Constitutiva Socio-Ecológica Tensión-Deformación (σ vs. ε)',
       subtitle: 'Demostración de la Histéresis Plástica y Pérdida Irreversible de Capacidad Portante',
-      image: '/docs/figures/fig1_stress_strain_hysteresis.png',
+      image: getAssetUrl('docs/figures/fig1_stress_strain_hysteresis.png'),
       badge: 'Reología de Materiales',
       badgeColor: 'border-emerald-500/40 text-emerald-300 bg-emerald-500/10',
       sectionRef: 'Sección 2.3 · Ecuación Fundamental 2',
@@ -43,7 +44,7 @@ export default function TheoryView() {
       number: 'Figura 2',
       title: 'Tensión Sistémica (σ) vs. Huella Metabólica Total con Scope 3 Upstream',
       subtitle: 'Evidencia del Desplazamiento Entrópico: El Colonialismo Metabólico del Norte Global',
-      image: '/docs/figures/fig2_scope3_displacement_biplot.png',
+      image: getAssetUrl('docs/figures/fig2_scope3_displacement_biplot.png'),
       badge: 'Metabolismo & Scope 3',
       badgeColor: 'border-magenta-500/40 text-[#DA7B93] bg-[#D83F87]/10',
       sectionRef: 'Sección 4 · Benchmark Multi-sitio (N=8)',
@@ -60,7 +61,7 @@ export default function TheoryView() {
       number: 'Figura 3',
       title: 'Inversión de Jerarquías en la Evaluación de Sostenibilidad (Slopegraph)',
       subtitle: 'Contraste entre IDH (PNUD), Huella Ecológica (GFN) y Tensión Sistémica HOMBROS',
-      image: '/docs/figures/fig3_multimodel_ranking_inversion.png',
+      image: getAssetUrl('docs/figures/fig3_multimodel_ranking_inversion.png'),
       badge: 'Benchmark Multi-Modelo',
       badgeColor: 'border-teal-500/40 text-teal-300 bg-teal-500/10',
       sectionRef: 'Sección 4.3 · Contrastación Cruzada',
@@ -77,7 +78,7 @@ export default function TheoryView() {
       number: 'Figura 4',
       title: 'Análisis Global de Sensibilidad de Sobol para la Tensión Sistémica (σ)',
       subtitle: 'Simulación Estocástica de Hipercubo Latino (Monte Carlo N=5,000)',
-      image: '/docs/figures/fig4_sobol_sensitivity_montecarlo.png',
+      image: getAssetUrl('docs/figures/fig4_sobol_sensitivity_montecarlo.png'),
       badge: 'Incertidumbre & Sobol UQ',
       badgeColor: 'border-purple-500/40 text-purple-300 bg-purple-500/10',
       sectionRef: 'Sección 2.2 · Análisis de Incertidumbre',
@@ -94,7 +95,7 @@ export default function TheoryView() {
       number: 'Figura 5',
       title: 'Amortiguación Tensora por Mutualismo en Red Panal (Density Violin Plots)',
       subtitle: 'Simulación de Choque Climático en Cuencas Aisladas vs. Cuencas Acopladas Policéntricamente',
-      image: '/docs/figures/fig5_honeycomb_network_damping.png',
+      image: getAssetUrl('docs/figures/fig5_honeycomb_network_damping.png'),
       badge: 'Red Panal & Ostrom',
       badgeColor: 'border-amber-500/40 text-amber-300 bg-amber-500/10',
       sectionRef: 'Sección 2.5 & 5.3 · Gobernanza Policéntrica',
@@ -597,28 +598,28 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
       className="space-y-8 max-w-6xl mx-auto"
     >
       {/* Top Header Banner with Action Buttons */}
-      <div className="card-magenta rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#D83F87]/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="card-magenta rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden border border-[#D83F87]/25">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#D83F87]/15 rounded-full blur-3xl pointer-events-none" />
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative z-10">
           <div className="flex items-start sm:items-center gap-4">
-            <div className="p-3.5 rounded-2xl bg-[#2A1B3D] border border-[#D83F87]/40 text-[#D83F87] shadow-inner shrink-0">
-              <BookOpen className="w-8 h-8 text-[#D83F87]" />
+            <div className="p-3.5 rounded-2xl bg-[#C86D51] text-white shadow-md shrink-0">
+              <BookOpen className="w-8 h-8 text-white" />
             </div>
             <div>
               <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border bg-[#2A1B3D] text-[#D83F87] border-[#D83F87]/40">
+                <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#C86D51] text-white shadow-xs">
                   Marco Epistémico & Paper Canónico
                 </span>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-black/40 text-slate-300 border border-white/10">
+                <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#487075] text-white shadow-xs">
                   TRL 5 • DOI: 10.5281/zenodo.hombros.2026
                 </span>
               </div>
-              <h1 className="text-2xl sm:text-3xl font-serif font-bold tracking-tight text-white">
+              <h1 className="text-2xl sm:text-3xl font-serif font-extrabold tracking-tight text-black">
                 Marco Epistémico, Paper Metodológico & Pipeline en R
               </h1>
-              <p className="text-xs sm:text-sm mt-1 text-slate-200 max-w-3xl leading-relaxed">
+              <p className="text-xs sm:text-sm mt-1 text-black font-medium max-w-3xl leading-relaxed">
                 Desarrollo Sostenido sobre Autosustento Sintrópico. La convergencia entre 
-                <strong className="text-[#DA7B93]"> geofísica, resistencia de materiales, economía ecológica radical y descolonización latinoamericana</strong>.
+                <strong className="text-black font-extrabold"> geofísica, resistencia de materiales, economía ecológica radical y descolonización latinoamericana</strong>.
               </p>
             </div>
           </div>
@@ -626,81 +627,81 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
           {/* Action Downloads Toolbar */}
           <div className="flex flex-wrap sm:flex-nowrap gap-2.5 shrink-0 w-full lg:w-auto">
             <a
-              href="/docs/HOMBROS_Presentacion_Oficial.pdf"
+              href={getAssetUrl('docs/HOMBROS_Presentacion_Oficial.pdf')}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 lg:flex-initial inline-flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl bg-[#2A1B3D] hover:bg-[#34224C] border border-[#D83F87]/50 text-white text-xs font-semibold shadow-lg hover:border-[#D83F87] transition-all group"
+              className="flex-1 lg:flex-initial inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#C86D51] hover:bg-[#b0583e] text-white text-xs font-bold shadow-md hover:shadow-lg transition-all group"
             >
-              <FileText className="w-4 h-4 text-[#D83F87] group-hover:scale-110 transition-transform" />
+              <FileText className="w-4 h-4 text-white group-hover:scale-110 transition-transform" />
               <span>Presentación PDF</span>
-              <ExternalLink className="w-3 h-3 text-slate-400" />
+              <ExternalLink className="w-3 h-3 text-white/80" />
             </a>
 
             <a
-              href="/paper.html"
+              href={getAssetUrl('paper.html')}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 lg:flex-initial inline-flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl bg-[#376E6F]/40 hover:bg-[#376E6F]/60 border border-[#45B69C]/50 text-white text-xs font-semibold shadow-lg hover:border-[#45B69C] transition-all group"
+              className="flex-1 lg:flex-initial inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#487075] hover:bg-[#395b5f] text-white text-xs font-bold shadow-md hover:shadow-lg transition-all group"
             >
-              <ExternalLink className="w-4 h-4 text-[#45B69C] group-hover:scale-110 transition-transform" />
+              <ExternalLink className="w-4 h-4 text-white group-hover:scale-110 transition-transform" />
               <span>Abrir Paper Completo</span>
             </a>
           </div>
         </div>
 
-        {/* Sub-tab Navigation (4 Pestañas Canónicas) */}
-        <div className="flex flex-wrap gap-2 mt-6 pt-5 border-t border-white/10 relative z-10">
+        {/* Sub-tab Navigation (4 Pestañas Canónicas con Botones de Color Vivos) */}
+        <div className="flex flex-wrap gap-2.5 mt-6 pt-5 border-t border-[#D4C9B8]/70 relative z-10">
           <button
             onClick={() => setActiveTab('paper')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm ${
               activeTab === 'paper'
-                ? 'bg-white text-[#2A1B3D] shadow-lg shadow-black/20'
-                : 'bg-black/30 text-slate-300 hover:text-white hover:bg-black/50 border border-white/10'
+                ? 'bg-[#487075] text-white border border-[#376E6F] shadow-md shadow-[#487075]/30'
+                : 'bg-[#7DB2B2]/20 text-slate-800 hover:bg-[#7DB2B2]/35 border border-[#7DB2B2]/50'
             }`}
           >
-            <FileText className="w-4 h-4 text-[#D83F87]" />
+            <FileText className={`w-4 h-4 ${activeTab === 'paper' ? 'text-white' : 'text-[#487075]'}`} />
             <span>Paper Canónico (IMRAD)</span>
           </button>
 
           <button
             onClick={() => setActiveTab('figures')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm ${
               activeTab === 'figures'
-                ? 'bg-white text-[#2A1B3D] shadow-lg shadow-black/20'
-                : 'bg-black/30 text-slate-300 hover:text-white hover:bg-black/50 border border-white/10'
+                ? 'bg-[#C86D51] text-white border border-[#927660] shadow-md shadow-[#C86D51]/30'
+                : 'bg-[#C86D51]/20 text-slate-800 hover:bg-[#C86D51]/30 border border-[#C86D51]/50'
             }`}
           >
-            <Image className="w-4 h-4 text-[#DA7B93]" />
+            <Image className={`w-4 h-4 ${activeTab === 'figures' ? 'text-white' : 'text-[#C86D51]'}`} />
             <span>Figuras Canónicas del Paper</span>
-            <span className="px-1.5 py-0.2 rounded-full text-[9px] font-mono bg-[#D83F87]/30 text-[#DA7B93] border border-[#D83F87]/40">
+            <span className="px-1.5 py-0.5 rounded-full text-[9px] font-mono bg-white/40 text-slate-900 font-bold">
               5
             </span>
           </button>
 
           <button
             onClick={() => setActiveTab('scripts_hub')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm ${
               activeTab === 'scripts_hub'
-                ? 'bg-white text-[#2A1B3D] shadow-lg shadow-black/20'
-                : 'bg-black/30 text-slate-300 hover:text-white hover:bg-black/50 border border-white/10'
+                ? 'bg-[#28475A] text-white border border-[#1E293B] shadow-md shadow-[#28475A]/30'
+                : 'bg-[#28475A]/20 text-slate-800 hover:bg-[#28475A]/30 border border-[#28475A]/50'
             }`}
           >
-            <Terminal className="w-4 h-4 text-[#45B69C]" />
-            <span>Explorador de Scripts & Pipeline (Hub)</span>
-            <span className="px-1.5 py-0.2 rounded-full text-[9px] font-mono bg-[#45B69C]/30 text-[#45B69C] border border-[#45B69C]/40">
+            <Terminal className={`w-4 h-4 ${activeTab === 'scripts_hub' ? 'text-white' : 'text-[#28475A]'}`} />
+            <span>Explorador de Scripts & Pipeline</span>
+            <span className="px-1.5 py-0.5 rounded-full text-[9px] font-mono bg-white/40 text-slate-900 font-bold">
               7 Módulos
             </span>
           </button>
 
           <button
             onClick={() => setActiveTab('episteme')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm ${
               activeTab === 'episteme'
-                ? 'bg-white text-[#2A1B3D] shadow-lg shadow-black/20'
-                : 'bg-black/30 text-slate-300 hover:text-white hover:bg-black/50 border border-white/10'
+                ? 'bg-[#927660] text-white border border-[#624F44] shadow-md shadow-[#927660]/30'
+                : 'bg-[#927660]/20 text-slate-800 hover:bg-[#927660]/30 border border-[#927660]/50'
             }`}
           >
-            <GraduationCap className="w-4 h-4 text-[#DA7B93]" />
+            <GraduationCap className={`w-4 h-4 ${activeTab === 'episteme' ? 'text-white' : 'text-[#927660]'}`} />
             <span>Hombros de Gigantes</span>
           </button>
         </div>
@@ -712,113 +713,156 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
       {activeTab === 'paper' && (
         <div className="space-y-8">
           {/* Paper Metadata Badge Card */}
-          <div className="card-slate rounded-3xl p-6 sm:p-7 shadow-2xl border border-white/10">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-white/10 text-xs">
+          <div className="card-slate rounded-3xl p-6 sm:p-7 shadow-xl border border-[#927660]/30">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#D4C9B8] text-xs">
               <div>
-                <span className="text-[10px] font-mono uppercase font-bold text-[#DA7B93] tracking-widest block">
+                <span className="text-[10px] font-mono uppercase font-bold text-[#927660] tracking-widest block">
                   Compendio Científico Metodológico Canónico
                 </span>
-                <h2 className="text-lg sm:text-xl font-serif font-bold text-white mt-0.5">
+                <h2 className="text-lg sm:text-xl font-serif font-extrabold text-black mt-0.5">
                   Hombros: Un Modelo de Mecánica de Medios Continuos y Metabolismo Socio-Ecológico para Cuantificar la Capacidad Portante, Tensión Sistémica y Desplazamiento Entrópico Territorial
                 </h2>
-                <p className="text-xs text-slate-300 mt-1">
-                  <strong>Autor:</strong> Daniel Santander Urrutia (Geofísico & Permacultor) • Proyecto Hombros • Noviembre 2026
+                <p className="text-xs text-black mt-1 font-medium">
+                  <strong className="font-bold">Autor:</strong> Daniel Santander Urrutia (Geofísico & Permacultor) • Proyecto Hombros • Noviembre 2026
                 </p>
               </div>
               <div className="flex flex-wrap gap-2 text-[10px] font-mono shrink-0">
-                <span className="px-2.5 py-1 rounded-lg bg-black/40 text-emerald-300 border border-emerald-500/30">
+                <span className="px-3 py-1.5 rounded-xl bg-[#487075] text-white font-bold shadow-xs">
                   Validación Multi-sitio: N=8
                 </span>
-                <span className="px-2.5 py-1 rounded-lg bg-black/40 text-[#45B69C] border border-[#45B69C]/30">
+                <span className="px-3 py-1.5 rounded-xl bg-[#28475A] text-white font-bold shadow-xs">
                   Clasif. UNESCO: 5312 / 3311
                 </span>
               </div>
             </div>
 
             {/* Abstract */}
-            <div className="mt-4 p-4 rounded-2xl bg-black/30 border border-white/5">
-              <span className="text-[10px] font-mono uppercase font-bold text-[#45B69C] tracking-wider block mb-1">
+            <div className="mt-4 p-5 rounded-2xl bg-white/95 border border-[#D4C9B8] shadow-sm">
+              <span className="text-[11px] font-mono uppercase font-extrabold text-black tracking-wider block mb-1.5">
                 Resumen Ejecutivo / Abstract
               </span>
-              <p className="text-xs text-slate-200 leading-relaxed font-sans">
+              <p className="text-xs sm:text-sm text-black leading-relaxed font-sans font-medium">
                 Los estándares de contabilidad socio-ambiental dominantes (IDH, Economía de la Dona, Límites Planetarios y Huella Ecológica) presentan sesgos críticos de compensabilidad aditiva, ceguera ante el desplazamiento metabólico de Alcance 3 hacia el Sur Global y ausencia de una física de fatiga territorial. En este trabajo presentamos la formalización canónica del modelo <strong>Hombros</strong>, integrando la mecánica de medios continuos con la termodinámica ecológica abierta. Definimos la capacidad portante no-compensatoria \(H = (S \cdot E \cdot K)^{1/3}\) con quiebre asintótico ante fallos de pilares individuales (\(H_i &lt; 0.25\)), la tensión sistémica \(\sigma = D / H\) y el régimen de deformación viscoelástica (elástico, fluencia, plástico y fractura). Validamos el modelo empíricamente en ocho arquetipos territoriales (Chanco, Aconcagua, Quintero-Puchuncaví en Chile; Copenhague, Barcelona, Bilbao, Ámsterdam y Berlín en Europa) y demostramos que las metrópolis post-industriales con reducidas emisiones territoriales directas externalizan entre un \(54\%\) y un \(76.5\%\) de su carga entrópica en forma de bienes intensivos importados.
               </p>
             </div>
           </div>
 
           {/* 1. Matriz de Gaps Epistémicos */}
-          <div className="card-teal rounded-3xl p-6 sm:p-8 shadow-2xl">
-            <div className="flex items-center gap-2 mb-2">
-              <Scale className="w-5 h-5 text-[#45B69C]" />
-              <h3 className="font-serif font-bold text-xl text-white">
+          <div className="card-teal rounded-3xl p-6 sm:p-8 shadow-xl border border-[#487075]/30">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="p-2 rounded-xl bg-[#487075] text-white shadow-sm">
+                <Scale className="w-5 h-5" />
+              </div>
+              <h3 className="font-serif font-extrabold text-xl sm:text-2xl text-black">
                 1. Análisis Crítico: Matriz de Gaps en Estándares Vigentes
               </h3>
             </div>
-            <p className="text-xs text-slate-200 mb-5 max-w-4xl leading-relaxed">
+            <p className="text-xs sm:text-sm text-black font-medium mb-6 max-w-4xl leading-relaxed">
               La literatura contemporánea de sostenibilidad presenta vacíos metodológicos recurrentes que impiden a las comunidades y gobiernos subnacionales evaluar su vulnerabilidad biofísica real:
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {gapsData.map((gap, idx) => (
-                <div key={idx} className="p-4 rounded-2xl bg-black/40 border border-white/10 flex flex-col justify-between hover:border-white/20 transition-all">
-                  <div>
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#45B69C] block mb-1">
-                      {gap.standard}
-                    </span>
-                    <div className="text-xs text-slate-300 font-sans mb-2.5">
-                      <strong className="text-slate-100">Supuesto Base:</strong> {gap.premise}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {gapsData.map((gap, idx) => {
+                const badgeThemes = [
+                  'bg-[#487075] text-white',
+                  'bg-[#C86D51] text-white',
+                  'bg-[#28475A] text-white',
+                  'bg-[#927660] text-white',
+                  'bg-[#5B507A] text-white',
+                  'bg-[#3E7B6C] text-white'
+                ];
+                const badgeClass = badgeThemes[idx % badgeThemes.length];
+
+                return (
+                  <div key={idx} className="p-5 rounded-2xl bg-white/95 border border-[#487075]/25 shadow-sm hover:shadow-md hover:border-[#487075]/60 transition-all flex flex-col justify-between">
+                    <div>
+                      <span className={`px-3 py-1.5 rounded-xl font-mono text-[11px] font-bold uppercase tracking-wide inline-block shadow-xs mb-3.5 ${badgeClass}`}>
+                        {gap.standard}
+                      </span>
+                      <div className="p-3.5 rounded-xl bg-[#FAF7F0] border border-[#DDD5C5] mb-3 text-black text-xs font-sans leading-relaxed shadow-xs">
+                        <strong className="text-black font-extrabold uppercase text-[10px] tracking-wide block mb-1">
+                          Supuesto Base:
+                        </strong>
+                        <span className="text-black font-normal">{gap.premise}</span>
+                      </div>
+                      <div className="p-3.5 rounded-xl bg-[#FEECE8] border border-[#F4A79D] mb-3.5 text-black text-xs font-sans leading-relaxed shadow-xs">
+                        <div className="flex items-center gap-1.5 mb-1">
+                          <span className="w-2.5 h-2.5 rounded-full bg-[#C86D51] shrink-0" />
+                          <strong className="text-black font-extrabold uppercase text-[10px] tracking-wide">
+                            Brecha Crítica:
+                          </strong>
+                        </div>
+                        <span className="text-black font-medium">{gap.gap}</span>
+                      </div>
                     </div>
-                    <div className="text-xs text-rose-300/90 font-sans mb-3 p-2 rounded-xl bg-rose-950/30 border border-rose-500/20">
-                      <strong className="text-rose-200">Brecha Crítica:</strong> {gap.gap}
+                    <div className="p-3.5 rounded-xl bg-[#E2F4F2] border border-[#7DB2B2] text-black text-xs font-sans leading-relaxed shadow-xs">
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#487075] shrink-0" />
+                        <strong className="text-black font-extrabold uppercase text-[10px] tracking-wide">
+                          Solución Hombros:
+                        </strong>
+                      </div>
+                      <span className="text-black font-semibold">{gap.solution}</span>
                     </div>
                   </div>
-                  <div className="text-xs text-emerald-300 font-sans p-2 rounded-xl bg-emerald-950/30 border border-emerald-500/20">
-                    <strong className="text-emerald-200">Solución Hombros:</strong> {gap.solution}
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
           {/* 2. Formulación Matemática de Medios Continuos */}
-          <div className="card-indigo rounded-3xl p-6 sm:p-8 shadow-2xl">
-            <div className="flex items-center gap-2 mb-2">
-              <Cpu className="w-5 h-5 text-[#DA7B93]" />
-              <h3 className="font-serif font-bold text-xl text-white">
+          <div className="card-indigo rounded-3xl p-6 sm:p-8 shadow-xl border border-[#28475A]/25">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="p-2 rounded-xl bg-[#28475A] text-white shadow-sm">
+                <Cpu className="w-5 h-5" />
+              </div>
+              <h3 className="font-serif font-extrabold text-xl sm:text-2xl text-black">
                 2. Formulación Matemática y Leyes Mecánicas
               </h3>
             </div>
-            <p className="text-xs text-slate-200 mb-5 max-w-4xl">
+            <p className="text-xs sm:text-sm text-black font-medium mb-6 max-w-4xl leading-relaxed">
               Hombros abandona las métricas abstractas y modela el territorio con leyes físicas verificables:
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono">
-              <div className="p-4 rounded-2xl bg-black/40 border border-white/10">
-                <span className="text-[10px] text-[#A4B3B6] uppercase font-bold block mb-1">Ecuación 1: Capacidad Portante</span>
-                <div className="text-base font-bold text-[#45B69C] my-1 font-mono">
-                  H = (S · E · K)<sup>1/3</sup> · ∏ 𝕀(H<sub>i</sub> ≥ 0.25)
+              <div className="p-5 rounded-2xl bg-white/95 border border-[#487075]/30 shadow-sm flex flex-col justify-between">
+                <div>
+                  <span className="px-3 py-1 rounded-lg bg-[#487075] text-white text-[10px] font-bold uppercase tracking-wider inline-block mb-3 shadow-xs">
+                    Ecuación 1 · Capacidad Portante
+                  </span>
+                  <div className="text-base font-extrabold text-black font-mono my-2 py-2.5 px-3 rounded-xl bg-[#E2F4F2] border border-[#7DB2B2]/60 text-center shadow-xs">
+                    H = (S · E · K)<sup>1/3</sup> · ∏ 𝕀(H<sub>i</sub> ≥ 0.25)
+                  </div>
                 </div>
-                <p className="text-[11px] text-slate-200 font-sans mt-2 leading-relaxed">
+                <p className="text-xs text-black font-sans mt-3 leading-relaxed">
                   Media geométrica no compensatoria. Si min(S, E, K) &lt; 0.25, el territorio experimenta falla estructural inmediata. Ningún superávit de capital social o técnico puede sustituir un suelo o acuífero muerto.
                 </p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-black/40 border border-white/10">
-                <span className="text-[10px] text-[#A4B3B6] uppercase font-bold block mb-1">Ecuación 2: Tensión Sistémica</span>
-                <div className="text-base font-bold text-[#D83F87] my-1 font-mono">
-                  σ = D / H = (∑ D<sub>j</sub> / 3) / H
+              <div className="p-5 rounded-2xl bg-white/95 border border-[#C86D51]/30 shadow-sm flex flex-col justify-between">
+                <div>
+                  <span className="px-3 py-1 rounded-lg bg-[#C86D51] text-white text-[10px] font-bold uppercase tracking-wider inline-block mb-3 shadow-xs">
+                    Ecuación 2 · Tensión Sistémica
+                  </span>
+                  <div className="text-base font-extrabold text-black font-mono my-2 py-2.5 px-3 rounded-xl bg-[#FEECE8] border border-[#F4A79D]/60 text-center shadow-xs">
+                    σ = D / H = (∑ D<sub>j</sub> / 3) / H
+                  </div>
                 </div>
-                <p className="text-[11px] text-slate-200 font-sans mt-2 leading-relaxed">
+                <p className="text-xs text-black font-sans mt-3 leading-relaxed">
                   Cociente uniaxial de esfuerzo sobre sección resistente. Define cuatro regímenes mecánicos: elástico (σ &lt; 0.85), límite de fluencia (0.85 ≤ σ &lt; 1.00), plástico irreversible (1.00 ≤ σ &lt; 1.25) y fractura catastrófica (σ ≥ 1.25).
                 </p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-black/40 border border-white/10">
-                <span className="text-[10px] text-[#A4B3B6] uppercase font-bold block mb-1">Ecuación 3: Velocidad Sintrópica</span>
-                <div className="text-base font-bold text-[#8D69A6] my-1 font-mono">
-                  Γ(t) = (1 / H) · (dH / dt)
+              <div className="p-5 rounded-2xl bg-white/95 border border-[#927660]/30 shadow-sm flex flex-col justify-between">
+                <div>
+                  <span className="px-3 py-1 rounded-lg bg-[#927660] text-white text-[10px] font-bold uppercase tracking-wider inline-block mb-3 shadow-xs">
+                    Ecuación 3 · Velocidad Sintrópica
+                  </span>
+                  <div className="text-base font-extrabold text-black font-mono my-2 py-2.5 px-3 rounded-xl bg-[#FAF7F0] border border-[#DDD5C5]/60 text-center shadow-xs">
+                    Γ(t) = (1 / H) · (dH / dt)
+                  </div>
                 </div>
-                <p className="text-[11px] text-slate-200 font-sans mt-2 leading-relaxed">
+                <p className="text-xs text-black font-sans mt-3 leading-relaxed">
                   Tasa temporal de acumulación o disipación neguentrópica en el tiempo. Γ &gt; +0.02 año<sup>-1</sup> indica acumulación sintrópica regenerativa; Γ &lt; -0.03 año<sup>-1</sup> denota senescencia disipativa acelerada.
                 </p>
               </div>
@@ -1151,12 +1195,12 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
         <div className="space-y-8">
           <HombrosDeGigantes />
 
-          <div className="card-slate rounded-3xl p-6 sm:p-8 shadow-2xl">
+          <div className="card-slate rounded-3xl p-6 sm:p-8 shadow-xl border border-[#927660]/30">
             <div className="mb-6">
-              <span className="text-[10px] font-mono uppercase font-bold text-[#DA7B93] tracking-widest block">
+              <span className="text-[10px] font-mono uppercase font-bold text-[#927660] tracking-widest block">
                 Arquitectura Epistemológica
               </span>
-              <h2 className="text-xl font-serif font-bold text-white mt-0.5">
+              <h2 className="text-xl sm:text-2xl font-serif font-extrabold text-black mt-0.5">
                 Los 4 Ejes de Ruptura con el Desarrollo Convencional
               </h2>
             </div>
@@ -1164,22 +1208,32 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {sections.map((sec, i) => {
                 const Icon = sec.icon;
+                const badgeBgColors = [
+                  'bg-[#487075] text-white',
+                  'bg-[#C86D51] text-white',
+                  'bg-[#28475A] text-white',
+                  'bg-[#927660] text-white'
+                ];
+                const badgeBg = badgeBgColors[i % badgeBgColors.length];
+
                 return (
                   <div 
                     key={i} 
-                    className={`rounded-3xl p-6 shadow-xl flex flex-col justify-between transition-all duration-300 group ${sec.cardClass}`}
+                    className={`rounded-3xl p-6 shadow-md flex flex-col justify-between transition-all duration-300 group ${sec.cardClass} border border-black/10`}
                   >
                     <div>
                       <div className="flex items-center justify-between mb-3.5">
-                        <span className="text-[10px] font-mono uppercase font-bold px-2.5 py-0.5 rounded-full border bg-black/40 border-white/20 text-white">
+                        <span className={`text-[10px] font-mono uppercase font-bold px-3 py-1 rounded-xl shadow-xs ${badgeBg}`}>
                           {sec.badge}
                         </span>
-                        <Icon className={`w-4 h-4 ${sec.color}`} />
+                        <div className="p-1.5 rounded-lg bg-white/70 shadow-2xs">
+                          <Icon className={`w-4 h-4 text-black`} />
+                        </div>
                       </div>
-                      <h3 className="text-base font-serif font-bold mb-3 text-white group-hover:text-white transition-colors">
+                      <h3 className="text-base font-serif font-extrabold mb-3 text-black">
                         {sec.title}
                       </h3>
-                      <p className="text-xs leading-relaxed whitespace-pre-line text-slate-200 font-sans">
+                      <p className="text-xs leading-relaxed whitespace-pre-line text-black font-sans font-medium">
                         {sec.content}
                       </p>
                     </div>
