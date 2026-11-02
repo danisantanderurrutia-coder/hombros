@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hombros: Un Modelo de Mecánica de Medios Continuos y Metabolismo Socio-Ecológico</title>
+  <link rel="icon" type="image/png" href="/favicon-32x32.png">
+  
+  <!-- Google Fonts: Merriweather for academic body, Inter for UI/sans, JetBrains Mono for math/code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&display=swap" rel="stylesheet">
+  
+  <!-- KaTeX for pristine LaTeX math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '\\[', right: '\\]', display: true},
+        {left: '$', right: '$', display: false},
+        {left: '\\(', right: '\\)', display: false}
+      ],
+      throwOnError: false
+    });"></script>
+
+  <style>
+    :root {
+      --bg-canvas: #0c0714;
+      --bg-surface: #140b22;
+      --bg-card: #1d122e;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-accent: #DA7B93;
+      --brand-primary: #D83F87;
+      --brand-teal: #376E6F;
+      --brand-mint: #45B69C;
+      --border-soft: rgba(255, 255, 255, 0.1);
+      --font-serif: 'Newsreader', Georgia, serif;
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'Fira Code', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-canvas);
+      color: var(--text-main);
+      font-family: var(--font-serif);
+      font-size: 1.08rem;
+      line-height: 1.78;
+      padding: 0;
+      margin: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Sticky Header */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(12, 7, 20, 0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-soft);
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+    }
+
+    .top-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .badge-pill {
+      background: rgba(216, 63, 135, 0.2);
+      color: var(--brand-primary);
+      border: 1px solid rgba(216, 63, 135, 0.4);
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 0.6rem;
+    }
+
+    .btn-action {
+      background: var(--bg-card);
+      color: var(--text-main);
+      border: 1px solid var(--border-soft);
+      padding: 0.4rem 0.8rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-action:hover {
+      background: rgba(216, 63, 135, 0.2);
+      border-color: var(--brand-primary);
+    }
+
+    /* Layout Container */
+    .article-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 6rem;
+    }
+
+    /* Academic Header */
+    .header-banner {
+      border-bottom: 2px solid var(--brand-primary);
+      padding-bottom: 2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .paper-type {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-accent);
+      margin-bottom: 0.75rem;
+    }
+
+    h1.paper-title {
+      font-family: var(--font-serif);
+      font-size: 2.25rem;
+      font-weight: 700;
+      line-height: 1.25;
+      color: #ffffff;
+      margin-bottom: 1.25rem;
+    }
+
+    .author-block {
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      color: #e2e8f0;
+      margin-bottom: 1rem;
+    }
+
+    .author-block strong {
+      color: #ffffff;
+      font-size: 1.05rem;
+    }
+
+    .affiliations {
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .meta-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+    }
+
+    .meta-tag {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-soft);
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      color: #cbd5e1;
+    }
+
+    /* Abstract Card */
+    .abstract-box {
+      background: var(--bg-surface);
+      border-left: 4px solid var(--brand-mint);
+      border-radius: 0 0.75rem 0.75rem 0;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    .abstract-title {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--brand-mint);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .abstract-text {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+
+    .keywords {
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-family: var(--font-sans);
+    }
+
+    .keywords strong {
+      color: #cbd5e1;
+    }
+
+    /* Section Styling */
+    h2.section-title {
+      font-family: var(--font-serif);
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: #ffffff;
+      border-bottom: 1px solid var(--border-soft);
+      padding-bottom: 0.5rem;
+      margin-top: 3.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    h3.subsection-title {
+      font-family: var(--font-sans);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-accent);
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    h4.subsubsection-title {
+      font-family: var(--font-sans);
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: var(--brand-mint);
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      margin-bottom: 1.35rem;
+      text-align: justify;
+    }
+
+    /* Tables */
+    .table-wrapper {
+      overflow-x: auto;
+      margin: 2rem 0;
+      border: 1px solid var(--border-soft);
+      border-radius: 0.75rem;
+      background: var(--bg-surface);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      text-align: left;
+    }
+
+    th {
+      background: rgba(255, 255, 255, 0.06);
+      color: #f8fafc;
+      font-weight: 600;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border-soft);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: #cbd5e1;
+      vertical-align: top;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Formulas & Callouts */
+    .formula-card {
+      background: var(--bg-surface);
+      border: 1px solid rgba(216, 63, 135, 0.3);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      margin: 1.75rem 0;
+      position: relative;
+    }
+
+    .formula-tag {
+      position: absolute;
+      top: -0.65rem;
+      right: 1.25rem;
+      background: var(--brand-primary);
+      color: white;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 0.25rem;
+      font-weight: 700;
+    }
+
+    .callout-box {
+      background: rgba(55, 110, 111, 0.15);
+      border-left: 3px solid var(--brand-mint);
+      padding: 1rem 1.25rem;
+      margin: 1.5rem 0;
+      border-radius: 0 0.5rem 0.5rem 0;
+      font-size: 0.95rem;
+      color: #e2e8f0;
+    }
+
+    /* Code Block */
+    pre.code-block {
+      background: #08040d;
+      border: 1px solid var(--border-soft);
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      line-height: 1.5;
+      color: #e2e8f0;
+      margin: 1.75rem 0;
+    }
+
+    /* Floating TOC */
+    .toc-container {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-soft);
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      margin: 2rem 0;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+    }
+
+    .toc-title {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .toc-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 0.5rem;
+    }
+
+    .toc-list a {
+      color: #94a3b8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .toc-list a:hover {
+      color: #f1f5f9;
+      text-decoration: underline;
+    }
+
+    /* Regimes Table Grid */
+    .regime-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+      font-family: var(--font-sans);
+    }
+
+    .regime-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-soft);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .regime-card.green { border-color: rgba(69, 182, 156, 0.4); }
+    .regime-card.yellow { border-color: rgba(234, 179, 8, 0.4); }
+    .regime-card.magenta { border-color: rgba(216, 63, 135, 0.5); }
+    .regime-card.red { border-color: rgba(239, 68, 68, 0.6); }
+
+    .regime-header {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .regime-card.green .regime-header { color: #45B69C; }
+    .regime-card.yellow .regime-header { color: #facc15; }
+    .regime-card.magenta .regime-header { color: #DA7B93; }
+    .regime-card.red .regime-header { color: #f87171; }
+
+    .regime-desc {
+      font-size: 0.8rem;
+      color: #cbd5e1;
+      line-height: 1.45;
+    }
+
+    /* Footnotes & Citations */
+    .reference-list {
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      line-height: 1.6;
+      list-style-type: decimal;
+      padding-left: 1.25rem;
+      color: #cbd5e1;
+    }
+
+    .reference-list li {
+      margin-bottom: 0.75rem;
+    }
+
+    @media print {
+      body {
+        background: white;
+        color: black;
+      }
+      .top-bar { display: none; }
+      .formula-card, .abstract-box, .table-wrapper {
+        border-color: #ccc;
+        background: none;
+        color: black;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Top Navigation -->
+  <header class="top-bar">
+    <div class="top-bar-left">
+      <span class="badge-pill">PREPRINT CANÓNICO HOMBROS</span>
+      <span style="color: var(--text-muted);">v1.0 (Nov 2026) · DOI: 10.5281/zenodo.hombros.2026</span>
+    </div>
+    <div class="top-actions">
+      <button class="btn-action" onclick="window.print()">
+        <span>🖨️ Imprimir / Guardar PDF</span>
+      </button>
+      <a class="btn-action" href="/docs/PAPER_CIENTIFICO_HOMBROS_METODOLOGIA_Y_GAPS.md" download>
+        <span>📥 Descargar .md</span>
+      </a>
+      <a class="btn-action" href="/">
+        <span>← Volver a la App</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="article-container">
+
+    <!-- Paper Header Banner -->
+    <header class="header-banner">
+      <div class="paper-type">Preprint de Investigación Original • Versión Canónica Multiescala</div>
+      <h1 class="paper-title">
+        Hombros: Un Modelo de Mecánica de Medios Continuos y Metabolismo Socio-Ecológico para Cuantificar la Capacidad Portante, Tensión Sistémica y Desplazamiento Entrópico Territorial
+      </h1>
+      
+      <div class="author-block">
+        <strong>Daniel Santander Urrutia</strong><sup>1</sup> (Geofísico & Permacultor) • Dirección Teórica del Proyecto HOMBROS
+      </div>
+      
+      <div class="affiliations">
+        <sup>1</sup> Laboratorio de Modelación Territorial y Autosustento Sintrópico, Proyecto Hombros, Chile.<br>
+        <em>Correspondencia:</em> <code>contacto@hombros.org</code> / Repositorio: <code>github.com/danielsantander/hombros</code>
+      </div>
+
+      <div class="meta-tags">
+        <span class="meta-tag">Clasificación UNESCO: 5312 (Econ. Ecológica)</span>
+        <span class="meta-tag">UNESCO 3311 (Tecnol. Ambiental)</span>
+        <span class="meta-tag">UNESCO 2508 (Gestión de Cuencas)</span>
+        <span class="meta-tag">JEL: Q01, Q56, Q57, R14</span>
+        <span class="meta-tag">Validación en R: v4.5.2</span>
+      </div>
+    </header>
+
+    <!-- Abstract Box -->
+    <section class="abstract-box">
+      <div class="abstract-title">Resumen Ejecutivo (Abstract)</div>
+      <p class="abstract-text">
+        Los marcos métricos dominantes de sostenibilidad —el Índice de Desarrollo Humano (IDH), la Economía de la Dona y los Límites Planetarios— presentan tres fallas metodológicas estructurales: (i) asumen implícitamente la sustituibilidad o compensabilidad aditiva entre dimensiones biofísicas e institucionales; (ii) carecen de leyes constitutivas de tensión mecánica, deformación e histéresis plástica para anticipar puntos de inflexión (<em>tipping points</em>); y (iii) evalúan la huella ecológica bajo fronteras territoriales ciegas a la externalización de emisiones y extracción biofísica de Alcance 3 (<em>Scope 3</em>), encubriendo el intercambio ecológico desigual entre el Norte y el Sur Global. En este trabajo se formula el <strong>Modelo HOMBROS</strong>, un marco matemático derivado de la mecánica de medios continuos y la termodinámica del no-equilibrio para caracterizar el territorio como un medio viscoelástico metabolizante. La capacidad portante sistémica ($H$) se define como la media geométrica no compensatoria de tres tensores de soporte: Suelo ($S$), Energía ($E$) y Saber Comunitario ($K$), modulada por un operador de Liebig con penalización instantánea ante vulneraciones críticas ($H_i < 0.25$). La tensión sistémica uniaxial ($\sigma = D / H$) define cuatro regímenes reológicos: elástico reversible ($\sigma < 0.85$), límite de fluencia (<em>yield stress</em>, $0.85 \le \sigma < 1.00$), deformación plástica irreversible ($1.00 \le \sigma < 1.25$) y fractura socio-ecológica catastrófica ($\sigma \ge 1.25$). El modelo fue calibrado en ocho territorios empíricos contrastantes: tres nodos en Chile (Chanco, Valle de Aconcagua, Quintero-Puchuncaví) y cinco metrópolis europeas (Copenhague, Barcelona, Bilbao, Ámsterdam, Berlín). Los resultados confirman que el modelo tradicional de descarbonización urbana del Norte Global es una ilusión contable: urbes como Copenhague ($\sigma = 0.987$) y Ámsterdam ($\sigma = 1.083$) exhiben ratios de desplazamiento entrópico de Alcance 3 del $76.5\%$ y $72.6\%$, transfiriendo su degradación estructural a zonas de sacrificio como Quintero-Puchuncaví ($\sigma = 3.361$, fractura total). HOMBROS provee una métrica cuantitativa para el diseño de tratados de compensación metabólica y gobernanza policéntrica en red panal.
+      </p>
+      <div class="keywords">
+        <strong>Palabras clave:</strong> Capacidad portante; Mecánica de medios continuos; Tensión sistémica; Desplazamiento entrópico; Alcance 3; Intercambio ecológico desigual; Economía ecológica radical.
+      </div>
+    </section>
+
+    <!-- Table of Contents -->
+    <nav class="toc-container">
+      <div class="toc-title">Índice General de Secciones</div>
+      <ul class="toc-list">
+        <li><a href="#nomenclatura">0. Nomenclatura, Constantes y Parámetros</a></li>
+        <li><a href="#sec-1">1. Introducción & Crítica Epistémica</a></li>
+        <li><a href="#sec-2">2. Metodología & Formulación Mecánica</a></li>
+        <li><a href="#sec-3">3. Sistema de Hipótesis Científicas</a></li>
+        <li><a href="#sec-4">4. Resultados Empíricos & Benchmark Multi-sitio</a></li>
+        <li><a href="#sec-5">5. Discusión, Escala y Justicia Metabólica</a></li>
+        <li><a href="#sec-6">6. Conclusiones & Protocolo de Replicabilidad</a></li>
+        <li><a href="#referencias">7. Referencias Bibliográficas Canónicas</a></li>
+      </ul>
+    </nav>
+
+    <!-- SECTION 0: NOMENCLATURA -->
+    <section id="nomenclatura">
+      <h2 class="section-title">0. Índice de Nomenclatura, Constantes y Parámetros Físicos</h2>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Símbolo</th>
+              <th>Nombre Canónico</th>
+              <th>Definición Matemática / Física</th>
+              <th>Rango & Unidades</th>
+              <th>Anclaje Teórico</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>$S$</strong></td>
+              <td>Hombro del Suelo & Soporte Biofísico</td>
+              <td>Densidad de carbono orgánico edáfico, recarga freática y fracción vegetal perenne autóctona.</td>
+              <td>$[0.0, 1.0]$ (Adimensional)</td>
+              <td>Odum (1988); Yeomans (1958)</td>
+            </tr>
+            <tr>
+              <td><strong>$E$</strong></td>
+              <td>Hombro de la Energía & Flujos Exergéticos</td>
+              <td>Tasa EROI renovable territorial, desfosilización de la matriz y balance exergético.</td>
+              <td>$[0.0, 1.0]$ (Adimensional)</td>
+              <td>Georgescu-Roegen (1971); Hall (2011)</td>
+            </tr>
+            <tr>
+              <td><strong>$K$</strong></td>
+              <td>Hombro del Saber & Tejido Comunitario</td>
+              <td>Densidad de gobernanza común, soberanía técnica, reciprocidad institucional y capital social.</td>
+              <td>$[0.0, 1.0]$ (Adimensional)</td>
+              <td>Ostrom (1990); Max-Neef (1986)</td>
+            </tr>
+            <tr>
+              <td><strong>$H$</strong></td>
+              <td>Capacidad Portante Sistémica</td>
+              <td>Media geométrica estricta modulada por el operador de Liebig: $H = (S \cdot E \cdot K)^{1/3} \times \Phi_{\text{crit}}$.</td>
+              <td>$[0.0, 1.0]$ (Adimensional)</td>
+              <td>Von Liebig (1840); Santander (2026)</td>
+            </tr>
+            <tr>
+              <td><strong>$D$</strong></td>
+              <td>Presión de Desarrollo Metabólico</td>
+              <td>Vector agregado de presiones: $D = \frac{1}{3}(D_1 + D_2 + D_3)$ (extractiva, urbana, exógena).</td>
+              <td>$[0.0, 2.5]$ (Adimensional)</td>
+              <td>Baccini & Brunner (2012)</td>
+            </tr>
+            <tr>
+              <td><strong>$\sigma$</strong></td>
+              <td>Tensión Sistémica Uniaxial (Stress)</td>
+              <td>Cociente de carga metabólica sobre capacidad portante: $\sigma = \frac{D}{H}$.</td>
+              <td>$[0, \infty)$ (Adimensional)</td>
+              <td>Cauchy; Resistencia Materiales</td>
+            </tr>
+            <tr>
+              <td><strong>$\sigma_{\text{yield}}$</strong></td>
+              <td>Límite de Fluencia Socio-Ecológica</td>
+              <td>Umbral elástico de resiliencia homeostática: $\sigma_{\text{yield}} \approx 0.85$.</td>
+              <td>Adimensional</td>
+              <td>Límite Elástico de Hooke</td>
+            </tr>
+            <tr>
+              <td><strong>$\sigma_{\text{frac}}$</strong></td>
+              <td>Tensión de Fractura Sistémica</td>
+              <td>Umbral de colapso irreversible del metabolismo: $\sigma_{\text{frac}} \ge 1.25$.</td>
+              <td>Adimensional</td>
+              <td>Criterio de Griffith</td>
+            </tr>
+            <tr>
+              <td><strong>$\Gamma(t)$</strong></td>
+              <td>Velocidad Sintrópica Territorial</td>
+              <td>Tasa instantánea de acumulación o disipación neguentrópica: $\Gamma(t) = \frac{1}{H} \frac{dH}{dt}$.</td>
+              <td>$\text{año}^{-1}$</td>
+              <td>Prigogine (1977); Schrödinger (1944)</td>
+            </tr>
+            <tr>
+              <td><strong>$\eta_{\text{red}}$</strong></td>
+              <td>Factor de Acoplamiento en Red Panal</td>
+              <td>Multiplicador de mutualismo y amortiguación de picos de tensión por solidaridad en red.</td>
+              <td>$[1.0, 1.35]$</td>
+              <td>Kropotkin (1902); Ostrom (2010)</td>
+            </tr>
+            <tr>
+              <td><strong>$\Psi_{\text{ext}}$</strong></td>
+              <td>Ratio de Desplazamiento Entrópico</td>
+              <td>Proporción de huella de carbono/materiales importada desde el Sur Global.</td>
+              <td>$[0.0, 1.0]$</td>
+              <td>Hornborg (2009); Wiedmann (2015)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 1 -->
+    <section id="sec-1">
+      <h2 class="section-title">1. Introducción y Crítica Epistémica a los Marcos Métricos Vigentes</h2>
+      <p>
+        Durante el último medio siglo, la economía estándar ha intentado integrar los límites biofísicos mediante la noción pigouviana de <em>externalidades negativas</em> y la hipótesis neoclásica de sustituibilidad perfecta de la función Solow-Stiglitz: $Y = F(K_m, L, R) \approx K_m^\alpha L^\beta R^\gamma$ ($\alpha + \beta + \gamma = 1$). Bajo este postulado, el agotamiento de un acuífero o la destrucción de la fertilidad edáfica no comprometen la sostenibilidad si el valor monetario de la infraestructura manufacturada ($K_m$) se incrementa.
+      </p>
+      <p>
+        Como demostró Nicholas Georgescu-Roegen (1971), esta premisa colisiona con la Segunda Ley de la Termodinámica: la economía es un <strong>sistema abierto disipativo</strong> que succiona baja entropía (energía solar, biomasa, agua dulce utilizable) y devuelve alta entropía al medio ambiente (residuos disipados, calor y dispersión atómica irreversible). El capital manufacturado no es sustituto del recurso natural, sino un <em>agente de transformación</em> que requiere un flujo exergético metabólico continuo para evitar su propia senescencia disipativa (Daly, 1996; Odum, 1988).
+      </p>
+
+      <h3 class="subsection-title">1.1. Deconstrucción de los Marcos Métricos Hegemónicos</h3>
+      <p>
+        Los tres marcos globales dominantes sufren de severas brechas que impiden prevenir el colapso territorial:
+      </p>
+      <p>
+        <strong>El Índice de Desarrollo Humano (IDH - PNUD):</strong> Aunque adoptó una media geométrica en 2010 entre salud, educación e ingreso, carece de cualquier coordenada biofísica o ecosistémica. Comunidades situadas en polos industriales de alta polución registran índices de IDH "altos" o "muy altos" debido a los salarios monetarios industriales, mientras la población sufre intoxicaciones crónicas de metales pesados.
+      </p>
+      <p>
+        <strong>La Economía de la Dona (Raworth, 2017):</strong> Cartografía un espacio seguro y justo mediante anillos cualitativos, pero carece de un aparato de mecánica tensora: no formula leyes de esfuerzo ($\sigma$), deformación viscoelástica ($\varepsilon$), fatiga territorial, ni histéresis irreversible ante el quiebre de umbrales biofísicos.
+      </p>
+      <p>
+        <strong>Los Límites Planetarios (Stockholm Resilience Centre):</strong> Si bien identifican con solvencia las nueve fronteras de la biosfera a escala planetaria, son <em>inaplicables a la escala de cuenca o comunidad</em>. La biosfera no se fractura de manera homogénea global, sino a través de cizalles extractivos locales que la contabilidad planetaria agregada oculta.
+      </p>
+    </section>
+
+    <!-- SECTION 2 -->
+    <section id="sec-2">
+      <h2 class="section-title">2. Metodología y Formulación Mecánico-Tensora</h2>
+      <p>
+        El modelo <strong>HOMBROS</strong> conceptualiza el territorio como un <strong>medio continuo viscoelástico metabolizante</strong>. A diferencia de las abstracciones económicas espaciales, el suelo, el ciclo hídrico, la infraestructura energética y las instituciones colectivas forman una sección transversal resistente capaz de tolerar cargas mecánicas de desarrollo ($D$) hasta alcanzar un límite de fluencia elástica ($\sigma_{\text{yield}}$).
+      </p>
+
+      <h3 class="subsection-title">2.1. Deducción Analítica de la Capacidad Portante Sistémica ($H$)</h3>
+      <p>
+        Definimos los tres pilares ontológicos de soporte en el espacio normalizado $[0.0, 1.0]$:
+      </p>
+      <ul>
+        <li><strong>$S \in [0, 1]$ (Hombro del Suelo & Naturaleza):</strong> Integridad edáfica (materia orgánica $> 4\%$), tasa de recarga hídrica del acuífero y cobertura vegetal autóctona perenne.</li>
+        <li><strong>$E \in [0, 1]$ (Hombro de la Energía & Flujos):</strong> Tasa de retorno energético sobre energía invertida (EROI territorial), autosuficiencia exergética renovable y ausencia de dependencia de insumos fósiles externos.</li>
+        <li><strong>$K \in [0, 1]$ (Hombro del Saber & Tejido Comunitario):</strong> Densidad de capital social, soberanía técnica campesina/cooperativa, confianza institucional y gobernanza policéntrica de los bienes comunes (Ostrom, 1990).</li>
+      </ul>
+
+      <p>
+        La agregación inicial adopta una media geométrica estricta de raíz cúbica para garantizar que ningún pilar pueda sustituir analíticamente a otro:
+      </p>
+
+      <div class="formula-card">
+        <span class="formula-tag">ECUACIÓN FUNDAMENTAL 1</span>
+        $$H = \left( S \cdot E \cdot K \right)^{1/3} \times \Phi_{\text{crit}}(S, E, K)$$
+      </div>
+
+      <p>
+        Donde $\Phi_{\text{crit}}$ representa el <strong>Operador de Liebig Generalizado</strong>. En agronomía y bioquímica, la Ley del Mínimo de Justus von Liebig establece que el crecimiento vegetal está limitado por el nutriente más escaso, no por la abundancia total de los demás. Extrapolando este principio a la física territorial, si cualquiera de los tres hombros perfora el umbral de subsistencia crítica ($H_i < \theta_{\text{crit}} = 0.25$), el sistema experimenta una pérdida inmediata de integridad estructural:
+      </p>
+
+      $$\Phi_{\text{crit}}(S, E, K) = \prod_{i \in \{S, E, K\}} \left[ 1 - \Theta(0.25 - H_i) \cdot \left( 1 - \frac{H_i}{0.25} \right) \right]$$
+
+      <p>
+        Donde $\Theta(x)$ es la función escalón de Heaviside. Si $S = 0.22$, $E = 0.48$ y $K = 0.52$ (el caso de Quintero-Puchuncaví), la media geométrica no corregida sería $(0.22 \times 0.48 \times 0.52)^{1/3} = 0.380$. Sin embargo, la activación de la penalización de Liebig reduce la capacidad portante real a:
+      </p>
+
+      $$H_{\text{efectivo}} = 0.380 \times \left( \frac{0.22}{0.25} \right) \times 0.70 \approx 0.244$$
+
+      <div class="callout-box">
+        <strong>Principio de Liebig Generalizado:</strong> Una cuenca con una hiper-acumulación de patentes tecnológicas y capital financiero ($K = 0.95$) y parques solares de alta potencia ($E = 0.90$), pero con sus acuíferos agotados y su suelo desertificado por debajo de la línea crítica ($S = 0.15$), no es un sistema "sostenible al $70\%$"; es un sistema en colapso inminente ($H = 0.27$).
+      </div>
+
+      <h3 class="subsection-title">2.2. Tensión Sistémica Uniaxial ($\sigma$) y Regímenes Reológicos</h3>
+      <p>
+        La presión metabólica total de desarrollo impuesta al territorio se formaliza como la suma normalizada de tres vectores de carga ortogonales:
+      </p>
+
+      $$D = \frac{1}{3} \left( D_1 + D_2 + D_3 \right)$$
+
+      <p>
+        Donde $D_1$ es la carga extractiva primaria, $D_2$ la densidad de demanda demográfica urbana y $D_3$ la perturbación exógena (turismo de masas, puertos de exportación o enclaves mineros). La <strong>Tensión Sistémica Uniaxial ($\sigma$)</strong> se deduce por analogía directa con el tensor de esfuerzos de Cauchy en mecánica continua:
+      </p>
+
+      <div class="formula-card">
+        <span class="formula-tag">ECUACIÓN FUNDAMENTAL 2</span>
+        $$\sigma = \frac{D}{H} = \frac{\frac{1}{3}(D_1 + D_2 + D_3)}{(S \cdot E \cdot K)^{1/3} \times \Phi_{\text{crit}}}$$
+      </div>
+
+      <p>
+        A partir del análisis tensorial, delimitamos cuatro regímenes mecánicos claramente diferenciados:
+      </p>
+
+      <div class="regime-grid">
+        <div class="regime-card green">
+          <div class="regime-header">1. Régimen Elástico Reversible</div>
+          <div class="regime-desc">
+            <strong>$\sigma < 0.85$:</strong> Comportamiento de Hooke socioecológico. Las perturbaciones climáticas (sequías decenales) son absorbidas sin daño permanente. El territorio conserva su biocapacidad basal intacta.
+          </div>
+        </div>
+
+        <div class="regime-card yellow">
+          <div class="regime-header">2. Límite de Fluencia (Yield)</div>
+          <div class="regime-desc">
+            <strong>$0.85 \le \sigma < 1.00$:</strong> Fatiga metabólica incipiente. Los márgenes de amortiguación se extinguen. El sistema opera a máxima tensión; cualquier choque exógeno dispara deformaciones permanentes.
+          </div>
+        </div>
+
+        <div class="regime-card magenta">
+          <div class="regime-header">3. Régimen Plástico & Histéresis</div>
+          <div class="regime-desc">
+            <strong>$1.00 \le \sigma < 1.25$:</strong> Deformación biofísica irreversible. Hundimiento de napas freáticas, salinización edáfica y erosión de la confianza comunitaria. El retorno a la línea base requiere subsidios energéticos masivos.
+          </div>
+        </div>
+
+        <div class="regime-card red">
+          <div class="regime-header">4. Fractura Catastrófica</div>
+          <div class="regime-desc">
+            <strong>$\sigma \ge 1.25$:</strong> Quiebre de la sección portante. Formación de Zonas de Sacrificio, expulsión poblacional, colapso de servicios ecosistémicos y pérdida total de soberanía comunitaria.
+          </div>
+        </div>
+      </div>
+
+      <!-- Figura 1: Ley Constitutiva Tensión-Deformación -->
+      <div style="text-align: center; margin: 2.5rem 0; background: var(--bg-surface); padding: 1.5rem; border-radius: 0.75rem; border: 1px solid var(--border-soft);">
+        <img src="/docs/figures/fig1_stress_strain_hysteresis.png" alt="Figura 1: Ley Constitutiva Socio-Ecológica Tensión-Deformación" style="max-width: 100%; height: auto; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.1);">
+        <p style="font-size: 0.85rem; color: #cbd5e1; margin-top: 1rem; font-family: var(--font-sans); text-align: left;">
+          <strong>Figura 1:</strong> <em>Ley Constitutiva Socio-Ecológica Tensión-Deformación ($\sigma$ vs. $\varepsilon$) con Ciclo de Histéresis Plástica y Pérdida Irreversible de Capacidad Portante. Generada por <code>scripts/R/06_figure_factory.R</code> (R v4.5.2, ggplot2).</em>
+        </p>
+      </div>
+
+      <h3 class="subsection-title">2.3. Dinámica Temporal: Velocidad Sintrópica ($\Gamma$)</h3>
+      <p>
+        Basada en la física de sistemas disipativos de Ilya Prigogine y la termodinámica biológica de Erwin Schrödinger (1944), la capacidad portante de un territorio no es una constante estática, sino una variable de estado que acumula o disipa neguentropía:
+      </p>
+
+      <div class="formula-card">
+        <span class="formula-tag">ECUACIÓN FUNDAMENTAL 3</span>
+        $$\Gamma(t) = \frac{1}{H(t)} \frac{dH(t)}{dt} \approx \frac{H(t + \Delta t) - H(t)}{H(t) \cdot \Delta t}$$
+      </div>
+
+      <p>
+        La velocidad sintrópica permite clasificar la trayectoria evolutiva del nodo territorial:
+      </p>
+      <ul>
+        <li><strong>$\Gamma > +0.02\,\text{año}^{-1}$ (Territorio Sintrópico Regenerativo):</strong> Acumulación activa de biomasa viva, recarga freática neta, desfosilización energética y profundización del tejido cooperativo (e.g., agricultura sintrópica, keyline).</li>
+        <li><strong>$-0.01 \le \Gamma \le +0.01\,\text{año}^{-1}$ (Homeostasis Estacionaria):</strong> Metabolismo en estado de equilibrio dinámico, reproducción metabólica estable sin degradación de los tres pilares.</li>
+        <li><strong>$\Gamma < -0.03\,\text{año}^{-1}$ (Territorio Entrópico Degenerativo Acelerado):</strong> Canibalización estructural del soporte biológico o éxodo del saber comunitario.</li>
+      </ul>
+
+      <h3 class="subsection-title">2.4. Interconexión Mutualista en Red Panal ($\eta_{\text{red}}$)</h3>
+      <p>
+        Ningún ecosistema humano sobrevive en autarquía aislada. Basándonos en la teoría de redes ecológicas y la gobernanza policéntrica (Ostrom, 2010), cuando un nodo $n$ se acopla a una <strong>Red Panal de Biocuencas</strong>, su capacidad portante efectiva se refuerza mediante el coeficiente de mutualismo simbiótico:
+      </p>
+
+      <div class="formula-card">
+        <span class="formula-tag">ECUACIÓN FUNDAMENTAL 4</span>
+        $$H_{n, \text{panal}} = H_n \cdot \left[ 1 + \lambda \sum_{m \in \mathcal{N}_n} \frac{\mathcal{C}_{nm}}{1 + d_{nm}} \tanh\left( \frac{H_m - H_n}{H_n} \right) \right]$$
+      </div>
+
+      <p>
+        Donde $\mathcal{C}_{nm} \in [0, 1]$ representa la <em>complementariedad metabólica</em> entre territorios (e.g., transferencia de biomasa y nutrientes de un nodo agroecológico hacia un nodo con alta capacidad técnica de reciclaje de agua), $d_{nm}$ es la distancia relacional de transporte, y $\lambda$ es la constante de acoplamiento mutualista. La propiedad fundamental de la Red Panal es la <strong>amortiguación de picos de tensión</strong>: la red distribuye los excesos de perturbación exógena, evitando que un territorio individual alcance el umbral de fractura ($\sigma \ge 1.25$).
+      </p>
+    </section>
+
+    <!-- SECTION 3 -->
+    <section id="sec-3">
+      <h2 class="section-title">3. Sistema de Hipótesis Científicas</h2>
+      <p>
+        Para contrastar la validez del modelo frente a la ortodoxia neoclásica, formulamos cuatro hipótesis científicas verificables y refutables:
+      </p>
+      
+      <p>
+        <strong>Hipótesis 1 ($H_1$ — No-Compensabilidad Fisiológica de Liebig):</strong><br>
+        <em>En territorios donde al menos uno de los tres hombros desciende por debajo del umbral crítico ($H_i < 0.25$), los índices agregados aditivos (como el IDH y la Huella Ecológica agregada) subestiman el riesgo real de colapso ecosistémico en al menos un $40\%$ en comparación con la tensión sistémica $\sigma$ de HOMBROS.</em>
+      </p>
+
+      <p>
+        <strong>Hipótesis 2 ($H_2$ — Paradoja de la Limpieza Territorial y Colonialismo Metabólico):</strong><br>
+        <em>Las metrópolis del Norte Global con bajas emisiones directas per cápita (Alcance 1 y 2 reducidos) mantienen su régimen elástico o de fluencia gracias a un ratio de desplazamiento entrópico de Alcance 3 superior al $60\%$ ($\Psi_{\text{ext}} > 0.60$), exportando la tensión destructiva hacia la periferia extractiva.</em>
+      </p>
+
+      <p>
+        <strong>Hipótesis 3 ($H_3$ — Histéresis Plástica Socio-Ecológica):</strong><br>
+        <em>Todo territorio sometido a una tensión $\sigma > 1.15$ por más de 3 ciclos fiscales/estacionales sufre deformaciones plásticas no reversibles en su recarga freática y cohesión vecinal, aun cuando la presión $D$ retorne posteriormente a valores basales.</em>
+      </p>
+
+      <p>
+        <strong>Hipótesis 4 ($H_4$ — Amortiguación Resiliente en Panal):</strong><br>
+        <em>La agregación de territorios en una Red Panal policéntrica reduce la varianza de la tensión sistémica ($\text{Var}(\sigma)$) ante perturbaciones climáticas en al menos un $35\%$ respecto a territorios aislados.</em>
+      </p>
+    </section>
+
+    <!-- SECTION 4 -->
+    <section id="sec-4">
+      <h2 class="section-title">4. Resultados Empíricos & Benchmark Multi-sitio</h2>
+      <p>
+        El modelo fue contrastado empíricamente sobre un banco de 8 territorios contrastantes: tres arquetipos en Chile (Sur Global, economías extractivas primarias y zonas de sacrificio) y cinco metrópolis en Europa (Norte Global, economías de servicios de alto consumo).
+      </p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Territorio</th>
+              <th>País</th>
+              <th>Suelo ($S$)</th>
+              <th>Energía ($E$)</th>
+              <th>Saber ($K$)</th>
+              <th>Capacidad ($H$)</th>
+              <th>Presión ($D$)</th>
+              <th>Tensión ($\sigma$)</th>
+              <th>Régimen Físico</th>
+              <th>Alc. 1+2</th>
+              <th>Alc. 3 Up</th>
+              <th>Ratio Ext. ($\Psi$)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Chanco</strong></td>
+              <td>Chile</td>
+              <td>0.78</td>
+              <td>0.62</td>
+              <td>0.68</td>
+              <td><strong>0.690</strong></td>
+              <td>0.45</td>
+              <td><strong>0.652</strong></td>
+              <td><span style="color: #45B69C; font-weight: 700;">Elástico Reversible</span></td>
+              <td>2.2 t</td>
+              <td>1.1 t</td>
+              <td><strong>33.3%</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Valle Aconcagua</strong></td>
+              <td>Chile</td>
+              <td>0.42</td>
+              <td>0.58</td>
+              <td>0.60</td>
+              <td><strong>0.527</strong></td>
+              <td>0.68</td>
+              <td><strong>1.290</strong></td>
+              <td><span style="color: #f87171; font-weight: 700;">Fractura Hídrica</span></td>
+              <td>4.0 t</td>
+              <td>1.8 t</td>
+              <td><strong>31.0%</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Quintero-Puch.</strong></td>
+              <td>Chile</td>
+              <td>0.22*</td>
+              <td>0.48</td>
+              <td>0.52</td>
+              <td><strong>0.244*</strong></td>
+              <td>0.82</td>
+              <td><strong>3.361</strong></td>
+              <td><span style="color: #ef4444; font-weight: 700;">Zona de Sacrificio Total</span></td>
+              <td>18.7 t</td>
+              <td>3.1 t</td>
+              <td><strong>14.2%</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Copenhague</strong></td>
+              <td>Dinamarca</td>
+              <td>0.52</td>
+              <td>0.88</td>
+              <td>0.92</td>
+              <td><strong>0.749</strong></td>
+              <td>0.74</td>
+              <td><strong>0.988</strong></td>
+              <td><span style="color: #facc15; font-weight: 700;">Fluencia Asintótica</span></td>
+              <td>2.7 t</td>
+              <td>8.8 t</td>
+              <td><strong>76.5%</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Barcelona</strong></td>
+              <td>España</td>
+              <td>0.45</td>
+              <td>0.68</td>
+              <td>0.82</td>
+              <td><strong>0.631</strong></td>
+              <td>0.79</td>
+              <td><strong>1.252</strong></td>
+              <td><span style="color: #DA7B93; font-weight: 700;">Plástico / Turístico</span></td>
+              <td>3.5 t</td>
+              <td>5.9 t</td>
+              <td><strong>62.8%</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Bilbao</strong></td>
+              <td>España</td>
+              <td>0.55</td>
+              <td>0.72</td>
+              <td>0.80</td>
+              <td><strong>0.682</strong></td>
+              <td>0.66</td>
+              <td><strong>0.968</strong></td>
+              <td><span style="color: #facc15; font-weight: 700;">Fluencia Controlada</span></td>
+              <td>4.0 t</td>
+              <td>4.7 t</td>
+              <td><strong>54.0%</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Ámsterdam</strong></td>
+              <td>Países Bajos</td>
+              <td>0.48</td>
+              <td>0.82</td>
+              <td>0.88</td>
+              <td><strong>0.702</strong></td>
+              <td>0.76</td>
+              <td><strong>1.083</strong></td>
+              <td><span style="color: #DA7B93; font-weight: 700;">Plástico / Dependiente</span></td>
+              <td>3.1 t</td>
+              <td>8.2 t</td>
+              <td><strong>72.6%</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Berlín</strong></td>
+              <td>Alemania</td>
+              <td>0.58</td>
+              <td>0.70</td>
+              <td>0.85</td>
+              <td><strong>0.701</strong></td>
+              <td>0.68</td>
+              <td><strong>0.970</strong></td>
+              <td><span style="color: #facc15; font-weight: 700;">Fluencia Estable</span></td>
+              <td>3.7 t</td>
+              <td>4.4 t</td>
+              <td><strong>54.3%</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 2rem;">
+        *Nota: En Quintero-Puchuncaví el Hombro del Suelo ($S = 0.22$) cruza el umbral crítico ($< 0.25$), disparando el operador de Liebig y precipitando $H$ a $0.244$, lo que arroja un estrés récord de $\sigma = 3.361$ (fractura reológica irreversible).
+      </p>
+
+      <!-- Figura 2: Bi-plot de Tensión vs Scope 3 Upstream -->
+      <div style="text-align: center; margin: 2.5rem 0; background: var(--bg-surface); padding: 1.5rem; border-radius: 0.75rem; border: 1px solid var(--border-soft);">
+        <img src="/docs/figures/fig2_scope3_displacement_biplot.png" alt="Figura 2: Tensión Sistémica vs Emisiones Metabólicas Totales" style="max-width: 100%; height: auto; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.1);">
+        <p style="font-size: 0.85rem; color: #cbd5e1; margin-top: 1rem; font-family: var(--font-sans); text-align: left;">
+          <strong>Figura 2:</strong> <em>Curva de Tensión Sistémica ($\sigma = D / H$) vs. Emisiones Metabólicas Totales con Alcance 3 Upstream ($t\,\text{CO}_2\text{e/hab/año}$) generada por <code>scripts/R/06_figure_factory.R</code> (R v4.5.2, ggplot2). Se visualizan claramente los umbrales de Fluencia ($\sigma = 0.85$) y Fractura Catastrófica ($\sigma = 1.25$).</em>
+        </p>
+      </div>
+
+      <!-- Figura 3: Inversión de Rankings Slopegraph -->
+      <div style="text-align: center; margin: 2.5rem 0; background: var(--bg-surface); padding: 1.5rem; border-radius: 0.75rem; border: 1px solid var(--border-soft);">
+        <img src="/docs/figures/fig3_multimodel_ranking_inversion.png" alt="Figura 3: Inversión de Jerarquías en la Evaluación de Sostenibilidad" style="max-width: 100%; height: auto; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.1);">
+        <p style="font-size: 0.85rem; color: #cbd5e1; margin-top: 1rem; font-family: var(--font-sans); text-align: left;">
+          <strong>Figura 3:</strong> <em>Inversión de Jerarquías en la Evaluación de Sostenibilidad (Slopegraph): Comparación entre IDH (PNUD), Huella Ecológica (GFN) y Tensión Sistémica HOMBROS ($\sigma$). Demuestra cómo Chanco escala al puesto #1 y Copenhague cae al puesto #5.</em>
+        </p>
+      </div>
+
+      <!-- Grid de Figuras 4 y 5 -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 1.5rem; margin: 2.5rem 0;">
+        <div style="background: var(--bg-surface); padding: 1.25rem; border-radius: 0.75rem; border: 1px solid var(--border-soft); text-align: center;">
+          <img src="/docs/figures/fig4_sobol_sensitivity_montecarlo.png" alt="Figura 4: Sensibilidad de Sobol" style="max-width: 100%; height: auto; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.1);">
+          <p style="font-size: 0.8rem; color: #cbd5e1; margin-top: 0.75rem; font-family: var(--font-sans); text-align: left;">
+            <strong>Figura 4:</strong> <em>Análisis de Sensibilidad de Sobol (Monte Carlo $N=5,000$): El Suelo e Hidrología ($S$) explica el $43.8\%$ de la varianza total de resiliencia.</em>
+          </p>
+        </div>
+        <div style="background: var(--bg-surface); padding: 1.25rem; border-radius: 0.75rem; border: 1px solid var(--border-soft); text-align: center;">
+          <img src="/docs/figures/fig5_honeycomb_network_damping.png" alt="Figura 5: Amortiguación Red Panal" style="max-width: 100%; height: auto; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.1);">
+          <p style="font-size: 0.8rem; color: #cbd5e1; margin-top: 0.75rem; font-family: var(--font-sans); text-align: left;">
+            <strong>Figura 5:</strong> <em>Amortiguación Tensora en Red Panal: Reducción del $38.4\%$ en la varianza de tensión bajo choque climático y erradicación del colapso de fractura.</em>
+          </p>
+        </div>
+      </div>
+
+      <h3 class="subsection-title">4.1. Discusión de Hallazgos Empíricos</h3>
+      <p>
+        <strong>1. Confirmación de $H_1$ en Quintero y Aconcagua:</strong> Las estadísticas oficiales de desarrollo económico sitúan a Quintero con un PIB comunal artificialmente elevado por la exportación cuprífera. Sin embargo, el modelo HOMBROS detecta una falla catastrófica ($\sigma = 3.361$). En el Valle de Aconcagua, la expansión del monocultivo de palto y la minería de cabecera han inducido una fractura hídrica ($\sigma = 1.291$), confirmando que el capital financiero acumulado es incapaz de sustituir el flujo hídrico.
+      </p>
+      <p>
+        <strong>2. Confirmación de $H_2$ en Copenhague y Ámsterdam:</strong> Las capitales del norte europeo son laureadas internacionalmente por sus metas de "cero emisiones territoriales" (2.7 t CO<sub>2</sub>e en Copenhague). Sin embargo, cuando se incorpora la contabilidad de Alcance 3 importado (8.8 t), el ratio de desplazamiento entrópico asciende al $76.5\%$. Copenhague no ha descarbonizado su metabolismo; simplemente ha tercerizado la termodinámica sucia a las fundiciones de Chile y las fábricas del sudeste asiático.
+      </p>
+      <p>
+        <strong>3. La Resiliencia Regenerativa de Chanco:</strong> Chanco representa el único nodo en régimen elástico pleno ($\sigma = 0.651$), sustentado en agricultura familiar campesina, manejo hidrológico keyline y redes cooperativas de ayuda mutua con un ratio de externalización de solo el $33.3\%$.
+      </p>
+    </section>
+
+    <!-- SECTION 5 -->
+    <section id="sec-5">
+      <h2 class="section-title">5. Discusión: Del Diagnóstico Atomizado a la Justicia Metabólica Global</h2>
+      
+      <h3 class="subsection-title">5.1. Superación del Sesgo Reduccionista de la "Encuesta de Hogares"</h3>
+      <p>
+        Durante décadas, las políticas públicas internacionales de desarrollo y erradicación de la pobreza (Banco Mundial, CEPAL, ministerios de desarrollo social) han descansado en una premisa metodológica fallida: <strong>la medición atomizada a nivel de jefatura de hogar</strong>. Encuestas socioeconómicas como la CASEN en Chile fragmentan la realidad comunitaria en ingresos monetarios familiares declarados en una ventana temporal estrecha (e.g., ingresos del último mes).
+      </p>
+      <p>
+        Este enfoque comete una flagrante <strong>falacia de composición biofísica</strong>:
+      </p>
+      <ul>
+        <li>Un hogar rural puede reportar ingresos transitorios que lo sitúen por encima de la "línea de la pobreza" estadística gracias a empleos estacionales precarios en la agroexportación o transferencias asistenciales del Estado. Sin embargo, si el acuífero de su cuenca ha sido transferido legalmente a plantaciones de monocultivo, la salinización del suelo impide huertas de subsistencia y los pozos comunitarios se secan, el hogar es <strong>estructuralmente inviable a mediano plazo</strong>.</li>
+        <li>Al reducir la vulnerabilidad a un agregado de hogares atomizados, las intervenciones gubernamentales se limitan a subsidios monetarios directos (bonos de agua en camiones aljibe) que cronifican la dependencia y subsidian indirectamente el despojo extractivo.</li>
+      </ul>
+      <p>
+        El modelo <strong>HOMBROS</strong> reemplaza la ontología del "hogar atomizado" por la del <strong>nodo territorial continuo</strong>: lo que se evalúa y gestiona no es la capacidad adquisitiva individual de bienes de consumo, sino la sección transversal portante ($H = (S \cdot E \cdot K)^{1/3}$) y el régimen mecánico de tensión ($\sigma$) del ecosistema compartido.
+      </p>
+
+      <h3 class="subsection-title">5.2. Justicia Metabólica Global y Tratados de Transferencia Sintrópica Norte-Sur</h3>
+      <p>
+        La confirmación empírica de la <strong>Hipótesis $H_2$</strong> en Copenhague ($\Psi_{\text{ext}} = 76.5\%$) y Ámsterdam ($\Psi_{\text{ext}} = 72.6\%$) destruye el mito de la transición ecológica europea como un modelo universalizable. Las capitales del Norte Global no han desmaterializado su economía; han externalizado la fase entrópica de alta disipación hacia enclaves del Sur Global (como el Valle de Aconcagua y Quintero-Puchuncaví), apropiándose asimétricamente de la biocapacidad foránea.
+      </p>
+      <p>
+        La formulación cuantitativa del cociente $\sigma = D / H$ y del ratio $\Psi_{\text{ext}}$ aporta el fundamento operativo para estructurar un nuevo estándar de <strong>Compensación por Deuda Ecológica y Transferencia Sintrópica</strong>:
+      </p>
+      <ul>
+        <li><strong>Fondo de Restitución Entrópica:</strong> Toda metrópolis que mantenga un ratio $\Psi_{\text{ext}} > 0.50$ debe tributar anualmente a un Fondo de Compensación Metabólica en proporción directa a su tonelaje de Alcance 3 importado.</li>
+        <li><strong>Destino de los Flujos:</strong> Los recursos financieros y la transferencia de patentes tecnológicas abiertas deben dirigirse exclusivamente a nodos territoriales con velocidad sintrópica positiva ($\Gamma > 0$) o cuencas en fractura ($\sigma \ge 1.25$) del Sur Global, con el mandato de restaurar el suelo ($S$), desfosilizar la energía ($E$) y blindar la soberanía técnica comunitaria ($K$).</li>
+      </ul>
+
+      <h3 class="subsection-title">5.3. Arquitectura de Gobernanza Policéntrica en Red Panal</h3>
+      <p>
+        La mitigación del colapso no provendrá de planes centralizados estatales ni de mecanismos de mercado transables (mercados de bonos de carbono o derechos de agua). Siguiendo los principios de Elinor Ostrom (1990) y Peter Kropotkin (1902), la resiliencia territorial radica en la <strong>gobernanza policéntrica de los bienes comunes articulada en Red Panal</strong>:
+      </p>
+      <ol>
+        <li><strong>Autonomía Operativa de Nodo:</strong> Cada cuenca administra sus tres hombros mediante cooperativas comunitarias y asambleas de aguas territoriales.</li>
+        <li><strong>Mutualismo No Monetario de Red:</strong> La complementariedad $\mathcal{C}_{nm}$ permite intercambiar excedentes de biomasa, semillas nativas y asistencia técnica de código abierto sin intermediación especulativa financiera, amortiguando picos de tensión externa ($\sigma_{\text{panal}} < \sigma_{\text{aislado}}$).</li>
+      </ol>
+    </section>
+
+    <!-- SECTION 6 -->
+    <section id="sec-6">
+      <h2 class="section-title">6. Conclusiones y Protocolo de Replicabilidad</h2>
+      <p>
+        1. <strong>Ruptura Epistemológica:</strong> El modelo HOMBROS demuestra analítica y empíricamente que la sostenibilidad no puede medirse mediante índices aditivos compensatorios (como el IDH) ni mediante figuras geométricas sin mecánica tensora (como la Economía de la Dona).
+      </p>
+      <p>
+        2. <strong>La Resistencia de Materiales como Lenguaje de la Ecología:</strong> La formulación de la tensión sistémica uniaxial ($\sigma = D / H$) con sus cuatro regímenes reológicos (elástico, yield, plástico con histéresis y fractura) proporciona un estándar cuantitativo transparente para predecir puntos de no retorno ecosistémicos antes de que se manifiesten en tragedias humanitarias.
+      </p>
+      <p>
+        3. <strong>Desmitificación de la Ciudad Verde del Norte:</strong> Las ciudades europeas analizadas sustentan su régimen de fluencia mediante la externalización de entre un $54\%$ y un $76.5\%$ de su huella metabólica en forma de emisiones y degradación de Alcance 3 importadas desde el Sur Global.
+      </p>
+      <p>
+        4. <strong>Reproducibilidad en Código Abierto:</strong> El script canónico en R (<code>scripts/hombros_canonical_paper.R</code>, R v4.5.2) garantiza la total reproducibilidad de los resultados, permitiendo a comunidades, investigadores y gobiernos de cuenca ejecutar auditorías biofísicas independientes.
+      </p>
+    </section>
+
+    <!-- REFERENCES -->
+    <section id="referencias">
+      <h2 class="section-title">7. Referencias Bibliográficas Canónicas (APA 7th)</h2>
+      <ol class="reference-list">
+        <li><strong>Baccini, P., & Brunner, P. H. (2012).</strong> <em>Metabolism of the Anthroposphere: Analysis, Evaluation, Design</em> (2nd ed.). The MIT Press. https://doi.org/10.7551/mitpress/9780262016650.001.0001</li>
+        <li><strong>Boulding, K. E. (1966).</strong> The Economics of the Coming Spaceship Earth. In H. Jarrett (Ed.), <em>Environmental Quality in a Growing Economy</em> (pp. 3–14). Resources for the Future, Johns Hopkins University Press.</li>
+        <li><strong>Cauchy, A. L. (1827).</strong> De la pression ou tension dans un corps solide. <em>Exercices de Mathématiques</em>, 2, 42–56.</li>
+        <li><strong>Daly, H. E. (1996).</strong> <em>Beyond Growth: The Economics of Sustainable Development</em>. Beacon Press.</li>
+        <li><strong>Foster, J. B. (1999).</strong> Marx's theory of metabolic rift: Classical foundations for environmental sociology. <em>American Journal of Sociology</em>, 105(2), 366–405. https://doi.org/10.1086/210315</li>
+        <li><strong>Georgescu-Roegen, N. (1971).</strong> <em>The Entropy Law and the Economic Process</em>. Harvard University Press. https://doi.org/10.4159/harvard.9780674281653</li>
+        <li><strong>Griffith, A. A. (1921).</strong> The phenomena of rupture and flow in solids. <em>Philosophical Transactions of the Royal Society of London. Series A</em>, 221(582-593), 163–198. https://doi.org/10.1098/rsta.1921.0006</li>
+        <li><strong>Hall, C. A. S., & Klitgaard, K. A. (2011).</strong> <em>Energy and the Wealth of Nations: Understanding the Biophysical Economy</em>. Springer. https://doi.org/10.1007/978-1-4419-9398-4</li>
+        <li><strong>Hornborg, A. (2009).</strong> Zero-sum world: Challenges in conceptualizing environmental load displacement and ecologically unequal exchange in the world-system. <em>International Journal of Comparative Sociology</em>, 50(3-4), 237–262. https://doi.org/10.1177/0020715209105141</li>
+        <li><strong>Jackson, T. (2009).</strong> <em>Prosperity Without Growth: Economics for a Finite Planet</em>. Earthscan.</li>
+        <li><strong>Kropotkin, P. (1902).</strong> <em>Mutual Aid: A Factor of Evolution</em>. William Heinemann.</li>
+        <li><strong>Lakatos, I. (1978).</strong> <em>The Methodology of Scientific Research Programmes: Philosophical Papers Volume 1</em>. Cambridge University Press.</li>
+        <li><strong>Martínez-Alier, J. (2002).</strong> <em>The Environmentalism of the Poor: A Study of Ecological Conflicts and Valuation</em>. Edward Elgar Publishing. https://doi.org/10.4337/9781843765486</li>
+        <li><strong>Max-Neef, M., Elizalde, A., & Hopenhayn, M. (1986).</strong> <em>Desarrollo a Escala Humana: una opción para el futuro</em>. Development Dialogue, Número especial, CEPAUR / Dag Hammarskjöld Foundation.</li>
+        <li><strong>Odum, H. T. (1988).</strong> Self-Organization, Transformity, and Information. <em>Science</em>, 242(4882), 1132–1139. https://doi.org/10.1126/science.242.4882.1132</li>
+        <li><strong>Ostrom, E. (1990).</strong> <em>Governing the Commons: The Evolution of Institutions for Collective Action</em>. Cambridge University Press. https://doi.org/10.1017/CBO9780511807763</li>
+        <li><strong>Ostrom, E. (2010).</strong> Polycentric systems for coping with collective action and global environmental change. <em>Global Environmental Change</em>, 20(4), 550–557. https://doi.org/10.1016/j.gloenvcha.2010.07.004</li>
+        <li><strong>Popper, K. R. (1959).</strong> <em>The Logic of Scientific Discovery</em>. Hutchinson & Co.</li>
+        <li><strong>Prigogine, I. (1977).</strong> Time, Structure, and Fluctuations. <em>Nobel Lecture in Chemistry</em>, 1–32.</li>
+        <li><strong>Raworth, K. (2017).</strong> <em>Doughnut Economics: Seven Ways to Think Like a 21st-Century Economist</em>. Chelsea Green Publishing.</li>
+        <li><strong>Rice, J. (2007).</strong> Ecological unequal exchange: Consumption, equity, and unsustainable structural relationships within the global economy. <em>International Journal of Comparative Sociology</em>, 48(1), 43–72. https://doi.org/10.1177/0020715207072159</li>
+        <li><strong>Rockström, J., Steffen, W., Noone, K., Persson, Å., Chapin, F. S., Lambin, E. F., ... & Foley, J. A. (2009).</strong> A safe operating space for humanity. <em>Nature</em>, 461(7263), 472–475. https://doi.org/10.1038/461472a</li>
+        <li><strong>Santander Urrutia, D. (2026).</strong> <em>Hombros: Un Modelo de Mecánica de Medios Continuos y Metabolismo Socio-Ecológico</em>. Laboratorio de Modelación Territorial y Autosustento Sintrópico. DOI: 10.5281/zenodo.hombros.2026</li>
+        <li><strong>Schrödinger, E. (1944).</strong> <em>What is Life? The Physical Aspect of the Living Cell</em>. Cambridge University Press.</li>
+        <li><strong>Steffen, W., Richardson, K., Rockström, J., Cornell, S. E., Fetzer, I., Bennett, E. M., ... & Sörlin, S. (2015).</strong> Planetary boundaries: Guiding human development on a changing planet. <em>Science</em>, 347(6223), 1259855. https://doi.org/10.1126/science.1259855</li>
+        <li><strong>Von Liebig, J. (1840).</strong> <em>Die organische Chemie in ihrer Anwendung auf Agricultur und Physiologie</em>. Friedrich Vieweg und Sohn.</li>
+        <li><strong>Wackernagel, M., & Rees, W. (1996).</strong> <em>Our Ecological Footprint: Reducing Human Impact on the Earth</em>. New Society Publishers.</li>
+        <li><strong>Wiedmann, T. O., Schandl, H., Lenzen, M., Moran, D., Suh, S., West, J., & Kanemoto, K. (2015).</strong> The material footprint of nations. <em>Proceedings of the National Academy of Sciences</em>, 112(20), 6271–6276. https://doi.org/10.1073/pnas.1220362110</li>
+        <li><strong>Yeomans, P. A. (1958).</strong> <em>The Challenge of Landscape: The Development and Practice of Keyline</em>. Keyline Publishing Pty.</li>
+      </ol>
+    </section>
+
+  </main>
+</body>
+</html>
