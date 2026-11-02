@@ -395,7 +395,7 @@ export default function CoreDashboard() {
                 <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1.5">
                   <span className="font-serif font-bold text-[#8D69A6] text-sm block">3. Hombro Económico ($K$)</span>
                   <p>
-                    Diversificación productiva (no monoproducción), autonomía presupuestaria municipal, equidad distributiva ($1-\text{Gini}$) y tasa de reinversión regenerativa.
+                    Diversificación productiva (no monoproducción), autonomía presupuestaria municipal, equidad distributiva (1 − Gini) y tasa de reinversión regenerativa.
                   </p>
                 </div>
               </div>
