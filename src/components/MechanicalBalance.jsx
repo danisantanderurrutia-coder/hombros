@@ -1,353 +1,280 @@
 import React, { useMemo } from 'react';
-import { Activity, ShieldAlert, CheckCircle2, AlertTriangle, Disc, ArrowDown, ArrowUp, Compass } from 'lucide-react';
-import { useTheme } from '../context/ThemeContext';
+import { motion } from 'framer-motion';
+import { Scale, Sparkles, AlertTriangle, ShieldCheck, ShieldAlert, Compass } from 'lucide-react';
 
 export default function MechanicalBalance({ santanderState }) {
-  const { D, H, sigma, trafficLight, trafficTitle } = santanderState;
+  const { D, H, sigma, trafficLight } = santanderState;
 
-  // Engineering calculations:
-  // Factor of Safety: FS = H / D (inverse of systemic stress sigma)
+  // Factor of Safety: FS = H / D
   const factorOfSafety = useMemo(() => {
-    return D > 0.001 ? parseFloat((H / D).toFixed(3)) : 9.99;
+    return D > 0.001 ? parseFloat((H / D).toFixed(2)) : 9.99;
   }, [D, H]);
 
-  // Angular deflection of the neutral axis theta (degrees)
+  // Margin of reserve (positive = safe reserve, negative = overdrawn deficit)
+  const marginReserve = parseFloat((H - D).toFixed(3));
+
+  // Angular deflection theta (degrees)
   // Positive angle tilts right-down (extractivism overload)
+  // Negative angle tilts left-down (carrying capacity dominance)
   const tiltDeg = useMemo(() => {
-    const rawDelta = (D - H);
-    // Sigmoid/tangent damping between -16 deg and +20 deg
-    const deg = Math.max(-16, Math.min(20, rawDelta * 18));
-    return parseFloat(deg.toFixed(2));
+    const rawDelta = D - H;
+    // Damped between -14 deg and +16 deg for organic aesthetic balance
+    const deg = Math.max(-14, Math.min(16, rawDelta * 16));
+    return parseFloat(deg.toFixed(1));
   }, [D, H]);
 
-  const thetaMrad = useMemo(() => {
-    return parseFloat(((tiltDeg * Math.PI) / 180 * 1000).toFixed(1));
-  }, [tiltDeg]);
-
-  // Unbalanced Bending Moment (normalized kNm)
-  const deltaMoment = useMemo(() => {
-    return parseFloat(((D - H) * 125).toFixed(1));
-  }, [D, H]);
-
-  // Structural Limit State (Eurocode / AISC nomenclature)
-  const limitState = useMemo(() => {
-    if (sigma < 0.70) {
+  // Visual status badge
+  const statusInfo = useMemo(() => {
+    if (sigma < 0.85) {
       return {
-        code: 'SLS-A (Serviceability Limit State · Safe Elastic)',
-        label: 'Régimen Elástico Admisible',
-        fsBadge: 'bg-emerald-950/80 border-emerald-500/60 text-emerald-300 ring-1 ring-emerald-500/30',
-        fsColor: 'text-emerald-400',
-        statusColor: '#34d399',
-        diag: 'La reacción estructural elástica absorbe la carga extractiva con reserva portante holgada.'
+        label: 'Equilibrio Sintrópico Seguro',
+        badge: 'bg-emerald-950/80 border-emerald-500/60 text-emerald-300 ring-1 ring-emerald-500/30',
+        textColor: 'text-emerald-400',
+        barColor: 'bg-emerald-400',
+        desc: 'Los hombros sostienen con holgura la carga. El territorio acumula margen biofísico.'
       };
     } else if (sigma <= 1.00) {
       return {
-        code: 'SLS-B (Serviceability Limit State · High Stress)',
-        label: 'Fatiga de Servicio / Fluencia Inminente',
-        fsBadge: 'bg-amber-950/80 border-amber-500/60 text-amber-300 ring-1 ring-amber-500/30',
-        fsColor: 'text-amber-400',
-        statusColor: '#fbbf24',
-        diag: 'Tensión próxima al límite de fluencia (Yield). Comienzan microdeformaciones plásticas.'
-      };
-    } else if (sigma <= 1.20) {
-      return {
-        code: 'ULS (Ultimate Limit State · Plastic Failure)',
-        label: 'Colapso Plástico Estructural',
-        fsBadge: 'bg-rose-950/80 border-rose-500/60 text-rose-300 ring-1 ring-rose-500/50',
-        fsColor: 'text-rose-400',
-        statusColor: '#f43f5e',
-        diag: 'La carga externa excede la capacidad plástica portante. Ruptura del equilibrio estático.'
+        label: 'Zona de Fatiga / Ajuste',
+        badge: 'bg-amber-950/80 border-amber-500/60 text-amber-300 ring-1 ring-amber-500/30',
+        textColor: 'text-amber-400',
+        barColor: 'bg-amber-400',
+        desc: 'Tensión próxima al límite elástico. Se requiere moderar la presión extractiva.'
       };
     } else {
       return {
-        code: 'FLS (Fatigue Limit State · Structural Fracture)',
-        label: 'Fractura Crítica Ineludible',
-        fsBadge: 'bg-red-950/90 border-red-500 text-red-200 ring-2 ring-red-500',
-        fsColor: 'text-red-400',
-        statusColor: '#ef4444',
-        diag: 'Quiebre irreversible del tensor territorial. Detención inmediata de cargas extractivas.'
+        label: 'Sobrecarga y Riesgo de Falla',
+        badge: 'bg-rose-950/90 border-rose-500 text-rose-200 ring-1 ring-rose-500/50',
+        textColor: 'text-rose-400',
+        barColor: 'bg-rose-500',
+        desc: 'La carga externa vence la resistencia estructural. Deformación permanente en curso.'
       };
     }
   }, [sigma]);
 
+  // Sphere visual sizes for pans
+  const leftSpheresCount = Math.max(1, Math.min(5, Math.round(H * 5)));
+  const rightSpheresCount = Math.max(1, Math.min(5, Math.round(D * 3.5)));
+
   return (
-    <div className="rounded-3xl p-6 transition-all duration-300 shadow-2xl card-indigo">
-      
-      {/* Engineering Header & Telemetry Badges */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-5 pb-4 border-b border-emerald-500/20">
+    <div className="rounded-3xl p-6 sm:p-7 card-slate border border-white/10 shadow-2xl relative overflow-hidden flex flex-col justify-between">
+      {/* Soft warm ambient radial halo */}
+      <div className={`absolute inset-0 pointer-events-none transition-all duration-700 opacity-25 ${
+        sigma < 0.85 
+          ? 'bg-gradient-to-r from-emerald-500/20 via-transparent to-teal-500/20' 
+          : sigma <= 1.00 
+            ? 'bg-gradient-to-r from-amber-500/25 via-transparent to-purple-500/20' 
+            : 'bg-gradient-to-r from-rose-500/30 via-transparent to-red-600/25'
+      }`} />
+
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10 relative z-10">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded border bg-bio-deep border-cyan-500/40 text-cyan-300">
-              ISO/TR 14045 · MECÁNICA DE MEDIOS CONTINUOS
-            </span>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded border border-emerald-500/30 bg-emerald-950/40 text-emerald-300">
-              {limitState.code}
-            </span>
+            <Scale className="w-5 h-5 text-[#DA7B93]" />
+            <h3 className="text-xl font-bold font-serif text-white tracking-wide">
+              Balanza de Esfuerzos y Margen de Reserva
+            </h3>
           </div>
-          
-          <h3 className="text-xl font-bold font-serif tracking-tight mt-1 text-white flex items-center gap-2">
-            <Disc className="w-5 h-5 text-cyan-400 animate-spin-slow" />
-            Rig de Equilibrio Estático & Celdas de Carga
-          </h3>
-          <p className="text-xs text-slate-300 mt-0.5 font-mono">
-            ΣF_y = 0 · ΣM_O = 0 · Tensión Uniaxial σ = D / H
+          <p className="text-xs text-slate-300 mt-0.5">
+            Equilibrio dinámico entre la <strong>Capacidad Portante ($H$)</strong> y la <strong>Carga de Desarrollo ($D$)</strong>
           </p>
         </div>
 
-        {/* Real-time Engineering Readouts: FS and Sigma */}
+        {/* Readout Badges */}
         <div className="flex items-center gap-3">
           {/* Factor of Safety */}
-          <div className={`px-3.5 py-2 rounded-xl border ${limitState.fsBadge}`}>
-            <div className="text-[9px] font-mono uppercase tracking-wider opacity-80 font-bold">
-              Factor de Seguridad (FS = 1/σ)
-            </div>
-            <div className="text-xl font-mono font-black flex items-baseline gap-1">
-              <span>{factorOfSafety.toFixed(2)}</span>
-              <span className="text-[10px] font-normal opacity-70">
-                {factorOfSafety >= 1.0 ? '[Estable]' : '[Falla]'}
-              </span>
+          <div className={`px-4 py-2 rounded-2xl border ${statusInfo.badge} shadow-lg text-right`}>
+            <span className="text-[10px] font-mono uppercase tracking-wider block opacity-80">
+              Factor Seguridad (H/D)
+            </span>
+            <div className="text-xl font-mono font-bold flex items-baseline justify-end gap-1">
+              <span>{factorOfSafety.toFixed(2)}x</span>
             </div>
           </div>
 
-          {/* Systemic Stress σ */}
-          <div className="px-3.5 py-2 rounded-xl border bg-bio-deep/90 border-cyan-500/40 text-cyan-300 shadow-inner">
-            <div className="text-[9px] font-mono uppercase tracking-wider opacity-80 font-bold">
-              Tensión Uniaxial (σ = D/H)
-            </div>
-            <div className="text-xl font-mono font-black text-white">
-              {sigma.toFixed(2)}
-            </div>
+          {/* Reserve Margin */}
+          <div className="px-4 py-2 rounded-2xl border bg-black/50 border-white/10 text-right">
+            <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 block">
+              Margen (H − D)
+            </span>
+            <strong className={`text-xl font-mono ${marginReserve >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
+              {marginReserve > 0 ? `+${marginReserve.toFixed(2)}` : marginReserve.toFixed(2)}
+            </strong>
           </div>
         </div>
       </div>
 
-      {/* CAD Schematic / Technical Blueprint Canvas */}
-      <div className="relative w-full bg-[#05130e] rounded-2xl border border-emerald-500/30 p-4 sm:p-6 overflow-hidden shadow-2xl select-none">
-        
-        {/* Engineering Technical Grid Background */}
-        <div 
-          className="absolute inset-0 opacity-15 pointer-events-none"
-          style={{
-            backgroundImage: `
-              linear-gradient(to right, rgba(52, 211, 153, 0.4) 1px, transparent 1px),
-              linear-gradient(to bottom, rgba(52, 211, 153, 0.4) 1px, transparent 1px)
-            `,
-            backgroundSize: '24px 24px'
-          }}
-        />
+      {/* THE BALANCED RIG (ORGANIC WARM SVG) */}
+      <div className="relative z-10 w-full flex items-center justify-center py-4 select-none">
+        <svg viewBox="0 0 620 220" className="w-full max-w-2xl h-auto overflow-visible">
+          <defs>
+            {/* Beam Metallic Finish */}
+            <linearGradient id="beamMetalGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#376E6F" />
+              <stop offset="50%" stopColor="#A4B3B6" />
+              <stop offset="100%" stopColor="#D83F87" />
+            </linearGradient>
 
-        {/* Overlay Telemetry HUD Tags */}
-        <div className="relative z-10 flex flex-wrap items-center justify-between gap-2 mb-2 text-[10px] font-mono text-slate-400">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
-            <span>TRANSDUCER RIG · SENSOR BIAXIAL</span>
-            <span className="text-emerald-400">STATUS: ON-LINE</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <span>DEFLEXIÓN θ: <strong className="text-white">{tiltDeg > 0 ? `+${tiltDeg}` : tiltDeg}°</strong> ({thetaMrad} mrad)</span>
-            <span>MOMENTO NETO ΔM: <strong className={deltaMoment > 0 ? 'text-rose-400' : 'text-emerald-400'}>{deltaMoment} kNm</strong></span>
-          </div>
-        </div>
+            {/* Brass Pedestal Gradient */}
+            <linearGradient id="brassPedestalGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#DA7B93" />
+              <stop offset="50%" stopColor="#8D69A6" />
+              <stop offset="100%" stopColor="#221434" />
+            </linearGradient>
 
-        {/* Technical SVG Schematic */}
-        <div className="relative z-10 w-full flex justify-center py-2">
-          <svg viewBox="0 0 680 250" className="w-full max-w-2xl h-auto overflow-visible">
-            <defs>
-              {/* Force Vector Gradients */}
-              <linearGradient id="loadVectorGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#f43f5e" />
-                <stop offset="100%" stopColor="#be123c" />
-              </linearGradient>
-              <linearGradient id="reactionVectorGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#10b981" />
-                <stop offset="100%" stopColor="#047857" />
-              </linearGradient>
+            {/* Pan Soft Glow */}
+            <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="5" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+          </defs>
 
-              {/* Technical Hatch Pattern for Fixed Ground */}
-              <pattern id="groundHatch" width="8" height="8" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
-                <line x1="0" y1="0" x2="0" y2="8" stroke="#34d399" strokeWidth="1.2" strokeOpacity="0.4" />
-              </pattern>
-
-              {/* Marker Arrowheads */}
-              <marker id="arrowRed" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                <path d="M 0 1 L 10 5 L 0 9 z" fill="#f43f5e" />
-              </marker>
-              <marker id="arrowGreen" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                <path d="M 0 1 L 10 5 L 0 9 z" fill="#34d399" />
-              </marker>
-              <marker id="arrowCyan" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
-                <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
-              </marker>
-            </defs>
-
-            {/* ============================================================== */}
-            {/* 1. FIXED DATUM & MEASUREMENT BENCHMARK LINES                   */}
-            {/* ============================================================== */}
-            
-            {/* Horizontal Neutral Line (Datum 0) */}
-            <line x1="40" y1="125" x2="640" y2="125" stroke="#1e4e3d" strokeWidth="1" strokeDasharray="4 4" />
-            <text x="45" y="120" className="text-[8px] font-mono fill-emerald-500/60">DATUM EJE NEUTRO (y = 0)</text>
-
-            {/* Left Dimension Line for L/2 */}
-            <line x1="120" y1="35" x2="340" y2="35" stroke="#065f46" strokeWidth="1" markerStart="url(#arrowCyan)" markerEnd="url(#arrowCyan)" />
-            <text x="230" y="30" textAnchor="middle" className="text-[9px] font-mono fill-cyan-400/80">L/2 = 250 mm</text>
-
-            {/* Right Dimension Line for L/2 */}
-            <line x1="340" y1="35" x2="560" y2="35" stroke="#065f46" strokeWidth="1" markerStart="url(#arrowCyan)" markerEnd="url(#arrowCyan)" />
-            <text x="450" y="30" textAnchor="middle" className="text-[9px] font-mono fill-cyan-400/80">L/2 = 250 mm</text>
-
-            {/* ============================================================== */}
-            {/* 2. RIG STRUCTURAL SUPPORT STAND (ROCA / BASE FIJA)            */}
-            {/* ============================================================== */}
-            {/* Base block */}
-            <rect x="290" y="220" width="100" height="15" fill="#09281e" stroke="#34d399" strokeWidth="1.2" />
-            <rect x="290" y="235" width="100" height="8" fill="url(#groundHatch)" stroke="#34d399" strokeWidth="0.8" strokeOpacity="0.5" />
-
-            {/* Triangular Fulcrum (Rótula Fija ISO) */}
-            <polygon points="340,132 305,220 375,220" fill="#0b3829" stroke="#34d399" strokeWidth="1.8" />
-            <circle cx="340" cy="180" r="14" fill="#051a13" stroke="#34d399" strokeWidth="1" strokeDasharray="2 2" />
-
-            {/* Knife-edge Hardened Pivot Pin */}
-            <circle cx="340" cy="125" r="9" fill="#0f4935" stroke="#38bdf8" strokeWidth="2" />
-            <circle cx="340" cy="125" r="3" fill="#ffffff" />
-            <circle cx="340" cy="125" r="1" fill="#000000" />
-
-            {/* Angular Vernier Scale Arc at Pivot */}
-            <path d="M 315 125 A 25 25 0 0 1 365 125" fill="none" stroke="#38bdf8" strokeWidth="1" strokeDasharray="2 2" />
-            <line x1="340" y1="100" x2="340" y2="92" stroke="#38bdf8" strokeWidth="1.5" />
-            <text x="340" y="87" textAnchor="middle" className="text-[8px] font-mono fill-cyan-300">0.0°</text>
-
-            {/* ============================================================== */}
-            {/* 3. DYNAMICALLY DEFLECTING STRUCTURAL BEAM (VIGA I-BEAM / TRUSS) */}
-            {/* ============================================================== */}
-            <g transform={`rotate(${tiltDeg} 340 125)`} className="transition-transform duration-700 ease-out">
-              
-              {/* Main Structural I-Beam Body */}
-              {/* Web plate */}
-              <rect x="110" y="119" width="460" height="12" fill="#0b2e22" stroke="#38bdf8" strokeWidth="1.5" rx="2" />
-              {/* Top Flange */}
-              <rect x="110" y="115" width="460" height="5" fill="#14533d" stroke="#34d399" strokeWidth="1" />
-              {/* Bottom Flange */}
-              <rect x="110" y="130" width="460" height="5" fill="#14533d" stroke="#34d399" strokeWidth="1" />
-
-              {/* Neutral axis dashed center-line inside beam */}
-              <line x1="110" y1="125" x2="570" y2="125" stroke="#a7f3d0" strokeWidth="1" strokeDasharray="6 3" />
-
-              {/* Laser-Etched Measurement Ticks along Beam */}
-              {[150, 190, 230, 270, 310, 370, 410, 450, 490, 530].map(tx => (
-                <line key={tx} x1={tx} y1="115" x2={tx} y2="120" stroke="#34d399" strokeWidth="1" strokeOpacity="0.7" />
-              ))}
-
-              {/* ------------------------------------------------------------ */}
-              {/* LEFT APPLICATION RIG: Extractive Load F_D                    */}
-              {/* ------------------------------------------------------------ */}
-              <g transform="translate(120, 125)">
-                {/* Load Cell Cylinder Mount */}
-                <rect x="-18" y="-14" width="36" height="28" fill="#1c0f14" stroke="#f43f5e" strokeWidth="1.5" rx="3" />
-                <circle cx="0" cy="0" r="4" fill="#f43f5e" />
-                <text x="0" y="3" textAnchor="middle" className="text-[7px] font-mono font-bold fill-white">LC-1</text>
-
-                {/* Vertical Engineering Load Vector Arrow (Downwards) */}
-                <line 
-                  x1="0" 
-                  y1="-75" 
-                  x2="0" 
-                  y2="-18" 
-                  stroke="#f43f5e" 
-                  strokeWidth="3.5" 
-                  markerEnd="url(#arrowRed)" 
-                />
-
-                {/* Force Vector Annotation Box */}
-                <rect x="-85" y="-105" width="170" height="26" fill="#1f0910" stroke="#f43f5e" strokeWidth="1.2" rx="4" />
-                <text x="0" y="-93" textAnchor="middle" className="text-[9px] font-mono font-bold fill-rose-300">
-                  CARGA ACTUANTE (F_D)
-                </text>
-                <text x="0" y="-82" textAnchor="middle" className="text-[10px] font-mono font-black fill-white">
-                  D = {D.toFixed(2)} [EXTRACCIÓN]
-                </text>
-              </g>
-
-              {/* ------------------------------------------------------------ */}
-              {/* RIGHT APPLICATION RIG: Structural Capacity Reaction R_H      */}
-              {/* ------------------------------------------------------------ */}
-              <g transform="translate(560, 125)">
-                {/* Reaction Load Cell Mount */}
-                <rect x="-18" y="-14" width="36" height="28" fill="#092119" stroke="#34d399" strokeWidth="1.5" rx="3" />
-                <circle cx="0" cy="0" r="4" fill="#34d399" />
-                <text x="0" y="3" textAnchor="middle" className="text-[7px] font-mono font-bold fill-white">LC-2</text>
-
-                {/* Vertical Engineering Reaction Vector Arrow (Downwards/Equilibrating) */}
-                <line 
-                  x1="0" 
-                  y1="-75" 
-                  x2="0" 
-                  y2="-18" 
-                  stroke="#34d399" 
-                  strokeWidth="3.5" 
-                  markerEnd="url(#arrowGreen)" 
-                />
-
-                {/* Force Vector Annotation Box */}
-                <rect x="-85" y="-105" width="170" height="26" fill="#072318" stroke="#34d399" strokeWidth="1.2" rx="4" />
-                <text x="0" y="-93" textAnchor="middle" className="text-[9px] font-mono font-bold fill-emerald-300">
-                  REACCIÓN PORTANTE (R_H)
-                </text>
-                <text x="0" y="-82" textAnchor="middle" className="text-[10px] font-mono font-black fill-white">
-                  H = {H.toFixed(2)} [CAPACIDAD]
-                </text>
-              </g>
-
-              {/* Deflection Angle Indicator Line along tilted beam */}
-              <line x1="280" y1="125" x2="400" y2="125" stroke="#38bdf8" strokeWidth="1" />
-            </g>
-
-            {/* Real-time Resultant Moment Vector (Curved Arrow at Pivot) */}
-            <g transform="translate(340, 125)">
-              <circle cx="0" cy="0" r="28" fill="none" stroke={deltaMoment > 0 ? '#f43f5e' : '#34d399'} strokeWidth="1.5" strokeDasharray="4 2" />
-              <text x="0" y="44" textAnchor="middle" className="text-[8px] font-mono fill-slate-300">
-                M_O = {deltaMoment > 0 ? `+${deltaMoment}` : deltaMoment} kNm
-              </text>
-            </g>
-
-          </svg>
-        </div>
-
-        {/* Engineering Diagnostic Footer Bar */}
-        <div className="relative z-10 mt-3 pt-3 border-t border-emerald-500/20 grid grid-cols-1 md:grid-cols-3 gap-3 text-xs font-mono">
+          {/* Center Pedestal Tower */}
+          <polygon points="310,95 285,185 335,185" fill="url(#brassPedestalGrad)" opacity="0.9" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
+          <ellipse cx="310" cy="185" rx="38" ry="8" fill="#140b20" stroke="rgba(255,255,255,0.25)" strokeWidth="1.5" />
           
-          <div className="flex items-center gap-2 bg-bio-deep/70 p-2.5 rounded-xl border border-emerald-500/20">
-            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: limitState.statusColor }}></span>
-            <div>
-              <span className="text-[9px] uppercase tracking-wider text-slate-400 block font-bold">Estado Límite (Eurocódigo)</span>
-              <strong className="text-white text-[11px]">{limitState.label}</strong>
-            </div>
-          </div>
+          {/* Base Inclinometer Level Arc */}
+          <path d="M 270 178 A 45 45 0 0 1 350 178" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="3" />
+          
+          {/* Inclinometer indicator needle */}
+          <line
+            x1="310"
+            y1="185"
+            x2={310 + tiltDeg * 2.2}
+            y2="165"
+            stroke={sigma < 0.85 ? '#34d399' : sigma <= 1.0 ? '#fbbf24' : '#f43f5e'}
+            strokeWidth="2.5"
+            strokeLinecap="round"
+          />
 
-          <div className="flex items-center gap-2 bg-bio-deep/70 p-2.5 rounded-xl border border-emerald-500/20">
-            <Compass className="w-4 h-4 text-cyan-400 shrink-0" />
-            <div>
-              <span className="text-[9px] uppercase tracking-wider text-slate-400 block font-bold">Respuesta del Eje Neutro</span>
-              <span className="text-cyan-200 text-[11px]">
-                {tiltDeg > 2 ? 'Inclinación Horaria (Sobrecarga D)' : tiltDeg < -2 ? 'Inclinación Antihoraria (Reserva H)' : 'Equilibrio Cuasi-Estático'}
-              </span>
-            </div>
-          </div>
+          {/* Central Fulcrum Jewel Bearing */}
+          <circle cx="310" cy="95" r="9" fill="#140b20" stroke="#DA7B93" strokeWidth="2.5" />
+          <circle cx="310" cy="95" r="4" fill="#ffffff" filter="url(#softGlow)" />
 
-          <div className="flex items-center gap-2 bg-bio-deep/70 p-2.5 rounded-xl border border-emerald-500/20">
-            <Activity className="w-4 h-4 text-emerald-400 shrink-0" />
-            <div>
-              <span className="text-[9px] uppercase tracking-wider text-slate-400 block font-bold">Veredicto Estructural</span>
-              <span className="text-slate-200 text-[10px] leading-tight block">
-                {limitState.diag}
-              </span>
-            </div>
-          </div>
+          {/* =================================================================
+              TILTING BEAM (Smooth Spring Animation around Center Pivot 310, 95)
+              ================================================================= */}
+          <motion.g
+            animate={{ rotate: tiltDeg }}
+            transition={{ type: 'spring', stiffness: 70, damping: 14 }}
+            style={{ originX: '310px', originY: '95px' }}
+          >
+            {/* The Sculpted Beam */}
+            <path
+              d="M 120 95 Q 215 90 310 93 Q 405 90 500 95 L 498 99 Q 405 96 310 97 Q 215 96 122 99 Z"
+              fill="url(#beamMetalGrad)"
+              filter="url(#softGlow)"
+            />
 
-        </div>
+            {/* Left Suspension Hook */}
+            <circle cx="120" cy="97" r="4" fill="#376E6F" stroke="#ffffff" strokeWidth="1.5" />
+            
+            {/* Right Suspension Hook */}
+            <circle cx="500" cy="97" r="4" fill="#D83F87" stroke="#ffffff" strokeWidth="1.5" />
 
+            {/* -------------------------------------------------------------
+                LEFT SUSPENDED PAN (Hombros / Capacidad H)
+                ------------------------------------------------------------- */}
+            {/* Left Strings */}
+            <line x1="120" y1="97" x2="85" y2="148" stroke="rgba(55,110,111,0.6)" strokeWidth="1.5" />
+            <line x1="120" y1="97" x2="155" y2="148" stroke="rgba(55,110,111,0.6)" strokeWidth="1.5" />
+
+            {/* Left Pan Saucer */}
+            <path
+              d="M 80 148 Q 120 162 160 148 Z"
+              fill="rgba(55,110,111,0.4)"
+              stroke="#376E6F"
+              strokeWidth="2"
+              filter="url(#softGlow)"
+            />
+
+            {/* Biocapacity Orbs in Left Pan (Proportional to H) */}
+            <g transform="translate(120, 142)">
+              {Array.from({ length: leftSpheresCount }).map((_, i) => (
+                <circle
+                  key={`left-orb-${i}`}
+                  cx={(i - (leftSpheresCount - 1) / 2) * 12}
+                  cy={-8}
+                  r={8 + H * 4}
+                  fill="url(#brassPedestalGrad)"
+                  stroke="#376E6F"
+                  strokeWidth="1.5"
+                  className="animate-pulse"
+                  style={{ animationDelay: `${i * 0.2}s` }}
+                />
+              ))}
+            </g>
+
+            {/* Left Pan Label */}
+            <text x="120" y="180" textAnchor="middle" className="text-[12px] font-serif font-bold fill-[#376E6F]">
+              Hombros: H = {H.toFixed(2)}
+            </text>
+            <text x="120" y="194" textAnchor="middle" className="text-[9px] font-mono fill-slate-400">
+              [Sostén Territorial]
+            </text>
+
+            {/* -------------------------------------------------------------
+                RIGHT SUSPENDED PAN (Carga / Presión D)
+                ------------------------------------------------------------- */}
+            {/* Right Strings */}
+            <line x1="500" y1="97" x2="465" y2="148" stroke="rgba(216,63,135,0.6)" strokeWidth="1.5" />
+            <line x1="500" y1="97" x2="535" y2="148" stroke="rgba(216,63,135,0.6)" strokeWidth="1.5" />
+
+            {/* Right Pan Saucer */}
+            <path
+              d="M 460 148 Q 500 162 540 148 Z"
+              fill="rgba(216,63,135,0.4)"
+              stroke="#D83F87"
+              strokeWidth="2"
+              filter="url(#softGlow)"
+            />
+
+            {/* Extractive Load Blocks in Right Pan (Proportional to D) */}
+            <g transform="translate(500, 142)">
+              {Array.from({ length: rightSpheresCount }).map((_, i) => (
+                <rect
+                  key={`right-block-${i}`}
+                  x={(i - (rightSpheresCount - 1) / 2) * 12 - 7}
+                  y={-14}
+                  width="14"
+                  height="12"
+                  rx="3"
+                  fill="#f43f5e"
+                  stroke="#ffffff"
+                  strokeWidth="1.2"
+                  opacity="0.85"
+                />
+              ))}
+            </g>
+
+            {/* Right Pan Label */}
+            <text x="500" y="180" textAnchor="middle" className="text-[12px] font-serif font-bold fill-[#DA7B93]">
+              Carga Externa: D = {D.toFixed(2)}
+            </text>
+            <text x="500" y="194" textAnchor="middle" className="text-[9px] font-mono fill-slate-400">
+              [Presión de Desarrollo]
+            </text>
+          </motion.g>
+        </svg>
       </div>
 
+      {/* Human Interpretation Footer */}
+      <div className={`p-3.5 rounded-2xl border text-xs font-mono flex flex-col sm:flex-row items-center justify-between gap-3 relative z-10 transition-all ${
+        sigma < 0.85 
+          ? 'bg-emerald-950/40 border-emerald-500/30 text-emerald-200' 
+          : sigma <= 1.00 
+            ? 'bg-amber-950/40 border-amber-500/30 text-amber-200' 
+            : 'bg-rose-950/60 border-rose-500/40 text-rose-200'
+      }`}>
+        <div className="flex items-center gap-2">
+          <span className="text-base">{sigma < 0.85 ? '✨' : sigma <= 1.00 ? '⚠️' : '🚨'}</span>
+          <span><strong>Diagnóstico:</strong> {statusInfo.desc}</span>
+        </div>
+        <div className="text-[11px] font-bold uppercase tracking-wider shrink-0 text-slate-300">
+          Inclinación: <span className="text-white font-mono">{tiltDeg > 0 ? `+${tiltDeg}` : tiltDeg}°</span> {tiltDeg > 0 ? '(Sobrecarga Extractiva)' : '(Reserva Holgada)'}
+        </div>
+      </div>
     </div>
   );
 }

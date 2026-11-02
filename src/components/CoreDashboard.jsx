@@ -697,6 +697,7 @@ export default function CoreDashboard() {
                   H={santanderState.H}
                   hasCriticalShoulder={santanderState.hasCriticalShoulder}
                   criticalDetails={santanderState.criticalDetails}
+                  onShoulderChange={handleShoulderChange}
                 />
               </div>
 
@@ -866,12 +867,12 @@ export default function CoreDashboard() {
               </div>
             </div>
 
-            {/* 2.2 Las Dos Figuras Mecánicas Activas en Tiempo Real */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Balanza Mecánica con Inclinación Física */}
+            {/* 2.2 Balanza Mecánica y Curva Reológica en Cascada Vertical */}
+            <div className="space-y-6">
+              {/* Balanza Mecánica con Inclinación Física y Fluidéz Orgánica */}
               <MechanicalBalance santanderState={santanderState} />
               
-              {/* Curva de Esfuerzo-Deformación Conectada Directamente a sigma = D / H */}
+              {/* Curva de Esfuerzo-Deformación Conectada Directamente a sigma = D / H (Debajo de la Balanza) */}
               <StressStrainCurve state={coupledMechanicsState} territory={syntheticTerritory} />
             </div>
 
