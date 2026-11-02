@@ -56,32 +56,18 @@ function AppContent() {
             <CoreDashboard />
           )}
 
-          {activeTab === 'world_map' && (
+          {(activeTab === 'world_map' || activeTab === 'cases') && (
             <WorldTerritoriesMap
               territories={territories}
               selectedTerritoryId={selectedTerritoryId}
               setSelectedTerritoryId={setSelectedTerritoryId}
               globalModifiers={modifiers}
-              onNavigateToCases={(cityId) => {
-                if (cityId) setSelectedTerritoryId(cityId);
-                setActiveTab('cases');
-              }}
-            />
-          )}
-
-          {activeTab === 'cases' && (
-            <DeepDiveCasesView 
-              selectedTerritoryId={selectedTerritoryId}
-              setSelectedTerritoryId={setSelectedTerritoryId}
-              onNavigateToMap={(cityId) => {
-                if (cityId) setSelectedTerritoryId(cityId);
-                setActiveTab('world_map');
-              }}
+              initialSubTab={activeTab === 'cases' ? 'cases' : 'map'}
             />
           )}
 
           {activeTab === 'scenarios' && (
-            <ScenarioSimulator territory={currentTerritory} />
+            <CoreDashboard initialSubtab="prospectiva" />
           )}
 
           {activeTab === 'data_sources' && (
