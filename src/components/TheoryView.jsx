@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import HombrosDeGigantes from './HombrosDeGigantes';
 import { getAssetUrl } from '../utils/assets';
+import { InlineMath, BlockMath, LatexText } from './KaTeXMath';
 
 export default function TheoryView() {
   const [activeTab, setActiveTab] = useState('paper'); // 'paper' | 'figures' | 'scripts_hub' | 'episteme'
@@ -742,7 +743,7 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                 Resumen Ejecutivo / Abstract
               </span>
               <p className="text-xs sm:text-sm text-black leading-relaxed font-sans font-medium">
-                Los estándares de contabilidad socio-ambiental dominantes (IDH, Economía de la Dona, Límites Planetarios y Huella Ecológica) presentan sesgos críticos de compensabilidad aditiva, ceguera ante el desplazamiento metabólico de Alcance 3 hacia el Sur Global y ausencia de una física de fatiga territorial. En este trabajo presentamos la formalización canónica del modelo <strong>Hombros</strong>, integrando la mecánica de medios continuos con la termodinámica ecológica abierta. Definimos la capacidad portante no-compensatoria \(H = (S \cdot E \cdot K)^{1/3}\) con quiebre asintótico ante fallos de pilares individuales (\(H_i &lt; 0.25\)), la tensión sistémica \(\sigma = D / H\) y el régimen de deformación viscoelástica (elástico, fluencia, plástico y fractura). Validamos el modelo empíricamente en ocho arquetipos territoriales (Chanco, Aconcagua, Quintero-Puchuncaví en Chile; Copenhague, Barcelona, Bilbao, Ámsterdam y Berlín en Europa) y demostramos que las metrópolis post-industriales con reducidas emisiones territoriales directas externalizan entre un \(54\%\) y un \(76.5\%\) de su carga entrópica en forma de bienes intensivos importados.
+                <LatexText text="Los estándares de contabilidad socio-ambiental dominantes (IDH, Economía de la Dona, Límites Planetarios y Huella Ecológica) presentan sesgos críticos de compensabilidad aditiva, ceguera ante el desplazamiento metabólico de Alcance 3 hacia el Sur Global y ausencia de una física de fatiga territorial. En este trabajo presentamos la formalización canónica del modelo **Hombros**, integrando la mecánica de medios continuos con la termodinámica ecológica abierta. Definimos la capacidad portante no-compensatoria \(H = (S \cdot E \cdot K)^{1/3}\) con quiebre asintótico ante fallos de pilares individuales (\(H_i < 0.25\)), la tensión sistémica \(\sigma = D / H\) y el régimen de deformación viscoelástica (elástico, fluencia, plástico y fractura). Validamos el modelo empíricamente en ocho arquetipos territoriales (Chanco, Aconcagua, Quintero-Puchuncaví en Chile; Copenhague, Barcelona, Bilbao, Ámsterdam y Berlín en Europa) y demostramos que las metrópolis post-industriales con reducidas emisiones territoriales directas externalizan entre un \(54\%\) y un \(76.5\%\) de su carga entrópica en forma de bienes intensivos importados." />
               </p>
             </div>
           </div>
@@ -783,7 +784,7 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                         <strong className="text-black font-extrabold uppercase text-[10px] tracking-wide block mb-1">
                           Supuesto Base:
                         </strong>
-                        <span className="text-black font-normal">{gap.premise}</span>
+                        <span className="text-black font-normal"><LatexText text={gap.premise} /></span>
                       </div>
                       <div className="p-3.5 rounded-xl bg-[#FEECE8] border border-[#F4A79D] mb-3.5 text-black text-xs font-sans leading-relaxed shadow-xs">
                         <div className="flex items-center gap-1.5 mb-1">
@@ -792,7 +793,7 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                             Brecha Crítica:
                           </strong>
                         </div>
-                        <span className="text-black font-medium">{gap.gap}</span>
+                        <span className="text-black font-medium"><LatexText text={gap.gap} /></span>
                       </div>
                     </div>
                     <div className="p-3.5 rounded-xl bg-[#E2F4F2] border border-[#7DB2B2] text-black text-xs font-sans leading-relaxed shadow-xs">
@@ -802,7 +803,7 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                           Solución Hombros:
                         </strong>
                       </div>
-                      <span className="text-black font-semibold">{gap.solution}</span>
+                      <span className="text-black font-semibold"><LatexText text={gap.solution} /></span>
                     </div>
                   </div>
                 );
@@ -830,13 +831,13 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                   <span className="px-3 py-1 rounded-lg bg-[#487075] text-white text-[10px] font-bold uppercase tracking-wider inline-block mb-3 shadow-xs">
                     Ecuación 1 · Capacidad Portante
                   </span>
-                  <div className="text-base font-extrabold text-black font-mono my-2 py-2.5 px-3 rounded-xl bg-[#E2F4F2] border border-[#7DB2B2]/60 text-center shadow-xs">
-                    H = (S · E · K)<sup>1/3</sup> · ∏ 𝕀(H<sub>i</sub> ≥ 0.25)
+                  <div className="text-base font-extrabold text-black my-2 py-2.5 px-3 rounded-xl bg-[#E2F4F2] border border-[#7DB2B2]/60 text-center shadow-xs">
+                    <BlockMath math="H = (S \cdot E \cdot K)^{1/3} \cdot \prod \mathbb{I}(H_i \ge 0.25)" />
                   </div>
                 </div>
-                <p className="text-xs text-black font-sans mt-3 leading-relaxed">
-                  Media geométrica no compensatoria. Si min(S, E, K) &lt; 0.25, el territorio experimenta falla estructural inmediata. Ningún superávit de capital social o técnico puede sustituir un suelo o acuífero muerto.
-                </p>
+                <div className="text-xs text-black font-sans mt-3 leading-relaxed">
+                  <LatexText text="Media geométrica no compensatoria. Si \(\min(S, E, K) < 0.25\), el territorio experimenta falla estructural inmediata. Ningún superávit de capital social o técnico puede sustituir un suelo o acuífero muerto." />
+                </div>
               </div>
 
               <div className="p-5 rounded-2xl bg-white/95 border border-[#C86D51]/30 shadow-sm flex flex-col justify-between">
@@ -844,13 +845,13 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                   <span className="px-3 py-1 rounded-lg bg-[#C86D51] text-white text-[10px] font-bold uppercase tracking-wider inline-block mb-3 shadow-xs">
                     Ecuación 2 · Tensión Sistémica
                   </span>
-                  <div className="text-base font-extrabold text-black font-mono my-2 py-2.5 px-3 rounded-xl bg-[#FEECE8] border border-[#F4A79D]/60 text-center shadow-xs">
-                    σ = D / H = (∑ D<sub>j</sub> / 3) / H
+                  <div className="text-base font-extrabold text-black my-2 py-2.5 px-3 rounded-xl bg-[#FEECE8] border border-[#F4A79D]/60 text-center shadow-xs">
+                    <BlockMath math="\sigma = \frac{D}{H} = \frac{\sum_{j=1}^3 D_j / 3}{H}" />
                   </div>
                 </div>
-                <p className="text-xs text-black font-sans mt-3 leading-relaxed">
-                  Cociente uniaxial de esfuerzo sobre sección resistente. Define cuatro regímenes mecánicos: elástico (σ &lt; 0.85), límite de fluencia (0.85 ≤ σ &lt; 1.00), plástico irreversible (1.00 ≤ σ &lt; 1.25) y fractura catastrófica (σ ≥ 1.25).
-                </p>
+                <div className="text-xs text-black font-sans mt-3 leading-relaxed">
+                  <LatexText text="Cociente uniaxial de esfuerzo sobre sección resistente. Define cuatro regímenes mecánicos: elástico (\(\sigma < 0.85\)), límite de fluencia (\(0.85 \le \sigma < 1.00\)), plástico irreversible (\(1.00 \le \sigma < 1.25\)) y fractura catastrófica (\(\sigma \ge 1.25\))." />
+                </div>
               </div>
 
               <div className="p-5 rounded-2xl bg-white/95 border border-[#927660]/30 shadow-sm flex flex-col justify-between">
@@ -858,13 +859,13 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                   <span className="px-3 py-1 rounded-lg bg-[#927660] text-white text-[10px] font-bold uppercase tracking-wider inline-block mb-3 shadow-xs">
                     Ecuación 3 · Velocidad Sintrópica
                   </span>
-                  <div className="text-base font-extrabold text-black font-mono my-2 py-2.5 px-3 rounded-xl bg-[#FAF7F0] border border-[#DDD5C5]/60 text-center shadow-xs">
-                    Γ(t) = (1 / H) · (dH / dt)
+                  <div className="text-base font-extrabold text-black my-2 py-2.5 px-3 rounded-xl bg-[#FAF7F0] border border-[#DDD5C5]/60 text-center shadow-xs">
+                    <BlockMath math="\Gamma(t) = \frac{1}{H} \frac{dH}{dt}" />
                   </div>
                 </div>
-                <p className="text-xs text-black font-sans mt-3 leading-relaxed">
-                  Tasa temporal de acumulación o disipación neguentrópica en el tiempo. Γ &gt; +0.02 año<sup>-1</sup> indica acumulación sintrópica regenerativa; Γ &lt; -0.03 año<sup>-1</sup> denota senescencia disipativa acelerada.
-                </p>
+                <div className="text-xs text-black font-sans mt-3 leading-relaxed">
+                  <LatexText text="Tasa temporal de acumulación o disipación neguentrópica en el tiempo. \(\Gamma > +0.02\,\text{año}^{-1}\) indica acumulación sintrópica regenerativa; \(\Gamma < -0.03\,\text{año}^{-1}\) denota senescencia disipativa acelerada." />
+                </div>
               </div>
             </div>
           </div>

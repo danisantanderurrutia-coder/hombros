@@ -19,6 +19,7 @@ import ThreeShouldersBreakdown from './ThreeShouldersBreakdown';
 import ShouldersRadarTripod from './ShouldersRadarTripod';
 import SyntropyGauge from './SyntropyGauge';
 import PhysicalTrafficLight from './PhysicalTrafficLight';
+import TerritorialBenchmarkingMap, { BENCHMARK_CITIES } from './TerritorialBenchmarkingMap';
 
 import { calculateHombrosFullState } from '../models/santanderModel';
 import { evaluateTerritoryState } from '../models/mechanics';
@@ -50,7 +51,7 @@ export default function CoreDashboard() {
   });
 
   // Selected territory for Subtab 4 (Semáforo & Ciudades)
-  const [selectedCityId, setSelectedCityId] = useState('quintero_puchuncavi');
+  const [selectedCityId, setSelectedCityId] = useState('quillota');
   const [cityStressDelta, setCityStressDelta] = useState(0);
 
   // When changing preset, update the custom variables
@@ -153,6 +154,78 @@ export default function CoreDashboard() {
       };
     }
 
+    // 1. Resolve from 25 Benchmark Cities (Europe 10 + Chile Central 15)
+    const benchmarkCity = BENCHMARK_CITIES.find(c => c.id === selectedCityId);
+    if (benchmarkCity) {
+      const adjustedSigma = benchmarkCity.sigma * (1 + cityStressDelta);
+      const isCritical = benchmarkCity.trafficLight === 'critical_red' || benchmarkCity.S < 0.25 || benchmarkCity.E < 0.25 || benchmarkCity.K < 0.25;
+
+      let effectiveLight = benchmarkCity.trafficLight;
+      if (adjustedSigma > 1.25) effectiveLight = 'black';
+      else if (adjustedSigma > 1.0) effectiveLight = 'red';
+      else if (adjustedSigma > 0.85) effectiveLight = 'amber';
+      else effectiveLight = 'green';
+      if (isCritical) effectiveLight = 'critical_red';
+
+      const activeAlerts = [];
+      if (isCritical) {
+        activeAlerts.push({
+          id: 'crit_shoulder',
+          condition: 'Falla Estructural de Hombro (H_i < 0.25)',
+          signal: '🔴',
+          action: benchmarkCity.remedy,
+          severity: 'critical'
+        });
+      }
+      if (adjustedSigma > 1.20) {
+        activeAlerts.push({
+          id: 'crit_sigma',
+          condition: `σ = ${adjustedSigma.toFixed(2)} > 1.20`,
+          signal: '🔴🔴',
+          action: 'Ruptura inminente: moratoria a la extracción y penalización de flujos de exportación.',
+          severity: 'critical'
+        });
+      } else if (adjustedSigma > 0.85) {
+        activeAlerts.push({
+          id: 'amber_sigma',
+          condition: `0.85 ≤ σ = ${adjustedSigma.toFixed(2)} ≤ 1.20`,
+          signal: '🟡',
+          action: 'Zona de fluencia elástica: reorientar inversiones hacia regeneración y retención hídrica.',
+          severity: 'high'
+        });
+      } else {
+        activeAlerts.push({
+          id: 'safe_sigma',
+          condition: `σ = ${adjustedSigma.toFixed(2)} < 0.85`,
+          signal: '🟢',
+          action: 'Margen biofísico seguro: custodiar cuencas y fortalecer circuitos cortos de economía comunitaria.',
+          severity: 'safe'
+        });
+      }
+
+      return {
+        id: benchmarkCity.id,
+        name: benchmarkCity.name,
+        country: benchmarkCity.country,
+        bioregion: benchmarkCity.region,
+        coordinates: benchmarkCity.coords,
+        description: benchmarkCity.diagnosis,
+        state: {
+          H: benchmarkCity.H,
+          sigma: adjustedSigma,
+          trafficLight: effectiveLight,
+          actionCode: benchmarkCity.actionCode,
+          trafficTitle: benchmarkCity.actionTitle,
+          hasCriticalShoulder: isCritical,
+          activeAlerts,
+          S: benchmarkCity.S,
+          E: benchmarkCity.E,
+          K: benchmarkCity.K
+        }
+      };
+    }
+
+    // 2. Fallback to INITIAL_TERRITORIES
     const terr = INITIAL_TERRITORIES.find(t => t.id === selectedCityId) || INITIAL_TERRITORIES[0];
     const evaluated = calculateHombrosFullState(terr, {
       pressureMod: cityStressDelta,
@@ -1037,7 +1110,7 @@ export default function CoreDashboard() {
             transition={{ duration: 0.25 }}
             className="space-y-6"
           >
-            {/* 4.1 Fila Principal: Semáforo Físico Iluminado frente al Explorador de Ciudades */}
+            {/* 4.1 Fila Principal: Semáforo Físico Iluminado frente a la Cartografía Territorial */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
               
               {/* SEMÁFORO BIOFÍSICO LUMINOSO (Columna Izquierda 4/12) */}
@@ -1051,140 +1124,60 @@ export default function CoreDashboard() {
                 />
               </div>
 
-              {/* SELECTOR Y MAPA DE CIUDADES DEL MUNDO (Columna Derecha 8/12) */}
-              <div className="lg:col-span-8 p-6 rounded-3xl card-slate border border-white/10 shadow-xl space-y-5">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3 border-b border-white/10">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <Globe className="w-5 h-5 text-teal-400" />
-                      <h2 className="text-lg font-serif font-bold text-white tracking-wide">
-                        Benchmarking Territorial de Ciudades del Mundo
-                      </h2>
-                    </div>
-                    <p className="text-xs text-slate-400 mt-0.5">
-                      Haz clic en cualquier ciudad para evaluar su semáforo biofísico y directrices de gobernanza
-                    </p>
-                  </div>
-
-                  <span className="text-[11px] font-mono px-3 py-1 rounded-xl bg-bio-deep border border-cyan-500/30 text-cyan-300 font-bold">
-                    {featuredCities.length} Territorios
-                  </span>
-                </div>
-
-                {/* Grid de Ciudades */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
-                  {featuredCities.map(city => {
-                    const isSelected = selectedCityId === city.id;
-                    return (
-                      <button
-                        key={city.id}
-                        onClick={() => {
-                          setSelectedCityId(city.id);
-                          setCityStressDelta(0);
-                        }}
-                        className={`p-3 rounded-2xl border text-left transition-all relative overflow-hidden group ${
-                          isSelected
-                            ? 'bg-gradient-to-r from-[#D83F87]/30 to-[#376E6F]/30 border-white/40 ring-1 ring-white/30 shadow-lg'
-                            : 'bg-black/40 hover:bg-white/5 border-white/5'
-                        }`}
-                      >
-                        <div className="flex items-center justify-between text-[10px] font-mono opacity-80 mb-1">
-                          <span className="text-slate-400 truncate">{city.country}</span>
-                          <span className="text-[#DA7B93] text-[9px]">{city.tag}</span>
-                        </div>
-                        <div className="text-xs font-serif font-bold text-white truncate">
-                          {city.name}
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {/* Ficha Territorial de la Ciudad Seleccionada */}
-                <div className="p-4 rounded-2xl bg-black/50 border border-white/10 space-y-3">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                    <div>
-                      <span className="text-[10px] font-mono uppercase tracking-wider text-teal-300 font-bold block">
-                        Territorio Activo:
-                      </span>
-                      <h3 className="text-base font-serif font-bold text-white flex items-center gap-2">
-                        <MapPin className="w-4 h-4 text-[#DA7B93]" />
-                        {activeCityData.name} ({activeCityData.country})
-                      </h3>
-                    </div>
-
-                    <div className="flex items-center gap-2 text-xs font-mono">
-                      <span className="px-2.5 py-1 rounded-lg bg-black/60 border border-white/10 text-slate-300">
-                        H = {activeCityData.state.H.toFixed(2)}
-                      </span>
-                      <span className="px-2.5 py-1 rounded-lg bg-black/60 border border-white/10 text-slate-300">
-                        σ = {activeCityData.state.sigma.toFixed(2)}
-                      </span>
-                    </div>
-                  </div>
-
-                  <p className="text-xs text-slate-300 leading-relaxed italic bg-white/5 p-3 rounded-xl border border-white/5 font-serif">
-                    "{activeCityData.description}"
-                  </p>
-
-                  {/* Simulador de Choque Directo en la Ciudad */}
-                  <div className="pt-2 border-t border-white/10 space-y-1.5">
-                    <div className="flex justify-between text-xs font-mono">
-                      <span className="text-slate-300">Simular Sobrecarga Extractiva en este Territorio:</span>
-                      <strong className={`font-bold ${
-                        cityStressDelta > 0.3 ? 'text-rose-400' : 'text-amber-300'
-                      }`}>
-                        +{cityStressDelta > 0 ? (cityStressDelta * 100).toFixed(0) : 0}% de Presión
-                      </strong>
-                    </div>
-                    <input
-                      type="range"
-                      min="0"
-                      max="1.5"
-                      step="0.05"
-                      value={cityStressDelta}
-                      onChange={e => setCityStressDelta(parseFloat(e.target.value))}
-                      className="w-full accent-rose-500 cursor-pointer h-1.5 bg-black/40 rounded"
-                    />
-                  </div>
-                </div>
-
+              {/* MAPA TERRITORIAL DE CIUDADES (Columna Derecha 8/12) */}
+              <div className="lg:col-span-8">
+                <TerritorialBenchmarkingMap
+                  selectedCityId={selectedCityId}
+                  onSelectCity={(cityId) => {
+                    setSelectedCityId(cityId);
+                    setCityStressDelta(0);
+                  }}
+                />
               </div>
 
             </div>
 
             {/* 4.2 Lista de Dictámenes y Alertas de la Lámina 21 para el Territorio Activo */}
-            <div className="p-6 rounded-3xl card-slate border border-white/10 shadow-xl space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-white/10">
+            <div className="p-6 rounded-3xl card-slate border border-[#927660]/30 shadow-xl space-y-4 bg-white/95">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#D4C9B8]">
                 <div className="flex items-center gap-2">
-                  <AlertOctagon className="w-5 h-5 text-amber-400" />
-                  <h3 className="font-serif font-bold text-white text-base">
-                    Dictámenes de Gobernanza Territorial (Lámina 21) para {activeCityData.name}
-                  </h3>
+                  <div className="p-2 rounded-xl bg-[#28475A] text-white shadow-xs">
+                    <AlertOctagon className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-serif font-extrabold text-black text-base sm:text-lg">
+                      Dictámenes de Gobernanza Territorial (Lámina 21) para {activeCityData.name}
+                    </h3>
+                    <p className="text-xs text-black font-medium">
+                      Protocolos normativos vinculantes según el régimen mecánico-metabólico activo
+                    </p>
+                  </div>
                 </div>
-                <span className="text-xs font-mono text-slate-400">
-                  {activeCityData.state.activeAlerts.length} protocolo(s) vinculante(s)
+                <span className="text-xs font-mono font-bold px-3 py-1 rounded-xl bg-[#FAF7F0] border border-[#DDD5C5] text-black">
+                  {activeCityData.state.activeAlerts?.length || 1} protocolo(s) vinculante(s)
                 </span>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {activeCityData.state.activeAlerts.map(alert => (
+                {(activeCityData.state.activeAlerts || []).map(alert => (
                   <div 
                     key={alert.id}
-                    className={`p-4 rounded-2xl border flex items-start gap-3.5 text-xs shadow-md transition-all ${
+                    className={`p-4 rounded-2xl border flex items-start gap-3.5 text-xs shadow-xs transition-all ${
                       alert.severity === 'critical'
-                        ? 'bg-rose-950/70 border-rose-500/50 text-rose-200'
+                        ? 'bg-[#FEECE8] border-[#F4A79D] text-black'
                         : alert.severity === 'high'
-                          ? 'bg-amber-950/70 border-amber-500/50 text-amber-200'
-                          : 'bg-emerald-950/70 border-emerald-500/50 text-emerald-200'
+                          ? 'bg-[#FFF9EE] border-[#E9D7A5] text-black'
+                          : 'bg-[#E2F4F2] border-[#7DB2B2] text-black'
                     }`}
                   >
-                    <span className="text-2xl mt-0.5">{alert.signal}</span>
+                    <span className="text-lg shrink-0 mt-0.5">{alert.signal}</span>
                     <div className="space-y-1">
-                      <strong className="block font-mono text-[11px] font-bold uppercase tracking-wider text-white">
-                        Condición Disparadora: {alert.condition}
-                      </strong>
-                      <p className="leading-relaxed text-slate-200">
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono font-black text-black uppercase text-[10px] tracking-wider px-2 py-0.5 rounded-lg bg-white/80 shadow-2xs">
+                          {alert.condition}
+                        </span>
+                      </div>
+                      <p className="font-sans text-xs text-black leading-relaxed font-semibold">
                         {alert.action}
                       </p>
                     </div>
