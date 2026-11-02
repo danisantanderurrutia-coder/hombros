@@ -1,898 +1,343 @@
 import React, { useMemo } from 'react';
-import { motion } from 'framer-motion';
 
 /**
- * GoldenAtlasHillAscent:
- * An interactive, geometric gold line-art figure (Atlas / Sisyphus transcended)
- * ascending a steep hill while hoisting a cosmic, deep-blue starry sphere.
- * 
- * Dynamic behaviors:
- * - As E, S, K increase:
- *   - The muscles (deltoids, biceps, chest, quads) physically bulge and expand.
- *   - The golden stroke weights and inner energetic fibers intensify.
- *   - The sphere is pushed high above the head, breaking free from the suffocating lower stance.
- *   - The climber's stance straightens with triumphant strength up the mountain.
- *   - The orbital rings and stars radiate brighter.
- *   - The botanical branches flourish and bloom.
+ * GoldenAtlasHillAscent
+ * Atlas dorado de líneas facetadas (low-poly), sin rostro, inspirado en el logo HOMBROS:
+ * sostiene sobre la cabeza una esfera azul profunda con estrellas y anillos orbitales
+ * mientras sube un cerro.
+ *
+ *  E (ecológico)  -> deltoides y trapecios
+ *  S (social)     -> brazos (bíceps, antebrazos)
+ *  K (cognitivo)  -> pecho, abdomen y torso
+ *  H = (E·S·K)^(1/3) -> la esfera se eleva y los brazos se extienden
  */
-export default function GoldenAtlasHillAscent({
-  E = 0.70, // Hombro Ecológico [0.1 .. 1.0]
-  S = 0.65, // Hombro Social [0.1 .. 1.0]
-  K = 0.68, // Hombro Cognitivo/Económico [0.1 .. 1.0]
-  className = '',
-}) {
-  // Clamped values
-  const valE = Math.max(0.1, Math.min(1.0, E));
-  const valS = Math.max(0.1, Math.min(1.0, S));
-  const valK = Math.max(0.1, Math.min(1.0, K));
 
-  // Liebig Carrying Capacity: Geometric mean
-  const H = Math.pow(valE * valS * valK, 1 / 3);
-  // Average composite power
-  const P = (valE + valS + valK) / 3;
+const CX = 450;
+const R = 108;
+const ground = (x) => 760 - 0.19 * x;
 
-  // Muscle expansion factors
-  // Bulge expands coordinates outward
-  const shoulderBulk = 6 + 26 * Math.pow(valE, 0.85); // Deltoids expansion
-  const armBulk = 5 + 20 * Math.pow(valS, 0.85);      // Biceps/forearms expansion
-  const coreBulk = 4 + 18 * Math.pow(valK, 0.85);     // Torso & chest expansion
-  const legBulk = 5 + 16 * Math.pow(P, 0.85);         // Quads & calves expansion
+const f = (n) => n.toFixed(1);
+const P = (x, y) => `${f(x)},${f(y)}`;
+const pts = (...a) => a.map(([x, y]) => P(x, y)).join(' ');
 
-  // Dynamic stroke weight and glow
-  const lineStrokeWidth = (2.0 + 2.2 * P).toFixed(2);
-  const fiberOpacity = (0.25 + 0.65 * P).toFixed(2);
+// Miembro facetado: 6 vértices (hombro+, bulto+, codo+, codo-, bulto-, hombro-)
+function limbGeom(a, b, w0, wm, w1, t = 0.45) {
+  const dx = b[0] - a[0];
+  const dy = b[1] - a[1];
+  const len = Math.hypot(dx, dy) || 1;
+  const nx = -dy / len;
+  const ny = dx / len;
+  const m = [a[0] + dx * t, a[1] + dy * t];
+  const off = (p, w, s) => [p[0] + nx * w * s, p[1] + ny * w * s];
+  return {
+    a, b, m,
+    a1: off(a, w0, 1), m1: off(m, wm, 1), b1: off(b, w1, 1),
+    b2: off(b, w1, -1), m2: off(m, wm, -1), a2: off(a, w0, -1),
+  };
+}
 
-  // Sphere lift calculations:
-  // Low H (0.15): Sphere heavy, low at Y = 300, elbows deeply bent.
-  // High H (1.00): Sphere lifted high into the sky at Y = 130, arms extended overhead in glorious V!
-  const sphereCenterY = 300 - 165 * Math.pow(H, 0.9);
-  const sphereCenterX = 450 + 10 * (1 - H); // Subtle lateral forward thrust as it rises
-  const sphereRadius = 108 + 14 * Math.pow(P, 0.8); // Expands slightly as capacity expands
+function Limb({ g, sw, o = 0.3 }) {
+  return (
+    <g strokeLinejoin="round" strokeLinecap="round">
+      <polygon points={pts(g.a1, g.m1, g.b1, g.b2, g.m2, g.a2)} fill="url(#goldFill)" fillOpacity={o + 0.35} stroke="url(#goldV)" strokeWidth={sw} />
+      {/* triangulación */}
+      <polyline points={pts(g.a1, g.m2, g.b2)} fill="none" stroke="#FFE9A0" strokeOpacity="0.55" strokeWidth={sw * 0.5} />
+      <polyline points={pts(g.a2, g.m1, g.b1)} fill="none" stroke="#FFE9A0" strokeOpacity="0.4" strokeWidth={sw * 0.5} />
+      <polyline points={pts(g.a, g.m, g.b)} fill="none" stroke="#FFF4CC" strokeOpacity="0.5" strokeWidth={sw * 0.45} />
+    </g>
+  );
+}
 
-  // Climber base positioning on mountain slope
-  // Mountain ground line: ascends from (0, 710) to (900, 470), slope is ~ -0.266
-  // Hip center:
-  const hipX = 390 + 20 * H;
-  const hipY = 510 - 15 * H;
+function Facet({ points, sw, o = 0.35 }) {
+  return (
+    <polygon points={points} fill="url(#goldFill)" fillOpacity={o} stroke="url(#goldV)" strokeWidth={sw} strokeLinejoin="round" />
+  );
+}
 
-  // Torso / Neck / Head coordinates (tilts and straightens as H rises)
-  const postureStraighten = (H - 0.5) * 18; // degrees correction
-  const chestX = hipX + 32 + (H * 10);
-  const chestY = hipY - 95 - (H * 22);
+const star4 = (s) =>
+  `M0 ${-s} Q ${s * 0.14} ${-s * 0.14} ${s} 0 Q ${s * 0.14} ${s * 0.14} 0 ${s} Q ${-s * 0.14} ${s * 0.14} ${-s} 0 Q ${-s * 0.14} ${-s * 0.14} 0 ${-s} Z`;
 
-  const neckX = chestX + 16;
-  const neckY = chestY - 45;
+function Branch({ scale, flip, x, y }) {
+  const P0 = [0, 90], P1 = [-34, 20], P2 = [-6, -78];
+  const bez = (t) => [
+    (1 - t) ** 2 * P0[0] + 2 * (1 - t) * t * P1[0] + t * t * P2[0],
+    (1 - t) ** 2 * P0[1] + 2 * (1 - t) * t * P1[1] + t * t * P2[1],
+  ];
+  const tan = (t) => [
+    2 * (1 - t) * (P1[0] - P0[0]) + 2 * t * (P2[0] - P1[0]),
+    2 * (1 - t) * (P1[1] - P0[1]) + 2 * t * (P2[1] - P1[1]),
+  ];
+  const leaves = [0.12, 0.28, 0.44, 0.6, 0.76, 0.92].flatMap((t, i) => {
+    const [px, py] = bez(t);
+    const [tx, ty] = tan(t);
+    const ang = (Math.atan2(ty, tx) * 180) / Math.PI;
+    return [-1, 1].map((s) => (
+      <ellipse key={`${i}${s}`} cx={px} cy={py} rx="3.6" ry="11"
+        transform={`rotate(${ang + 90 + s * 52} ${px} ${py}) translate(0 -9)`}
+        fill={s > 0 ? '#F2C94C' : '#7DB2B2'} fillOpacity="0.9" />
+    ));
+  });
+  return (
+    <g transform={`translate(${x} ${y}) scale(${flip * scale} ${scale})`}>
+      <path d={`M${P0} Q${P1} ${P2}`} fill="none" stroke="#C9A24A" strokeWidth="2.2" />
+      {leaves}
+    </g>
+  );
+}
 
-  const headX = neckX + 14;
-  const headY = neckY - 32;
+export default function GoldenAtlasHillAscent({ E = 0.7, S = 0.65, K = 0.68, className = '' }) {
+  const e = Math.max(0.1, Math.min(1, E));
+  const s = Math.max(0.1, Math.min(1, S));
+  const k = Math.max(0.1, Math.min(1, K));
+  const H = Math.cbrt(e * s * k);
+  const avg = (e + s + k) / 3;
+  const sw = 2 + 1.6 * avg; // grosor de línea
 
-  // Deltoids (Shoulders) positions
-  const leftShoulderX = chestX - 38 - shoulderBulk * 0.7;
-  const leftShoulderY = chestY - 12 - (H * 10);
+  // --- Esfera ---
+  const sy = 300 - 100 * H;
+  const sr = R + 8 * avg;
 
-  const rightShoulderX = chestX + 42 + shoulderBulk * 0.7;
-  const rightShoulderY = chestY - 22 - (H * 14);
+  // --- Medidas musculares ---
+  const c = 54 + 24 * k;          // semiancho de pecho
+  const w = 28 + 9 * k;           // semiancho de cintura
+  const dr = 15 + 14 * e;         // radio del deltoides
+  const shY = 364;
+  const shX = c + 8;             // hombro respecto al centro
 
-  // Hand grips cupping the sphere bottom-left and bottom-right
-  const leftHandAngle = 135 * (Math.PI / 180);
-  const rightHandAngle = 45 * (Math.PI / 180);
+  const Lsh = [CX - shX, shY];
+  const Rsh = [CX + shX, shY];
 
-  const leftHandX = sphereCenterX + (sphereRadius + 4) * Math.cos(leftHandAngle);
-  const leftHandY = sphereCenterY + (sphereRadius + 4) * Math.sin(leftHandAngle);
+  // Manos: bajo los flancos de la esfera
+  const hx = sr * 0.9;
+  const hy = sy + sr * 0.5;
+  const Lh = [CX - hx, hy];
+  const Rh = [CX + hx, hy];
 
-  const rightHandX = sphereCenterX + (sphereRadius + 4) * Math.cos(rightHandAngle);
-  const rightHandY = sphereCenterY + (sphereRadius + 4) * Math.sin(rightHandAngle);
+  // Codos (se abren y bajan cuando H es bajo)
+  const slack = 1 - H;
+  const elbow = (sh, hand, dir) => [
+    (sh[0] + hand[0]) / 2 + dir * (16 + slack * 52),
+    (sh[1] + hand[1]) / 2 + slack * 46,
+  ];
+  const Le = elbow(Lsh, Lh, -1);
+  const Re = elbow(Rsh, Rh, 1);
 
-  // Elbows (Inverse kinematics style position that opens up as hands rise)
-  // Left elbow
-  const leftElbowX = leftShoulderX - 25 - armBulk * 0.6 - (1 - H) * 22;
-  const leftElbowY = (leftShoulderY + leftHandY) / 2 + 25 * (1 - H);
+  const uArm = (sh, el) => limbGeom(sh, el, dr * 0.95, 12 + 15 * s, 9 + 4 * s, 0.4);
+  const fArm = (el, h) => limbGeom(el, h, 10 + 5 * s, 10 + 9 * s, 7.5, 0.35);
+  const LU = uArm(Lsh, Le), RU = uArm(Rsh, Re);
+  const LF = fArm(Le, Lh), RF = fArm(Re, Rh);
 
-  // Right elbow
-  const rightElbowX = rightShoulderX + 28 + armBulk * 0.6 + (1 - H) * 20;
-  const rightElbowY = (rightShoulderY + rightHandY) / 2 + 22 * (1 - H);
+  // Piernas (escalando: izquierda abajo, derecha en paso alto)
+  const hipY = 528;
+  const LHip = [CX - 20, hipY], RHip = [CX + 20, hipY];
+  const LKnee = [CX - 52, 610], RKnee = [CX + 64, 596];
+  const LFoot = [CX - 62, ground(CX - 62) - 14];
+  const RFoot = [CX + 72, ground(CX + 72) - 14];
+  const thigh = (h, kn) => limbGeom(h, kn, 22 + 7 * avg, 19 + 11 * avg, 12, 0.4);
+  const shin = (kn, ft) => limbGeom(kn, ft, 12, 12 + 6 * avg, 7, 0.3);
+  const LT = thigh(LHip, LKnee), RT = thigh(RHip, RKnee);
+  const LS = shin(LKnee, LFoot), RS = shin(RKnee, RFoot);
+  const foot = ([x, y]) => pts([x - 9, y - 4], [x + 8, y - 6], [x + 34, y + 10], [x + 30, y + 14], [x - 14, y + 14]);
 
-  // Legs in mountain-climbing step:
-  // Back leg (left): pushed back down the slope, bearing initial weight
-  const leftKneeX = hipX - 65;
-  const leftKneeY = hipY + 55;
-  const leftFootX = hipX - 110;
-  const leftFootY = 635; // Planted on slope
+  // Torso
+  const pecB = 420 + 10 * k;
+  const aw = w * 0.62;
 
-  // Front leg (right): high knee step uphill forward
-  const rightKneeX = hipX + 70 + (H * 15);
-  const rightKneeY = hipY + 30 - (H * 10);
-  const rightFootX = hipX + 95 + (H * 12);
-  const rightFootY = 570; // Planted on higher rock step
+  // Cabeza facetada sin rostro
+  const hc = [CX, 290];
+  const headPts = Array.from({ length: 10 }, (_, i) => {
+    const a = (i / 10) * Math.PI * 2 - Math.PI / 2;
+    return [hc[0] + Math.cos(a) * 19, hc[1] + Math.sin(a) * 25];
+  });
 
-  // Generate dynamic stars inside the sphere
   const innerStars = useMemo(() => [
-    { cx: -42, cy: -35, r: 2.8, sparkle: true, delay: 0 },
-    { cx: 35, cy: -45, r: 3.2, sparkle: true, delay: 0.4 },
-    { cx: -20, cy: 15, r: 2.2, sparkle: true, delay: 0.8 },
-    { cx: 48, cy: 22, r: 2.6, sparkle: true, delay: 1.2 },
-    { cx: -55, cy: 38, r: 1.8, sparkle: false, delay: 0 },
-    { cx: 10, cy: -20, r: 3.8, sparkle: true, delay: 0.2 },
-    { cx: 62, cy: -15, r: 2.0, sparkle: false, delay: 0 },
-    { cx: -25, cy: -60, r: 1.9, sparkle: false, delay: 0 },
-    { cx: 5, cy: 45, r: 2.5, sparkle: true, delay: 1.0 },
-    { cx: -68, cy: -10, r: 1.6, sparkle: false, delay: 0 },
-    { cx: 30, cy: 55, r: 1.7, sparkle: false, delay: 0 },
-    { cx: -40, cy: 62, r: 1.5, sparkle: false, delay: 0 },
-    { cx: 0, cy: 0, r: 4.2, sparkle: true, delay: 0.6 },
+    [-46, -38, 6], [38, -48, 7], [-22, 14, 5], [52, 20, 6], [-60, 40, 4],
+    [12, -18, 9], [66, -14, 4], [-28, -64, 4], [6, 46, 5], [-70, -8, 3.5],
+    [32, 58, 3.5], [-42, 62, 3], [0, 0, 8],
   ], []);
 
-  // Laurel branch leaves scale with Ecological (valE) and H
-  const leafScale = 0.5 + 0.65 * valE;
+  const leafScale = 0.55 + 0.6 * e;
+  const lift = Math.max(0, (H - 0.55) / 0.45);
+
+  const mirror = (fn) => (
+    <>
+      {fn(-1)}
+      {fn(1)}
+    </>
+  );
 
   return (
     <div className={`relative w-full max-w-5xl mx-auto select-none ${className}`}>
-      <svg
-        viewBox="0 0 900 740"
-        className="w-full h-auto drop-shadow-2xl overflow-visible"
-        xmlns="http://www.w3.org/2000/svg"
-      >
+      <svg viewBox="0 0 900 800" className="w-full h-auto overflow-visible" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          {/* =======================================================
-              DEFINICIÓN DE GRADIENTES DORADOS Y CÓSMICOS
-              ======================================================= */}
-          
-          {/* Dorado Metálico Principal */}
-          <linearGradient id="goldMetallic" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#FFF4D0" />
-            <stop offset="25%" stopColor="#F5D061" />
-            <stop offset="50%" stopColor="#E5A93C" />
-            <stop offset="75%" stopColor="#FFDF78" />
-            <stop offset="100%" stopColor="#B37D14" />
+          <linearGradient id="goldV" gradientUnits="userSpaceOnUse" x1="0" y1="80" x2="0" y2="700">
+            <stop offset="0%" stopColor="#FFF1B8" />
+            <stop offset="45%" stopColor="#F2C94C" />
+            <stop offset="100%" stopColor="#B77F12" />
           </linearGradient>
-
-          {/* Dorado Radiante con Brillo Máximo */}
-          <linearGradient id="goldRadiant" x1="0%" y1="100%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#D49419" />
-            <stop offset="40%" stopColor="#FFE47A" />
-            <stop offset="70%" stopColor="#FFFBE6" />
-            <stop offset="100%" stopColor="#F3B329" />
+          <linearGradient id="goldFill" gradientUnits="userSpaceOnUse" x1="300" y1="200" x2="600" y2="700">
+            <stop offset="0%" stopColor="#FFE9A0" />
+            <stop offset="50%" stopColor="#D9A22A" />
+            <stop offset="100%" stopColor="#6B4410" />
           </linearGradient>
-
-          {/* Relleno translúcido para facetas musculares */}
-          <linearGradient id="muscleFacetFill" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#FFDF78" stopOpacity={0.22 + 0.28 * P} />
-            <stop offset="50%" stopColor="#D49419" stopOpacity={0.12 + 0.20 * P} />
-            <stop offset="100%" stopColor="#4A2E00" stopOpacity={0.05} />
-          </linearGradient>
-
-          {/* Esfera Cósmica: Azul Ultra Profundo a Índigo */}
-          <radialGradient id="sphereCosmicGrad" cx="40%" cy="35%" r="65%">
-            <stop offset="0%" stopColor="#25438C" />
-            <stop offset="35%" stopColor="#142654" />
-            <stop offset="70%" stopColor="#0B1430" />
-            <stop offset="100%" stopColor="#040816" />
+          <radialGradient id="sphereGrad" cx="38%" cy="32%" r="75%">
+            <stop offset="0%" stopColor="#27489A" />
+            <stop offset="40%" stopColor="#12275B" />
+            <stop offset="80%" stopColor="#0A1332" />
+            <stop offset="100%" stopColor="#050918" />
           </radialGradient>
-
-          {/* Halo de atmósfera de la esfera */}
-          <radialGradient id="sphereAuraGrad" cx="50%" cy="50%" r="50%">
-            <stop offset="60%" stopColor="#38BDF8" stopOpacity={0.25 * H} />
-            <stop offset="85%" stopColor="#6366F1" stopOpacity={0.15 * H} />
-            <stop offset="100%" stopColor="#000000" stopOpacity="0" />
+          <radialGradient id="auraGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="55%" stopColor="#4C8DFF" stopOpacity={0.25 + 0.3 * H} />
+            <stop offset="100%" stopColor="#4C8DFF" stopOpacity="0" />
           </radialGradient>
-
-          {/* Cerro / Ladera de la Montaña: Estratos de Suelo Regenerativo */}
-          <linearGradient id="mountainSlopeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#233544" />
-            <stop offset="30%" stopColor="#192834" />
-            <stop offset="70%" stopColor="#111B24" />
-            <stop offset="100%" stopColor="#0A1017" />
+          <linearGradient id="hillGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#1F3345" />
+            <stop offset="100%" stopColor="#0A1119" />
           </linearGradient>
-
-          {/* Líneas topográficas doradas del cerro */}
-          <linearGradient id="topoLineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#D4A373" stopOpacity="0.1" />
-            <stop offset="50%" stopColor="#F5D061" stopOpacity="0.6" />
-            <stop offset="100%" stopColor="#7DB2B2" stopOpacity="0.8" />
-          </linearGradient>
-
-          {/* Filtro de Resplandor Dorado (Glow) */}
-          <filter id="goldGlow" x="-30%" y="-30%" width="160%" height="160%">
-            <feGaussianBlur stdDeviation="3.5" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
+          <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="2.6" result="b" />
+            <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
           </filter>
-
-          {/* Filtro de Resplandor Intenso para Estrellas */}
-          <filter id="starFlare" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="4" result="glow" />
-            <feMerge>
-              <feMergeNode in="glow" />
-              <feMergeNode in="glow" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
+          <filter id="flare" x="-100%" y="-100%" width="300%" height="300%">
+            <feGaussianBlur stdDeviation="3" result="b" />
+            <feMerge><feMergeNode in="b" /><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
           </filter>
         </defs>
 
-        {/* =======================================================
-            FONDO AMBIENTAL: ATMÓSFERA Y LADERA DEL CERRO
-            ======================================================= */}
-        {/* Cielo suave matinal / cósmico */}
-        <rect x="0" y="0" width="900" height="740" fill="transparent" />
-
-        {/* Resplandor cósmico detrás del cerro hacia la cumbre */}
-        <circle cx="820" cy="380" r="280" fill="url(#sphereAuraGrad)" opacity={0.6} />
-
-        {/* Capas geológicas del cerro que asciende hacia la derecha */}
-        {/* Capa de roca profunda */}
-        <path
-          d="M 0 710 L 900 460 L 900 740 L 0 740 Z"
-          fill="url(#mountainSlopeGrad)"
-          stroke="rgba(212, 163, 115, 0.25)"
-          strokeWidth="1.5"
-        />
-
-        {/* Estrato intermedio: Curvas de nivel topográficas doradas / celadón */}
-        <path
-          d="M 0 725 Q 300 660 600 580 T 900 495"
-          fill="none"
-          stroke="url(#topoLineGrad)"
-          strokeWidth="1.5"
-          strokeDasharray="6 4"
-        />
-        <path
-          d="M 0 740 Q 320 680 620 605 T 900 525"
-          fill="none"
-          stroke="url(#topoLineGrad)"
-          strokeWidth="1"
-          opacity="0.6"
-        />
-        <path
-          d="M 0 695 Q 350 635 680 545 T 900 465"
-          fill="none"
-          stroke="url(#topoLineGrad)"
-          strokeWidth="2"
-        />
-
-        {/* Cresta rocosa principal del cerro (sendero de ascenso) */}
-        <path
-          d="M -20 705 L 180 670 L 320 635 L 500 575 L 680 520 L 920 455"
-          fill="none"
-          stroke="#F5D061"
-          strokeWidth="3"
-          filter="url(#goldGlow)"
-        />
-
-        {/* Rocas de apoyo para los pies del escalador */}
-        <polygon
-          points={`${leftFootX - 25},${leftFootY + 5} ${leftFootX + 35},${leftFootY + 5} ${leftFootX + 15},${leftFootY + 30} ${leftFootX - 20},${leftFootY + 25}`}
-          fill="#1C2D3D"
-          stroke="#D4A373"
-          strokeWidth="1.5"
-        />
-        <polygon
-          points={`${rightFootX - 20},${rightFootY + 5} ${rightFootX + 45},${rightFootY - 5} ${rightFootX + 30},${rightFootY + 25} ${rightFootX - 15},${rightFootY + 28}`}
-          fill="#1C2D3D"
-          stroke="#F5D061"
-          strokeWidth="2"
-          filter="url(#goldGlow)"
-        />
-
-        {/* Hitos / Marcadores en el cerro */}
-        <g transform="translate(140, 680)" opacity="0.7">
-          <circle cx="0" cy="0" r="3" fill="#D4A373" />
-          <text x="10" y="4" fill="#C86D51" fontSize="10" fontFamily="monospace" fontWeight="bold">
-            0% Entropía
-          </text>
-        </g>
-        <g transform="translate(480, 595)" opacity="0.85">
-          <circle cx="0" cy="0" r="3" fill="#F5D061" />
-          <text x="10" y="4" fill="#F5D061" fontSize="10" fontFamily="monospace" fontWeight="bold">
-            Límite Elástico (Hombros)
-          </text>
-        </g>
-        <g transform="translate(760, 490)">
-          <circle cx="0" cy="0" r="4" fill="#7DB2B2" />
-          <text x="10" y="4" fill="#7DB2B2" fontSize="10" fontFamily="monospace" fontWeight="bold">
-            Cumbre Sintrópica
-          </text>
+        {/* ================= CERRO ================= */}
+        <polygon points={`0,800 0,${ground(0)} 900,${ground(900)} 900,800`} fill="url(#hillGrad)" />
+        {[28, 70, 112, 160].map((d, i) => (
+          <path key={i} d={`M0 ${ground(0) + d} L900 ${ground(900) + d}`} stroke="#D4A373" strokeOpacity={0.28 - i * 0.04} strokeWidth="1.2" strokeDasharray={i % 2 ? '2 7' : '8 6'} />
+        ))}
+        <path d={`M-10 ${ground(-10)} L910 ${ground(910)}`} stroke="url(#goldV)" strokeWidth="3" filter="url(#glow)" />
+        {/* Rocas de apoyo */}
+        <polygon points={pts([LFoot[0] - 26, ground(LFoot[0]) + 14], [LFoot[0] - 6, ground(LFoot[0]) - 2], [LFoot[0] + 48, ground(LFoot[0]) + 4], [LFoot[0] + 40, ground(LFoot[0]) + 22])} fill="#17283A" stroke="#D4A373" strokeOpacity="0.8" />
+        <polygon points={pts([RFoot[0] - 22, ground(RFoot[0]) + 14], [RFoot[0] - 2, ground(RFoot[0]) - 3], [RFoot[0] + 52, ground(RFoot[0]) + 2], [RFoot[0] + 42, ground(RFoot[0]) + 22])} fill="#17283A" stroke="#F2C94C" strokeOpacity="0.9" />
+        {/* Cumbre */}
+        <g transform={`translate(830 ${ground(830) - 24})`}>
+          <path d={star4(14)} fill="#7DB2B2" filter="url(#flare)" />
         </g>
 
+        {/* ================= ESFERA ================= */}
+        <g>
+          <circle cx={CX} cy={sy} r={sr + 36} fill="url(#auraGrad)" />
+          <Branch scale={leafScale} flip={1} x={CX - sr - 26} y={sy + 6} />
+          <Branch scale={leafScale} flip={-1} x={CX + sr + 26} y={sy + 6} />
+          <circle cx={CX} cy={sy} r={sr} fill="url(#sphereGrad)" stroke="url(#goldV)" strokeWidth={2 + avg} filter="url(#glow)" />
+          <circle cx={CX} cy={sy} r={sr - 3} fill="none" stroke="#6CB4FF" strokeOpacity={0.3 + 0.4 * H} strokeWidth="1.2" />
+          {innerStars.map(([dx, dy, r], i) => (
+            <g key={i} transform={`translate(${CX + (dx * sr) / 100} ${sy + (dy * sr) / 100})`}>
+              <path d={star4(r * (1 + 0.4 * H))} fill="#fff" filter={r > 5 ? 'url(#flare)' : undefined} opacity={0.75 + 0.25 * H} />
+            </g>
+          ))}
+          {[[-26, 1.38, 0.34, '#FFF4CC'], [32, 1.34, 0.32, '#F2C94C']].map(([rot, rx, ry, col], i) => (
+            <ellipse key={i} cx={CX} cy={sy} rx={sr * rx} ry={sr * ry} fill="none" stroke={col} strokeWidth={2.2 + 0.6 * avg} transform={`rotate(${rot} ${CX} ${sy})`} filter="url(#glow)" />
+          ))}
+          {/* Corona de tres estrellas */}
+          <g transform={`translate(${CX} ${sy - sr - 42 - 8 * H})`}><path d={star4(20)} fill="#F2C94C" filter="url(#flare)" /></g>
+          <g transform={`translate(${CX - 64} ${sy - sr - 22 - 6 * H})`}><path d={star4(11)} fill="#F2C94C" filter="url(#flare)" /></g>
+          <g transform={`translate(${CX + 64} ${sy - sr - 22 - 6 * H})`}><path d={star4(11)} fill="#F2C94C" filter="url(#flare)" /></g>
+        </g>
 
-        {/* =======================================================
-            ESFERA CELESTIAL AZUL OSCURA CON ESTRELLAS Y ANILLOS
-            (Sostenida en alto; asciende con H)
-            ======================================================= */}
-        <g id="celestialSphereGroup">
-          
-          {/* Halo radiante de fondo de la esfera */}
-          <circle
-            cx={sphereCenterX}
-            cy={sphereCenterY}
-            r={sphereRadius + 22}
-            fill="url(#sphereAuraGrad)"
-          />
+        {/* ================= ATLAS DORADO ================= */}
+        <g transform={`rotate(-3 ${CX} 690)`} filter="url(#glow)">
+          {/* Pierna trasera (abajo del cerro) */}
+          <Limb g={LS} sw={sw} o={0.15} />
+          <Limb g={LT} sw={sw} o={0.2} />
+          <polygon points={foot(LFoot)} fill="url(#goldFill)" fillOpacity="0.6" stroke="url(#goldV)" strokeWidth={sw} strokeLinejoin="round" />
+          {/* Pierna delantera (paso alto) */}
+          <Limb g={RS} sw={sw} o={0.3} />
+          <Limb g={RT} sw={sw} o={0.3} />
+          <polygon points={foot(RFoot)} fill="url(#goldFill)" fillOpacity="0.7" stroke="url(#goldV)" strokeWidth={sw} strokeLinejoin="round" />
+          {/* Rótulas */}
+          <polygon points={pts([LKnee[0] - 9, LKnee[1] - 2], [LKnee[0], LKnee[1] - 10], [LKnee[0] + 9, LKnee[1] - 2], [LKnee[0], LKnee[1] + 8])} fill="#FFE9A0" fillOpacity="0.4" stroke="#FFE9A0" strokeWidth="1" />
+          <polygon points={pts([RKnee[0] - 9, RKnee[1] - 2], [RKnee[0], RKnee[1] - 10], [RKnee[0] + 9, RKnee[1] - 2], [RKnee[0], RKnee[1] + 8])} fill="#FFE9A0" fillOpacity="0.4" stroke="#FFE9A0" strokeWidth="1" />
 
-          {/* Globo principal: azul marino cósmico profundo */}
-          <circle
-            cx={sphereCenterX}
-            cy={sphereCenterY}
-            r={sphereRadius}
-            fill="url(#sphereCosmicGrad)"
-            stroke="#F5D061"
-            strokeWidth={2 + 1.2 * P}
-            filter="url(#goldGlow)"
+          {/* Torso en V */}
+          <Facet
+            points={pts([CX - c - 4, 372], [CX + c + 4, 372], [CX + w + 2, 462], [CX + w + 8, hipY + 4], [CX - w - 8, hipY + 4], [CX - w - 2, 462])}
+            sw={sw} o={0.28}
           />
-
-          {/* Borde celeste interno de refracción atmosférica */}
-          <circle
-            cx={sphereCenterX}
-            cy={sphereCenterY}
-            r={sphereRadius - 2}
-            fill="none"
-            stroke="#38BDF8"
-            strokeWidth="1.2"
-            opacity={0.45 + 0.4 * H}
-          />
-
-          {/* Red de meridianos y paralelos celestes sutiles */}
-          <ellipse
-            cx={sphereCenterX}
-            cy={sphereCenterY}
-            rx={sphereRadius * 0.9}
-            ry={sphereRadius * 0.35}
-            fill="none"
-            stroke="rgba(125, 178, 178, 0.3)"
-            strokeWidth="1"
-            strokeDasharray="4 3"
-          />
-          <ellipse
-            cx={sphereCenterX}
-            cy={sphereCenterY}
-            rx={sphereRadius * 0.35}
-            ry={sphereRadius * 0.9}
-            fill="none"
-            stroke="rgba(125, 178, 178, 0.25)"
-            strokeWidth="1"
-            strokeDasharray="4 3"
-          />
-
-          {/* Anillo Orbital 1: Inclinado hacia la derecha (-28°) */}
-          <g transform={`rotate(-28, ${sphereCenterX}, ${sphereCenterY})`}>
-            <ellipse
-              cx={sphereCenterX}
-              cy={sphereCenterY}
-              rx={sphereRadius * 1.36}
-              ry={sphereRadius * 0.38}
-              fill="none"
-              stroke="#FFF8DB"
-              strokeWidth={2.4 + 0.6 * P}
-              filter="url(#goldGlow)"
+          {/* Pectorales */}
+          {mirror((d) => (
+            <Facet
+              key={d}
+              points={pts([CX, 372], [CX + d * (c + 2), 378], [CX + d * (c * 0.82), pecB - 8], [CX + d * (c * 0.4), pecB + 4], [CX + d * 3, pecB - 4])}
+              sw={sw * 0.85} o={0.5}
             />
-            {/* Brillo en el borde del anillo */}
-            <circle
-              cx={sphereCenterX + sphereRadius * 1.36}
-              cy={sphereCenterY}
-              r="3.5"
-              fill="#FFFFFF"
-              filter="url(#starFlare)"
-            />
-          </g>
+          ))}
+          <line x1={CX} y1="370" x2={CX} y2={hipY} stroke="#FFF4CC" strokeOpacity="0.6" strokeWidth={sw * 0.5} />
+          {/* Abdominales */}
+          {[0, 1, 2].map((i) => (
+            <React.Fragment key={i}>{mirror((d) => (
+              <polygon key={`${i}${d}`}
+                points={pts([CX + d * 2.5, 436 + i * 25], [CX + d * aw, 438 + i * 25], [CX + d * (aw - 1), 456 + i * 25], [CX + d * 2.5, 456 + i * 25])}
+                fill="url(#goldFill)" fillOpacity={0.3 + 0.35 * k} stroke="#FFE9A0" strokeOpacity="0.8" strokeWidth="1.3" strokeLinejoin="round" />
+            ))}</React.Fragment>
+          ))}
+          {/* Oblicuos */}
+          {mirror((d) => (
+            <polyline key={d} points={pts([CX + d * (aw + 5), 440], [CX + d * (w - 2), 480], [CX + d * (w + 4), hipY - 6])} fill="none" stroke="#FFE9A0" strokeOpacity="0.55" strokeWidth="1.3" />
+          ))}
+          {/* Pelvis en V */}
+          <polyline points={pts([CX - w - 6, hipY - 6], [CX, hipY + 16], [CX + w + 6, hipY - 6])} fill="none" stroke="url(#goldV)" strokeWidth={sw * 0.9} strokeLinejoin="round" />
 
-          {/* Anillo Orbital 2: Inclinado hacia la izquierda (+34°) */}
-          <g transform={`rotate(34, ${sphereCenterX}, ${sphereCenterY})`}>
-            <ellipse
-              cx={sphereCenterX}
-              cy={sphereCenterY}
-              rx={sphereRadius * 1.32}
-              ry={sphereRadius * 0.36}
-              fill="none"
-              stroke="#F5D061"
-              strokeWidth={2.2 + 0.6 * P}
-              filter="url(#goldGlow)"
-            />
-            {/* Brillo en el borde del segundo anillo */}
-            <circle
-              cx={sphereCenterX - sphereRadius * 1.32}
-              cy={sphereCenterY}
-              r="3"
-              fill="#FFFFFF"
-              filter="url(#starFlare)"
-            />
-          </g>
+          {/* Trapecios y cuello */}
+          {mirror((d) => (
+            <Facet key={d} points={pts([CX + d * 8, 322], [CX + d * (c + 14 + 6 * e), shY - 4], [CX + d * (c - 2), 376], [CX + d * 6, 352])} sw={sw * 0.85} o={0.45} />
+          ))}
+          <Facet points={pts([CX - 11, 310], [CX + 11, 310], [CX + 15, 352], [CX - 15, 352])} sw={sw * 0.85} o={0.35} />
 
-          {/* Constelación de estrellas interiores (4-point sparkle stars & dots) */}
-          {innerStars.map((s, idx) => {
-            const posX = sphereCenterX + (s.cx * sphereRadius) / 100;
-            const posY = sphereCenterY + (s.cy * sphereRadius) / 100;
+          {/* Cabeza sin rostro */}
+          <polygon points={headPts.map(([x, y]) => P(x, y)).join(' ')} fill="url(#goldFill)" fillOpacity="0.5" stroke="url(#goldV)" strokeWidth={sw} strokeLinejoin="round" />
+          {headPts.filter((_, i) => i % 2 === 0).map(([x, y], i) => (
+            <line key={i} x1={hc[0]} y1={hc[1] - 4} x2={x} y2={y} stroke="#FFF4CC" strokeOpacity="0.35" strokeWidth="1" />
+          ))}
 
-            if (s.sparkle) {
-              const sz = s.r * (1 + 0.3 * H);
-              return (
-                <g key={idx} transform={`translate(${posX}, ${posY})`}>
-                  {/* Destello de 4 puntas como en la imagen */}
-                  <path
-                    d={`M 0 ${-sz * 2.2} Q 0 0 ${sz * 2.2} 0 Q 0 0 0 ${sz * 2.2} Q 0 0 ${-sz * 2.2} 0 Q 0 0 0 ${-sz * 2.2} Z`}
-                    fill="#FFFFFF"
-                    filter="url(#starFlare)"
-                  />
-                  <circle cx="0" cy="0" r={sz * 0.6} fill="#F5D061" />
-                </g>
-              );
-            }
+          {/* Brazos */}
+          {[[LU, LF, -1], [RU, RF, 1]].map(([u, fa, d]) => (
+            <g key={d}>
+              <Limb g={u} sw={sw} o={0.28} />
+              <Limb g={fa} sw={sw} o={0.28} />
+              {/* Codo */}
+              <polygon points={pts([u.b[0] - 6, u.b[1]], [u.b[0], u.b[1] - 7], [u.b[0] + 6, u.b[1]], [u.b[0], u.b[1] + 6])} fill="#FFE9A0" fillOpacity="0.5" stroke="#FFE9A0" strokeWidth="1" />
+            </g>
+          ))}
+
+          {/* Deltoides (hexágonos facetados) */}
+          {[[Lsh, -1], [Rsh, 1]].map(([p, d]) => {
+            const cxp = p[0] + d * 3;
+            const cyp = p[1] + 2;
+            const ring = Array.from({ length: 6 }, (_, i) => {
+              const a = (i / 6) * Math.PI * 2 - Math.PI / 2;
+              return [cxp + Math.cos(a) * dr * 1.05, cyp + Math.sin(a) * dr];
+            });
             return (
-              <circle
-                key={idx}
-                cx={posX}
-                cy={posY}
-                r={s.r}
-                fill="#FFFFFF"
-                opacity="0.85"
-              />
+              <g key={d} strokeLinejoin="round">
+                <polygon points={ring.map(([x, y]) => P(x, y)).join(' ')} fill="url(#goldFill)" fillOpacity={0.55 + 0.25 * e} stroke="url(#goldV)" strokeWidth={sw} />
+                {ring.map(([x, y], i) => (
+                  <line key={i} x1={cxp} y1={cyp} x2={x} y2={y} stroke="#FFF4CC" strokeOpacity="0.35" strokeWidth="1" />
+                ))}
+              </g>
             );
           })}
 
-          {/* Corona Superior de 3 Estrellas Flotantes (como en la imagen cargada) */}
-          {/* Estrella Central Grande */}
-          <g transform={`translate(${sphereCenterX}, ${sphereCenterY - sphereRadius - 38 - 10 * H})`}>
-            <path
-              d="M 0 -22 Q 0 0 22 0 Q 0 0 0 22 Q 0 0 -22 0 Q 0 0 0 -22 Z"
-              fill="url(#goldRadiant)"
-              filter="url(#starFlare)"
-            />
-            <circle cx="0" cy="0" r="4.5" fill="#FFFFFF" />
-          </g>
-
-          {/* Estrella Izquierda Flotante */}
-          <g transform={`translate(${sphereCenterX - 65}, ${sphereCenterY - sphereRadius - 20 - 8 * H})`}>
-            <path
-              d="M 0 -12 Q 0 0 12 0 Q 0 0 0 12 Q 0 0 -12 0 Q 0 0 0 -12 Z"
-              fill="#F5D061"
-              filter="url(#starFlare)"
-            />
-            <circle cx="0" cy="0" r="2.5" fill="#FFFFFF" />
-          </g>
-
-          {/* Estrella Derecha Flotante */}
-          <g transform={`translate(${sphereCenterX + 65}, ${sphereCenterY - sphereRadius - 20 - 8 * H})`}>
-            <path
-              d="M 0 -12 Q 0 0 12 0 Q 0 0 0 12 Q 0 0 -12 0 Q 0 0 0 -12 Z"
-              fill="#F5D061"
-              filter="url(#starFlare)"
-            />
-            <circle cx="0" cy="0" r="2.5" fill="#FFFFFF" />
-          </g>
-
-          {/* Ramas de Olivo / Laurel Solarpunk en los costados de la esfera (como en el logo) */}
-          {/* Rama Izquierda */}
-          <g transform={`translate(${sphereCenterX - sphereRadius - 16}, ${sphereCenterY - 10}) scale(${leafScale})`}>
-            <path
-              d="M 0 50 Q -35 10 -15 -45 Q -5 -80 15 -110"
-              fill="none"
-              stroke="#7DB2B2"
-              strokeWidth="2.5"
-            />
-            {/* Hojas */}
-            <path d="M -15 35 Q -35 25 -25 15 C -15 25 -10 32 -15 35 Z" fill="#F5D061" stroke="#487075" strokeWidth="1" />
-            <path d="M -22 0 Q -48 -8 -32 -20 C -20 -10 -18 -4 -22 0 Z" fill="#7DB2B2" stroke="#F5D061" strokeWidth="1" />
-            <path d="M -12 -38 Q -38 -50 -20 -60 C -10 -50 -8 -42 -12 -38 Z" fill="#F5D061" stroke="#487075" strokeWidth="1" />
-            <path d="M 5 -75 Q -15 -95 0 -105 C 10 -95 10 -82 5 -75 Z" fill="#7DB2B2" stroke="#F5D061" strokeWidth="1" />
-          </g>
-
-          {/* Rama Derecha */}
-          <g transform={`translate(${sphereCenterX + sphereRadius + 16}, ${sphereCenterY - 10}) scale(${-leafScale}, ${leafScale})`}>
-            <path
-              d="M 0 50 Q -35 10 -15 -45 Q -5 -80 15 -110"
-              fill="none"
-              stroke="#7DB2B2"
-              strokeWidth="2.5"
-            />
-            {/* Hojas */}
-            <path d="M -15 35 Q -35 25 -25 15 C -15 25 -10 32 -15 35 Z" fill="#F5D061" stroke="#487075" strokeWidth="1" />
-            <path d="M -22 0 Q -48 -8 -32 -20 C -20 -10 -18 -4 -22 0 Z" fill="#7DB2B2" stroke="#F5D061" strokeWidth="1" />
-            <path d="M -12 -38 Q -38 -50 -20 -60 C -10 -50 -8 -42 -12 -38 Z" fill="#F5D061" stroke="#487075" strokeWidth="1" />
-            <path d="M 5 -75 Q -15 -95 0 -105 C 10 -95 10 -82 5 -75 Z" fill="#7DB2B2" stroke="#F5D061" strokeWidth="1" />
-          </g>
-
+          {/* Manos que sostienen la esfera */}
+          {[[Lh, -1], [Rh, 1]].map(([p, d]) => (
+            <g key={d} strokeLinejoin="round" strokeLinecap="round">
+              <polygon points={pts([p[0] - 9, p[1] + 8], [p[0] - 8, p[1] - 9], [p[0] + 6, p[1] - 13], [p[0] + 11, p[1] + 2], [p[0] + 3, p[1] + 12])} fill="#FFE9A0" fillOpacity="0.75" stroke="url(#goldV)" strokeWidth={sw * 0.9} />
+              <path d={`M${p[0] - d * 2} ${p[1] - 12} q ${d * -8} -12 ${d * -16} -6 M${p[0] + d * 3} ${p[1] - 12} q ${d * -4} -13 ${d * -14} -12`} fill="none" stroke="#FFF4CC" strokeWidth="2" />
+            </g>
+          ))}
         </g>
 
-
-        {/* =======================================================
-            FIGURA HUMANA DORADA: LÍNEAS GEOMÉTRICAS SIN ROSTRO
-            (Los músculos crecen con E, S, K y las piernas suben el cerro)
-            ======================================================= */}
-        <g id="goldenClimberFigure" filter="url(#goldGlow)">
-          
-          {/* 1. PIERNA TRASERA (IZQUIERDA) - Empuja desde la ladera baja */}
-          {/* Muslo Trasero */}
-          <polygon
-            points={`
-              ${hipX - 15},${hipY}
-              ${leftKneeX - 10 - legBulk * 0.4},${leftKneeY - 5}
-              ${leftKneeX + 12 + legBulk * 0.4},${leftKneeY + 5}
-              ${hipX + 10},${hipY + 15}
-            `}
-            fill="url(#muscleFacetFill)"
-            stroke="url(#goldMetallic)"
-            strokeWidth={lineStrokeWidth}
-          />
-          {/* Línea de tensión muscular del cuádriceps trasero */}
-          <line
-            x1={hipX - 2}
-            y1={hipY + 6}
-            x2={leftKneeX}
-            y2={leftKneeY}
-            stroke="#FFE57F"
-            strokeWidth="1.5"
-            strokeOpacity={fiberOpacity}
-          />
-
-          {/* Pantorrilla y Tendón de Aquiles Trasero */}
-          <polygon
-            points={`
-              ${leftKneeX - 8},${leftKneeY}
-              ${leftFootX - 12 - legBulk * 0.3},${leftFootY - 15}
-              ${leftFootX + 14},${leftFootY - 12}
-              ${leftKneeX + 10},${leftKneeY + 6}
-            `}
-            fill="url(#muscleFacetFill)"
-            stroke="url(#goldMetallic)"
-            strokeWidth={lineStrokeWidth}
-          />
-          {/* Pie Trasero firmemente clavado en la roca */}
-          <polygon
-            points={`
-              ${leftFootX - 14},${leftFootY - 10}
-              ${leftFootX + 22},${leftFootY - 5}
-              ${leftFootX + 18},${leftFootY + 6}
-              ${leftFootX - 22},${leftFootY + 5}
-            `}
-            fill="#D49419"
-            stroke="url(#goldMetallic)"
-            strokeWidth={lineStrokeWidth}
-          />
-
-          {/* 2. PIERNA DELANTERA (DERECHA) - Paso firme hacia arriba */}
-          {/* Muslo Delantero Alto */}
-          <polygon
-            points={`
-              ${hipX + 10},${hipY}
-              ${rightKneeX - 10},${rightKneeY - 15 - legBulk * 0.5}
-              ${rightKneeX + 16 + legBulk * 0.5},${rightKneeY + 10}
-              ${hipX + 25},${hipY + 22}
-            `}
-            fill="url(#muscleFacetFill)"
-            stroke="url(#goldMetallic)"
-            strokeWidth={lineStrokeWidth}
-          />
-          {/* Línea de fibra del recto femoral derecho */}
-          <line
-            x1={hipX + 18}
-            y1={hipY + 10}
-            x2={rightKneeX + 4}
-            y2={rightKneeY}
-            stroke="#FFE57F"
-            strokeWidth="1.8"
-            strokeOpacity={fiberOpacity}
-          />
-
-          {/* Pantorrilla Delantera */}
-          <polygon
-            points={`
-              ${rightKneeX - 4},${rightKneeY + 8}
-              ${rightFootX - 12 - legBulk * 0.3},${rightFootY - 12}
-              ${rightFootX + 16 + legBulk * 0.3},${rightFootY - 10}
-              ${rightKneeX + 14},${rightKneeY + 4}
-            `}
-            fill="url(#muscleFacetFill)"
-            stroke="url(#goldMetallic)"
-            strokeWidth={lineStrokeWidth}
-          />
-          {/* Pie Delantero en apoyo dinámico */}
-          <polygon
-            points={`
-              ${rightFootX - 12},${rightFootY - 8}
-              ${rightFootX + 28},${rightFootY - 15}
-              ${rightFootX + 32},${rightFootY + 4}
-              ${rightFootX - 16},${rightFootY + 6}
-            `}
-            fill="#D49419"
-            stroke="url(#goldMetallic)"
-            strokeWidth={lineStrokeWidth}
-          />
-
-
-          {/* 3. PELVIS Y ZONA CORE (ABDOMEN Y OBLICUOS) */}
-          {/* Pelvis facetada */}
-          <polygon
-            points={`
-              ${hipX - 22},${hipY - 15}
-              ${hipX + 28},${hipY - 18}
-              ${hipX + 20},${hipY + 20}
-              ${hipX - 15},${hipY + 18}
-            `}
-            fill="url(#muscleFacetFill)"
-            stroke="url(#goldMetallic)"
-            strokeWidth={lineStrokeWidth}
-          />
-
-          {/* Abdominales y cintura facetada (expande con K y P) */}
-          {/* Nivel inferior de abdominales */}
-          <polygon
-            points={`
-              ${hipX - 18 - coreBulk * 0.4},${hipY - 15}
-              ${hipX + 24 + coreBulk * 0.4},${hipY - 18}
-              ${chestX + 22 + coreBulk * 0.5},${chestY + 45}
-              ${chestX - 20 - coreBulk * 0.5},${chestY + 45}
-            `}
-            fill="url(#muscleFacetFill)"
-            stroke="url(#goldMetallic)"
-            strokeWidth={lineStrokeWidth}
-          />
-          {/* Línea central alba del abdomen */}
-          <line
-            x1={(hipX + 2)}
-            y1={hipY - 16}
-            x2={(chestX + 2)}
-            y2={chestY + 12}
-            stroke="#FFE57F"
-            strokeWidth="1.6"
-            strokeOpacity={fiberOpacity}
-          />
-          {/* Cortes transversales de abdominales */}
-          <line
-            x1={hipX - 10 - coreBulk * 0.3}
-            y1={hipY - 32}
-            x2={hipX + 16 + coreBulk * 0.3}
-            y2={hipY - 34}
-            stroke="url(#goldMetallic)"
-            strokeWidth="1.2"
-          />
-          <line
-            x1={chestX - 14 - coreBulk * 0.3}
-            y1={chestY + 30}
-            x2={chestX + 18 + coreBulk * 0.3}
-            y2={chestY + 28}
-            stroke="url(#goldMetallic)"
-            strokeWidth="1.2"
-          />
-
-
-          {/* 4. PECHO / PECTORALES GRANDES (EXPANDEN CON FUERZA) */}
-          {/* Pectoral Izquierdo */}
-          <polygon
-            points={`
-              ${chestX + 2},${chestY + 14}
-              ${chestX - 26 - coreBulk * 0.7},${chestY + 10}
-              ${leftShoulderX + 15},${leftShoulderY + 12}
-              ${neckX - 6},${neckY + 8}
-            `}
-            fill="url(#muscleFacetFill)"
-            stroke="url(#goldMetallic)"
-            strokeWidth={lineStrokeWidth}
-          />
-          {/* Pectoral Derecho */}
-          <polygon
-            points={`
-              ${chestX + 2},${chestY + 14}
-              ${neckX - 2},${neckY + 8}
-              ${rightShoulderX - 12},${rightShoulderY + 10}
-              ${chestX + 32 + coreBulk * 0.7},${chestY + 8}
-            `}
-            fill="url(#muscleFacetFill)"
-            stroke="url(#goldMetallic)"
-            strokeWidth={lineStrokeWidth}
-          />
-          {/* Esternón y Clavículas en V dorada */}
-          <line
-            x1={neckX}
-            y1={neckY + 8}
-            x2={chestX + 2}
-            y2={chestY + 14}
-            stroke="#FFF4D0"
-            strokeWidth="2"
-          />
-          <line
-            x1={neckX - 4}
-            y1={neckY + 8}
-            x2={leftShoulderX + 10}
-            y2={leftShoulderY + 5}
-            stroke="#F5D061"
-            strokeWidth="1.8"
-          />
-          <line
-            x1={neckX + 4}
-            y1={neckY + 8}
-            x2={rightShoulderX - 8}
-            y2={rightShoulderY + 4}
-            stroke="#F5D061"
-            strokeWidth="1.8"
-          />
-
-
-          {/* 5. CUELLO Y CABEZA SIN ROSTRO (ESTILO EXACTO DE LA IMAGEN) */}
-          {/* Cuello trapezoidal potente */}
-          <polygon
-            points={`
-              ${neckX - 12},${neckY + 10}
-              ${neckX + 14},${neckY + 10}
-              ${headX + 6},${headY + 18}
-              ${headX - 8},${headY + 18}
-            `}
-            fill="url(#muscleFacetFill)"
-            stroke="url(#goldMetallic)"
-            strokeWidth={lineStrokeWidth}
-          />
-
-          {/* Cabeza: Óvalo / huevo de contorno dorado puro, sin rostro */}
-          <ellipse
-            cx={headX}
-            cy={headY}
-            rx={14 + 1.5 * P}
-            ry={19 + 1.5 * P}
-            fill="url(#muscleFacetFill)"
-            stroke="url(#goldRadiant)"
-            strokeWidth={lineStrokeWidth}
-          />
-          {/* Faceta de luz interior en la frente/corona sin rasgos faciales */}
-          <path
-            d={`M ${headX - 6} ${headY - 6} Q ${headX} ${headY - 12} ${headX + 6} ${headY - 6}`}
-            fill="none"
-            stroke="#FFF8DB"
-            strokeWidth="1.5"
-            strokeOpacity="0.8"
-          />
-
-
-          {/* 6. HOMBROS (DELTOIDES GIGANTES - CRECEN CON E) */}
-          {/* Hombro Izquierdo (Deltoides Lateral + Anterior) */}
-          <polygon
-            points={`
-              ${neckX - 6},${neckY + 8}
-              ${leftShoulderX - shoulderBulk * 0.6},${leftShoulderY - 4}
-              ${leftShoulderX - shoulderBulk * 0.9},${leftShoulderY + 18 + shoulderBulk * 0.4}
-              ${leftShoulderX + 10},${leftShoulderY + 28}
-            `}
-            fill="url(#muscleFacetFill)"
-            stroke="url(#goldMetallic)"
-            strokeWidth={lineStrokeWidth}
-          />
-          {/* Estría muscular del deltoides izquierdo */}
-          <line
-            x1={leftShoulderX - shoulderBulk * 0.4}
-            y1={leftShoulderY + 2}
-            x2={leftShoulderX + 2}
-            y2={leftShoulderY + 22}
-            stroke="#FFE57F"
-            strokeWidth="1.6"
-            strokeOpacity={fiberOpacity}
-          />
-
-          {/* Hombro Derecho (Deltoides Lateral + Anterior) */}
-          <polygon
-            points={`
-              ${neckX + 6},${neckY + 8}
-              ${rightShoulderX + 8},${rightShoulderY + 28}
-              ${rightShoulderX + shoulderBulk * 0.9},${rightShoulderY + 18 + shoulderBulk * 0.4}
-              ${rightShoulderX + shoulderBulk * 0.6},${rightShoulderY - 4}
-            `}
-            fill="url(#muscleFacetFill)"
-            stroke="url(#goldMetallic)"
-            strokeWidth={lineStrokeWidth}
-          />
-          {/* Estría muscular del deltoides derecho */}
-          <line
-            x1={rightShoulderX + shoulderBulk * 0.4}
-            y1={rightShoulderY + 2}
-            x2={rightShoulderX - 2}
-            y2={rightShoulderY + 22}
-            stroke="#FFE57F"
-            strokeWidth="1.6"
-            strokeOpacity={fiberOpacity}
-          />
-
-
-          {/* 7. BRAZOS Y ANTEBRAZOS (CRECEN CON S, ELEVAN LA ESFERA) */}
-          {/* Brazo Izquierdo (Bíceps / Tríceps) */}
-          <polygon
-            points={`
-              ${leftShoulderX - shoulderBulk * 0.5},${leftShoulderY + 12}
-              ${leftElbowX - armBulk * 0.6},${leftElbowY}
-              ${leftElbowX + armBulk * 0.4},${leftElbowY + 16}
-              ${leftShoulderX + 6},${leftShoulderY + 26}
-            `}
-            fill="url(#muscleFacetFill)"
-            stroke="url(#goldMetallic)"
-            strokeWidth={lineStrokeWidth}
-          />
-          {/* Antebrazo Izquierdo hacia la esfera */}
-          <polygon
-            points={`
-              ${leftElbowX - armBulk * 0.4},${leftElbowY}
-              ${leftHandX - 8},${leftHandY + 4}
-              ${leftHandX + 10},${leftHandY - 6}
-              ${leftElbowX + armBulk * 0.4},${leftElbowY + 16}
-            `}
-            fill="url(#muscleFacetFill)"
-            stroke="url(#goldMetallic)"
-            strokeWidth={lineStrokeWidth}
-          />
-          {/* Mano Izquierda sosteniendo firmemente la esfera */}
-          <polygon
-            points={`
-              ${leftHandX - 10},${leftHandY + 2}
-              ${leftHandX + 2},${leftHandY - 14}
-              ${leftHandX + 16},${leftHandY - 6}
-              ${leftHandX + 6},${leftHandY + 12}
-            `}
-            fill="#FFE47A"
-            stroke="url(#goldMetallic)"
-            strokeWidth={lineStrokeWidth}
-          />
-          {/* Dedos izquierdos curvados sobre el borde de la esfera */}
-          <path
-            d={`M ${leftHandX - 6} ${leftHandY - 8} Q ${leftHandX + 4} ${leftHandY - 16} ${leftHandX + 12} ${leftHandY - 8}`}
-            fill="none"
-            stroke="#FFF8DB"
-            strokeWidth="2.2"
-          />
-
-          {/* Brazo Derecho (Bíceps / Tríceps) */}
-          <polygon
-            points={`
-              ${rightShoulderX + shoulderBulk * 0.5},${rightShoulderY + 12}
-              ${rightShoulderX - 6},${rightShoulderY + 26}
-              ${rightElbowX - armBulk * 0.4},${rightElbowY + 16}
-              ${rightElbowX + armBulk * 0.6},${rightElbowY}
-            `}
-            fill="url(#muscleFacetFill)"
-            stroke="url(#goldMetallic)"
-            strokeWidth={lineStrokeWidth}
-          />
-          {/* Antebrazo Derecho hacia la esfera */}
-          <polygon
-            points={`
-              ${rightElbowX + armBulk * 0.4},${rightElbowY}
-              ${rightElbowX - armBulk * 0.4},${rightElbowY + 16}
-              ${rightHandX - 10},${rightHandY - 6}
-              ${rightHandX + 8},${rightHandY + 4}
-            `}
-            fill="url(#muscleFacetFill)"
-            stroke="url(#goldMetallic)"
-            strokeWidth={lineStrokeWidth}
-          />
-          {/* Mano Derecha sosteniendo firmemente la esfera */}
-          <polygon
-            points={`
-              ${rightHandX + 10},${rightHandY + 2}
-              ${rightHandX - 6},${rightHandY + 12}
-              ${rightHandX - 16},${rightHandY - 6}
-              ${rightHandX - 2},${rightHandY - 14}
-            `}
-            fill="#FFE47A"
-            stroke="url(#goldMetallic)"
-            strokeWidth={lineStrokeWidth}
-          />
-          {/* Dedos derechos curvados sobre el borde de la esfera */}
-          <path
-            d={`M ${rightHandX + 6} ${rightHandY - 8} Q ${rightHandX - 4} ${rightHandY - 16} ${rightHandX - 12} ${rightHandY - 8}`}
-            fill="none"
-            stroke="#FFF8DB"
-            strokeWidth="2.2"
-          />
-
-        </g>
-
-        {/* =======================================================
-            RAYOS DE ENERGÍA Y LIFT DINÁMICOS
-            (Conectan los hombros con la elevación del cosmos)
-            ======================================================= */}
-        {H > 0.6 && (
-          <g opacity={((H - 0.6) / 0.4).toFixed(2)} filter="url(#goldGlow)">
-            {/* Rayos dorados que irradian desde los hombros */}
-            <line x1={leftShoulderX} y1={leftShoulderY} x2={sphereCenterX - 60} y2={sphereCenterY + 40} stroke="#F5D061" strokeWidth="1.5" strokeDasharray="4 2" />
-            <line x1={chestX} y1={chestY} x2={sphereCenterX} y2={sphereCenterY + 50} stroke="#FFF8DB" strokeWidth="2" strokeDasharray="5 3" />
-            <line x1={rightShoulderX} y1={rightShoulderY} x2={sphereCenterX + 60} y2={sphereCenterY + 40} stroke="#F5D061" strokeWidth="1.5" strokeDasharray="4 2" />
+        {/* Rayos de elevación */}
+        {lift > 0 && (
+          <g opacity={lift * 0.8} stroke="#F2C94C" strokeWidth="1.3" strokeDasharray="3 5" filter="url(#glow)">
+            <line x1={Lsh[0]} y1={Lsh[1] - 20} x2={CX - sr * 0.5} y2={sy + sr * 0.9} />
+            <line x1={Rsh[0]} y1={Rsh[1] - 20} x2={CX + sr * 0.5} y2={sy + sr * 0.9} />
           </g>
         )}
-
       </svg>
     </div>
   );
