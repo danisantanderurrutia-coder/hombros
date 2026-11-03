@@ -2,20 +2,17 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { getAssetUrl } from '../utils/assets';
 
 /**
- * GoldenAtlasHillAscent — Edición "Zeus / Olympian Titan 2.5D Mesh Rig"
+ * GoldenAtlasHillAscent — Edición "Monte Olimpo & Escalinata Monumental (Calidad Zeus)"
  *
- * Combina un render 3D de calidad videojuego (estilo Zeus en God of War: piel de bronce
- * y oro bruñido, cabeza escultórica sin rostro, brazaletes olímpicos dorados en los
- * antebrazos, faldellín griego plisado con greca dorada y grebas/sandalias) con un
- * motor de deformación de malla esquelética 2D en tiempo real (HTML5 Canvas Triangle Mesh)
- * y capas vectoriales cósmicas:
- *
- *  - E (Ecológico)  -> Hipertrofia real en deltoides (hombros) y trapecios + ramas de laurel.
- *  - S (Social)     -> Hipertrofia real en bíceps, tríceps y antebrazos con brazaletes.
- *  - K (Cognitivo)  -> Expansión torácica (pectorales, dorsales en V) y cuádriceps.
- *  - H = (E·S·K)^(1/3) -> Extensión de brazos sobre la cabeza, elevación de la esfera
- *                         azul oscura con estrellas, rayos olímpicos y allanamiento
- *                         de la pendiente (Entropía vs. Sintropía).
+ * Combina:
+ *  1. Escenario panorámico del Monte Olimpo (templos corintios, pebeteros dorados,
+ *     mar de nubes y rayos crepusculares).
+ *  2. Escalinata Olímpica 3D en perspectiva cuyos peldaños de mármol y greca dorada
+ *     se empinan y agrietan con la Entropía (1 - H) o se allanan y florecen con la
+ *     Sintropía (H), manteniendo ambos pies del Titán exactamente apoyados en los
+ *     peldaños 0 y 2.
+ *  3. Titán Dorado estilo Zeus (God of War) con malla de deformación muscular 2D
+ *     en tiempo real (HTML5 Canvas Triangle Mesh) reactiva a E, S, K y H.
  */
 
 const CX = 450;
@@ -60,19 +57,16 @@ function Branch({ scale, flip, x, y }) {
   );
 }
 
-// Función matemática de deformación muscular y postural sobre coordenadas normalizadas (u, v) en [0,1]x[0,1]
+// Deformador esquelético 2D del Titán Zeus con adaptación de paso a la escalinata
 function createTitanDeformer(e, s, k, aspect = 768 / 1376) {
   const H = Math.cbrt(e * s * k);
   const avg = (e + s + k) / 3;
   const entropy = 1 - H;
-  const m = 0.06 + 0.19 * entropy;
-  const baseGround = (x) => 744 - m * (x - 402);
 
-  // Escala general del cuerpo según potencia muscular E, S, K
-  const baseH = 460 + 48 * avg;
+  const baseH = 458 + 48 * avg;
   const baseW = baseH * aspect * (0.85 + 0.26 * (0.38 * e + 0.34 * k + 0.28 * s));
   const boxX = CX - baseW * 0.49;
-  const footTargetY = baseGround(402);
+  const footTargetY = 736;
   const boxY = footTargetY - baseH * 0.976;
 
   const de = e - 0.45;
@@ -84,7 +78,7 @@ function createTitanDeformer(e, s, k, aspect = 768 / 1376) {
     let du = 0;
     let dv = 0;
 
-    // 1. Deltoides y Trapecios (E - Hombro Ecológico): campos gaussianos amplios y suaves
+    // 1. Deltoides y Trapecios (E - Hombro Ecológico)
     for (const [side, cu] of [
       [-1, 0.28],
       [1, 0.72],
@@ -110,7 +104,7 @@ function createTitanDeformer(e, s, k, aspect = 768 / 1376) {
       }
     }
 
-    // 3. Pectorales, Dorsales en V (Latissimus Dorsi) y Cuádriceps (K - Hombro Cognitivo)
+    // 3. Pectorales, Dorsales en V y Cuádriceps (K - Hombro Cognitivo)
     const dChest = ((u - 0.5) / 0.3) ** 2 + ((v - 0.33) / 0.15) ** 2;
     if (dChest < 9) {
       du += (u - 0.5) * 0.28 * dk * Math.exp(-dChest);
@@ -130,13 +124,20 @@ function createTitanDeformer(e, s, k, aspect = 768 / 1376) {
       du -= (u > 0.5 ? 1 : -1) * 0.025 * dH * armMask;
     }
 
+    // 5. Adaptación de la pierna derecha al peralte de los escalones (Entropía vs. Sintropía)
+    const rlegU = Math.max(0, Math.min(1, (u - 0.46) / 0.12));
+    const rlegV = Math.max(0, Math.min(1, (v - 0.48) / 0.14));
+    const rlegMask = rlegU * rlegV;
+    if (rlegMask > 0) {
+      dv += 0.058 * (H - 0.35) * rlegMask;
+    }
+
     return [boxX + (u + du) * baseW, boxY + (v + dv) * baseH];
   };
 
-  return { deform, baseGround, H, avg, entropy, m, baseW, baseH, boxX, boxY };
+  return { deform, H, avg, entropy, baseW, baseH, boxX, boxY };
 }
 
-// Dibuja un triángulo con mapeo afín exacto sobre el contexto 2D del Canvas
 function drawWarpedTriangle(ctx, img, u0, v0, u1, v1, u2, v2, x0, y0, x1, y1, x2, y2) {
   const cx = (x0 + x1 + x2) / 3;
   const cy = (y0 + y1 + y2) / 3;
@@ -165,7 +166,6 @@ function drawWarpedTriangle(ctx, img, u0, v0, u1, v1, u2, v2, x0, y0, x1, y1, x2
   const det = dU1 * dV2 - dU2 * dV1;
   if (Math.abs(det) < 1e-5) return;
 
-  // Matriz afín exacta de Canvas 2D: x' = a*sx + c*sy + e, y' = b*sx + d*sy + f
   const a = ((x1 - x0) * dV2 - (x2 - x0) * dV1) / det;
   const c = ((x2 - x0) * dU1 - (x1 - x0) * dU2) / det;
   const e = x0 - a * sx0 - c * sy0;
@@ -194,6 +194,7 @@ export default function GoldenAtlasHillAscent({ E = 0.7, S = 0.65, K = 0.68, cla
   const canvasRef = useRef(null);
   const [titanImg, setTitanImg] = useState(null);
   const titanUrl = getAssetUrl('art/zeus_golden_titan.png');
+  const olympusBgUrl = getAssetUrl('art/olympus_backdrop.jpg');
 
   useEffect(() => {
     let active = true;
@@ -209,7 +210,7 @@ export default function GoldenAtlasHillAscent({ E = 0.7, S = 0.65, K = 0.68, cla
   }, [titanUrl]);
 
   const rig = useMemo(() => {
-    const { deform, baseGround, H, avg, entropy, m, baseW, baseH, boxX, boxY } = createTitanDeformer(e, s, k);
+    const { deform, H, avg, entropy, baseW, baseH, boxX, boxY } = createTitanDeformer(e, s, k);
     const palmL = deform(0.185, 0.068);
     const palmR = deform(0.805, 0.068);
     const shL = deform(0.28, 0.245);
@@ -217,7 +218,7 @@ export default function GoldenAtlasHillAscent({ E = 0.7, S = 0.65, K = 0.68, cla
     const footL = deform(0.322, 0.976);
     const footR = deform(0.712, 0.862);
 
-    // Acople exacto por Pitágoras entre las palmas abiertas del Titán y el borde de la esfera
+    // Acople exacto entre las palmas abiertas del Titán y el borde de la esfera
     const sx = (palmL[0] + palmR[0]) / 2;
     const palmHalfSpan = Math.max(40, (palmR[0] - palmL[0]) / 2);
     const sr = Math.max(palmHalfSpan * 1.15, 116 + 18 * avg);
@@ -225,14 +226,27 @@ export default function GoldenAtlasHillAscent({ E = 0.7, S = 0.65, K = 0.68, cla
     const palmY = (palmL[1] + palmR[1]) / 2;
     const sy = palmY - dyContact + 10;
 
-    // Función de perfil del cerro con escalón natural bajo el pie derecho y ascenso continuo hacia la derecha
-    const ground = (x) => {
-      const yLow = footL[1] + 2 - m * (x - footL[0]);
-      const yHigh = footR[1] + 2 - m * (x - footR[0]);
-      const t = Math.max(0, Math.min(1, (x - (footL[0] + 32)) / Math.max(18, footR[0] - footL[0] - 62)));
-      const smooth = t * t * (3 - 2 * t);
-      return yLow * (1 - smooth) + yHigh * smooth;
-    };
+    // Geometría de la Escalinata Olímpica:
+    // El pie izquierdo apoya en el peldaño k = 0 y el pie derecho en el peldaño k = 2
+    const stepW = Math.max(38, (footR[0] - footL[0]) / 2);
+    const riserH = Math.max(10, (footL[1] - footR[1]) / 2);
+    const stairOriginX = footL[0] - stepW * 0.48;
+    const stairOriginY = footL[1] + 2;
+    const m = riserH / stepW;
+
+    const stepAt = (idx) => ({
+      idx,
+      x0: stairOriginX + idx * stepW,
+      x1: stairOriginX + (idx + 1) * stepW,
+      y: stairOriginY - idx * riserH,
+    });
+
+    const steps = [];
+    for (let idx = -9; idx <= 13; idx++) {
+      steps.push(stepAt(idx));
+    }
+
+    const ground = (x) => stairOriginY - m * (x - stairOriginX);
 
     return {
       deform,
@@ -241,6 +255,11 @@ export default function GoldenAtlasHillAscent({ E = 0.7, S = 0.65, K = 0.68, cla
       avg,
       entropy,
       m,
+      stepW,
+      riserH,
+      stairOriginX,
+      stairOriginY,
+      steps,
       baseW,
       baseH,
       boxX,
@@ -322,21 +341,46 @@ export default function GoldenAtlasHillAscent({ E = 0.7, S = 0.65, K = 0.68, cla
     }
   }, [titanImg, rig]);
 
-  const { ground, H, avg, entropy, m, palmL, palmR, shL, shR, footL, footR, sx, sy, sr } = rig;
-  const ridgeCol = entropy > 0.5 ? '#E0745A' : '#F2C94C';
+  const {
+    ground,
+    H,
+    avg,
+    entropy,
+    m,
+    stepW,
+    riserH,
+    steps,
+    palmL,
+    palmR,
+    shL,
+    shR,
+    sx,
+    sy,
+    sr,
+  } = rig;
+
+  const isEntropic = entropy > 0.5;
+  const trimCol = isEntropic ? '#E0745A' : '#F2C94C';
   const nRocks = Math.round((9 * Math.max(0, entropy - 0.15)) / 0.85);
-  const nSprouts = Math.round((11 * Math.max(0, H - 0.35)) / 0.65);
+  const nSprouts = Math.round((9 * Math.max(0, H - 0.35)) / 0.65);
   const leafScale = 0.58 + 0.62 * e;
   const lift = Math.max(0, (H - 0.52) / 0.48);
 
-  // Polilínea suave de la cresta montañosa que pasa exactamente bajo ambos pies del Titán
-  const ridgePoints = useMemo(() => {
-    const pts = [];
-    for (let x = -10; x <= 910; x += 20) {
-      pts.push(`${x},${ground(x).toFixed(1)}`);
-    }
+  // Profundidad 3D en perspectiva de cada peldaño de mármol
+  const depthDX = -58;
+  const depthDY = -22;
+
+  // Polígono del muro lateral de soporte bajo los peldaños
+  const wallPolygon = useMemo(() => {
+    const pts = [`-60,820`];
+    steps.forEach((st) => {
+      pts.push(`${st.x0.toFixed(1)},${(st.y + riserH).toFixed(1)}`);
+      pts.push(`${st.x0.toFixed(1)},${st.y.toFixed(1)}`);
+      pts.push(`${st.x1.toFixed(1)},${st.y.toFixed(1)}`);
+    });
+    pts.push(`960,820`);
     return pts.join(' ');
-  }, [ground]);
+  }, [steps, riserH]);
 
   const innerStars = useMemo(
     () => [
@@ -358,9 +402,31 @@ export default function GoldenAtlasHillAscent({ E = 0.7, S = 0.65, K = 0.68, cla
   );
 
   return (
-    <div className={`relative w-full max-w-5xl mx-auto select-none aspect-[9/8] ${className}`}>
+    <div className={`relative w-full max-w-5xl mx-auto select-none aspect-[9/8] overflow-hidden rounded-2xl ${className}`}>
       {/* =====================================================================
-          CAPA 1 (FONDO SVG): CIELO OLÍMPICO, CERRO REACTIVO Y ESFERA CÓSMICA
+          CAPA 0: FONDO PANORÁMICO DEL MONTE OLIMPO (CALIDAD VIDEOJUEGO)
+          ===================================================================== */}
+      <img
+        src={olympusBgUrl}
+        alt="Monte Olimpo"
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none transition-all duration-700"
+        style={{
+          filter: isEntropic
+            ? 'brightness(0.78) contrast(1.12) saturate(0.9)'
+            : 'brightness(0.92) contrast(1.08) saturate(1.12)',
+        }}
+      />
+      {/* Viñeta atmosférica para dar máximo contraste al Titán y a la Esfera */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(circle at 50% 38%, rgba(8, 15, 30, 0.18) 0%, rgba(7, 13, 24, 0.52) 68%, rgba(5, 9, 18, 0.82) 100%)',
+        }}
+      />
+
+      {/* =====================================================================
+          CAPA 1 (SVG): ESCALINATA MONUMENTAL OLÍMPICA 3D Y ESFERA CÓSMICA
           ===================================================================== */}
       <svg
         viewBox="0 0 900 800"
@@ -373,27 +439,38 @@ export default function GoldenAtlasHillAscent({ E = 0.7, S = 0.65, K = 0.68, cla
             <stop offset="45%" stopColor="#F2C94C" />
             <stop offset="100%" stopColor="#B77F12" />
           </linearGradient>
+
           <radialGradient id="sphereGrad" cx="38%" cy="32%" r="75%">
             <stop offset="0%" stopColor="#27489A" />
             <stop offset="40%" stopColor="#12275B" />
             <stop offset="80%" stopColor="#0A1332" />
             <stop offset="100%" stopColor="#050918" />
           </radialGradient>
+
           <radialGradient id="auraGrad" cx="50%" cy="50%" r="50%">
-            <stop offset="52%" stopColor="#4C8DFF" stopOpacity={0.28 + 0.35 * H} />
-            <stop offset="82%" stopColor="#F2C94C" stopOpacity={0.12 + 0.2 * H} />
+            <stop offset="52%" stopColor="#4C8DFF" stopOpacity={0.32 + 0.35 * H} />
+            <stop offset="82%" stopColor="#F2C94C" stopOpacity={0.14 + 0.22 * H} />
             <stop offset="100%" stopColor="#4C8DFF" stopOpacity="0" />
           </radialGradient>
-          <linearGradient id="hillGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#22364A" />
-            <stop offset="50%" stopColor="#13202E" />
-            <stop offset="100%" stopColor="#080E15" />
+
+          {/* Gradientes de Mármol Olímpico para Peldaños y Muro */}
+          <linearGradient id="marbleTread" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor={isEntropic ? '#4A3B3C' : '#566A80'} />
+            <stop offset="55%" stopColor={isEntropic ? '#2E2528' : '#334659'} />
+            <stop offset="100%" stopColor="#182330" />
           </linearGradient>
-          <radialGradient id="olympusSky" cx="50%" cy="24%" r="62%">
-            <stop offset="0%" stopColor="#354C66" stopOpacity="0.42" />
-            <stop offset="60%" stopColor="#192636" stopOpacity="0.2" />
-            <stop offset="100%" stopColor="#080E18" stopOpacity="0" />
-          </radialGradient>
+
+          <linearGradient id="marbleRiser" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#2A3B4D" />
+            <stop offset="100%" stopColor="#101822" />
+          </linearGradient>
+
+          <linearGradient id="stairWallGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#1E2D3D" />
+            <stop offset="45%" stopColor="#121C27" />
+            <stop offset="100%" stopColor="#070C12" />
+          </linearGradient>
+
           <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
             <feGaussianBlur stdDeviation="2.8" result="b" />
             <feMerge>
@@ -401,6 +478,7 @@ export default function GoldenAtlasHillAscent({ E = 0.7, S = 0.65, K = 0.68, cla
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
+
           <filter id="flare" x="-100%" y="-100%" width="300%" height="300%">
             <feGaussianBlur stdDeviation="3.2" result="b" />
             <feMerge>
@@ -411,57 +489,102 @@ export default function GoldenAtlasHillAscent({ E = 0.7, S = 0.65, K = 0.68, cla
           </filter>
         </defs>
 
-        {/* Nubes dramáticas del Monte Olimpo */}
-        <ellipse cx="450" cy="210" rx="440" ry="190" fill="url(#olympusSky)" />
-        <path
-          d="M 30 250 Q 220 190 430 225 T 870 195"
-          fill="none"
-          stroke="#527294"
-          strokeOpacity="0.16"
-          strokeWidth="32"
-          strokeLinecap="round"
-        />
-
-        {/* Ladera del Cerro con escalón rocoso natural bajo ambos pies y pendiente acoplada a Entropía / Sintropía */}
-        <polygon points={`-10,800 ${ridgePoints} 910,800`} fill="url(#hillGrad)" />
+        {/* ================= ESCALINATA MONUMENTAL DEL OLIMPO ================= */}
+        {/* Muro lateral de sillares de mármol bajo los peldaños */}
+        <polygon points={wallPolygon} fill="url(#stairWallGrad)" />
         <polygon
-          points={`-10,800 ${ridgePoints} 910,800`}
-          fill={entropy > 0.5 ? '#C86D51' : '#7DB2B2'}
-          fillOpacity={Math.abs(H - 0.5) * 0.22}
+          points={wallPolygon}
+          fill={isEntropic ? '#C86D51' : '#7DB2B2'}
+          fillOpacity={Math.abs(H - 0.5) * 0.16}
         />
 
-        {/* Estratos topográficos */}
-        {[26, 62, 102].map((d, i) => (
-          <polyline
-            key={i}
-            points={ridgePoints
-              .split(' ')
-              .map((pair) => {
-                const [px, py] = pair.split(',');
-                return `${px},${(parseFloat(py) + d).toFixed(1)}`;
-              })
-              .join(' ')}
-            fill="none"
-            stroke="#D4A373"
-            strokeOpacity={0.28 - i * 0.05}
-            strokeWidth="1.2"
-            strokeDasharray={i % 2 ? '2 7' : '8 6'}
-          />
-        ))}
-
-        {/* Arista principal del cerro */}
-        <polyline
-          points={ridgePoints}
-          fill="none"
-          stroke={entropy > 0.5 ? ridgeCol : 'url(#goldV)'}
-          strokeWidth="3.5"
-          filter="url(#glow)"
+        {/* Friso de Greca Griega Dorada que recorre el muro de la escalinata */}
+        <line
+          x1="-20"
+          y1={ground(-20) + 42}
+          x2="920"
+          y2={ground(920) + 42}
+          stroke={trimCol}
+          strokeOpacity="0.65"
+          strokeWidth="2"
+        />
+        <line
+          x1="-20"
+          y1={ground(-20) + 52}
+          x2="920"
+          y2={ground(920) + 52}
+          stroke={trimCol}
+          strokeOpacity="0.55"
+          strokeWidth="6"
+          strokeDasharray="8 6"
+        />
+        <line
+          x1="-20"
+          y1={ground(-20) + 62}
+          x2="920"
+          y2={ground(920) + 62}
+          stroke={trimCol}
+          strokeOpacity="0.65"
+          strokeWidth="2"
         />
 
-        {/* Entropía: rocas que se desprenden y ruedan cuesta abajo */}
+        {/* Peldaños 3D en perspectiva (Huella superior + Contrahuella vertical + Moldura dorada) */}
+        {steps.map((st) => {
+          const isFootStep = st.idx === 0 || st.idx === 2;
+          const x0 = st.x0;
+          const x1 = st.x1;
+          const y0 = st.y;
+          const y1 = st.y + riserH;
+
+          const treadPts = `${x0.toFixed(1)},${y0.toFixed(1)} ${x1.toFixed(1)},${y0.toFixed(1)} ${(x1 + depthDX).toFixed(1)},${(y0 + depthDY).toFixed(1)} ${(x0 + depthDX).toFixed(1)},${(y0 + depthDY).toFixed(1)}`;
+          const riserPts = `${x0.toFixed(1)},${y0.toFixed(1)} ${(x0 + depthDX).toFixed(1)},${(y0 + depthDY).toFixed(1)} ${(x0 + depthDX).toFixed(1)},${(y1 + depthDY).toFixed(1)} ${x0.toFixed(1)},${y1.toFixed(1)}`;
+
+          return (
+            <g key={st.idx}>
+              {/* Contrahuella vertical (Riser) */}
+              <polygon
+                points={riserPts}
+                fill="url(#marbleRiser)"
+                stroke={trimCol}
+                strokeOpacity="0.45"
+                strokeWidth="1"
+              />
+              {/* Huella superior de mármol (Tread) */}
+              <polygon
+                points={treadPts}
+                fill="url(#marbleTread)"
+                stroke={isFootStep ? '#FFF1B8' : trimCol}
+                strokeOpacity={isFootStep ? 0.95 : 0.7}
+                strokeWidth={isFootStep ? 2.2 : 1.3}
+              />
+              {/* Borde frontal biselado en oro/terracota del escalón */}
+              <line
+                x1={x0}
+                y1={y0}
+                x2={x1}
+                y2={y0}
+                stroke={isFootStep ? '#FFF7D6' : trimCol}
+                strokeWidth={isFootStep ? 3.2 : 2.2}
+                filter={isFootStep ? 'url(#glow)' : undefined}
+              />
+              {/* Grietas volcánicas en régimen entrópico */}
+              {isEntropic && st.idx % 2 === 0 && (
+                <path
+                  d={`M ${x0 + stepW * 0.35} ${y0} L ${x0 + stepW * 0.28} ${y0 + riserH * 0.55} L ${x0 + stepW * 0.42} ${y0 + riserH * 0.9}`}
+                  fill="none"
+                  stroke="#E0745A"
+                  strokeWidth="1.4"
+                  opacity="0.75"
+                />
+              )}
+            </g>
+          );
+        })}
+
+        {/* Entropía: fragmentos de mármol que ruedan escaleras abajo */}
         {Array.from({ length: nRocks }, (_, i) => {
           const x0 = 560 + ((i * 97) % 300);
-          const y0 = ground(x0) - 4;
+          const y0 = ground(x0) - 6;
           const dur = 3 + (i % 4) * 0.7;
           return (
             <g key={`r${i}`} opacity="0.9">
@@ -493,10 +616,13 @@ export default function GoldenAtlasHillAscent({ E = 0.7, S = 0.65, K = 0.68, cla
           );
         })}
 
-        {/* Sintropía: brotes dorados y verdes que crecen sobre el sendero */}
+        {/* Sintropía: brotes de laurel dorado y celadón en los peldaños superiores */}
         {Array.from({ length: nSprouts }, (_, i) => {
-          const x = 555 + i * 30;
-          const y = ground(x);
+          const stIdx = 3 + i;
+          const st = steps.find((sObj) => sObj.idx === stIdx);
+          if (!st) return null;
+          const x = st.x0 + stepW * 0.55;
+          const y = st.y;
           const h = 10 + 10 * H + (i % 3) * 3;
           return (
             <g key={`s${i}`} transform={`translate(${x} ${y})`}>
@@ -511,14 +637,9 @@ export default function GoldenAtlasHillAscent({ E = 0.7, S = 0.65, K = 0.68, cla
           );
         })}
 
-        {/* Cumbre Sintrópica */}
-        <g transform={`translate(845 ${ground(845) - 24})`}>
-          <path d={star4(14)} fill="#7DB2B2" filter="url(#flare)" />
-        </g>
-
         {/* ================= ESFERA CÓSMICA AZUL OSCURA CON ESTRELLAS ================= */}
         <g>
-          <circle cx={sx} cy={sy} r={sr + 42} fill="url(#auraGrad)" />
+          <circle cx={sx} cy={sy} r={sr + 44} fill="url(#auraGrad)" />
           <Branch scale={leafScale} flip={1} x={sx - sr - 24} y={sy + 8} />
           <Branch scale={leafScale} flip={-1} x={sx + sr + 24} y={sy + 8} />
           <circle
@@ -527,7 +648,7 @@ export default function GoldenAtlasHillAscent({ E = 0.7, S = 0.65, K = 0.68, cla
             r={sr}
             fill="url(#sphereGrad)"
             stroke="url(#goldV)"
-            strokeWidth={2.6 + avg}
+            strokeWidth={2.8 + avg}
             filter="url(#glow)"
           />
           <circle
@@ -536,7 +657,7 @@ export default function GoldenAtlasHillAscent({ E = 0.7, S = 0.65, K = 0.68, cla
             r={sr - 3.5}
             fill="none"
             stroke="#6CB4FF"
-            strokeOpacity={0.38 + 0.42 * H}
+            strokeOpacity={0.4 + 0.42 * H}
             strokeWidth="1.5"
           />
           {innerStars.map(([dx, dy, r], i) => (
@@ -545,7 +666,7 @@ export default function GoldenAtlasHillAscent({ E = 0.7, S = 0.65, K = 0.68, cla
                 d={star4(r * (1 + 0.4 * H))}
                 fill="#FFFFFF"
                 filter={r > 5 ? 'url(#flare)' : undefined}
-                opacity={0.8 + 0.2 * H}
+                opacity={0.82 + 0.18 * H}
               />
             </g>
           ))}
@@ -599,7 +720,7 @@ export default function GoldenAtlasHillAscent({ E = 0.7, S = 0.65, K = 0.68, cla
         ref={canvasRef}
         width={W}
         height={H_VIEW}
-        className="absolute inset-0 w-full h-full pointer-events-none drop-shadow-[0_10px_24px_rgba(0,0,0,0.75)]"
+        className="absolute inset-0 w-full h-full pointer-events-none drop-shadow-[0_12px_28px_rgba(0,0,0,0.82)]"
       />
 
       {/* =====================================================================
