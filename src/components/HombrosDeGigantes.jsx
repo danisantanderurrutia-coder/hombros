@@ -66,7 +66,7 @@ export default function HombrosDeGigantes() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-[#D4C9B8]">
         <div>
           <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#487075] text-white shadow-xs">
-            Marco Epistémico (Lámina 25)
+            Genealogía Epistémica Canónica
           </span>
           <h3 className="text-xl sm:text-2xl font-serif font-extrabold text-black tracking-tight mt-1.5 flex items-center gap-2">
             Construir sobre Hombros de Gigantes

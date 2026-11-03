@@ -79,18 +79,23 @@ export default function ThreeShouldersBreakdown({ santanderState, territory }) {
 
   return (
     <div className="rounded-3xl p-6 sm:p-8 transition-all duration-300 shadow-2xl card-magenta space-y-6">
-      {/* Header with Geometric Mean Formula */}
+      {/* Header with Geometric Mean Formula & Hypothesis Framing */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-white/10">
         <div>
-          <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full border bg-[#2A1B3D] border-[#D83F87]/40 text-[#D83F87] shadow-sm">
-            Nivel 1, 2 & 3: Normalización Biofísica, Hombros y Media Geométrica
-          </span>
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full border bg-[#2A1B3D] border-[#D83F87]/40 text-[#D83F87] shadow-sm">
+              Nivel 1, 2 & 3: Hipótesis Paramétricas, Hombros y Media Geométrica
+            </span>
+            <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full border bg-emerald-950/80 border-emerald-500/40 text-emerald-300 shadow-sm">
+              Fase Pre-Fondo · Validación Empírica & Acople AgriTwin
+            </span>
+          </div>
           <h3 className="text-xl sm:text-2xl font-bold font-serif tracking-tight mt-2 text-white flex items-center gap-2.5">
             <Layers className="w-5 h-5 text-[#D83F87]" />
-            Capacidad Portante: H = (S · E · K)<sup>1/3</sup> · Φ<sub>crit</sub>
+            Hipótesis de Capacidad Portante: H = (S · E · K)<sup>1/3</sup> · Φ<sub>crit</sub>
           </h3>
           <p className="text-xs text-slate-300 mt-1 max-w-2xl leading-relaxed">
-            <strong>Principio de No-Compensación de Liebig:</strong> Si cualquier pilar cae bajo el umbral crítico (H<sub>i</sub> &lt; 0.25), se activa la penalización estructural Φ<sub>crit</sub>. El capital financiero (K) jamás puede compensar un acuífero o suelo destruido (E).
+            <strong>Estatus Epistemológico (Hipótesis de Trabajo):</strong> Los puntajes de los Tres Hombros operan como <em>hipótesis paramétricas falsables</em> formuladas con registros abiertos (Tier 1/2) para nuestra postulación a fondos de investigación. Su implementación financiada desplegará validación empírica <strong>Tier 3</strong> en terreno (sondeos hidrogeofísicos SEV, Eddy Covariance y telemetría satelital <strong>AgriTwin</strong> Sentinel-2 STAC/COG).
           </p>
         </div>
 

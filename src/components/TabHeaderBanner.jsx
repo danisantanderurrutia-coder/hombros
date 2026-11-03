@@ -12,12 +12,20 @@ const TAB_METADATA = {
     accent: '#7DB2B2',
   },
   audit: {
-    tag: 'PROTOCOLO SEIA 2.0 & SOLVENCIA METABÓLICA',
-    title: 'Auditoría de Tracción Territorial, Normalización & Dictamen Biofísico',
-    subtitle: 'Trazabilidad desde el dato físico crudo al espacio [0, 1], ensayo de carga virtual pre-inversión (σ₀ → σ_proj) y certificación contra el canibalismo metabólico Scope 3.',
+    tag: 'PROTOCOLO SEIA 2.0, HIPÓTESIS DE CUENCA & ROI BIOFÍSICO',
+    title: 'Auditoría de Tracción Territorial, Hipótesis de Hombros & Dictamen Pre-Inversional',
+    subtitle: 'Formulación de hipótesis paramétricas [0, 1], ensayo de tracción pre-inversión (σ₀ → σ_proj), conector de telemetría AgriTwin y calculadora de Costo de Inacción vs. Inversión Sintrópica.',
     image: getAssetUrl('art/header_cases_metrics.jpg'),
     icon: GitCompare,
     accent: '#C86D51',
+  },
+  articles: {
+    tag: 'INCIDENCIA LEGISLATIVA, REFORMA AL SEIA & ENSAYOS OLCA',
+    title: 'Artículos de Política Pública, Reforma al SEIA 2.0 & Tetralogía OLCA',
+    subtitle: 'Propuesta estrella de Reforma Estructural a la Ley 19.300 (Cláusula de Salvaguarda Pre-Inversional), 4 Policy Briefs adaptados de los ensayos publicados en el OLCA y arquitectura de integración con AgriTwin.',
+    image: getAssetUrl('art/header_theory_library.jpg'),
+    icon: BookOpen,
+    accent: '#28475A',
   },
   world_map: {
     tag: 'ATLAS GEODÉSICO & CONTRASTE GLOBAL',

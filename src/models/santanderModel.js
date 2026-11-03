@@ -144,7 +144,7 @@ export function calculateHombrosFullState(territoryData, userModifiers = { press
     actionCode = 'HALT_EXTRACTION';
   }
 
-  // 8. If/Then Actionable Signals (Lámina 21)
+  // 8. If/Then Actionable Governance Signals (Protocolos Vinculantes de Cuenca)
   const activeAlerts = [];
   if (hasCriticalShoulder) {
     activeAlerts.push({

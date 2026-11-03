@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Globe, MapPin, AlertCircle, ShieldAlert, CheckCircle2, ChevronRight, Activity, Filter, Info, Sparkles, Building2, Droplets, Mountain } from 'lucide-react';
-import { InlineMath } from './KaTeXMath';
+import { InlineMath, LatexText } from './KaTeXMath';
 
 export const BENCHMARK_CITIES = [
   // =========================================================================

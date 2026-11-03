@@ -9,6 +9,7 @@ import ScenarioSimulator from './components/ScenarioSimulator';
 import DataSourcesView from './components/DataSourcesView';
 import TheoryView from './components/TheoryView';
 import MetabolicAuditView from './components/MetabolicAuditView';
+import ArticlesPolicyView from './components/ArticlesPolicyView';
 import SolarpunkAtlasCanvas from './components/SolarpunkAtlasCanvas';
 import { INITIAL_TERRITORIES } from './models/territories';
 import { evaluateTerritoryState } from './models/mechanics';
@@ -61,6 +62,10 @@ function AppContent() {
             <MetabolicAuditView />
           )}
 
+          {activeTab === 'articles' && (
+            <ArticlesPolicyView onNavigateTab={setActiveTab} />
+          )}
+
           {(activeTab === 'world_map' || activeTab === 'cases' || activeTab === 'data_sources') && (
             <WorldTerritoriesMap
               territories={territories}
@@ -81,17 +86,17 @@ function AppContent() {
         </main>
       </div>
 
-      {/* Footer Solarpunk Travertino */}
+      {/* Footer Institucional del Think Tank & Laboratorio */}
       <footer className="border-t py-6 mt-12 transition-colors duration-400 text-xs border-[#D4C9B8]/70 bg-[#FAF7F0]/95 text-slate-600 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full inline-block bg-[#487075] animate-pulse"></span>
             <span>
-              <strong className="font-serif font-bold text-slate-900 tracking-wide">HOMBROS</strong> · Sistema Metabólico Territorial & Autosustento Sintrópico
+              <strong className="font-serif font-bold text-slate-900 tracking-wide">HOMBROS</strong> · Programa de Investigación en Economía Biofísica, Mecánica Territorial & Gobernanza Sintrópica
             </span>
           </div>
-          <div className="text-[11px] font-mono text-[#487075] font-bold">
-            [ Solarpunk Travertino & Celadón Edition · Cono Sur & Europa ]
+          <div className="text-[11px] font-mono text-[#28475A] font-bold">
+            [ Laboratorio de Hipótesis Biofísicas & Incidencia Pública · Cono Sur & Europa ]
           </div>
         </div>
       </footer>

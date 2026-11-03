@@ -3,7 +3,8 @@ import { motion } from 'framer-motion';
 import {
   ShieldCheck, ShieldAlert, Scale, Calculator, Activity, FileCheck2,
   AlertTriangle, CheckCircle2, Flame, Globe, Sliders, Printer,
-  ArrowRight, Database, Layers, TrendingUp, Lock, Unlock, RotateCcw, Image
+  ArrowRight, Database, Layers, TrendingUp, Lock, Unlock, RotateCcw,
+  PlusCircle, Cpu, Download, Coins, Sprout
 } from 'lucide-react';
 import { INITIAL_TERRITORIES } from '../models/territories';
 import { calculateHombrosFullState } from '../models/santanderModel';
@@ -15,14 +16,14 @@ const INVESTMENT_ARCHETYPES = [
   {
     id: 'baseline',
     name: '0. Línea Base Actual (Sin Proyecto Incremental)',
-    badge: 'Estado Basal σ₀',
+    badge: 'Hipótesis Basal σ₀',
     deltaD1: 0.0,
     deltaD2: 0.0,
     deltaD3: 0.0,
     deltaE: 0.0,
     deltaS: 0.0,
     deltaK: 0.0,
-    description: 'Evalúa la solvencia metabólica actual de la cuenca sin añadir nueva carga extractiva ni inmobiliaria.'
+    description: 'Evalúa la hipótesis de solvencia metabólica actual de la cuenca sin añadir nueva carga extractiva ni inmobiliaria.'
   },
   {
     id: 'agro_forestal',
@@ -74,17 +75,92 @@ const INVESTMENT_ARCHETYPES = [
   }
 ];
 
+// Preset de Cuenca Propia alimentada por el Gemelo Digital AgriTwin (Río Longaví / Bullileo / Retiro)
+const AGRITWIN_LONGAVI_PRESET = {
+  id: 'custom_territory',
+  name: 'Cuenca Río Longaví - Bullileo (AgriTwin)',
+  country: 'Chile · Maule Sur',
+  scale: 'Cuenca Hidro-Agrícola (122.070 ha · 5 APRs)',
+  population: 21400,
+  isCustom: true,
+  variables: {
+    s1: 0.72, // Cohesión Comités APR (Bullileo, Retiro, Copihue, Romeral, Villaseca)
+    s2: 0.58, // Capacidad institucional comunal
+    s3: 0.64, // Saberes campesinos + telemetría
+    s4: 0.76, // Baja violencia urbana, amenaza piro-forestal en cabeceras
+    e1: 0.52, // Sentinel-2 NDRE/NDVI mosaico transicional + relicto nativo
+    e2: 0.48, // Embalse Bullileo (110 hm³) + recesión Maillet-Boussinesq Río Longaví
+    e3: 0.61, // SOC_proxy Sentinel-2 SWIR + SoilGrids franco-arcilloso (3.8% MO)
+    e4: 0.55, // Exposición a viento Puelche y riesgo WUI en laderas con pino
+    k1: 0.56, // Diversificación: avellano, viña, cerezo, arroz, pradera, apicultura
+    k2: 0.44, // Autonomía presupuestaria rural
+    k3: 0.54, // Distribución predial mixta
+    k4: 0.62  // Balance biótico con Tranque Keyline (18.500 m³) y manejo FAO-56
+  },
+  pressureVars: {
+    d1: 0.44,
+    d2: 0.22,
+    d3: 0.36
+  },
+  kappa: 0.38,
+  materialProperties: {
+    modulusElasticity: 1.28,
+    yieldStrength: 0.85,
+    fractureToughness: 1.25
+  },
+  emissionsMetrics: {
+    scope1Direct: 1.4,
+    scope2Grid: 0.8,
+    scope3Upstream: 1.9,
+    consumptionTotal: 4.1,
+    biogenicSequestration: 2.8
+  }
+};
+
 export default function MetabolicAuditView() {
   const [selectedTerritoryId, setSelectedTerritoryId] = useState('chanco');
   const [selectedArchetypeId, setSelectedArchetypeId] = useState('agro_forestal');
-  const [activeAuditStep, setActiveAuditStep] = useState('all'); // 'all' | 'step1_norm' | 'step2_traction' | 'step3_rating'
+  const [activeAuditStep, setActiveAuditStep] = useState('all'); // 'all' | 'step1_norm' | 'step2_traction' | 'step3_rating' | 'step4_roi'
   const [rawOverrides, setRawOverrides] = useState({});
   const [customDeltaD, setCustomDeltaD] = useState(null);
   const [customDeltaE, setCustomDeltaE] = useState(null);
 
+  // Estado para "+ Evaluar Tu Propio Territorio / Comuna"
+  const [customMeta, setCustomMeta] = useState({
+    name: AGRITWIN_LONGAVI_PRESET.name,
+    region: AGRITWIN_LONGAVI_PRESET.country,
+    scale: AGRITWIN_LONGAVI_PRESET.scale,
+    population: AGRITWIN_LONGAVI_PRESET.population,
+    d1: AGRITWIN_LONGAVI_PRESET.pressureVars.d1,
+    kappa: AGRITWIN_LONGAVI_PRESET.kappa,
+    agritwinLinked: true
+  });
+
+  // Estado para la Calculadora de ROI Biofísico (Costo de Inacción vs. Inversión Sintrópica)
+  const [roiInputs, setRoiInputs] = useState({
+    aprFamiliesWaterTruck: 1200, // Familias abastecidas por camiones aljibe (~$1.450 USD/familia/año)
+    annualFireRiskHectares: 1800, // Hectáreas en riesgo anual de incendio (~$920 USD/ha combate + pérdida edáfica)
+    syntropicHectaresTarget: 2500, // Hectáreas a reconvertir con Keyline + Bosque Nativo + Cortafuegos WUI (~$1.350 USD/ha inversión única escalonada)
+    horizonYears: 10
+  });
+
   const territory = useMemo(() => {
+    if (selectedTerritoryId === 'custom_territory') {
+      return {
+        ...AGRITWIN_LONGAVI_PRESET,
+        name: customMeta.name,
+        country: customMeta.region,
+        scale: customMeta.scale,
+        population: customMeta.population,
+        kappa: customMeta.kappa,
+        pressureVars: {
+          ...AGRITWIN_LONGAVI_PRESET.pressureVars,
+          d1: customMeta.d1
+        }
+      };
+    }
     return INITIAL_TERRITORIES.find(t => t.id === selectedTerritoryId) || INITIAL_TERRITORIES[0];
-  }, [selectedTerritoryId]);
+  }, [selectedTerritoryId, customMeta]);
 
   const archetype = useMemo(() => {
     return INVESTMENT_ARCHETYPES.find(a => a.id === selectedArchetypeId) || INVESTMENT_ARCHETYPES[0];
@@ -93,6 +169,32 @@ export default function MetabolicAuditView() {
   const handleSelectTerritory = (id) => {
     setSelectedTerritoryId(id);
     setRawOverrides({});
+  };
+
+  const handleActivateCustomTerritory = (useAgriTwinPreset = true) => {
+    setSelectedTerritoryId('custom_territory');
+    setRawOverrides({});
+    if (useAgriTwinPreset) {
+      setCustomMeta({
+        name: 'Cuenca Río Longaví - Bullileo (AgriTwin)',
+        region: 'Chile · Maule Sur',
+        scale: 'Cuenca Hidro-Agrícola (122.070 ha · 5 APRs)',
+        population: 21400,
+        d1: 0.44,
+        kappa: 0.38,
+        agritwinLinked: true
+      });
+    } else {
+      setCustomMeta({
+        name: 'Mi Comuna / Cuenca en Estudio',
+        region: 'Hipótesis Local Pre-Fondo',
+        scale: 'Escala Comunal / Subcuenca',
+        population: 15000,
+        d1: 0.48,
+        kappa: 0.32,
+        agritwinLinked: false
+      });
+    }
   };
 
   const handleSelectArchetype = (id) => {
@@ -251,6 +353,79 @@ export default function MetabolicAuditView() {
     };
   }, [territory, effectiveVariables, baselineState, archetype, customDeltaD, customDeltaE]);
 
+  // Cálculo del ROI Biofísico: Costo de Inacción (Gasto Paliativo Entrópico) vs. Inversión Sintrópica (OLCA / Maule)
+  const roiMetrics = useMemo(() => {
+    const annualWaterTruckUSD = roiInputs.aprFamiliesWaterTruck * 1450; // Costo fiscal camiones aljibe + logística DGA/SENAPRED
+    const annualFireSuppressionUSD = roiInputs.annualFireRiskHectares * 920; // Combate aéreo/terrestre + pérdida de suelo y subsidios de emergencia
+    const annualInactionTotalUSD = annualWaterTruckUSD + annualFireSuppressionUSD;
+    const cumulativeInactionUSD = annualInactionTotalUSD * roiInputs.horizonYears;
+
+    // Inversión Sintrópica (Keyline + Restauración de Vegas + Fajas Agroforestales WUI 45m + Soberanía APR)
+    const capexSyntropicUSD = roiInputs.syntropicHectaresTarget * 1350;
+    const annualMaintenanceUSD = capexSyntropicUSD * 0.06; // 6% OPEX cooperativo anual
+    const annualAgroforestryRevenueUSD = roiInputs.syntropicHectaresTarget * 410; // Retorno local biomasa, miel, frutales/agroforestería y agua infiltrada
+    const residualPalliativeUSD = annualInactionTotalUSD * 0.18; // Reducción del 82% en gasto de emergencia tras restaurar H
+
+    const cumulativeSyntropicNetCostUSD =
+      capexSyntropicUSD +
+      (annualMaintenanceUSD + residualPalliativeUSD - annualAgroforestryRevenueUSD) * roiInputs.horizonYears;
+
+    const netFiscalSavingsUSD = cumulativeInactionUSD - cumulativeSyntropicNetCostUSD;
+    const benefitCostRatio = ((cumulativeInactionUSD - residualPalliativeUSD * roiInputs.horizonYears + annualAgroforestryRevenueUSD * roiInputs.horizonYears) /
+      Math.max(1, capexSyntropicUSD + annualMaintenanceUSD * roiInputs.horizonYears)).toFixed(2);
+    const paybackYears = Math.max(1.2, (capexSyntropicUSD / Math.max(1, annualInactionTotalUSD * 0.82 + annualAgroforestryRevenueUSD - annualMaintenanceUSD))).toFixed(1);
+
+    return {
+      annualWaterTruckM: (annualWaterTruckUSD / 1e6).toFixed(2),
+      annualFireSuppressionM: (annualFireSuppressionUSD / 1e6).toFixed(2),
+      annualInactionTotalM: (annualInactionTotalUSD / 1e6).toFixed(2),
+      cumulativeInactionM: (cumulativeInactionUSD / 1e6).toFixed(2),
+      capexSyntropicM: (capexSyntropicUSD / 1e6).toFixed(2),
+      cumulativeSyntropicNetCostM: (Math.max(0, cumulativeSyntropicNetCostUSD) / 1e6).toFixed(2),
+      netFiscalSavingsM: (netFiscalSavingsUSD / 1e6).toFixed(2),
+      benefitCostRatio,
+      paybackYears
+    };
+  }, [roiInputs]);
+
+  const handleExportHypothesisJSON = () => {
+    const payload = {
+      protocol: 'HOMBROS-SEIA-2.0-HYPOTHESIS-ACTA',
+      generatedAt: new Date().toISOString(),
+      epistemologicalStatus: 'Hipótesis de Calibración Pre-Inversional (Postulación a Fondo de Investigación)',
+      territory: {
+        id: territory.id,
+        name: territory.name,
+        region: territory.country,
+        scale: territory.scale,
+        population: territory.population,
+        agritwinCoupled: selectedTerritoryId === 'custom_territory' && customMeta.agritwinLinked
+      },
+      normalizedShouldersHypothesis: {
+        S: baselineState.S,
+        E: baselineState.E,
+        K: baselineState.K,
+        H_effective: baselineState.H,
+        phiCrit: baselineState.phiCrit,
+        variables: effectiveVariables
+      },
+      tractionStressTest: {
+        archetypeEvaluated: archetype.name,
+        sigma0: baselineState.sigma,
+        sigmaProj: tractionAudit.projState.sigma,
+        verdictCode: tractionAudit.verdictCode,
+        solvencyRating: tractionAudit.solvencyRating
+      }
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `HOMBROS_Hipotesis_${territory.id}_SEIA2.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   const varGroups = [
     { shoulder: 'S', title: 'Hombro Social (S)', keys: ['s1', 's2', 's3', 's4'], color: 'border-[#DA7B93]/40 bg-[#301b24]/60' },
     { shoulder: 'E', title: 'Hombro Ambiental (E)', keys: ['e1', 'e2', 'e3', 'e4'], color: 'border-[#376E6F]/50 bg-[#173132]/60' },
@@ -265,7 +440,7 @@ export default function MetabolicAuditView() {
       className="space-y-8 max-w-7xl mx-auto"
     >
       {/* =================================================================== */}
-      {/* HEADER EJECUTIVO DEL SISTEMA DE AUDITORÍA CANÓNICA HOMBROS          */}
+      {/* HEADER EJECUTIVO DEL SISTEMA DE AUDITORÍA & LABORATORIO DE HIPÓTESIS*/}
       {/* =================================================================== */}
       <div className="card-magenta rounded-3xl p-6 sm:p-8 shadow-2xl border border-[#D83F87]/35 relative overflow-hidden">
         <div className="absolute -top-20 -right-20 w-96 h-96 bg-[#D83F87]/15 rounded-full blur-3xl pointer-events-none" />
@@ -273,92 +448,223 @@ export default function MetabolicAuditView() {
           <div>
             <div className="flex flex-wrap items-center gap-2 mb-2">
               <span className="px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-[#C86D51] text-white">
-                Estándar Metodológico Verificable · SEIA 2.0 Biofísico
+                Laboratorio de Hipótesis Biofísicas · Fase Pre-Fondo de Investigación
               </span>
               <span className="px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-[#376E6F] text-white">
-                Protocolo OECD/JRC + Liebig + Cauchy
+                Protocolo SEIA 2.0 + Acople AgriTwin STAC/COG
               </span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-serif font-extrabold text-black tracking-tight">
-              Sistema de Auditoría de Tracción Territorial & Solvencia Metabólica
+              Sistema de Auditoría de Tracción Territorial, Hipótesis de Hombros & ROI Biofísico
             </h1>
             <p className="text-xs sm:text-sm text-black font-medium mt-1.5 max-w-3xl leading-relaxed">
-              De un sitio web informativo a una <strong>metodología auditable de 3 eslabones</strong>: 
-              <strong> (I)</strong> Normalización trazable desde el dato físico crudo (<InlineMath math="X_{\text{raw}} \to [0,1]" />), 
-              <strong> (II)</strong> Ensayo de Tracción Mecánica pre-inversión (<InlineMath math="\sigma_0 \to \sigma_{\text{proj}}" />) y 
-              <strong> (III)</strong> Rating de Solvencia Biofísica con fiscalización de Canibalismo Metabólico (Scope 3).
+              Los índices de los Tres Hombros (<InlineMath math="S, E, K" />) operan aquí como <strong>Hipótesis Paramétricas Falsables (Tier 1/2)</strong> diseñadas para ser validadas empíricamente en terreno mediante nuestra postulación a fondos de investigación y el acople con el Gemelo Digital <strong>AgriTwin</strong> (Sentinel-2 + FAO-56 + SEV).
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-2.5 shrink-0">
             <button
+              onClick={handleExportHypothesisJSON}
+              className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-[#487075] hover:bg-[#376E6F] text-white text-xs font-mono font-bold shadow-md transition-all"
+              title="Descargar Ficha JSON de Hipótesis Territorial"
+            >
+              <Download className="w-4 h-4" />
+              <span>Exportar Hipótesis (.JSON)</span>
+            </button>
+            <button
               onClick={() => window.print()}
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#28475A] hover:bg-[#1e3544] text-white text-xs font-mono font-bold shadow-md transition-all"
             >
               <Printer className="w-4 h-4" />
-              <span>Imprimir Acta de Dictamen</span>
+              <span>Imprimir Acta</span>
             </button>
           </div>
         </div>
 
-        {/* Selector de Territorio y Filtro de Eslabones */}
-        <div className="mt-6 pt-5 border-t border-[#D4C9B8] flex flex-col lg:flex-row lg:items-center justify-between gap-4 relative z-10">
-          <div className="flex flex-wrap items-center gap-1.5">
-            <span className="text-[11px] font-mono font-bold text-black mr-1">Cuenca Auditada:</span>
-            {INITIAL_TERRITORIES.map(t => (
+        {/* Selector de Territorio + Botón "+ Evaluar Tu Propio Territorio / AgriTwin" */}
+        <div className="mt-6 pt-5 border-t border-[#D4C9B8] flex flex-col gap-4 relative z-10">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-wrap items-center gap-1.5">
+              <span className="text-[11px] font-mono font-bold text-black mr-1">Hipótesis de Cuenca:</span>
+              {INITIAL_TERRITORIES.map(t => (
+                <button
+                  key={t.id}
+                  onClick={() => handleSelectTerritory(t.id)}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold transition-all border ${
+                    selectedTerritoryId === t.id
+                      ? 'bg-[#487075] text-white border-[#376E6F] shadow-md'
+                      : 'bg-white/85 text-slate-800 border-[#D4C9B8] hover:bg-white'
+                  }`}
+                >
+                  {t.name}
+                </button>
+              ))}
+
+              {/* Botón + Evaluar Tu Propio Territorio / Conector AgriTwin */}
               <button
-                key={t.id}
-                onClick={() => handleSelectTerritory(t.id)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold transition-all border ${
-                  selectedTerritoryId === t.id
-                    ? 'bg-[#487075] text-white border-[#376E6F] shadow-md'
-                    : 'bg-white/85 text-slate-800 border-[#D4C9B8] hover:bg-white'
+                onClick={() => handleActivateCustomTerritory(true)}
+                className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold transition-all border ${
+                  selectedTerritoryId === 'custom_territory'
+                    ? 'bg-[#28475A] text-amber-300 border-amber-400 ring-2 ring-amber-400/50 shadow-lg'
+                    : 'bg-[#140b22] text-amber-300 border-[#28475A] hover:bg-[#1e1233]'
                 }`}
               >
-                {t.name}
+                <PlusCircle className="w-3.5 h-3.5 text-amber-300" />
+                <span>+ Evaluar Tu Propio Territorio / Acople AgriTwin</span>
               </button>
-            ))}
+            </div>
+
+            <div className="flex flex-wrap items-center gap-1.5">
+              {[
+                { id: 'all', label: 'Flujo Completo (I–IV)' },
+                { id: 'step1_norm', label: 'I. Hipótesis [0,1]' },
+                { id: 'step2_traction', label: 'II. Tracción SEIA 2.0' },
+                { id: 'step3_rating', label: 'III. Rating & Acta' },
+                { id: 'step4_roi', label: 'IV. ROI Biofísico vs. Inacción' }
+              ].map(st => (
+                <button
+                  key={st.id}
+                  onClick={() => setActiveAuditStep(st.id)}
+                  className={`px-3 py-1.5 rounded-xl text-[11px] font-mono font-bold transition-all border ${
+                    activeAuditStep === st.id
+                      ? 'bg-[#C86D51] text-white border-[#927660]'
+                      : 'bg-white/70 text-slate-800 border-[#D4C9B8] hover:bg-white'
+                  }`}
+                >
+                  {st.label}
+                </button>
+              ))}
+            </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-1.5">
-            {[
-              { id: 'all', label: 'Flujo Completo (I + II + III)' },
-              { id: 'step1_norm', label: 'I. Dato Crudo → [0,1]' },
-              { id: 'step2_traction', label: 'II. Ensayo de Tracción' },
-              { id: 'step3_rating', label: 'III. Rating & Acta' }
-            ].map(st => (
-              <button
-                key={st.id}
-                onClick={() => setActiveAuditStep(st.id)}
-                className={`px-3 py-1.5 rounded-xl text-[11px] font-mono font-bold transition-all border ${
-                  activeAuditStep === st.id
-                    ? 'bg-[#C86D51] text-white border-[#927660]'
-                    : 'bg-white/70 text-slate-800 border-[#D4C9B8] hover:bg-white'
-                }`}
-              >
-                {st.label}
-              </button>
-            ))}
-          </div>
+          {/* Panel Desplegable cuando se activa "+ Evaluar Tu Propio Territorio / Acople AgriTwin" */}
+          {selectedTerritoryId === 'custom_territory' && (
+            <div className="p-5 rounded-2xl bg-[#140b22] text-white border border-amber-400/40 shadow-xl space-y-4">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-white/10">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <Cpu className="w-4 h-4 text-emerald-300" />
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-300 font-bold">
+                      Kit de Autoevaluación Municipal & Conector de Telemetría AgriTwin (Sentinel-2 STAC/COG + FAO-56)
+                    </span>
+                  </div>
+                  <h3 className="font-serif font-bold text-base sm:text-lg text-white mt-0.5">
+                    Configura tu Propia Hipótesis Comunal o Carga el Gemelo Digital de la Cuenca del Río Longaví
+                  </h3>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    onClick={() => handleActivateCustomTerritory(true)}
+                    className={`px-3 py-1.5 rounded-xl text-[11px] font-mono font-bold border transition-all ${
+                      customMeta.agritwinLinked
+                        ? 'bg-emerald-600 text-white border-emerald-300'
+                        : 'bg-white/10 text-slate-200 border-white/20 hover:bg-white/20'
+                    }`}
+                  >
+                    📡 Preset AgriTwin: Cuenca Longaví / Bullileo
+                  </button>
+                  <button
+                    onClick={() => handleActivateCustomTerritory(false)}
+                    className={`px-3 py-1.5 rounded-xl text-[11px] font-mono font-bold border transition-all ${
+                      !customMeta.agritwinLinked
+                        ? 'bg-amber-600 text-white border-amber-300'
+                        : 'bg-white/10 text-slate-200 border-white/20 hover:bg-white/20'
+                    }`}
+                  >
+                    ✏️ Plantilla Comunal en Blanco
+                  </button>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 text-xs font-mono">
+                <div>
+                  <label className="text-[10px] text-slate-400 uppercase block mb-1">Nombre Cuenca / Comuna</label>
+                  <input
+                    type="text"
+                    value={customMeta.name}
+                    onChange={(e) => setCustomMeta(prev => ({ ...prev, name: e.target.value }))}
+                    className="w-full px-3 py-1.5 rounded-lg bg-black/50 border border-white/20 text-white font-bold"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] text-slate-400 uppercase block mb-1">Región / País</label>
+                  <input
+                    type="text"
+                    value={customMeta.region}
+                    onChange={(e) => setCustomMeta(prev => ({ ...prev, region: e.target.value }))}
+                    className="w-full px-3 py-1.5 rounded-lg bg-black/50 border border-white/20 text-white"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] text-slate-400 uppercase block mb-1">Población Expuesta</label>
+                  <input
+                    type="number"
+                    value={customMeta.population}
+                    onChange={(e) => setCustomMeta(prev => ({ ...prev, population: parseInt(e.target.value || '0', 10) }))}
+                    className="w-full px-3 py-1.5 rounded-lg bg-black/50 border border-white/20 text-amber-300 font-bold"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] text-slate-400 uppercase block mb-1">
+                    Presión Extractiva Basal (D₁ = {customMeta.d1.toFixed(2)})
+                  </label>
+                  <input
+                    type="range"
+                    min="0.10"
+                    max="0.95"
+                    step="0.02"
+                    value={customMeta.d1}
+                    onChange={(e) => setCustomMeta(prev => ({ ...prev, d1: parseFloat(e.target.value) }))}
+                    className="w-full accent-amber-400 cursor-pointer mt-2"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] text-slate-400 uppercase block mb-1">
+                    Amortiguación Gobernanza (κ = {customMeta.kappa.toFixed(2)})
+                  </label>
+                  <input
+                    type="range"
+                    min="0.05"
+                    max="0.75"
+                    step="0.02"
+                    value={customMeta.kappa}
+                    onChange={(e) => setCustomMeta(prev => ({ ...prev, kappa: parseFloat(e.target.value) }))}
+                    className="w-full accent-emerald-400 cursor-pointer mt-2"
+                  />
+                </div>
+              </div>
+
+              {customMeta.agritwinLinked && (
+                <div className="p-3 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-[11px] font-mono text-emerald-200 flex flex-wrap items-center justify-between gap-2">
+                  <span>
+                    <strong>✓ Acople Tele-Hidrológico AgriTwin Activo:</strong> Las variables E₁..E₄ se inicializan con la reflectancia BOA Sentinel-2 L2A (Tile 18HYD: NDRE, NDMI, MNDWI, NBR, BSI/SOC) y el balance de masa del Embalse Bullileo (110 hm³) + 5 Comités APR.
+                  </span>
+                  <span className="px-2 py-0.5 rounded bg-emerald-500/30 text-white font-bold">
+                    Tier 2 → Tier 3 Ready
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
 
       {/* =================================================================== */}
-      {/* ESLABÓN I: AUDITORÍA DE NORMALIZACIÓN (DEL DATO CRUDO AL 0 - 1)     */}
+      {/* ESLABÓN I: AUDITORÍA DE HIPÓTESIS DE NORMALIZACIÓN (X_raw -> [0,1]) */}
       {/* =================================================================== */}
       {(activeAuditStep === 'all' || activeAuditStep === 'step1_norm') && (
         <div className="card-teal rounded-3xl p-6 sm:p-8 shadow-2xl border border-[#7DB2B2]/40 space-y-6">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-white/15">
             <div>
               <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-black/40 text-emerald-300 border border-emerald-500/30">
-                Eslabón Metodológico I · Protocolo Goalpost Scaling (OECD/JRC + Falkenmark + Liebig)
+                Eslabón Metodológico I · Hipótesis Paramétricas de Pre-Validación Empírica (OECD/JRC + Falkenmark + Liebig)
               </span>
               <h2 className="text-xl sm:text-2xl font-serif font-extrabold text-white mt-1.5 flex items-center gap-2">
                 <Calculator className="w-6 h-6 text-emerald-300" />
-                1. Trazabilidad de Normalización: Del Dato Físico Crudo al Espacio [0, 1]
+                1. Formulación de Hipótesis sobre los Tres Hombros: Del Dato Físico Crudo al Espacio [0, 1]
               </h2>
               <p className="text-xs text-slate-200 mt-1 max-w-3xl leading-relaxed">
-                Cada variable de <strong>{territory.name}</strong> se audita en su unidad física real antes de ingresar a la media geométrica. Puedes modificar cualquier dato crudo para verificar cómo las funciones de transferencia (Directa, Inversa o Logarítmica) recalculan el hombro y activan el corte de Liebig (<InlineMath math="H_i < 0.25" />).
+                En el marco de nuestra postulación a fondos de investigación, los valores de <strong>{territory.name}</strong> no se presentan como dogmas estadísticos cerrados, sino como <strong>hipótesis de trabajo transparentes y refutables</strong>. Ajusta cualquier deslizador físico para simular campañas de medición en terreno y observar cómo recalcula la capacidad portante (<InlineMath math="H" />) y el corte de Liebig (<InlineMath math="H_i < 0.25" />).
               </p>
             </div>
 
@@ -368,7 +674,7 @@ export default function MetabolicAuditView() {
                 className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-mono font-bold shadow-md shrink-0"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
-                <span>Restaurar Datos Oficiales ({Object.keys(rawOverrides).length})</span>
+                <span>Restaurar Hipótesis Base ({Object.keys(rawOverrides).length})</span>
               </button>
             )}
           </div>
@@ -384,7 +690,7 @@ export default function MetabolicAuditView() {
                   <div className="flex items-center justify-between pb-2.5 border-b border-white/10">
                     <div>
                       <h3 className="font-serif font-bold text-base text-white">{group.title}</h3>
-                      <span className="text-[10px] font-mono text-slate-300">Promedio Ponderado Nivel 2</span>
+                      <span className="text-[10px] font-mono text-slate-300">Hipótesis Nivel 2 (Pre-Fondo)</span>
                     </div>
                     <span className={`px-3 py-1 rounded-xl font-mono text-sm font-black border ${
                       isShoulderCrit ? 'bg-rose-600 text-white border-rose-300 animate-pulse' : 'bg-black/50 text-emerald-300 border-white/20'
@@ -414,7 +720,7 @@ export default function MetabolicAuditView() {
                           </div>
 
                           <div className="flex items-center justify-between text-[10px] text-slate-300">
-                            <span>Dato Crudo: <strong className="text-amber-300">{currentRaw} {spec.unit}</strong></span>
+                            <span>Hipótesis Cruda: <strong className="text-amber-300">{currentRaw} {spec.unit}</strong></span>
                             <span className="text-slate-400">{spec.dataTier.split(' ')[0]} {spec.dataTier.split(' ')[1]}</span>
                           </div>
 
@@ -453,7 +759,7 @@ export default function MetabolicAuditView() {
             </div>
             <div className="lg:col-span-5 space-y-2.5 text-xs text-slate-200 p-2">
               <span className="px-2.5 py-1 rounded-md bg-[#376E6F] text-white font-mono text-[10px] font-bold uppercase">
-                Nueva Figura 6 Canónica (R v4.5.2)
+                Figura 6 Canónica · Pipeline R v4.5.2
               </span>
               <h4 className="font-serif font-bold text-base text-white">
                 Curvas de Transferencia Multi-Polaridad y Umbral de Liebig
@@ -474,14 +780,14 @@ export default function MetabolicAuditView() {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-white/15">
             <div>
               <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-black/40 text-amber-300 border border-amber-500/30">
-                Eslabón Metodológico II · Ensayo de Carga Virtual Uniaxial (Cauchy + Hooke + Griffith)
+                Eslabón Metodológico II · Ensayo de Carga Virtual Uniaxial (Cauchy + Hooke + Cláusula Pre-Inversional)
               </span>
               <h2 className="text-xl sm:text-2xl font-serif font-extrabold text-white mt-1.5 flex items-center gap-2">
                 <Scale className="w-6 h-6 text-amber-300" />
-                2. Ensayo de Tracción Territorial Pre-Inversión (Stress-Test de Cuenca)
+                2. Ensayo de Tracción Territorial Pre-Inversión (Simulador de Reforma al SEIA)
               </h2>
               <p className="text-xs text-slate-200 mt-1 max-w-3xl leading-relaxed">
-                Antes de autorizar un proyecto extractivo, inmobiliario, energético o turístico en <strong>{territory.name}</strong>, sometemos su sección portante (<InlineMath math="H" />) a la tracción incremental del proyecto (<InlineMath math="\Delta D, \Delta E" />). Si el esfuerzo resultante <InlineMath math="\sigma_{\text{proj}}" /> cruza el límite de fluencia (<InlineMath math="0.85" />), el proyecto induce daño plástico irreversible.
+                Aplica nuestra propuesta de <strong>Cláusula de Salvaguarda Pre-Inversional</strong> sobre <strong>{territory.name}</strong>: antes de autorizar un proyecto extractivo, energético o inmobiliario, sometemos la hipótesis de capacidad portante (<InlineMath math="H" />) a la tracción incremental del proyecto (<InlineMath math="\Delta D, \Delta E" />).
               </p>
             </div>
           </div>
@@ -489,7 +795,7 @@ export default function MetabolicAuditView() {
           {/* Selector de Arquetipo de Proyecto a Auditar */}
           <div className="space-y-2">
             <span className="text-xs font-mono uppercase text-amber-300 font-bold block">
-              Selecciona el Proyecto / Intervención a Someter a Auditoría en {territory.name}:
+              Selecciona el Proyecto / Intervención a Someter a Auditoría SEIA 2.0 en {territory.name}:
             </span>
             <div className="grid grid-cols-1 md:grid-cols-5 gap-2.5">
               {INVESTMENT_ARCHETYPES.map(arch => {
@@ -577,7 +883,7 @@ export default function MetabolicAuditView() {
               <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-[11px] font-mono text-slate-300">
                 <div>Ecuación de Tracción Auditada:</div>
                 <div className="text-white font-bold mt-1">
-                  σ_proj = (D₀ + ΔD) / [ (S · (E₀ + ΔE) · K)^(1/3) · Φ_crit ]
+                  σ_proj = (D₀ + ΔD) / [ (S · (E₀ + ΔE) · K)^(1/3) · Φ_crit · (1 + κ) ]
                 </div>
               </div>
             </div>
@@ -642,7 +948,7 @@ export default function MetabolicAuditView() {
               <div className={`p-4 rounded-2xl border ${tractionAudit.verdictBadge} shadow-lg`}>
                 <div className="flex items-center justify-between gap-2 mb-1">
                   <span className="text-[10px] font-mono uppercase tracking-wider font-bold opacity-90">
-                    Dictamen Vinculante del Ensayo de Tracción Territorial
+                    Dictamen Vinculante del Ensayo de Tracción Territorial (SEIA 2.0)
                   </span>
                   <span className="text-xs font-mono font-black px-2 py-0.5 rounded bg-black/30">
                     Código: {tractionAudit.verdictCode}
@@ -669,7 +975,7 @@ export default function MetabolicAuditView() {
             </div>
             <div className="lg:col-span-5 space-y-2.5 text-xs text-slate-200 p-2">
               <span className="px-2.5 py-1 rounded-md bg-[#D83F87] text-white font-mono text-[10px] font-bold uppercase">
-                Nueva Figura 7 Canónica (R v4.5.2)
+                Figura 7 Canónica · Pipeline R v4.5.2
               </span>
               <h4 className="font-serif font-bold text-base text-white">
                 Benchmark de Ensayo de Tracción Multi-Sitio (<InlineMath math="\sigma_0 \to \sigma_{\text{proj}}" />)
@@ -698,7 +1004,7 @@ export default function MetabolicAuditView() {
               </h2>
             </div>
             <span className="font-mono text-xs font-bold px-3 py-1.5 rounded-xl bg-[#FAF7F0] border border-[#D4C9B8] text-slate-800">
-              Folio: HOMBROS-2026-{territory.id.toUpperCase()}-AUDIT
+              Folio: HOMBROS-2026-{territory.id.toUpperCase()}-HYPOTHESIS
             </span>
           </div>
 
@@ -767,8 +1073,170 @@ export default function MetabolicAuditView() {
                 </p>
               </div>
               <div className="mt-4 pt-3 border-t border-white/10 font-mono text-[11px] text-emerald-300 flex justify-between">
-                <span>Estado de Certificación:</span>
-                <strong>AUDITADO CONFORME A CANON v1.0</strong>
+                <span>Estado Epistemológico:</span>
+                <strong>HIPÓTESIS PRE-INVERSIÓN VERIFICABLE</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* =================================================================== */}
+      {/* ESLABÓN IV: CALCULADORA DE ROI BIOFÍSICO VS. COSTO DE INACCIÓN      */}
+      {/* =================================================================== */}
+      {(activeAuditStep === 'all' || activeAuditStep === 'step4_roi') && (
+        <div className="card-rose rounded-3xl p-6 sm:p-8 shadow-2xl border border-[#DA7B93]/40 space-y-6">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-white/15">
+            <div>
+              <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-black/40 text-amber-300 border border-amber-400/30">
+                Eslabón Metodológico IV · Economía Política del «Apague Seguro» (Santander, OLCA 2025)
+              </span>
+              <h2 className="text-xl sm:text-2xl font-serif font-extrabold text-white mt-1.5 flex items-center gap-2">
+                <Coins className="w-6 h-6 text-amber-300" />
+                4. Calculadora de Costo de Inacción (Gasto Paliativo de Sísifo) vs. Inversión Sintrópica (ROI Biofísico)
+              </h2>
+              <p className="text-xs text-slate-200 mt-1 max-w-4xl leading-relaxed">
+                Como demostramos en la serie publicada en el <strong>OLCA</strong> (<em>«Las propuestas regenerativas, incluso desde una perspectiva capitalista, se vuelven más rentables en el tiempo al reconocerse los costos ecosistémicos y la deuda ambiental»</em>), el Estado gasta cada año millones de dólares en <strong>medidas paliativas entrópicas</strong> (camiones aljibe eternos para Comités APR secos y combate reactivo de incendios en monocultivos) que no regeneran ni un milímetro de suelo ni de acuífero.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+            {/* Left: Interactive Fiscal & Biophysical Sliders */}
+            <div className="lg:col-span-5 p-5 rounded-2xl bg-black/45 border border-white/15 flex flex-col justify-between space-y-4 font-mono text-xs">
+              <div className="space-y-4">
+                <span className="text-[10px] uppercase tracking-wider text-amber-300 font-bold block">
+                  Parámetros de Gasto Paliativo vs. Reconversión de Cuenca
+                </span>
+
+                <div>
+                  <div className="flex justify-between mb-1">
+                    <span className="text-slate-200">Familias APR con Camión Aljibe:</span>
+                    <strong className="text-rose-300">{roiInputs.aprFamiliesWaterTruck.toLocaleString()} hogares</strong>
+                  </div>
+                  <input
+                    type="range"
+                    min="200"
+                    max="5000"
+                    step="100"
+                    value={roiInputs.aprFamiliesWaterTruck}
+                    onChange={(e) => setRoiInputs(prev => ({ ...prev, aprFamiliesWaterTruck: parseInt(e.target.value, 10) }))}
+                    className="w-full accent-rose-500 cursor-pointer"
+                  />
+                  <span className="text-[10px] text-slate-400">Costo fiscal medio: ~$1.450 USD/hogar/año en suministro de emergencia</span>
+                </div>
+
+                <div>
+                  <div className="flex justify-between mb-1">
+                    <span className="text-slate-200">Superficie Anual Expuesta a Megaincendios:</span>
+                    <strong className="text-rose-300">{roiInputs.annualFireRiskHectares.toLocaleString()} ha/año</strong>
+                  </div>
+                  <input
+                    type="range"
+                    min="300"
+                    max="8000"
+                    step="100"
+                    value={roiInputs.annualFireRiskHectares}
+                    onChange={(e) => setRoiInputs(prev => ({ ...prev, annualFireRiskHectares: parseInt(e.target.value, 10) }))}
+                    className="w-full accent-rose-500 cursor-pointer"
+                  />
+                  <span className="text-[10px] text-slate-400">Combate aéreo/terrestre + pérdida edáfica y subsidios: ~$920 USD/ha</span>
+                </div>
+
+                <div>
+                  <div className="flex justify-between mb-1">
+                    <span className="text-slate-200">Meta de Reconversión Sintrópica (Keyline + Nativo):</span>
+                    <strong className="text-emerald-300">{roiInputs.syntropicHectaresTarget.toLocaleString()} ha</strong>
+                  </div>
+                  <input
+                    type="range"
+                    min="500"
+                    max="6000"
+                    step="100"
+                    value={roiInputs.syntropicHectaresTarget}
+                    onChange={(e) => setRoiInputs(prev => ({ ...prev, syntropicHectaresTarget: parseInt(e.target.value, 10) }))}
+                    className="w-full accent-emerald-400 cursor-pointer"
+                  />
+                  <span className="text-[10px] text-slate-400">CAPEX regenerativo: ~$1.350 USD/ha (tranques Keyline, fajas WUI 45m, agroforestería)</span>
+                </div>
+
+                <div>
+                  <div className="flex justify-between mb-1">
+                    <span className="text-slate-200">Horizonte de Evaluación Presupuestaria:</span>
+                    <strong className="text-amber-300">{roiInputs.horizonYears} años</strong>
+                  </div>
+                  <input
+                    type="range"
+                    min="5"
+                    max="20"
+                    step="1"
+                    value={roiInputs.horizonYears}
+                    onChange={(e) => setRoiInputs(prev => ({ ...prev, horizonYears: parseInt(e.target.value, 10) }))}
+                    className="w-full accent-amber-400 cursor-pointer"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Right: Comparative Financial & Biophysical Outcome */}
+            <div className="lg:col-span-7 p-5 rounded-2xl bg-black/45 border border-white/15 flex flex-col justify-between space-y-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* Path A: Inaction / Sisyphus */}
+                <div className="p-4 rounded-2xl bg-rose-950/45 border border-rose-500/35 space-y-2">
+                  <span className="text-[10px] font-mono uppercase text-rose-300 font-bold block">
+                    Ruta A · Gasto Paliativo Entrópico (Mito de Sísifo)
+                  </span>
+                  <div className="text-2xl sm:text-3xl font-serif font-black text-rose-300">
+                    ${roiMetrics.cumulativeInactionM} M USD
+                  </div>
+                  <p className="text-[11px] text-slate-300 font-sans leading-relaxed">
+                    Gasto público acumulado en {roiInputs.horizonYears} años (${roiMetrics.annualInactionTotalM}M USD/año: ${roiMetrics.annualWaterTruckM}M en camiones aljibe + ${roiMetrics.annualFireSuppressionM}M en fuego/emergencias). <strong>Resultado biofísico: ΔH = 0.00 (la cuenca sigue seca).</strong>
+                  </p>
+                </div>
+
+                {/* Path B: Syntropic Capitalization */}
+                <div className="p-4 rounded-2xl bg-emerald-950/45 border border-emerald-500/35 space-y-2">
+                  <span className="text-[10px] font-mono uppercase text-emerald-300 font-bold block">
+                    Ruta B · Inversión Sintrópica en H (Keyline + Agroforestería)
+                  </span>
+                  <div className="text-2xl sm:text-3xl font-serif font-black text-emerald-300">
+                    ${roiMetrics.capexSyntropicM} M USD <span className="text-xs font-mono font-normal text-slate-300">(CAPEX Inicial)</span>
+                  </div>
+                  <p className="text-[11px] text-slate-300 font-sans leading-relaxed">
+                    Recarga acuíferos APR en la fuente, corta la continuidad de combustible pibanda WUI y genera retorno productivo local. <strong>Resultado biofísico: ΔH +0.16 y caída de σ al rango elástico.</strong>
+                  </p>
+                </div>
+              </div>
+
+              {/* Bottom KPI Row */}
+              <div className="grid grid-cols-3 gap-3 font-mono">
+                <div className="p-3.5 rounded-xl bg-black/50 border border-emerald-500/30">
+                  <span className="text-[10px] text-slate-400 uppercase block">Ahorro Neto ({roiInputs.horizonYears} años)</span>
+                  <strong className="text-lg sm:text-xl text-emerald-300">
+                    +${roiMetrics.netFiscalSavingsM} M USD
+                  </strong>
+                  <span className="text-[10px] text-slate-400 block">Recursos públicos liberados</span>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-black/50 border border-amber-500/30">
+                  <span className="text-[10px] text-slate-400 uppercase block">Multiplicador ROI Biofísico</span>
+                  <strong className="text-lg sm:text-xl text-amber-300">
+                    {roiMetrics.benefitCostRatio}x
+                  </strong>
+                  <span className="text-[10px] text-slate-400 block">Beneficio / Costo Integrado</span>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-black/50 border border-white/15">
+                  <span className="text-[10px] text-slate-400 uppercase block">Payback Territorial</span>
+                  <strong className="text-lg sm:text-xl text-white">
+                    {roiMetrics.paybackYears} años
+                  </strong>
+                  <span className="text-[10px] text-slate-400 block">Punto de equilibrio fiscal</span>
+                </div>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 text-xs text-slate-200 font-sans leading-relaxed">
+                <strong className="text-amber-300 font-mono uppercase">Conclusión para Fondos de Inversión Pública (ANID / GORE / BID):</strong> Cada dólar invertido en restaurar la sección transversal de la cuenca (<InlineMath math="H" />) ahorra <strong>{roiMetrics.benefitCostRatio} dólares</strong> en gasto fiscal reactivo, recuperando la inversión en <strong>{roiMetrics.paybackYears} años</strong> y dejando un activo hidro-edáfico permanente para las comunidades.
               </div>
             </div>
           </div>

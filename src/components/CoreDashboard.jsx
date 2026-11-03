@@ -349,7 +349,7 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
       id: 'semaforo', 
       number: '5', 
       label: 'Semáforo & Ciudades', 
-      tag: 'Lámina 21 & Mapa', 
+      tag: 'Protocolos & Mapa', 
       icon: AlertOctagon,
       color: 'from-amber-500 to-rose-600' 
     },
@@ -1162,7 +1162,7 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
 
             </div>
 
-            {/* 4.2 Lista de Dictámenes y Alertas de la Lámina 21 para el Territorio Activo */}
+            {/* 4.2 Lista de Dictámenes y Protocolos Normativos para el Territorio Activo */}
             <div className="p-6 rounded-3xl card-slate border border-[#927660]/30 shadow-xl space-y-4 bg-white/95">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#D4C9B8]">
                 <div className="flex items-center gap-2">
@@ -1171,7 +1171,7 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
                   </div>
                   <div>
                     <h3 className="font-serif font-extrabold text-black text-base sm:text-lg">
-                      Dictámenes de Gobernanza Territorial (Lámina 21) para {activeCityData.name}
+                      Dictámenes de Gobernanza Territorial & Salvaguarda Pre-Inversional para {activeCityData.name}
                     </h3>
                     <p className="text-xs text-black font-medium">
                       Protocolos normativos vinculantes según el régimen mecánico-metabólico activo

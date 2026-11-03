@@ -82,7 +82,7 @@ export default function DataEcosystemModal() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-solarpunk-brass/25">
         <div>
           <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border bg-amber-100 text-amber-900 border-amber-300">
-            Ecosistema de Información Oficial de Chile (Lámina 21 & 22)
+            Ecosistema de Información Pública & Telemetría Satelital (Tier 1–3)
           </span>
           <h3 className={`text-xl font-bold tracking-tight mt-1 ${
             isAtlas ? 'font-serif text-atlas-ink' : 'font-serif text-solarpunk-leaf'

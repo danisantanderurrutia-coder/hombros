@@ -1,11 +1,12 @@
 import React from 'react';
-import { Activity, Globe, Layers, Database, BookOpen, GitCompare, Sparkles, ShieldCheck } from 'lucide-react';
+import { Activity, Globe, Layers, Database, BookOpen, GitCompare, Sparkles, ShieldCheck, FileText } from 'lucide-react';
 import { getAssetUrl } from '../utils/assets';
 
 export default function Navbar({ activeTab, setActiveTab }) {
   const navItems = [
     { id: 'core', label: 'El Núcleo', icon: Activity },
     { id: 'audit', label: 'Auditoría Biofísica', icon: ShieldCheck },
+    { id: 'articles', label: 'Artículos & Policy', icon: FileText },
     { id: 'world_map', label: 'Atlas Territorial', icon: Globe },
     { id: 'theory', label: 'Marco Epistémico', icon: BookOpen },
   ];
@@ -34,12 +35,12 @@ export default function Navbar({ activeTab, setActiveTab }) {
                 <span className="tracking-wide text-2xl font-bold font-serif text-slate-900 tracking-tight">
                   HOMBROS
                 </span>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full uppercase tracking-wider font-bold bg-[#7DB2B2]/20 text-[#487075] border border-[#7DB2B2]/50">
-                  Solarpunk
+                <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full uppercase tracking-wider font-bold bg-[#28475A]/15 text-[#28475A] border border-[#28475A]/40">
+                  Think Tank & Lab
                 </span>
               </div>
               <p className="text-[11px] hidden sm:block text-[#64748B] font-mono font-medium">
-                Desarrollo Sostenido sobre Autosustento Sintrópico
+                Laboratorio de Hipótesis Biofísicas & Gobernanza Sintrópica
               </p>
             </div>
           </div>
