@@ -4,7 +4,11 @@ import { NORMALIZATION_GOALPOSTS, normalizeRawValue, denormalizeScoreToRaw } fro
 import { InlineMath } from './KaTeXMath';
 
 export default function ThreeShouldersBreakdown({ santanderState, territory }) {
-  const [expandedShoulder, setExpandedShoulder] = useState('ambiental');
+  const [expandedShoulders, setExpandedShoulders] = useState({
+    social: true,
+    ambiental: true,
+    economico: true
+  });
   const [selectedNormVar, setSelectedNormVar] = useState('e2');
   const [customRawInput, setCustomRawInput] = useState(
     denormalizeScoreToRaw('e2', santanderState?.currentVars?.e2 ?? 0.38)
@@ -14,7 +18,7 @@ export default function ThreeShouldersBreakdown({ santanderState, territory }) {
   const { S, E, K, H, H_base, phiCrit, hasCriticalShoulder, currentVars } = santanderState;
 
   const toggleShoulder = (id) => {
-    setExpandedShoulder(prev => prev === id ? null : id);
+    setExpandedShoulders(prev => ({ ...prev, [id]: !prev[id] }));
   };
 
   const handleSelectNormVar = (varKey, currentScore) => {
@@ -118,7 +122,7 @@ export default function ThreeShouldersBreakdown({ santanderState, territory }) {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {shoulders.map(sh => {
           const Icon = sh.icon;
-          const isExpanded = expandedShoulder === sh.id;
+          const isExpanded = !!expandedShoulders[sh.id];
           const isCritical = sh.val < 0.25;
 
           return (

@@ -626,15 +626,17 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
                 {/* Sliders Grid */}
                 {manipulationMode === 'essential' ? (
                   <div className="space-y-4">
-                    {/* Hombro Social */}
-                    <div className="p-4 rounded-2xl card-rose space-y-2 shadow-md">
+                    {/* Hombro Social (S) con sus 4 Componentes */}
+                    <div className={`p-4 rounded-2xl card-rose space-y-3 shadow-md transition-all ${
+                      santanderState.S < 0.25 ? 'ring-2 ring-rose-500 bg-rose-950/70' : ''
+                    }`}>
                       <div className="flex justify-between items-center text-xs">
                         <span className="font-bold font-serif text-[#DA7B93] flex items-center gap-2">
                           <Users className="w-4 h-4 text-[#DA7B93]" />
                           Hombro Social (S)
                         </span>
-                        <span className="font-mono font-bold text-white text-base">
-                          {santanderState.S.toFixed(2)}
+                        <span className={`font-mono font-bold text-base ${santanderState.S < 0.25 ? 'text-rose-400 animate-pulse' : 'text-white'}`}>
+                          {santanderState.S.toFixed(2)} {santanderState.S < 0.25 && '⚠️ CRÍTICO'}
                         </span>
                       </div>
                       <input
@@ -647,12 +649,37 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
                         className="w-full accent-[#DA7B93] cursor-pointer h-2 bg-black/40 rounded-lg"
                       />
                       <p className="text-[11px] text-slate-300">
-                        Cohesión comunitaria, instituciones, educación y paz social.
+                        Cohesión comunitaria, instituciones locales, capital humano y paz territorial.
                       </p>
+                      {/* 4 Sub-componentes del Hombro Social */}
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-white/10">
+                        {[
+                          { key: 's1', code: 'S₁', label: 'Cohesión APR' },
+                          { key: 's2', code: 'S₂', label: 'Instituciones' },
+                          { key: 's3', code: 'S₃', label: 'Cap. Humano' },
+                          { key: 's4', code: 'S₄', label: 'Paz Social' }
+                        ].map(item => (
+                          <div key={item.key} className="p-2 rounded-xl bg-black/35 border border-white/10 space-y-1">
+                            <div className="flex items-center justify-between text-[10px] font-mono">
+                              <span className="text-[#DA7B93] font-bold">{item.code} {item.label}</span>
+                              <strong className="text-white">{(customVariables[item.key] ?? 0.5).toFixed(2)}</strong>
+                            </div>
+                            <input
+                              type="range"
+                              min="0.05"
+                              max="1.0"
+                              step="0.02"
+                              value={customVariables[item.key] || 0.5}
+                              onChange={e => handleVariableChange(item.key, e.target.value)}
+                              className="w-full accent-[#DA7B93] cursor-pointer h-1 bg-black/50 rounded"
+                            />
+                          </div>
+                        ))}
+                      </div>
                     </div>
 
-                    {/* Hombro Ambiental */}
-                    <div className={`p-4 rounded-2xl card-teal space-y-2 shadow-md transition-all ${
+                    {/* Hombro Ambiental (E) con sus 4 Componentes */}
+                    <div className={`p-4 rounded-2xl card-teal space-y-3 shadow-md transition-all ${
                       santanderState.E < 0.25 ? 'ring-2 ring-rose-500 bg-rose-950/70' : ''
                     }`}>
                       <div className="flex justify-between items-center text-xs">
@@ -674,19 +701,46 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
                         className="w-full accent-[#376E6F] cursor-pointer h-2 bg-black/40 rounded-lg"
                       />
                       <p className="text-[11px] text-slate-300">
-                        Integridad ecosistémica, disponibilidad hídrica por cuenca y suelo vivo.
+                        Integridad ecosistémica, disponibilidad hídrica por cuenca, suelo vivo y clima.
                       </p>
+                      {/* 4 Sub-componentes del Hombro Ambiental */}
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-white/10">
+                        {[
+                          { key: 'e1', code: 'E₁', label: 'Dosel Nativo' },
+                          { key: 'e2', code: 'E₂', label: 'Agua Cuenca' },
+                          { key: 'e3', code: 'E₃', label: 'Suelo SOC' },
+                          { key: 'e4', code: 'E₄', label: 'Resil. Clima' }
+                        ].map(item => (
+                          <div key={item.key} className="p-2 rounded-xl bg-black/35 border border-white/10 space-y-1">
+                            <div className="flex items-center justify-between text-[10px] font-mono">
+                              <span className="text-emerald-300 font-bold">{item.code} {item.label}</span>
+                              <strong className="text-white">{(customVariables[item.key] ?? 0.5).toFixed(2)}</strong>
+                            </div>
+                            <input
+                              type="range"
+                              min="0.05"
+                              max="1.0"
+                              step="0.02"
+                              value={customVariables[item.key] || 0.5}
+                              onChange={e => handleVariableChange(item.key, e.target.value)}
+                              className="w-full accent-[#376E6F] cursor-pointer h-1 bg-black/50 rounded"
+                            />
+                          </div>
+                        ))}
+                      </div>
                     </div>
 
-                    {/* Hombro Económico */}
-                    <div className="p-4 rounded-2xl card-indigo space-y-2 shadow-md">
+                    {/* Hombro Económico (K) con sus 4 Componentes */}
+                    <div className={`p-4 rounded-2xl card-indigo space-y-3 shadow-md transition-all ${
+                      santanderState.K < 0.25 ? 'ring-2 ring-rose-500 bg-rose-950/70' : ''
+                    }`}>
                       <div className="flex justify-between items-center text-xs">
                         <span className="font-bold font-serif text-[#8D69A6] flex items-center gap-2">
                           <Coins className="w-4 h-4 text-[#8D69A6]" />
                           Hombro Económico (K)
                         </span>
-                        <span className="font-mono font-bold text-white text-base">
-                          {santanderState.K.toFixed(2)}
+                        <span className={`font-mono font-bold text-base ${santanderState.K < 0.25 ? 'text-rose-400 animate-pulse' : 'text-white'}`}>
+                          {santanderState.K.toFixed(2)} {santanderState.K < 0.25 && '⚠️ CRÍTICO'}
                         </span>
                       </div>
                       <input
@@ -699,8 +753,33 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
                         className="w-full accent-[#8D69A6] cursor-pointer h-2 bg-black/40 rounded-lg"
                       />
                       <p className="text-[11px] text-slate-300">
-                        Diversificación productiva, autonomía local, equidad distributiva y balance regenerativo.
+                        Diversificación productiva, autonomía comunal, equidad distributiva y balance biótico.
                       </p>
+                      {/* 4 Sub-componentes del Hombro Económico */}
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-white/10">
+                        {[
+                          { key: 'k1', code: 'K₁', label: 'Diversific.' },
+                          { key: 'k2', code: 'K₂', label: 'Autonomía' },
+                          { key: 'k3', code: 'K₃', label: 'Equidad Gini' },
+                          { key: 'k4', code: 'K₄', label: 'Bal. Biótico' }
+                        ].map(item => (
+                          <div key={item.key} className="p-2 rounded-xl bg-black/35 border border-white/10 space-y-1">
+                            <div className="flex items-center justify-between text-[10px] font-mono">
+                              <span className="text-purple-300 font-bold">{item.code} {item.label}</span>
+                              <strong className="text-white">{(customVariables[item.key] ?? 0.5).toFixed(2)}</strong>
+                            </div>
+                            <input
+                              type="range"
+                              min="0.05"
+                              max="1.0"
+                              step="0.02"
+                              value={customVariables[item.key] || 0.5}
+                              onChange={e => handleVariableChange(item.key, e.target.value)}
+                              className="w-full accent-[#8D69A6] cursor-pointer h-1 bg-black/50 rounded"
+                            />
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 ) : (
