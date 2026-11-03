@@ -6,9 +6,7 @@ export default function Navbar({ activeTab, setActiveTab }) {
   const navItems = [
     { id: 'landing', label: 'Inicio', icon: Sparkles },
     { id: 'core', label: 'El Núcleo', icon: Activity },
-    { id: 'world_map', label: 'Mapa Mundi & Datos Crudos', icon: Globe },
-    { id: 'cases', label: 'Contraste de Métricas', icon: GitCompare },
-    { id: 'scenarios', label: 'Simulador Prospectivo', icon: Layers },
+    { id: 'world_map', label: 'Atlas Territorial & Contraste', icon: Globe },
     { id: 'data_sources', label: 'Fuentes de Datos', icon: Database },
     { id: 'theory', label: 'Marco Epistémico', icon: BookOpen },
   ];

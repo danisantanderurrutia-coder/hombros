@@ -11,6 +11,7 @@ import {
 import { calculateHombrosFullState, calculateScopeEmissionsMetrics } from '../models/santanderModel';
 import ScopeEmissionsBreakdown from './ScopeEmissionsBreakdown';
 import HoneycombNetwork from './HoneycombNetwork';
+import DeepDiveCasesView from './DeepDiveCasesView';
 import { useTheme } from '../context/ThemeContext';
 
 // Trade / Metabolic Geodesic Flow Arcs (from Global South extraction to Global North consumption hubs)
@@ -79,13 +80,20 @@ export default function WorldTerritoriesMap({
   selectedTerritoryId, 
   setSelectedTerritoryId,
   globalModifiers,
-  onNavigateToCases
+  onNavigateToCases,
+  initialSubTab = 'map'
 }) {
   const { palette, isFcinq } = useTheme();
   const [activeTileKey, setActiveTileKey] = useState('satellite');
   const [filterRegion, setFilterRegion] = useState('all'); // 'all', 'chile', 'europe'
   const [showMetabolicFlows, setShowMetabolicFlows] = useState(true);
-  const [activeSubTab, setActiveSubTab] = useState('map'); // 'map', 'panal', 'emissions'
+  const [activeSubTab, setActiveSubTab] = useState(initialSubTab || 'map'); // 'map', 'cases', 'emissions', 'panal'
+
+  useEffect(() => {
+    if (initialSubTab) {
+      setActiveSubTab(initialSubTab);
+    }
+  }, [initialSubTab]);
 
   // Dossier Active Sub-tab
   const [dossierTab, setDossierTab] = useState('diagnosis'); // 'diagnosis', 'raw_data', 'surveys', 'emissions', 'history', 'compare'
@@ -356,7 +364,7 @@ export default function WorldTerritoriesMap({
             </p>
           </div>
 
-          {/* Sub-tab view switch: Map + Panal + Emissions */}
+          {/* Sub-tab view switch: Map + Cases + Emissions + Panal */}
           <div className="flex flex-wrap items-center gap-1.5 p-1.5 rounded-2xl border border-white/10 bg-[#1e132c] shadow-md self-start lg:self-center">
             <button
               onClick={() => setActiveSubTab('map')}
@@ -370,6 +378,17 @@ export default function WorldTerritoriesMap({
               Mapa & Datos Crudos
             </button>
             <button
+              onClick={() => setActiveSubTab('cases')}
+              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition-all ${
+                activeSubTab === 'cases'
+                  ? 'bg-[#DA7B93] text-white shadow-md shadow-[#DA7B93]/40'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <GitCompare className="w-3.5 h-3.5" />
+              Contraste de Casos & Modelos
+            </button>
+            <button
               onClick={() => setActiveSubTab('emissions')}
               className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition-all ${
                 activeSubTab === 'emissions'
@@ -379,6 +398,17 @@ export default function WorldTerritoriesMap({
             >
               <Factory className="w-3.5 h-3.5" />
               Matriz Scope 1-2-3 (Metabolismo)
+            </button>
+            <button
+              onClick={() => setActiveSubTab('panal')}
+              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition-all ${
+                activeSubTab === 'panal'
+                  ? 'bg-[#2C3539] text-white shadow-md shadow-black/40'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <Hexagon className="w-3.5 h-3.5" />
+              Red Panal P2P
             </button>
           </div>
         </div>
@@ -563,15 +593,31 @@ export default function WorldTerritoriesMap({
                     {activeTerritory.tag}
                   </p>
 
-                  {onNavigateToCases && (
+                  <div className="flex flex-wrap items-center gap-2 mt-3">
                     <button
-                      onClick={() => onNavigateToCases(activeTerritory.id)}
-                      className="mt-2.5 flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[11px] font-mono font-bold bg-bio-deep hover:bg-bio-surface text-cyan-300 border border-cyan-500/30 hover:border-cyan-400 transition-all shadow-sm"
+                      onClick={() => setActiveSubTab('cases')}
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[11px] font-mono font-bold bg-[#DA7B93]/20 hover:bg-[#DA7B93]/30 text-[#DA7B93] border border-[#DA7B93]/40 hover:border-[#DA7B93] transition-all shadow-sm"
                     >
-                      <GitCompare className="w-3.5 h-3.5 text-cyan-400" />
-                      <span>Comparar con Métrica Nativa en Contraste &rarr;</span>
+                      <GitCompare className="w-3.5 h-3.5" />
+                      <span>Ver en Contraste Epistémico &rarr;</span>
                     </button>
-                  )}
+                    <button
+                      onClick={handleCopyRawData}
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[11px] font-mono font-bold bg-bio-deep hover:bg-bio-surface text-slate-300 hover:text-white border border-emerald-500/30 transition-all shadow-sm"
+                    >
+                      {copiedRawData ? (
+                        <>
+                          <Check className="w-3.5 h-3.5 text-emerald-400" />
+                          <span className="text-emerald-400 font-bold">¡Datos Copiados!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-3.5 h-3.5 text-cyan-400" />
+                          <span>Copiar Datos Crudos</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
                 </div>
 
                 <div className={`px-3.5 py-1.5 rounded-2xl border text-center font-mono shrink-0 shadow-lg ${
@@ -589,6 +635,90 @@ export default function WorldTerritoriesMap({
               <p className="mt-3 text-xs leading-relaxed text-slate-300">
                 {activeTerritory.description}
               </p>
+
+              {/* Instant Empirical Snapshot Strip (6 Telemetric Indicators) */}
+              <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 p-2.5 rounded-2xl bg-black/30 border border-white/5 font-mono text-center">
+                <div className="p-1.5 rounded-xl bg-white/[0.02]">
+                  <span className="block text-[9px] uppercase text-slate-400 font-bold">Población</span>
+                  <span className="text-xs font-bold text-white">{activeTerritory.population.toLocaleString()}</span>
+                </div>
+                <div className="p-1.5 rounded-xl bg-white/[0.02]">
+                  <span className="block text-[9px] uppercase text-cyan-300 font-bold">Agua</span>
+                  <span className="text-xs font-bold text-cyan-200">
+                    {activeTerritory.complementaryMetrics?.waterConsumptionLitresPerDay ? `${activeTerritory.complementaryMetrics.waterConsumptionLitresPerDay} L/d` : 'N/D'}
+                  </span>
+                </div>
+                <div className="p-1.5 rounded-xl bg-white/[0.02]">
+                  <span className="block text-[9px] uppercase text-emerald-300 font-bold">Área Verde</span>
+                  <span className="text-xs font-bold text-emerald-200">
+                    {activeTerritory.complementaryMetrics?.greenSpaceM2PerCapita ? `${activeTerritory.complementaryMetrics.greenSpaceM2PerCapita} m²` : 'N/D'}
+                  </span>
+                </div>
+                <div className="p-1.5 rounded-xl bg-white/[0.02]">
+                  <span className="block text-[9px] uppercase text-amber-300 font-bold">Red Eléctrica</span>
+                  <span className="text-xs font-bold text-amber-200">
+                    {activeTerritory.emissions?.gridCarbonIntensity ? `${activeTerritory.emissions.gridCarbonIntensity} g/k` : 'N/D'}
+                  </span>
+                </div>
+                <div className="p-1.5 rounded-xl bg-white/[0.02]">
+                  <span className="block text-[9px] uppercase text-teal-300 font-bold">Autonomía</span>
+                  <span className="text-xs font-bold text-teal-200">
+                    {activeTerritory.complementaryMetrics?.municipalAutonomyRate ? `${(activeTerritory.complementaryMetrics.municipalAutonomyRate * 100).toFixed(0)}%` : 'N/D'}
+                  </span>
+                </div>
+                <div className="p-1.5 rounded-xl bg-white/[0.02]">
+                  <span className="block text-[9px] uppercase text-pink-300 font-bold">Gini</span>
+                  <span className="text-xs font-bold text-pink-200">
+                    {activeTerritory.surveys?.gini || 'N/D'}
+                  </span>
+                </div>
+              </div>
+
+              {/* Sitios Web Oficiales & Fuentes de Datos Abiertos */}
+              <div className="mt-4 pt-3.5 border-t border-emerald-500/20">
+                <div className="flex items-center justify-between gap-2 mb-2.5">
+                  <div className="flex items-center gap-2">
+                    <Globe className="w-3.5 h-3.5 text-cyan-400" />
+                    <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-cyan-300">
+                      Sitios Web Oficiales & Fuentes Abiertas del Territorio:
+                    </span>
+                  </div>
+                  <span className="text-[9px] font-mono px-2 py-0.5 rounded-full bg-cyan-950/70 border border-cyan-500/30 text-cyan-200">
+                    {activeTerritory.openDataSources?.length || 0} Portales
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  {activeTerritory.openDataSources?.map((source, idx) => (
+                    <a
+                      key={idx}
+                      href={source.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex flex-col justify-between p-2.5 rounded-xl bg-bio-deep/90 hover:bg-bio-surface border border-cyan-500/20 hover:border-cyan-400 transition-all hover:scale-[1.01] shadow-sm"
+                    >
+                      <div>
+                        <div className="flex items-center justify-between gap-1 mb-1">
+                          <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-cyan-950/70 text-cyan-300 border border-cyan-500/30">
+                            {source.type}
+                          </span>
+                          <ExternalLink className="w-3 h-3 text-cyan-400 group-hover:text-white transition-colors shrink-0" />
+                        </div>
+                        <p className="font-serif font-bold text-xs text-white group-hover:text-cyan-200 transition-colors">
+                          {source.name}
+                        </p>
+                        <p className="text-[10px] text-slate-300 line-clamp-2 mt-0.5 leading-snug">
+                          {source.description}
+                        </p>
+                      </div>
+                      <div className="mt-2 pt-1 border-t border-white/5 flex items-center justify-between text-[9px] font-mono text-cyan-400 group-hover:text-cyan-300">
+                        <span className="truncate max-w-[120px]">{source.url.replace(/^https?:\/\//, '')}</span>
+                        <ArrowUpRight className="w-2.5 h-2.5" />
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
 
               {/* Dossier Navigation Tabs */}
               <div className="mt-5 pt-4 border-t border-emerald-500/20 flex flex-wrap gap-1.5 font-mono">
@@ -1188,6 +1318,18 @@ export default function WorldTerritoriesMap({
           </div>
 
         </div>
+      )}
+
+      {/* Contraste de Casos & Modelos Nativos View */}
+      {activeSubTab === 'cases' && (
+        <DeepDiveCasesView 
+          selectedTerritoryId={selectedTerritoryId}
+          setSelectedTerritoryId={setSelectedTerritoryId}
+          onNavigateToMap={(id) => {
+            if (id) setSelectedTerritoryId(id);
+            setActiveSubTab('map');
+          }}
+        />
       )}
 
       {/* Honeycomb P2P Network View */}

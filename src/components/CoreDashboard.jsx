@@ -14,6 +14,7 @@ import BasalResourceMeters from './BasalResourceMeters';
 import MechanicalBalance from './MechanicalBalance';
 import OrganismVisualAvatar from './OrganismVisualAvatar';
 import ThreeShouldersBreakdown from './ThreeShouldersBreakdown';
+import ScenarioSimulator from './ScenarioSimulator';
 
 // Specialized SVG Figures
 import ShouldersRadarTripod from './ShouldersRadarTripod';
@@ -26,9 +27,9 @@ import { evaluateTerritoryState } from '../models/mechanics';
 import { PROTOTYPICAL_PRESETS, VARIABLE_METADATA } from '../models/prototypicalModel';
 import { INITIAL_TERRITORIES } from '../models/territories';
 
-export default function CoreDashboard() {
+export default function CoreDashboard({ initialSubtab = 'hombros' }) {
   // Navigation Subtabs
-  const [activeSubtab, setActiveSubtab] = useState('hombros'); // 'hombros' | 'tension' | 'sintropia' | 'semaforo' | 'organismo'
+  const [activeSubtab, setActiveSubtab] = useState(initialSubtab); // 'hombros' | 'tension' | 'sintropia' | 'prospectiva' | 'semaforo' | 'organismo'
 
   // Active Archetype Preset
   const [selectedPresetId, setSelectedPresetId] = useState('sintropico');
@@ -337,8 +338,16 @@ export default function CoreDashboard() {
       color: 'from-[#376E6F] to-[#254b4c]' 
     },
     { 
-      id: 'semaforo', 
+      id: 'prospectiva', 
       number: '4', 
+      label: 'Simulador Prospectivo', 
+      tag: 'Dinámica a 36 Meses', 
+      icon: Layers,
+      color: 'from-[#44318D] to-[#8D69A6]' 
+    },
+    { 
+      id: 'semaforo', 
+      number: '5', 
       label: 'Semáforo & Ciudades', 
       tag: 'Lámina 21 & Mapa', 
       icon: AlertOctagon,
@@ -346,7 +355,7 @@ export default function CoreDashboard() {
     },
     { 
       id: 'organismo', 
-      number: '5', 
+      number: '6', 
       label: 'Organismo Integrado', 
       tag: 'Vista Holística', 
       icon: Cpu,
@@ -521,7 +530,7 @@ export default function CoreDashboard() {
           BARRA DE NAVEGACIÓN PROGRESIVA EN SUBPESTAÑAS DEL NÚCLEO
           ========================================================================= */}
       <div className="bg-[#180e25]/90 border border-white/10 p-1.5 rounded-2xl shadow-xl backdrop-blur-md sticky top-20 z-40">
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1.5">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5">
           {subtabs.map(tab => {
             const Icon = tab.icon;
             const isActive = activeSubtab === tab.id;
@@ -1099,7 +1108,23 @@ export default function CoreDashboard() {
         )}
 
         {/* =======================================================================
-            SUBPESTAÑA 4: SEMÁFORO OPERATIVO FÍSICO & MAPA DE CIUDADES (LÁMINA 21)
+            SUBPESTAÑA 4: SIMULADOR PROSPECTIVO (DINÁMICA TEMPORAL 12-60 MESES)
+            ======================================================================= */}
+        {activeSubtab === 'prospectiva' && (
+          <motion.div
+            key="subtab_prospectiva"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.25 }}
+            className="space-y-6"
+          >
+            <ScenarioSimulator territory={syntheticTerritory} />
+          </motion.div>
+        )}
+
+        {/* =======================================================================
+            SUBPESTAÑA 5: SEMÁFORO OPERATIVO FÍSICO & MAPA DE CIUDADES (LÁMINA 21)
             ======================================================================= */}
         {activeSubtab === 'semaforo' && (
           <motion.div
@@ -1189,7 +1214,7 @@ export default function CoreDashboard() {
         )}
 
         {/* =======================================================================
-            SUBPESTAÑA 5: ORGANISMO INTEGRADO (VISTA HOLÍSTICA SIN DUPLICIDAD DE RIG)
+            SUBPESTAÑA 6: ORGANISMO INTEGRADO (VISTA HOLÍSTICA SIN DUPLICIDAD DE RIG)
             ======================================================================= */}
         {activeSubtab === 'organismo' && (
           <motion.div

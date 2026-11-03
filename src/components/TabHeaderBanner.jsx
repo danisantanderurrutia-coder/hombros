@@ -12,9 +12,9 @@ const TAB_METADATA = {
     accent: '#7DB2B2',
   },
   world_map: {
-    tag: 'OBSERVATORIO GEODÉSICO DE CUENCAS',
-    title: 'Cartografía Territorial y Flujos Metabólicos',
-    subtitle: 'Telemetría biofísica comparada: emisiones de alcance 1, 2 y 3, biomasa activa y balances de huella hídrica por bioregión.',
+    tag: 'ATLAS GEODÉSICO & CONTRASTE GLOBAL',
+    title: 'Atlas Territorial, Flujos Metabólicos & Casos de Estudio',
+    subtitle: 'Cartografía orbital y contraste empírico multi-sitio: datos crudos oficiales, fuentes abiertas en vivo, emisiones Scope 1-3 y benchmarking frente a modelos urbanos tradicionales.',
     image: getAssetUrl('art/header_world_watershed.jpg'),
     icon: Globe,
     accent: '#487075',

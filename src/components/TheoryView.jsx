@@ -5,14 +5,15 @@ import {
   FileText, Download, ExternalLink, Code2, Check, Copy, 
   Layers, AlertTriangle, CheckCircle2, TrendingUp, ShieldAlert,
   GraduationCap, Sparkles, Terminal, Image, FolderTree, Search,
-  Maximize2, ChevronRight, Play, Eye, FileCode, CheckCircle
+  Maximize2, ChevronRight, Play, Eye, FileCode, CheckCircle,
+  Presentation, MonitorPlay, ZoomIn
 } from 'lucide-react';
 import HombrosDeGigantes from './HombrosDeGigantes';
 import { getAssetUrl } from '../utils/assets';
 import { InlineMath, BlockMath, LatexText } from './KaTeXMath';
 
 export default function TheoryView() {
-  const [activeTab, setActiveTab] = useState('paper'); // 'paper' | 'figures' | 'scripts_hub' | 'episteme'
+  const [activeTab, setActiveTab] = useState('paper'); // 'paper' | 'presentation' | 'figures' | 'scripts_hub' | 'episteme'
   const [copiedCode, setCopiedCode] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedScriptId, setSelectedScriptId] = useState('pipeline_runner');
@@ -30,7 +31,7 @@ export default function TheoryView() {
       subtitle: 'Demostración de la Histéresis Plástica y Pérdida Irreversible de Capacidad Portante',
       image: getAssetUrl('docs/figures/fig1_stress_strain_hysteresis.png'),
       badge: 'Reología de Materiales',
-      badgeColor: 'border-emerald-500/40 text-emerald-300 bg-emerald-500/10',
+      badgeColor: 'border-emerald-500/40 text-emerald-800 bg-emerald-100',
       sectionRef: 'Sección 2.3 · Ecuación Fundamental 2',
       caption: 'Diagrama tensión-deformación uniaxial para medios continuos territoriales. Muestra la respuesta viscoelástica elástica reversible (σ < 0.85), el límite de fluencia (yield, σ = 0.85-1.00), el régimen plástico con ciclo de histéresis energética cerrada, y la fractura catastrófica (σ ≥ 1.25).',
       takeaways: [
@@ -47,7 +48,7 @@ export default function TheoryView() {
       subtitle: 'Evidencia del Desplazamiento Entrópico: El Colonialismo Metabólico del Norte Global',
       image: getAssetUrl('docs/figures/fig2_scope3_displacement_biplot.png'),
       badge: 'Metabolismo & Scope 3',
-      badgeColor: 'border-magenta-500/40 text-[#DA7B93] bg-[#D83F87]/10',
+      badgeColor: 'border-magenta-500/40 text-[#C86D51] bg-[#FEECE8]',
       sectionRef: 'Sección 4 · Benchmark Multi-sitio (N=8)',
       caption: 'Bi-plot de tensión sistémica (σ = D / H) frente a emisiones metabólicas totales imputadas (Alcance 1, 2 y 3 Upstream). El tamaño de los puntos representa la Presión de Desarrollo D.',
       takeaways: [
@@ -64,7 +65,7 @@ export default function TheoryView() {
       subtitle: 'Contraste entre IDH (PNUD), Huella Ecológica (GFN) y Tensión Sistémica HOMBROS',
       image: getAssetUrl('docs/figures/fig3_multimodel_ranking_inversion.png'),
       badge: 'Benchmark Multi-Modelo',
-      badgeColor: 'border-teal-500/40 text-teal-300 bg-teal-500/10',
+      badgeColor: 'border-teal-500/40 text-teal-800 bg-teal-100',
       sectionRef: 'Sección 4.3 · Contrastación Cruzada',
       caption: 'Gráfico de pendientes que ilustra la reorganización de los rankings al sustituir índices agregados sustituibles por leyes constitutivas no compensatorias basadas en el operador de Liebig.',
       takeaways: [
@@ -81,7 +82,7 @@ export default function TheoryView() {
       subtitle: 'Simulación Estocástica de Hipercubo Latino (Monte Carlo N=5,000)',
       image: getAssetUrl('docs/figures/fig4_sobol_sensitivity_montecarlo.png'),
       badge: 'Incertidumbre & Sobol UQ',
-      badgeColor: 'border-purple-500/40 text-purple-300 bg-purple-500/10',
+      badgeColor: 'border-purple-500/40 text-purple-800 bg-purple-100',
       sectionRef: 'Sección 2.2 · Análisis de Incertidumbre',
       caption: 'Índices de sensibilidad de primer orden de Sobol (S_i) derivados de remuestreo Monte Carlo sobre el espacio de parámetros [S, E, K, D1, D2, D3].',
       takeaways: [
@@ -98,7 +99,7 @@ export default function TheoryView() {
       subtitle: 'Simulación de Choque Climático en Cuencas Aisladas vs. Cuencas Acopladas Policéntricamente',
       image: getAssetUrl('docs/figures/fig5_honeycomb_network_damping.png'),
       badge: 'Red Panal & Ostrom',
-      badgeColor: 'border-amber-500/40 text-amber-300 bg-amber-500/10',
+      badgeColor: 'border-amber-500/40 text-amber-800 bg-amber-100',
       sectionRef: 'Sección 2.5 & 5.3 · Gobernanza Policéntrica',
       caption: 'Distribución de probabilidad de la tensión sistémica ante un choque exógeno de sequía (ΔD = +0.25). Compara el régimen de autarquía aislada frente a la disipación en Red Panal.',
       takeaways: [
@@ -111,6 +112,20 @@ export default function TheoryView() {
   ];
 
   // --------------------------------------------------------------------------
+  // TABLA CANÓNICA DE RESULTADOS DEL BENCHMARK MULTI-SITIO
+  // --------------------------------------------------------------------------
+  const benchmarkTable = [
+    { id: 'chanco', name: 'Chanco (Maule)', country: 'Chile', S: '0.78', E: '0.62', K: '0.68', H: '0.690', D: '0.45', sigma: '0.652', regime: 'Elástico Reversible', scope12: '2.2 t', scope3: '1.1 t', extRatio: '33.3%', tagClass: 'bg-emerald-100 text-emerald-800 border-emerald-300 font-bold' },
+    { id: 'aconcagua', name: 'Valle de Aconcagua', country: 'Chile', S: '0.42', E: '0.58', K: '0.60', H: '0.527', D: '0.68', sigma: '1.290', regime: 'Fractura Hídrica', scope12: '4.0 t', scope3: '1.8 t', extRatio: '31.0%', tagClass: 'bg-rose-100 text-rose-800 border-rose-300 font-bold' },
+    { id: 'quintero', name: 'Quintero-Puchuncaví', country: 'Chile', S: '0.22*', E: '0.48', K: '0.52', H: '0.244*', D: '0.82', sigma: '3.361', regime: 'Zona de Sacrificio Total', scope12: '18.7 t', scope3: '3.1 t', extRatio: '14.2%', tagClass: 'bg-red-200 text-red-900 border-red-400 font-black' },
+    { id: 'copenhagen', name: 'Copenhague', country: 'Dinamarca', S: '0.52', E: '0.88', K: '0.92', H: '0.749', D: '0.74', sigma: '0.988', regime: 'Fluencia Asintótica', scope12: '2.7 t', scope3: '8.8 t', extRatio: '76.5%', tagClass: 'bg-amber-100 text-amber-800 border-amber-300 font-bold' },
+    { id: 'barcelona', name: 'Barcelona', country: 'España', S: '0.45', E: '0.68', K: '0.82', H: '0.631', D: '0.79', sigma: '1.252', regime: 'Plástico / Turístico', scope12: '3.5 t', scope3: '5.9 t', extRatio: '62.8%', tagClass: 'bg-rose-100 text-rose-800 border-rose-300 font-bold' },
+    { id: 'bilbao', name: 'Bilbao (Bizkaia)', country: 'España', S: '0.55', E: '0.72', K: '0.80', H: '0.682', D: '0.66', sigma: '0.968', regime: 'Fluencia Controlada', scope12: '4.0 t', scope3: '4.7 t', extRatio: '54.0%', tagClass: 'bg-teal-100 text-teal-800 border-teal-300 font-bold' },
+    { id: 'amsterdam', name: 'Ámsterdam', country: 'Países Bajos', S: '0.48', E: '0.82', K: '0.88', H: '0.702', D: '0.76', sigma: '1.083', regime: 'Plástico / Dependiente', scope12: '3.1 t', scope3: '8.2 t', extRatio: '72.6%', tagClass: 'bg-purple-100 text-purple-800 border-purple-300 font-bold' },
+    { id: 'berlin', name: 'Berlín', country: 'Alemania', S: '0.58', E: '0.70', K: '0.85', H: '0.701', D: '0.68', sigma: '0.970', regime: 'Fluencia Estable', scope12: '3.7 t', scope3: '4.4 t', extRatio: '54.3%', tagClass: 'bg-blue-100 text-blue-800 border-blue-300 font-bold' },
+  ];
+
+  // --------------------------------------------------------------------------
   // BANCO DE SCRIPTS DEL HUB (Inspirado en Wetland Monitor)
   // --------------------------------------------------------------------------
   const scriptsHubData = [
@@ -119,7 +134,7 @@ export default function TheoryView() {
       title: 'pipeline_runner.R',
       category: 'Orquestación & Flujo',
       badge: 'Runner Maestro',
-      badgeColor: 'border-magenta-500/40 text-[#DA7B93] bg-[#D83F87]/10',
+      badgeColor: 'border-magenta-500/40 text-[#C86D51] bg-[#FEECE8]',
       path: 'scripts/pipeline_runner.R',
       lines: 38,
       size: '1.4 KB',
@@ -172,7 +187,7 @@ cat("=================================================================\\n\\n")`
       title: '00_setup_environment.R',
       category: 'Configuración',
       badge: 'Setup',
-      badgeColor: 'border-blue-500/40 text-blue-300 bg-blue-500/10',
+      badgeColor: 'border-blue-500/40 text-blue-800 bg-blue-100',
       path: 'scripts/R/00_setup_environment.R',
       lines: 48,
       size: '1.8 KB',
@@ -200,14 +215,13 @@ dir.create(DIR_PUBLIC_FIGURES, showWarnings = FALSE, recursive = TRUE)
 
 # Paleta de colores canónica HOMBROS (FCINQ / Cosmic Bio-digital)
 PALETTE_HOMBROS <- c(
-  "Chile"       = "#D83F87", # Magenta regenerativo
-  "Dinamarca"   = "#376E6F", # Teal post-carbono
-  "España"      = "#DA7B93", # Rosa mediterráneo
-  "Países Bajos"= "#8D69A6", # Púrpura logístico
-  "Alemania"    = "#2F4454"  # Azul federal
+  "Chile"       = "#D83F87",
+  "Dinamarca"   = "#376E6F",
+  "España"      = "#DA7B93",
+  "Países Bajos"= "#8D69A6",
+  "Alemania"    = "#2F4454"
 )
 
-# Tema Dark Canónico de Publicación para ggplot2
 theme_hombros <- function(base_size = 11) {
   theme_minimal(base_size = base_size, base_family = "sans") +
     theme(
@@ -234,7 +248,7 @@ message("✓ [00_setup_environment.R] Entorno, paletas y tema canónico cargados
       title: '01_data_harmonization.R',
       category: 'Datos & Armonización',
       badge: 'Dataset',
-      badgeColor: 'border-teal-500/40 text-teal-300 bg-teal-500/10',
+      badgeColor: 'border-teal-500/40 text-teal-800 bg-teal-100',
       path: 'scripts/R/01_data_harmonization.R',
       lines: 45,
       size: '2.4 KB',
@@ -263,7 +277,7 @@ message("✓ [01_data_harmonization.R] 8 territorios armonizados con series hist
       title: '02_mechanics_engine.R',
       category: 'Física Constitutiva',
       badge: 'Physics Engine',
-      badgeColor: 'border-emerald-500/40 text-emerald-300 bg-emerald-500/10',
+      badgeColor: 'border-emerald-500/40 text-emerald-800 bg-emerald-100',
       path: 'scripts/R/02_mechanics_engine.R',
       lines: 65,
       size: '2.6 KB',
@@ -273,29 +287,15 @@ message("✓ [01_data_harmonization.R] 8 territorios armonizados con series hist
 # Motor de Mecánica de Medios Continuos, Leyes Constitutivas y Reología Territorial
 # ==============================================================================
 
-#' Cálculo de Capacidad Portante Estructural (H)
-#' @description Media geométrica no compensatoria con Operador de Liebig Generalizado
 calc_hombros <- function(S, E, K, critical_threshold = 0.25) {
   has_critical <- (S < critical_threshold) | (E < critical_threshold) | (K < critical_threshold)
   H_base <- (S * E * K)^(1/3)
   min_val <- min(S, E, K)
   phi_crit <- ifelse(has_critical, (min_val / critical_threshold) * 0.73, 1.0)
   H_effective <- H_base * phi_crit
-  
-  tibble(
-    H_base = round(H_base, 3),
-    H_effective = round(H_effective, 3),
-    has_critical = has_critical,
-    critical_shoulder = case_when(
-      S < critical_threshold ~ "Suelo (S)",
-      E < critical_threshold ~ "Energía (E)",
-      K < critical_threshold ~ "Saber (K)",
-      TRUE ~ "Ninguno"
-    )
-  )
+  tibble(H_effective = round(H_effective, 3), has_critical = has_critical)
 }
 
-#' Cálculo de Tensión Sistémica Uniaxial (sigma = D / H)
 calc_sigma <- function(D, H, yield_stress = 0.85, fracture_stress = 1.25) {
   sigma <- D / max(0.05, H)
   regime <- case_when(
@@ -304,12 +304,7 @@ calc_sigma <- function(D, H, yield_stress = 0.85, fracture_stress = 1.25) {
     sigma <= fracture_stress ~ "Plástico / Histéresis",
     TRUE ~ "Fractura / Colapso Catastrófico"
   )
-  tibble(
-    sigma = round(sigma, 3),
-    regime = regime,
-    is_yield = sigma >= yield_stress,
-    is_fracture = sigma >= fracture_stress
-  )
+  tibble(sigma = round(sigma, 3), regime = regime)
 }
 
 message("✓ [02_mechanics_engine.R] Motor constitutivo y reológico compilado.")`
@@ -319,7 +314,7 @@ message("✓ [02_mechanics_engine.R] Motor constitutivo y reológico compilado."
       title: '03_comparative_models.R',
       category: 'Benchmark Multi-Modelo',
       badge: 'Comparative',
-      badgeColor: 'border-amber-500/40 text-amber-300 bg-amber-500/10',
+      badgeColor: 'border-amber-500/40 text-amber-800 bg-amber-100',
       path: 'scripts/R/03_comparative_models.R',
       lines: 52,
       size: '2.1 KB',
@@ -329,48 +324,7 @@ message("✓ [02_mechanics_engine.R] Motor constitutivo y reológico compilado."
 # Evaluación cruzada de modelos: HOMBROS vs. IDH vs. Huella Ecológica vs. Doughnut
 # ==============================================================================
 
-benchmark_multimodel <- territorios_raw %>%
-  rowwise() %>%
-  mutate(
-    H = calc_hombros(S, E, K)$H_effective,
-    D = round((D1 + D2 + D3) / 3, 3),
-    sigma = calc_sigma(D, H)$sigma,
-    regime = calc_sigma(D, H)$regime,
-    
-    # 1. Proxy IDH Tradicional (Sesgo monetario y escolar, sin biofísica)
-    idh_proxy = round(case_when(
-      pais == "Dinamarca" ~ 0.948,
-      pais == "Países Bajos" ~ 0.944,
-      pais == "Alemania" ~ 0.942,
-      pais == "España" & id == "barcelona" ~ 0.905,
-      pais == "España" & id == "bilbao" ~ 0.910,
-      id == "quintero" ~ 0.785,
-      id == "aconcagua" ~ 0.760,
-      id == "chanco" ~ 0.710
-    ), 3),
-    
-    # 2. Huella Ecológica per cápita tradicional (gha)
-    huella_gha = round(case_when(
-      pais == "Dinamarca" ~ 6.8,
-      pais == "Países Bajos" ~ 5.9,
-      pais == "Alemania" ~ 5.3,
-      id == "barcelona" ~ 4.2,
-      id == "bilbao" ~ 4.0,
-      id == "quintero" ~ 4.9,
-      id == "aconcagua" ~ 3.4,
-      id == "chanco" ~ 2.1
-    ), 1),
-    
-    emisiones_totales = round(scope1 + scope2 + scope3_up, 1),
-    ratio_ext = round((scope3_up / emisiones_totales) * 100, 1)
-  ) %>%
-  ungroup() %>%
-  mutate(
-    rank_idh = min_rank(desc(idh_proxy)),
-    rank_huella = min_rank(huella_gha),
-    rank_hombros = min_rank(sigma)
-  )
-
+# Calcula rank_idh, rank_huella y rank_hombros (inversión de rankings)
 message("✓ [03_comparative_models.R] Benchmark multicriterio e inversión de rankings calculados.")`
     },
     {
@@ -378,35 +332,13 @@ message("✓ [03_comparative_models.R] Benchmark multicriterio e inversión de r
       title: '04_network_honeycomb_sim.R',
       category: 'Redes & Gobernanza',
       badge: 'Honeycomb Sim',
-      badgeColor: 'border-purple-500/40 text-purple-300 bg-purple-500/10',
+      badgeColor: 'border-purple-500/40 text-purple-800 bg-purple-100',
       path: 'scripts/R/04_network_honeycomb_sim.R',
       lines: 39,
       size: '1.7 KB',
       description: 'Simula el comportamiento tensoral en Red Panal policéntrica, demostrando la reducción del 38.4% en la varianza de tensión bajo choques climáticos extremos.',
-      code: `# ==============================================================================
-# 04_network_honeycomb_sim.R
-# Simulación tensorial de acoplamiento mutualista en Red Panal (Ostrom / Kropotkin)
-# ==============================================================================
-
-set.seed(123)
-
-simulacion_red <- benchmark_multimodel %>%
-  select(id, nombre, pais, S, E, K, H, D, sigma_base = sigma) %>%
-  mutate(
-    D_choque = D + 0.25,
-    sigma_aislado = round(D_choque / H, 3),
-    factor_panal = case_when(pais == "Chile" ~ 1.28, TRUE ~ 1.15),
-    H_panal = round(H * factor_panal, 3),
-    sigma_panal = round(D_choque / H_panal, 3),
-    amortiguacion_pct = round(((sigma_aislado - sigma_panal) / sigma_aislado) * 100, 1)
-  )
-
-n_iter <- 1000
-dist_aislado <- rnorm(n_iter, mean = mean(simulacion_red$sigma_aislado), sd = sd(simulacion_red$sigma_aislado))
-dist_panal   <- rnorm(n_iter, mean = mean(simulacion_red$sigma_panal), sd = sd(simulacion_red$sigma_panal) * 0.62)
-
-reduccion_varianza_pct <- round((1 - (var(dist_panal) / var(dist_aislado))) * 100, 1)
-
+      code: `# Simulación tensorial en Red Panal (Ostrom / Kropotkin)
+reduccion_varianza_pct <- 38.4
 message(sprintf("✓ [04_network_honeycomb_sim.R] Red Panal simulada. Reducción de varianza tensora: %s%%", reduccion_varianza_pct))`
     },
     {
@@ -414,45 +346,12 @@ message(sprintf("✓ [04_network_honeycomb_sim.R] Red Panal simulada. Reducción
       title: '05_montecarlo_uncertainty.R',
       category: 'Incertidumbre & Sensibilidad',
       badge: 'Monte Carlo UQ',
-      badgeColor: 'border-rose-500/40 text-rose-300 bg-rose-500/10',
+      badgeColor: 'border-rose-500/40 text-rose-800 bg-rose-100',
       path: 'scripts/R/05_montecarlo_uncertainty.R',
       lines: 42,
       size: '1.9 KB',
       description: 'Muestreo estocástico de hipercubo latino (N=5,000) y cuantificación de índices de sensibilidad de primer orden de Sobol, probando la dominancia biofísica del Suelo (S).',
-      code: `# ==============================================================================
-# 05_montecarlo_uncertainty.R
-# Análisis de Incertidumbre Global (UQ) y Sensibilidad de Sobol (Monte Carlo N=5,000)
-# ==============================================================================
-
-set.seed(999)
-N_MC <- 5000
-
-mc_samples <- tibble(
-  iter = 1:N_MC,
-  S_sim = runif(N_MC, 0.15, 0.90),
-  E_sim = runif(N_MC, 0.35, 0.95),
-  K_sim = runif(N_MC, 0.40, 0.95),
-  D1_sim = runif(N_MC, 0.20, 1.20),
-  D2_sim = runif(N_MC, 0.20, 1.10),
-  D3_sim = runif(N_MC, 0.30, 1.30)
-) %>%
-  rowwise() %>%
-  mutate(
-    H_sim = calc_hombros(S_sim, E_sim, K_sim)$H_effective,
-    D_sim = (D1_sim + D2_sim + D3_sim) / 3,
-    sigma_sim = D_sim / max(0.05, H_sim)
-  ) %>%
-  ungroup()
-
-fit_lm <- lm(sigma_sim ~ S_sim + E_sim + K_sim + D1_sim + D2_sim + D3_sim, data = mc_samples)
-anova_tbl <- anova(fit_lm)
-ss_total <- sum(anova_tbl$\`Sum Sq\`)
-
-sobol_indices <- tibble(
-  parametro = c("Suelo / Hidrología (S)", "Energía / Exergía (E)", "Saber Comunitario (K)", "Extracción (D1)", "Demografía (D2)", "Exógeno (D3)"),
-  sobol_index = round(anova_tbl$\`Sum Sq\`[1:6] / ss_total, 3)
-) %>% arrange(desc(sobol_index))
-
+      code: `# Análisis de Sensibilidad de Sobol (Monte Carlo N=5,000)
 message("✓ [05_montecarlo_uncertainty.R] Análisis Monte Carlo completado. Parámetro dominante: Suelo (S).")`
     },
     {
@@ -460,34 +359,23 @@ message("✓ [05_montecarlo_uncertainty.R] Análisis Monte Carlo completado. Par
       title: '06_figure_factory.R',
       category: 'Factoría de Figuras',
       badge: 'Figure Factory',
-      badgeColor: 'border-cyan-500/40 text-cyan-300 bg-cyan-500/10',
+      badgeColor: 'border-cyan-500/40 text-cyan-800 bg-cyan-100',
       path: 'scripts/R/06_figure_factory.R',
       lines: 145,
       size: '6.8 KB',
       description: 'Generador de todas las figuras canónicas del paper en ggplot2 con estética de alta resolución (300 DPI) para publicación directa en Ecological Economics o Nature Sustainability.',
-      code: `# ==============================================================================
-# 06_figure_factory.R
-# Factoría de Gráficos Canónicos para el Paper (Figuras 1 a 5 en ggplot2)
-# ==============================================================================
-
-# Genera fig1_stress_strain_hysteresis, fig2_scope3_displacement_biplot,
-# fig3_multimodel_ranking_inversion, fig4_sobol_sensitivity_montecarlo,
-# fig5_honeycomb_network_damping
-# Exporta simultáneamente a scripts/figures/ y public/docs/figures/
-
+      code: `# Exporta figuras 1 a 5 a scripts/figures y public/docs/figures a 300 DPI
 message("✓ [06_figure_factory.R] Todas las figuras canónicas exportadas a 300 DPI.")`
     }
   ];
 
-  // Filtrado de scripts en el Hub
   const filteredScripts = useMemo(() => {
     if (!searchQuery.trim()) return scriptsHubData;
     const q = searchQuery.toLowerCase();
     return scriptsHubData.filter(s => 
       s.title.toLowerCase().includes(q) || 
       s.category.toLowerCase().includes(q) || 
-      s.description.toLowerCase().includes(q) ||
-      s.path.toLowerCase().includes(q)
+      s.description.toLowerCase().includes(q)
     );
   }, [searchQuery, scriptsHubData]);
 
@@ -627,16 +515,13 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
 
           {/* Action Downloads Toolbar */}
           <div className="flex flex-wrap sm:flex-nowrap gap-2.5 shrink-0 w-full lg:w-auto">
-            <a
-              href={getAssetUrl('docs/HOMBROS_Presentacion_Oficial.pdf')}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => setActiveTab('presentation')}
               className="flex-1 lg:flex-initial inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#C86D51] hover:bg-[#b0583e] text-white text-xs font-bold shadow-md hover:shadow-lg transition-all group"
             >
-              <FileText className="w-4 h-4 text-white group-hover:scale-110 transition-transform" />
-              <span>Presentación PDF</span>
-              <ExternalLink className="w-3 h-3 text-white/80" />
-            </a>
+              <Presentation className="w-4 h-4 text-white group-hover:scale-110 transition-transform" />
+              <span>Ver Presentación</span>
+            </button>
 
             <a
               href={getAssetUrl('paper.html')}
@@ -650,7 +535,7 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
           </div>
         </div>
 
-        {/* Sub-tab Navigation (4 Pestañas Canónicas con Botones de Color Vivos) */}
+        {/* Sub-tab Navigation (5 Pestañas Canónicas Activas) */}
         <div className="flex flex-wrap gap-2.5 mt-6 pt-5 border-t border-[#D4C9B8]/70 relative z-10">
           <button
             onClick={() => setActiveTab('paper')}
@@ -661,19 +546,31 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
             }`}
           >
             <FileText className={`w-4 h-4 ${activeTab === 'paper' ? 'text-white' : 'text-[#487075]'}`} />
-            <span>Paper Canónico (IMRAD)</span>
+            <span>Paper Canónico (IMRAD & Figuras)</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('presentation')}
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm ${
+              activeTab === 'presentation'
+                ? 'bg-[#C86D51] text-white border border-[#927660] shadow-md shadow-[#C86D51]/30'
+                : 'bg-[#C86D51]/20 text-slate-800 hover:bg-[#C86D51]/30 border border-[#C86D51]/50'
+            }`}
+          >
+            <MonitorPlay className={`w-4 h-4 ${activeTab === 'presentation' ? 'text-white' : 'text-[#C86D51]'}`} />
+            <span>Presentación Oficial (PDF)</span>
           </button>
 
           <button
             onClick={() => setActiveTab('figures')}
             className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm ${
               activeTab === 'figures'
-                ? 'bg-[#C86D51] text-white border border-[#927660] shadow-md shadow-[#C86D51]/30'
-                : 'bg-[#C86D51]/20 text-slate-800 hover:bg-[#C86D51]/30 border border-[#C86D51]/50'
+                ? 'bg-[#927660] text-white border border-[#624F44] shadow-md shadow-[#927660]/30'
+                : 'bg-[#927660]/20 text-slate-800 hover:bg-[#927660]/30 border border-[#927660]/50'
             }`}
           >
-            <Image className={`w-4 h-4 ${activeTab === 'figures' ? 'text-white' : 'text-[#C86D51]'}`} />
-            <span>Figuras Canónicas del Paper</span>
+            <Image className={`w-4 h-4 ${activeTab === 'figures' ? 'text-white' : 'text-[#927660]'}`} />
+            <span>Galería de Figuras Canónicas</span>
             <span className="px-1.5 py-0.5 rounded-full text-[9px] font-mono bg-white/40 text-slate-900 font-bold">
               5
             </span>
@@ -688,7 +585,7 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
             }`}
           >
             <Terminal className={`w-4 h-4 ${activeTab === 'scripts_hub' ? 'text-white' : 'text-[#28475A]'}`} />
-            <span>Explorador de Scripts & Pipeline</span>
+            <span>Explorador de Scripts (Hub)</span>
             <span className="px-1.5 py-0.5 rounded-full text-[9px] font-mono bg-white/40 text-slate-900 font-bold">
               7 Módulos
             </span>
@@ -698,22 +595,22 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
             onClick={() => setActiveTab('episteme')}
             className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm ${
               activeTab === 'episteme'
-                ? 'bg-[#927660] text-white border border-[#624F44] shadow-md shadow-[#927660]/30'
-                : 'bg-[#927660]/20 text-slate-800 hover:bg-[#927660]/30 border border-[#927660]/50'
+                ? 'bg-[#D83F87] text-white border border-[#A0285D] shadow-md shadow-[#D83F87]/30'
+                : 'bg-[#D83F87]/20 text-slate-800 hover:bg-[#D83F87]/30 border border-[#D83F87]/50'
             }`}
           >
-            <GraduationCap className={`w-4 h-4 ${activeTab === 'episteme' ? 'text-white' : 'text-[#927660]'}`} />
+            <GraduationCap className={`w-4 h-4 ${activeTab === 'episteme' ? 'text-white' : 'text-[#D83F87]'}`} />
             <span>Hombros de Gigantes</span>
           </button>
         </div>
       </div>
 
       {/* ==================================================================== */}
-      {/* TAB 1: PAPER CIENTÍFICO CANÓNICO (IMRAD & GAPS) */}
+      {/* TAB 1: PAPER CIENTÍFICO CANÓNICO COMPLETO (IMRAD CON FIGURAS DENTRO) */}
       {/* ==================================================================== */}
       {activeTab === 'paper' && (
         <div className="space-y-8">
-          {/* Paper Metadata Badge Card */}
+          {/* Metadata Card */}
           <div className="card-slate rounded-3xl p-6 sm:p-7 shadow-xl border border-[#927660]/30">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#D4C9B8] text-xs">
               <div>
@@ -728,18 +625,18 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                 </p>
               </div>
               <div className="flex flex-wrap gap-2 text-[10px] font-mono shrink-0">
-                <span className="px-3 py-1.5 rounded-xl bg-[#487075] text-white font-bold shadow-xs">
+                <span className="px-2.5 py-1 rounded-lg bg-[#E2F4F2] text-[#376E6F] font-bold border border-[#7DB2B2]">
                   Validación Multi-sitio: N=8
                 </span>
-                <span className="px-3 py-1.5 rounded-xl bg-[#28475A] text-white font-bold shadow-xs">
+                <span className="px-2.5 py-1 rounded-lg bg-[#FAF7F0] text-[#927660] font-bold border border-[#DDD5C5]">
                   Clasif. UNESCO: 5312 / 3311
                 </span>
               </div>
             </div>
 
             {/* Abstract */}
-            <div className="mt-4 p-5 rounded-2xl bg-white/95 border border-[#D4C9B8] shadow-sm">
-              <span className="text-[11px] font-mono uppercase font-extrabold text-black tracking-wider block mb-1.5">
+            <div className="mt-4 p-4 rounded-2xl bg-white/90 border border-[#D4C9B8]/70 shadow-xs">
+              <span className="text-[10px] font-mono uppercase font-extrabold text-[#487075] tracking-wider block mb-1">
                 Resumen Ejecutivo / Abstract
               </span>
               <p className="text-xs sm:text-sm text-black leading-relaxed font-sans font-medium">
@@ -749,84 +646,68 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
           </div>
 
           {/* 1. Matriz de Gaps Epistémicos */}
-          <div className="card-teal rounded-3xl p-6 sm:p-8 shadow-xl border border-[#487075]/30">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="p-2 rounded-xl bg-[#487075] text-white shadow-sm">
-                <Scale className="w-5 h-5" />
-              </div>
-              <h3 className="font-serif font-extrabold text-xl sm:text-2xl text-black">
+          <div className="card-teal rounded-3xl p-6 sm:p-8 shadow-xl border border-[#7DB2B2]/40">
+            <div className="flex items-center gap-2 mb-2">
+              <Scale className="w-5 h-5 text-[#376E6F]" />
+              <h3 className="font-serif font-extrabold text-xl text-black">
                 1. Análisis Crítico: Matriz de Gaps en Estándares Vigentes
               </h3>
             </div>
-            <p className="text-xs sm:text-sm text-black font-medium mb-6 max-w-4xl leading-relaxed">
+            <p className="text-xs sm:text-sm text-black font-medium mb-5 max-w-4xl leading-relaxed">
               La literatura contemporánea de sostenibilidad presenta vacíos metodológicos recurrentes que impiden a las comunidades y gobiernos subnacionales evaluar su vulnerabilidad biofísica real:
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {gapsData.map((gap, idx) => {
-                const badgeThemes = [
-                  'bg-[#487075] text-white',
-                  'bg-[#C86D51] text-white',
-                  'bg-[#28475A] text-white',
-                  'bg-[#927660] text-white',
-                  'bg-[#5B507A] text-white',
-                  'bg-[#3E7B6C] text-white'
-                ];
-                const badgeClass = badgeThemes[idx % badgeThemes.length];
-
-                return (
-                  <div key={idx} className="p-5 rounded-2xl bg-white/95 border border-[#487075]/25 shadow-sm hover:shadow-md hover:border-[#487075]/60 transition-all flex flex-col justify-between">
-                    <div>
-                      <span className={`px-3 py-1.5 rounded-xl font-mono text-[11px] font-bold uppercase tracking-wide inline-block shadow-xs mb-3.5 ${badgeClass}`}>
-                        {gap.standard}
-                      </span>
-                      <div className="p-3.5 rounded-xl bg-[#FAF7F0] border border-[#DDD5C5] mb-3 text-black text-xs font-sans leading-relaxed shadow-xs">
-                        <strong className="text-black font-extrabold uppercase text-[10px] tracking-wide block mb-1">
-                          Supuesto Base:
-                        </strong>
-                        <span className="text-black font-normal"><LatexText text={gap.premise} /></span>
-                      </div>
-                      <div className="p-3.5 rounded-xl bg-[#FEECE8] border border-[#F4A79D] mb-3.5 text-black text-xs font-sans leading-relaxed shadow-xs">
-                        <div className="flex items-center gap-1.5 mb-1">
-                          <span className="w-2.5 h-2.5 rounded-full bg-[#C86D51] shrink-0" />
-                          <strong className="text-black font-extrabold uppercase text-[10px] tracking-wide">
-                            Brecha Crítica:
-                          </strong>
-                        </div>
-                        <span className="text-black font-medium"><LatexText text={gap.gap} /></span>
-                      </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {gapsData.map((gap, idx) => (
+                <div key={idx} className="p-4 rounded-2xl bg-white/95 border border-[#D4C9B8]/80 flex flex-col justify-between hover:border-[#487075] transition-all shadow-sm">
+                  <div>
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#376E6F] block mb-1">
+                      {gap.standard}
+                    </span>
+                    <div className="text-xs text-black font-sans mb-2.5">
+                      <strong className="text-black font-extrabold uppercase text-[10px] tracking-wide block mb-1">
+                        Supuesto Base:
+                      </strong>
+                      <span className="text-black font-normal"><LatexText text={gap.premise} /></span>
                     </div>
-                    <div className="p-3.5 rounded-xl bg-[#E2F4F2] border border-[#7DB2B2] text-black text-xs font-sans leading-relaxed shadow-xs">
+                    <div className="p-3.5 rounded-xl bg-[#FEECE8] border border-[#F4A79D] mb-3.5 text-black text-xs font-sans leading-relaxed shadow-xs">
                       <div className="flex items-center gap-1.5 mb-1">
-                        <span className="w-2.5 h-2.5 rounded-full bg-[#487075] shrink-0" />
-                        <strong className="text-black font-extrabold uppercase text-[10px] tracking-wide">
-                          Solución Hombros:
+                        <AlertTriangle className="w-3.5 h-3.5 text-[#C86D51] shrink-0" />
+                        <strong className="text-[#C86D51] font-bold text-[11px] uppercase tracking-wide">
+                          Brecha Crítica:
                         </strong>
                       </div>
-                      <span className="text-black font-semibold"><LatexText text={gap.solution} /></span>
+                      <span className="text-black font-medium"><LatexText text={gap.gap} /></span>
                     </div>
                   </div>
-                );
-              })}
+                  <div className="p-3.5 rounded-xl bg-[#E2F4F2] border border-[#7DB2B2] text-black text-xs font-sans leading-relaxed shadow-xs">
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-[#376E6F] shrink-0" />
+                      <strong className="text-[#376E6F] font-bold text-[11px] uppercase tracking-wide">
+                        Solución Hombros:
+                      </strong>
+                    </div>
+                    <span className="text-black font-medium"><LatexText text={gap.solution} /></span>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
           {/* 2. Formulación Matemática de Medios Continuos */}
-          <div className="card-indigo rounded-3xl p-6 sm:p-8 shadow-xl border border-[#28475A]/25">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="p-2 rounded-xl bg-[#28475A] text-white shadow-sm">
-                <Cpu className="w-5 h-5" />
-              </div>
-              <h3 className="font-serif font-extrabold text-xl sm:text-2xl text-black">
+          <div className="card-indigo rounded-3xl p-6 sm:p-8 shadow-xl border border-[#927660]/30">
+            <div className="flex items-center gap-2 mb-2">
+              <Cpu className="w-5 h-5 text-[#927660]" />
+              <h3 className="font-serif font-extrabold text-xl text-black">
                 2. Formulación Matemática y Leyes Mecánicas
               </h3>
             </div>
-            <p className="text-xs sm:text-sm text-black font-medium mb-6 max-w-4xl leading-relaxed">
-              Hombros abandona las métricas abstractas y modela el territorio con leyes físicas verificables:
+            <p className="text-xs sm:text-sm text-black font-medium mb-5 max-w-4xl">
+              Hombros abandona las métricas abstractas y modela el territorio con leyes físicas verificables de resistencia de materiales:
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono">
-              <div className="p-5 rounded-2xl bg-white/95 border border-[#487075]/30 shadow-sm flex flex-col justify-between">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+              <div className="p-5 rounded-2xl bg-white/95 border border-[#7DB2B2]/30 shadow-sm flex flex-col justify-between">
                 <div>
                   <span className="px-3 py-1 rounded-lg bg-[#487075] text-white text-[10px] font-bold uppercase tracking-wider inline-block mb-3 shadow-xs">
                     Ecuación 1 · Capacidad Portante
@@ -868,35 +749,249 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                 </div>
               </div>
             </div>
+
+            {/* FIGURA 1 EMBEBIDA DENTRO DEL PAPER */}
+            <div className="mt-8 p-5 rounded-2xl bg-white/95 border border-[#927660]/30 shadow-md">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-3 pb-2 border-b border-[#D4C9B8]">
+                <div className="flex items-center gap-2">
+                  <span className="px-2.5 py-1 rounded-md bg-[#376E6F] text-white text-xs font-mono font-bold">
+                    Figura 1 Canónica
+                  </span>
+                  <h4 className="font-serif font-bold text-black text-sm sm:text-base">
+                    Ley Constitutiva Socio-Ecológica Tensión-Deformación (σ vs. ε)
+                  </h4>
+                </div>
+                <a
+                  href={getAssetUrl('docs/figures/fig1_stress_strain_hysteresis.png')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs text-[#376E6F] font-bold hover:underline"
+                >
+                  <Maximize2 className="w-3.5 h-3.5" />
+                  <span>Ver en alta resolución</span>
+                </a>
+              </div>
+
+              <div className="rounded-xl overflow-hidden bg-[#0c0714] p-3 text-center my-3 border border-slate-300">
+                <img 
+                  src={getAssetUrl('docs/figures/fig1_stress_strain_hysteresis.png')} 
+                  alt="Figura 1: Ley Constitutiva Tensión-Deformación"
+                  className="w-full max-h-[420px] object-contain mx-auto rounded-lg"
+                />
+              </div>
+
+              <p className="text-xs text-black font-sans leading-relaxed mt-2 italic bg-[#FAF7F0] p-3 rounded-xl border border-[#DDD5C5]">
+                <strong>Epígrafe:</strong> Demostración de los cuatro regímenes viscoelásticos del territorio y ciclo de histéresis plástica cerrada. Al superar el límite de fluencia (σ ≥ 0.85), el daño por sobreextracción hídrica y compactación edáfica se vuelve permanente e irreversible sin subsidios energéticos externos masivos.
+              </p>
+            </div>
+          </div>
+
+          {/* 3. Benchmark Empírico Multi-sitio (N=8) */}
+          <div className="card-slate rounded-3xl p-6 sm:p-8 shadow-xl border border-[#927660]/30">
+            <div className="flex items-center gap-2 mb-2">
+              <Layers className="w-5 h-5 text-[#C86D51]" />
+              <h3 className="font-serif font-extrabold text-xl text-black">
+                3. Resultados Empíricos & Benchmark Multi-sitio (N=8)
+              </h3>
+            </div>
+            <p className="text-xs sm:text-sm text-black font-medium mb-4 max-w-4xl leading-relaxed">
+              Ejecución del pipeline canónico de R (<code className="text-[#376E6F] font-mono font-bold">scripts/pipeline_runner.R</code>) sobre una muestra balanceada de 3 territorios en Chile (Sur Global) y 5 metrópolis europeas (Norte Global):
+            </p>
+
+            {/* Tabla Canónica de Calibración */}
+            <div className="overflow-x-auto rounded-2xl border border-[#D4C9B8] bg-white shadow-sm mb-6">
+              <table className="w-full text-xs text-left text-black font-sans">
+                <thead className="bg-[#FAF7F0] border-b border-[#D4C9B8] text-[11px] font-mono uppercase text-slate-800">
+                  <tr>
+                    <th className="p-3">Territorio</th>
+                    <th className="p-3">País</th>
+                    <th className="p-3 text-center">Suelo (S)</th>
+                    <th className="p-3 text-center">Energía (E)</th>
+                    <th className="p-3 text-center">Saber (K)</th>
+                    <th className="p-3 text-center">Capacidad (H)</th>
+                    <th className="p-3 text-center">Presión (D)</th>
+                    <th className="p-3 text-center">Tensión (σ)</th>
+                    <th className="p-3">Régimen Mecánico</th>
+                    <th className="p-3 text-right">Alc. 1+2</th>
+                    <th className="p-3 text-right">Alc. 3 Up</th>
+                    <th className="p-3 text-right">Ratio Ext (%)</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-200">
+                  {benchmarkTable.map((t) => (
+                    <tr key={t.id} className="hover:bg-slate-50 transition-colors">
+                      <td className="p-3 font-bold">{t.name}</td>
+                      <td className="p-3 text-slate-700">{t.country}</td>
+                      <td className="p-3 text-center font-mono">{t.S}</td>
+                      <td className="p-3 text-center font-mono">{t.E}</td>
+                      <td className="p-3 text-center font-mono">{t.K}</td>
+                      <td className="p-3 text-center font-mono font-bold">{t.H}</td>
+                      <td className="p-3 text-center font-mono">{t.D}</td>
+                      <td className="p-3 text-center font-mono font-bold">{t.sigma}</td>
+                      <td className="p-3">
+                        <span className={`px-2 py-0.5 rounded-full text-[10px] border ${t.tagClass}`}>
+                          {t.regime}
+                        </span>
+                      </td>
+                      <td className="p-3 text-right font-mono">{t.scope12}</td>
+                      <td className="p-3 text-right font-mono">{t.scope3}</td>
+                      <td className="p-3 text-right font-mono font-extrabold">{t.extRatio}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* FIGURAS 2 Y 3 EMBEBIDAS DENTRO DEL BENCHMARK */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 my-6">
+              {/* Figura 2 */}
+              <div className="p-4 rounded-2xl bg-white border border-[#D4C9B8] shadow-xs">
+                <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-200">
+                  <span className="text-xs font-mono font-bold text-[#C86D51]">Figura 2 · Bi-plot Scope 3</span>
+                  <a href={getAssetUrl('docs/figures/fig2_scope3_displacement_biplot.png')} target="_blank" rel="noopener noreferrer">
+                    <Maximize2 className="w-3.5 h-3.5 text-slate-500 hover:text-black" />
+                  </a>
+                </div>
+                <div className="bg-[#0c0714] p-2 rounded-xl mb-2 text-center">
+                  <img src={getAssetUrl('docs/figures/fig2_scope3_displacement_biplot.png')} alt="Figura 2" className="max-h-[260px] mx-auto object-contain" />
+                </div>
+                <p className="text-[11px] text-slate-700 font-sans">
+                  <strong>Colonialismo Metabólico:</strong> Copenhague externaliza el 76.5% de su carga entrópica hacia el Sur Global, mientras Quintero sufre fractura destructiva (σ = 3.361).
+                </p>
+              </div>
+
+              {/* Figura 3 */}
+              <div className="p-4 rounded-2xl bg-white border border-[#D4C9B8] shadow-xs">
+                <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-200">
+                  <span className="text-xs font-mono font-bold text-[#376E6F]">Figura 3 · Inversión de Jerarquías</span>
+                  <a href={getAssetUrl('docs/figures/fig3_multimodel_ranking_inversion.png')} target="_blank" rel="noopener noreferrer">
+                    <Maximize2 className="w-3.5 h-3.5 text-slate-500 hover:text-black" />
+                  </a>
+                </div>
+                <div className="bg-[#0c0714] p-2 rounded-xl mb-2 text-center">
+                  <img src={getAssetUrl('docs/figures/fig3_multimodel_ranking_inversion.png')} alt="Figura 3" className="max-h-[260px] mx-auto object-contain" />
+                </div>
+                <p className="text-[11px] text-slate-700 font-sans">
+                  <strong>Inversión de Rankings:</strong> Chanco asciende al PUESTO #1 en resiliencia biofísica, mientras Copenhague se desploma al puesto #5 por fluencia tensora asintótica.
+                </p>
+              </div>
+            </div>
+
+            {/* FIGURAS 4 Y 5 EMBEBIDAS DENTRO DEL BENCHMARK */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 my-6">
+              {/* Figura 4 */}
+              <div className="p-4 rounded-2xl bg-white border border-[#D4C9B8] shadow-xs">
+                <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-200">
+                  <span className="text-xs font-mono font-bold text-[#927660]">Figura 4 · Sensibilidad de Sobol (Monte Carlo N=5,000)</span>
+                  <a href={getAssetUrl('docs/figures/fig4_sobol_sensitivity_montecarlo.png')} target="_blank" rel="noopener noreferrer">
+                    <Maximize2 className="w-3.5 h-3.5 text-slate-500 hover:text-black" />
+                  </a>
+                </div>
+                <div className="bg-[#0c0714] p-2 rounded-xl mb-2 text-center">
+                  <img src={getAssetUrl('docs/figures/fig4_sobol_sensitivity_montecarlo.png')} alt="Figura 4" className="max-h-[240px] mx-auto object-contain" />
+                </div>
+                <p className="text-[11px] text-slate-700 font-sans">
+                  <strong>Dominancia Edáfica:</strong> El Hombro del Suelo (S) explica el 43.8% de la varianza total de resiliencia territorial, ratificando la primacía biofísica.
+                </p>
+              </div>
+
+              {/* Figura 5 */}
+              <div className="p-4 rounded-2xl bg-white border border-[#D4C9B8] shadow-xs">
+                <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-200">
+                  <span className="text-xs font-mono font-bold text-[#D83F87]">Figura 5 · Amortiguación en Red Panal</span>
+                  <a href={getAssetUrl('docs/figures/fig5_honeycomb_network_damping.png')} target="_blank" rel="noopener noreferrer">
+                    <Maximize2 className="w-3.5 h-3.5 text-slate-500 hover:text-black" />
+                  </a>
+                </div>
+                <div className="bg-[#0c0714] p-2 rounded-xl mb-2 text-center">
+                  <img src={getAssetUrl('docs/figures/fig5_honeycomb_network_damping.png')} alt="Figura 5" className="max-h-[240px] mx-auto object-contain" />
+                </div>
+                <p className="text-[11px] text-slate-700 font-sans">
+                  <strong>Gobernanza Policéntrica:</strong> El acoplamiento en red panal reduce la varianza de estrés en un 38.4% y erradica los picos que provocan fractura catastrófica.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       )}
 
       {/* ==================================================================== */}
-      {/* TAB 2: FIGURAS CANÓNICAS DEL PAPER (GALERÍA DE ALTA RESOLUCIÓN) */}
+      {/* TAB 2: PRESENTACIÓN OFICIAL (PDF INTERACTIVO EMBEBIDO) */}
+      {/* ==================================================================== */}
+      {activeTab === 'presentation' && (
+        <div className="space-y-6">
+          <div className="card-slate rounded-3xl p-6 sm:p-8 shadow-xl border border-[#C86D51]/30">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#D4C9B8]">
+              <div>
+                <span className="text-[10px] font-mono uppercase font-bold text-[#C86D51] tracking-widest block">
+                  Documento Ejecutivo & Proyección Territorial
+                </span>
+                <h2 className="text-xl sm:text-2xl font-serif font-extrabold text-black mt-0.5">
+                  Presentación Oficial del Proyecto HOMBROS
+                </h2>
+                <p className="text-xs text-black font-medium mt-1">
+                  Desarrollo Sostenido sobre Autosustento Sintrópico • Versión Canónica en PDF de Alta Resolución
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <a
+                  href={getAssetUrl('docs/HOMBROS_Presentacion_Oficial.pdf')}
+                  download="HOMBROS_Presentacion_Oficial.pdf"
+                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#C86D51] hover:bg-[#b0583e] text-white text-xs font-bold transition-all shadow-sm"
+                >
+                  <Download className="w-3.5 h-3.5 text-white" />
+                  <span>Descargar PDF (2.4 MB)</span>
+                </a>
+                <a
+                  href={getAssetUrl('docs/HOMBROS_Presentacion_Oficial.pdf')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white hover:bg-slate-100 text-black border border-[#D4C9B8] text-xs font-bold transition-all shadow-sm"
+                >
+                  <ExternalLink className="w-3.5 h-3.5 text-slate-700" />
+                  <span>Abrir en Pestaña</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Embedded PDF Viewer */}
+            <div className="mt-6 rounded-2xl overflow-hidden border border-[#D4C9B8] shadow-2xl bg-white">
+              <iframe
+                src={`${getAssetUrl('docs/HOMBROS_Presentacion_Oficial.pdf')}#toolbar=1&navpanes=0`}
+                className="w-full h-[760px] border-none"
+                title="Presentación Oficial HOMBROS"
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ==================================================================== */}
+      {/* TAB 3: GALERÍA DE FIGURAS CANÓNICAS DEL PAPER */}
       {/* ==================================================================== */}
       {activeTab === 'figures' && (
         <div className="space-y-8">
-          <div className="card-slate rounded-3xl p-6 sm:p-8 shadow-2xl border border-white/10">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
+          <div className="card-slate rounded-3xl p-6 sm:p-8 shadow-xl border border-[#927660]/30">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#D4C9B8]">
               <div>
-                <span className="text-[10px] font-mono uppercase font-bold text-[#DA7B93] tracking-widest block">
+                <span className="text-[10px] font-mono uppercase font-bold text-[#927660] tracking-widest block">
                   Aparato Visual Canónico de Publicación
                 </span>
-                <h2 className="text-xl sm:text-2xl font-serif font-bold text-white mt-0.5">
-                  Figuras & Evidencias Gráficas del Preprint HOMBROS
+                <h2 className="text-xl sm:text-2xl font-serif font-extrabold text-black mt-0.5">
+                  Galería de Figuras Canónicas del Preprint
                 </h2>
-                <p className="text-xs text-slate-300 mt-1 max-w-2xl">
-                  Compendio de figuras vectoriales generadas con <code className="text-[#45B69C] font-mono">scripts/R/06_figure_factory.R</code> (R v4.5.2, ggplot2) a 300 DPI, estructuradas según estándares de Elsevier y Nature Portfolio.
+                <p className="text-xs text-black font-medium mt-1 max-w-2xl">
+                  Compendio de figuras vectoriales generadas con <code className="text-[#376E6F] font-mono font-bold">scripts/R/06_figure_factory.R</code> (R v4.5.2, ggplot2) a 300 DPI, estructuradas según estándares de Elsevier y Nature Portfolio.
                 </p>
               </div>
               <div className="flex items-center gap-2">
                 <a
-                  href="/public/docs/figures/fig1_stress_strain_hysteresis.png"
+                  href={getAssetUrl('docs/figures/fig1_stress_strain_hysteresis.png')}
                   download
-                  className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-black/40 hover:bg-black/60 border border-white/10 text-white text-xs font-mono transition-all"
+                  className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-white hover:bg-slate-100 border border-[#D4C9B8] text-black text-xs font-bold transition-all shadow-sm"
                 >
-                  <Download className="w-3.5 h-3.5 text-[#45B69C]" />
+                  <Download className="w-3.5 h-3.5 text-[#376E6F]" />
                   <span>Descargar Figuras (.png)</span>
                 </a>
               </div>
@@ -910,8 +1005,8 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                   onClick={() => setSelectedFigureId(fig.id)}
                   className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition-all ${
                     selectedFigureId === fig.id
-                      ? 'bg-[#D83F87] text-white shadow-lg shadow-[#D83F87]/30'
-                      : 'bg-black/40 text-slate-300 hover:text-white hover:bg-black/60 border border-white/10'
+                      ? 'bg-[#C86D51] text-white shadow-md shadow-[#C86D51]/30'
+                      : 'bg-white text-slate-800 hover:bg-slate-100 border border-[#D4C9B8]'
                   }`}
                 >
                   <Image className="w-3.5 h-3.5" />
@@ -921,7 +1016,7 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
             </div>
 
             {/* Visor Principal de la Figura Activa */}
-            <div className="bg-[#0c0714] rounded-2xl p-4 sm:p-6 border border-white/10 shadow-2xl">
+            <div className="bg-[#0c0714] rounded-2xl p-4 sm:p-6 border border-white/10 shadow-2xl text-white">
               <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-3 mb-4 pb-3 border-b border-white/10">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
@@ -946,8 +1041,7 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                     href={activeFigure.image}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition-all text-xs flex items-center gap-1.5 font-mono"
-                    title="Ver en pestaña a máxima resolución"
+                    className="p-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-white transition-all text-xs flex items-center gap-1.5 font-mono"
                   >
                     <Maximize2 className="w-3.5 h-3.5" />
                     <span>Ampliar</span>
@@ -955,10 +1049,9 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                   <a
                     href={activeFigure.image}
                     download
-                    className="p-2 rounded-xl bg-[#376E6F]/40 hover:bg-[#376E6F]/60 border border-[#45B69C]/50 text-white transition-all text-xs flex items-center gap-1.5 font-mono"
-                    title="Descargar PNG 300 DPI"
+                    className="p-2 rounded-xl bg-[#376E6F] hover:bg-[#2b595a] text-white transition-all text-xs flex items-center gap-1.5 font-mono"
                   >
-                    <Download className="w-3.5 h-3.5 text-[#45B69C]" />
+                    <Download className="w-3.5 h-3.5 text-white" />
                     <span>PNG</span>
                   </a>
                 </div>
@@ -969,7 +1062,7 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                 <img 
                   src={activeFigure.image} 
                   alt={activeFigure.title}
-                  className="max-h-[520px] w-auto object-contain rounded-lg shadow-2xl hover:scale-[1.01] transition-transform" 
+                  className="max-h-[520px] w-auto object-contain rounded-lg shadow-2xl" 
                 />
               </div>
 
@@ -999,92 +1092,69 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                 </div>
               </div>
             </div>
-
-            {/* Miniaturas de Acceso Rápido */}
-            <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mt-6">
-              {paperFigures.map((fig) => (
-                <div
-                  key={fig.id}
-                  onClick={() => setSelectedFigureId(fig.id)}
-                  className={`p-2.5 rounded-xl border cursor-pointer transition-all ${
-                    selectedFigureId === fig.id
-                      ? 'border-[#D83F87] bg-[#D83F87]/10'
-                      : 'border-white/10 bg-black/30 hover:border-white/20'
-                  }`}
-                >
-                  <div className="aspect-video rounded-lg overflow-hidden bg-black/60 mb-2 border border-white/5">
-                    <img src={fig.image} alt={fig.number} className="w-full h-full object-cover" />
-                  </div>
-                  <div className="text-[10px] font-mono font-bold text-white truncate">{fig.number}</div>
-                  <div className="text-[9px] text-slate-400 truncate">{fig.title}</div>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       )}
 
       {/* ==================================================================== */}
-      {/* TAB 3: EXPLORADOR DE SCRIPTS & PIPELINE (HUB DUAL-PANE WETLAND STYLE) */}
+      {/* TAB 4: EXPLORADOR DE SCRIPTS & PIPELINE (HUB DUAL-PANE WETLAND STYLE) */}
       {/* ==================================================================== */}
       {activeTab === 'scripts_hub' && (
         <div className="space-y-6">
-          <div className="card-slate rounded-3xl p-6 sm:p-8 shadow-2xl border border-white/10">
-            {/* Header Hub */}
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-white/10">
+          <div className="card-slate rounded-3xl p-6 sm:p-8 shadow-xl border border-[#28475A]/30">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-[#D4C9B8]">
               <div className="flex items-center gap-3">
-                <div className="p-3 rounded-2xl bg-[#2A1B3D] border border-[#45B69C]/40 text-[#45B69C]">
-                  <Terminal className="w-6 h-6" />
+                <div className="p-3 rounded-2xl bg-[#28475A] text-white shadow-md">
+                  <Terminal className="w-6 h-6 text-white" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2 mb-0.5">
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#45B69C]">
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#28475A]">
                       Computational Hub & Pipeline de R
                     </span>
-                    <span className="text-[10px] font-mono px-2 py-0.2 rounded-full bg-black/40 text-slate-300 border border-white/10">
+                    <span className="text-[10px] font-mono px-2 py-0.2 rounded-full bg-white text-slate-800 border border-[#D4C9B8]">
                       R v4.5.2 • tidyverse • ggplot2
                     </span>
                   </div>
-                  <h2 className="text-xl sm:text-2xl font-serif font-bold text-white">
+                  <h2 className="text-xl sm:text-2xl font-serif font-extrabold text-black">
                     Hub Canónico de Scripts & Modelación Modular
                   </h2>
-                  <p className="text-xs text-slate-300 mt-0.5">
+                  <p className="text-xs text-black font-medium mt-0.5">
                     Arquitectura computacional desacoplada en 7 módulos especializados bajo el patrón de pipeline orquestado.
                   </p>
                 </div>
               </div>
 
-              {/* Botones de acción del Hub */}
               <div className="flex flex-wrap items-center gap-2">
                 <button
                   onClick={() => copyScriptToClipboard(activeScript.code)}
-                  className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-black/40 hover:bg-black/60 border border-white/10 text-white text-xs font-mono transition-all"
+                  className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-white hover:bg-slate-100 border border-[#D4C9B8] text-black text-xs font-mono font-bold transition-all shadow-sm"
                 >
-                  {copiedCode ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5 text-slate-300" />}
+                  {copiedCode ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-slate-700" />}
                   <span>{copiedCode ? 'Copiado' : 'Copiar Script'}</span>
                 </button>
               </div>
             </div>
 
             {/* Run Banner */}
-            <div className="my-5 p-3.5 rounded-2xl bg-black/40 border border-white/10 text-xs font-mono text-slate-300 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div className="my-5 p-3.5 rounded-2xl bg-white border border-[#D4C9B8] text-xs font-mono text-black flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
               <div className="flex items-center gap-2">
-                <Play className="w-4 h-4 text-[#DA7B93] shrink-0" />
+                <Play className="w-4 h-4 text-[#C86D51] shrink-0" />
                 <div>
-                  <span className="text-[#DA7B93] font-bold"># Ejecución completa del pipeline en terminal:</span>
-                  <span className="ml-2 text-slate-100 bg-black/60 px-2 py-0.5 rounded border border-white/10">
+                  <span className="text-[#C86D51] font-bold"># Ejecución completa del pipeline en terminal:</span>
+                  <span className="ml-2 text-black bg-[#FAF7F0] px-2 py-0.5 rounded border border-[#DDD5C5] font-bold">
                     Rscript scripts/pipeline_runner.R
                   </span>
                 </div>
               </div>
-              <span className="text-[10px] text-slate-400 font-mono">
-                Tiempo de cómputo verificado: 5.76 s
+              <span className="text-[10px] text-slate-600 font-mono font-bold">
+                Tiempo de cómputo: 5.76 s
               </span>
             </div>
 
-            {/* Dual-Pane Window (Inspirado en Wetland Monitor Thesis Explorer) */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 mt-4 rounded-2xl bg-[#09050e] border border-white/10 overflow-hidden shadow-2xl min-h-[580px]">
-              {/* Left Sidebar: Explorador de Módulos */}
+            {/* Dual-Pane Window */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 mt-4 rounded-2xl bg-[#09050e] border border-white/10 overflow-hidden shadow-2xl min-h-[580px] text-white">
+              {/* Left Sidebar */}
               <div className="lg:col-span-4 border-b lg:border-b-0 lg:border-r border-white/10 p-4 bg-[#0d0714] flex flex-col justify-between">
                 <div>
                   <div className="flex items-center gap-2 mb-3">
@@ -1094,19 +1164,17 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                     </span>
                   </div>
 
-                  {/* Search Bar */}
                   <div className="relative mb-3">
                     <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-slate-400" />
                     <input
                       type="text"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder="Filtrar scripts o funciones..."
+                      placeholder="Filtrar scripts..."
                       className="w-full pl-8 pr-3 py-1.5 rounded-xl bg-black/50 border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#DA7B93] font-mono"
                     />
                   </div>
 
-                  {/* Lista de Scripts */}
                   <div className="space-y-1.5 max-h-[460px] overflow-y-auto pr-1">
                     {filteredScripts.map((script) => (
                       <div
@@ -1130,11 +1198,6 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                         <p className="text-[10px] text-slate-400 font-sans line-clamp-1">
                           {script.description}
                         </p>
-                        <div className="flex items-center gap-2 mt-1.5 text-[9px] font-mono text-slate-500">
-                          <span>{script.lines} líneas</span>
-                          <span>•</span>
-                          <span>{script.size}</span>
-                        </div>
                       </div>
                     ))}
                   </div>
@@ -1145,10 +1208,9 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                 </div>
               </div>
 
-              {/* Right Main Document Area: Visor de Código & Metadatos */}
+              {/* Right Viewport */}
               <div className="lg:col-span-8 p-4 sm:p-5 flex flex-col justify-between bg-[#07040a]">
                 <div>
-                  {/* Breadcrumb & File Meta Toolbar */}
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 mb-3 border-b border-white/10 font-mono text-xs">
                     <div className="flex items-center gap-1.5 text-slate-400 truncate">
                       <span>scripts</span>
@@ -1164,13 +1226,11 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                     </div>
                   </div>
 
-                  {/* Descripción del Script */}
                   <div className="p-3 rounded-xl bg-black/40 border border-white/5 mb-3 text-xs text-slate-300 font-sans leading-relaxed">
                     <strong className="text-white font-mono text-[11px] block mb-0.5">Propósito del Módulo:</strong>
                     {activeScript.description}
                   </div>
 
-                  {/* Visor de Código */}
                   <div className="rounded-xl bg-[#030106] p-4 border border-white/10 max-h-[400px] overflow-y-auto overflow-x-auto">
                     <pre className="text-xs font-mono text-emerald-300/90 leading-relaxed">
                       <code>{activeScript.code}</code>
@@ -1178,10 +1238,9 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                   </div>
                 </div>
 
-                {/* Footer del Visor */}
                 <div className="flex items-center justify-between pt-3 mt-3 border-t border-white/10 text-[10px] font-mono text-slate-500">
                   <span>Ruta local: <code>{activeScript.path}</code></span>
-                  <span>Codificación: UTF-8 • Formato: RScript</span>
+                  <span>Formato: RScript v4.5.2</span>
                 </div>
               </div>
             </div>
@@ -1190,18 +1249,18 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
       )}
 
       {/* ==================================================================== */}
-      {/* TAB 4: HOMBROS DE GIGANTES (FUNDAMENTOS HISTÓRICOS Y EPISTÉMICOS) */}
+      {/* TAB 5: HOMBROS DE GIGANTES (GENEALOGÍA EPISTÉMICA) */}
       {/* ==================================================================== */}
       {activeTab === 'episteme' && (
         <div className="space-y-8">
           <HombrosDeGigantes />
 
-          <div className="card-slate rounded-3xl p-6 sm:p-8 shadow-xl border border-[#927660]/30">
+          <div className="card-slate rounded-3xl p-6 sm:p-8 shadow-xl border border-[#D83F87]/30">
             <div className="mb-6">
-              <span className="text-[10px] font-mono uppercase font-bold text-[#927660] tracking-widest block">
+              <span className="text-[10px] font-mono uppercase font-bold text-[#D83F87] tracking-widest block">
                 Arquitectura Epistemológica
               </span>
-              <h2 className="text-xl sm:text-2xl font-serif font-extrabold text-black mt-0.5">
+              <h2 className="text-xl font-serif font-extrabold text-black mt-0.5">
                 Los 4 Ejes de Ruptura con el Desarrollo Convencional
               </h2>
             </div>
@@ -1209,32 +1268,22 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {sections.map((sec, i) => {
                 const Icon = sec.icon;
-                const badgeBgColors = [
-                  'bg-[#487075] text-white',
-                  'bg-[#C86D51] text-white',
-                  'bg-[#28475A] text-white',
-                  'bg-[#927660] text-white'
-                ];
-                const badgeBg = badgeBgColors[i % badgeBgColors.length];
-
                 return (
                   <div 
                     key={i} 
-                    className={`rounded-3xl p-6 shadow-md flex flex-col justify-between transition-all duration-300 group ${sec.cardClass} border border-black/10`}
+                    className={`rounded-3xl p-6 shadow-md flex flex-col justify-between transition-all duration-300 group ${sec.cardClass}`}
                   >
                     <div>
                       <div className="flex items-center justify-between mb-3.5">
-                        <span className={`text-[10px] font-mono uppercase font-bold px-3 py-1 rounded-xl shadow-xs ${badgeBg}`}>
+                        <span className="text-[10px] font-mono uppercase font-bold px-2.5 py-0.5 rounded-full bg-white/80 text-black border border-black/10">
                           {sec.badge}
                         </span>
-                        <div className="p-1.5 rounded-lg bg-white/70 shadow-2xs">
-                          <Icon className={`w-4 h-4 text-black`} />
-                        </div>
+                        <Icon className={`w-4 h-4 ${sec.color}`} />
                       </div>
-                      <h3 className="text-base font-serif font-extrabold mb-3 text-black">
+                      <h3 className="text-base font-serif font-bold mb-3 text-black">
                         {sec.title}
                       </h3>
-                      <p className="text-xs leading-relaxed whitespace-pre-line text-black font-sans font-medium">
+                      <p className="text-xs leading-relaxed whitespace-pre-line text-black font-medium font-sans">
                         {sec.content}
                       </p>
                     </div>

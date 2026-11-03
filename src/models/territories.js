@@ -1,4 +1,4 @@
-import { getAssetUrl } from '../utils/assets';
+import { getAssetUrl } from '../utils/assets.js';
 
 /**
  * Comprehensive Territories Database - HOMBROS Metabolic Platform
