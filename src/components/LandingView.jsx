@@ -6,8 +6,9 @@ import {
   Mountain, Compass, CheckCircle2, ChevronRight, HelpCircle
 } from 'lucide-react';
 import LandingHeroBanner from './LandingHeroBanner';
+import KitAuditaTuCuencaBanner from './KitAuditaTuCuencaBanner';
 
-export default function LandingView({ onNavigate }) {
+export default function LandingView({ onNavigate, onNavigateCustomAudit }) {
   const modules = [
     {
       id: 'core',
@@ -158,6 +159,18 @@ export default function LandingView({ onNavigate }) {
           </p>
         </div>
       </div>
+
+      {/* 2.5 BANNER DESTACADO: KIT AUDITA TU PROPIA CUENCA */}
+      <KitAuditaTuCuencaBanner
+        isCustomActive={false}
+        onActivateCustom={(useAgriTwin) => {
+          if (onNavigateCustomAudit) {
+            onNavigateCustomAudit(useAgriTwin ? 'agritwin' : 'blank');
+          } else {
+            onNavigate('audit');
+          }
+        }}
+      />
 
       {/* 3. CATÁLOGO DE MÓDULOS DEL ECOSISTEMA HOMBROS */}
       <div className="space-y-6">

@@ -1,16 +1,17 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   ShieldCheck, ShieldAlert, Scale, Calculator, Activity, FileCheck2,
   AlertTriangle, CheckCircle2, Flame, Globe, Sliders, Printer,
   ArrowRight, Database, Layers, TrendingUp, Lock, Unlock, RotateCcw,
-  PlusCircle, Cpu, Download, Coins, Sprout
+  PlusCircle, Cpu, Download, Coins, Sprout, Sparkles, Radio
 } from 'lucide-react';
 import { INITIAL_TERRITORIES } from '../models/territories';
 import { calculateHombrosFullState } from '../models/santanderModel';
 import { NORMALIZATION_GOALPOSTS, normalizeRawValue, denormalizeScoreToRaw } from '../models/normalization';
 import { InlineMath, BlockMath } from './KaTeXMath';
 import { getAssetUrl } from '../utils/assets';
+import KitAuditaTuCuencaBanner from './KitAuditaTuCuencaBanner';
 
 const INVESTMENT_ARCHETYPES = [
   {
@@ -117,8 +118,10 @@ const AGRITWIN_LONGAVI_PRESET = {
   }
 };
 
-export default function MetabolicAuditView() {
-  const [selectedTerritoryId, setSelectedTerritoryId] = useState('chanco');
+export default function MetabolicAuditView({ initialCustomMode }) {
+  const [selectedTerritoryId, setSelectedTerritoryId] = useState(
+    initialCustomMode ? 'custom_territory' : 'chanco'
+  );
   const [selectedArchetypeId, setSelectedArchetypeId] = useState('agro_forestal');
   const [activeAuditStep, setActiveAuditStep] = useState('all'); // 'all' | 'step1_norm' | 'step2_traction' | 'step3_rating' | 'step4_roi'
   const [rawOverrides, setRawOverrides] = useState({});
@@ -126,15 +129,36 @@ export default function MetabolicAuditView() {
   const [customDeltaE, setCustomDeltaE] = useState(null);
 
   // Estado para "+ Evaluar Tu Propio Territorio / Comuna"
-  const [customMeta, setCustomMeta] = useState({
-    name: AGRITWIN_LONGAVI_PRESET.name,
-    region: AGRITWIN_LONGAVI_PRESET.country,
-    scale: AGRITWIN_LONGAVI_PRESET.scale,
-    population: AGRITWIN_LONGAVI_PRESET.population,
-    d1: AGRITWIN_LONGAVI_PRESET.pressureVars.d1,
-    kappa: AGRITWIN_LONGAVI_PRESET.kappa,
-    agritwinLinked: true
+  const [customMeta, setCustomMeta] = useState(() => {
+    if (initialCustomMode === 'blank') {
+      return {
+        name: 'Mi Comuna / Cuenca en Estudio',
+        region: 'Hipótesis Local Pre-Fondo',
+        scale: 'Escala Comunal / Subcuenca',
+        population: 15000,
+        d1: 0.48,
+        kappa: 0.32,
+        agritwinLinked: false
+      };
+    }
+    return {
+      name: AGRITWIN_LONGAVI_PRESET.name,
+      region: AGRITWIN_LONGAVI_PRESET.country,
+      scale: AGRITWIN_LONGAVI_PRESET.scale,
+      population: AGRITWIN_LONGAVI_PRESET.population,
+      d1: AGRITWIN_LONGAVI_PRESET.pressureVars.d1,
+      kappa: AGRITWIN_LONGAVI_PRESET.kappa,
+      agritwinLinked: true
+    };
   });
+
+  useEffect(() => {
+    if (initialCustomMode === 'agritwin') {
+      handleActivateCustomTerritory(true);
+    } else if (initialCustomMode === 'blank') {
+      handleActivateCustomTerritory(false);
+    }
+  }, [initialCustomMode]);
 
   // Estado para la Calculadora de ROI Biofísico (Costo de Inacción vs. Inversión Sintrópica)
   const [roiInputs, setRoiInputs] = useState({
@@ -440,6 +464,16 @@ export default function MetabolicAuditView() {
       className="space-y-8 max-w-7xl mx-auto"
     >
       {/* =================================================================== */}
+      {/* BANNER PROTAGÓNICO: KIT AUDITA TU PROPIA CUENCA & GEMELO AGRITWIN    */}
+      {/* =================================================================== */}
+      <KitAuditaTuCuencaBanner
+        isCustomActive={selectedTerritoryId === 'custom_territory'}
+        customMeta={customMeta}
+        onActivateCustom={handleActivateCustomTerritory}
+        onResetToBenchmark={() => handleSelectTerritory('chanco')}
+      />
+
+      {/* =================================================================== */}
       {/* HEADER EJECUTIVO DEL SISTEMA DE AUDITORÍA & LABORATORIO DE HIPÓTESIS*/}
       {/* =================================================================== */}
       <div className="card-magenta rounded-3xl p-6 sm:p-8 shadow-2xl border border-[#D83F87]/35 relative overflow-hidden">
@@ -500,17 +534,17 @@ export default function MetabolicAuditView() {
                 </button>
               ))}
 
-              {/* Botón + Evaluar Tu Propio Territorio / Conector AgriTwin */}
+              {/* Botón + Kit: Audita tu Propia Cuenca */}
               <button
                 onClick={() => handleActivateCustomTerritory(true)}
-                className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold transition-all border ${
+                className={`inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-mono font-bold transition-all border ${
                   selectedTerritoryId === 'custom_territory'
-                    ? 'bg-[#28475A] text-amber-300 border-amber-400 ring-2 ring-amber-400/50 shadow-lg'
-                    : 'bg-[#140b22] text-amber-300 border-[#28475A] hover:bg-[#1e1233]'
+                    ? 'bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 border-amber-600 ring-2 ring-amber-400/60 shadow-lg'
+                    : 'bg-gradient-to-r from-[#122227] to-[#28475A] text-amber-300 border-amber-400/60 hover:brightness-115 shadow-md'
                 }`}
               >
-                <PlusCircle className="w-3.5 h-3.5 text-amber-300" />
-                <span>+ Evaluar Tu Propio Territorio / Acople AgriTwin</span>
+                <Sparkles className={`w-3.5 h-3.5 ${selectedTerritoryId === 'custom_territory' ? 'text-slate-950' : 'text-amber-300'}`} />
+                <span>⚡ Kit: Audita tu Propia Cuenca</span>
               </button>
             </div>
 

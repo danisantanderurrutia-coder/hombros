@@ -13,6 +13,7 @@ import ScopeEmissionsBreakdown from './ScopeEmissionsBreakdown';
 import HoneycombNetwork from './HoneycombNetwork';
 import DeepDiveCasesView from './DeepDiveCasesView';
 import DataSourcesView from './DataSourcesView';
+import KitAuditaTuCuencaBanner from './KitAuditaTuCuencaBanner';
 import { useTheme } from '../context/ThemeContext';
 
 // Trade / Metabolic Geodesic Flow Arcs (from Global South extraction to Global North consumption hubs)
@@ -82,6 +83,7 @@ export default function WorldTerritoriesMap({
   setSelectedTerritoryId,
   globalModifiers,
   onNavigateToCases,
+  onNavigateCustomAudit,
   initialSubTab = 'map'
 }) {
   const { palette, isFcinq } = useTheme();
@@ -1425,6 +1427,18 @@ export default function WorldTerritoriesMap({
           <DataSourcesView />
         </div>
       )}
+
+      {/* Llamado a la Acción: Kit Audita tu Propia Cuenca */}
+      <div className="pt-4">
+        <KitAuditaTuCuencaBanner
+          isCustomActive={false}
+          onActivateCustom={(useAgriTwin) => {
+            if (onNavigateCustomAudit) {
+              onNavigateCustomAudit(useAgriTwin ? 'agritwin' : 'blank');
+            }
+          }}
+        />
+      </div>
 
     </div>
   );

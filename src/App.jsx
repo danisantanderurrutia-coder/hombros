@@ -19,6 +19,13 @@ function AppContent() {
   const [territories] = useState(INITIAL_TERRITORIES);
   const [selectedTerritoryId, setSelectedTerritoryId] = useState('chanco');
   const [activeTab, setActiveTab] = useState('landing');
+  const [customAuditMode, setCustomAuditMode] = useState(null); // null | 'agritwin' | 'blank'
+
+  const handleNavigateCustomAudit = (mode = 'agritwin') => {
+    setCustomAuditMode(mode);
+    setActiveTab('audit');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const [modifiers, setModifiers] = useState({
     climateShock: 0,
@@ -51,7 +58,10 @@ function AppContent() {
           )}
 
           {activeTab === 'landing' && (
-            <LandingView onNavigate={setActiveTab} />
+            <LandingView 
+              onNavigate={setActiveTab} 
+              onNavigateCustomAudit={handleNavigateCustomAudit}
+            />
           )}
 
           {activeTab === 'core' && (
@@ -59,7 +69,7 @@ function AppContent() {
           )}
 
           {activeTab === 'audit' && (
-            <MetabolicAuditView />
+            <MetabolicAuditView initialCustomMode={customAuditMode} />
           )}
 
           {activeTab === 'articles' && (
@@ -72,6 +82,7 @@ function AppContent() {
               selectedTerritoryId={selectedTerritoryId}
               setSelectedTerritoryId={setSelectedTerritoryId}
               globalModifiers={modifiers}
+              onNavigateCustomAudit={handleNavigateCustomAudit}
               initialSubTab={activeTab === 'cases' ? 'cases' : activeTab === 'data_sources' ? 'data_sources' : 'map'}
             />
           )}
