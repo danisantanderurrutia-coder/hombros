@@ -777,6 +777,12 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                   src={getAssetUrl('docs/figures/fig1_stress_strain_hysteresis.png')} 
                   alt="Figura 1: Ley Constitutiva Tensión-Deformación"
                   className="w-full max-h-[420px] object-contain mx-auto rounded-lg"
+                  onError={(e) => {
+                    if (!e.target.dataset.tried) {
+                      e.target.dataset.tried = '1';
+                      e.target.src = '/hombros/docs/figures/fig1_stress_strain_hysteresis.png';
+                    }
+                  }}
                 />
               </div>
 
@@ -853,7 +859,17 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                   </a>
                 </div>
                 <div className="bg-[#0c0714] p-2 rounded-xl mb-2 text-center">
-                  <img src={getAssetUrl('docs/figures/fig2_scope3_displacement_biplot.png')} alt="Figura 2" className="max-h-[260px] mx-auto object-contain" />
+                  <img 
+                    src={getAssetUrl('docs/figures/fig2_scope3_displacement_biplot.png')} 
+                    alt="Figura 2" 
+                    className="max-h-[260px] mx-auto object-contain" 
+                    onError={(e) => {
+                      if (!e.target.dataset.tried) {
+                        e.target.dataset.tried = '1';
+                        e.target.src = '/hombros/docs/figures/fig2_scope3_displacement_biplot.png';
+                      }
+                    }}
+                  />
                 </div>
                 <p className="text-[11px] text-slate-700 font-sans">
                   <strong>Colonialismo Metabólico:</strong> Copenhague externaliza el 76.5% de su carga entrópica hacia el Sur Global, mientras Quintero sufre fractura destructiva (σ = 3.361).
@@ -869,7 +885,17 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                   </a>
                 </div>
                 <div className="bg-[#0c0714] p-2 rounded-xl mb-2 text-center">
-                  <img src={getAssetUrl('docs/figures/fig3_multimodel_ranking_inversion.png')} alt="Figura 3" className="max-h-[260px] mx-auto object-contain" />
+                  <img 
+                    src={getAssetUrl('docs/figures/fig3_multimodel_ranking_inversion.png')} 
+                    alt="Figura 3" 
+                    className="max-h-[260px] mx-auto object-contain" 
+                    onError={(e) => {
+                      if (!e.target.dataset.tried) {
+                        e.target.dataset.tried = '1';
+                        e.target.src = '/hombros/docs/figures/fig3_multimodel_ranking_inversion.png';
+                      }
+                    }}
+                  />
                 </div>
                 <p className="text-[11px] text-slate-700 font-sans">
                   <strong>Inversión de Rankings:</strong> Chanco asciende al PUESTO #1 en resiliencia biofísica, mientras Copenhague se desploma al puesto #5 por fluencia tensora asintótica.
@@ -888,7 +914,17 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                   </a>
                 </div>
                 <div className="bg-[#0c0714] p-2 rounded-xl mb-2 text-center">
-                  <img src={getAssetUrl('docs/figures/fig4_sobol_sensitivity_montecarlo.png')} alt="Figura 4" className="max-h-[240px] mx-auto object-contain" />
+                  <img 
+                    src={getAssetUrl('docs/figures/fig4_sobol_sensitivity_montecarlo.png')} 
+                    alt="Figura 4" 
+                    className="max-h-[240px] mx-auto object-contain" 
+                    onError={(e) => {
+                      if (!e.target.dataset.tried) {
+                        e.target.dataset.tried = '1';
+                        e.target.src = '/hombros/docs/figures/fig4_sobol_sensitivity_montecarlo.png';
+                      }
+                    }}
+                  />
                 </div>
                 <p className="text-[11px] text-slate-700 font-sans">
                   <strong>Dominancia Edáfica:</strong> El Hombro del Suelo (S) explica el 43.8% de la varianza total de resiliencia territorial, ratificando la primacía biofísica.
@@ -904,7 +940,17 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                   </a>
                 </div>
                 <div className="bg-[#0c0714] p-2 rounded-xl mb-2 text-center">
-                  <img src={getAssetUrl('docs/figures/fig5_honeycomb_network_damping.png')} alt="Figura 5" className="max-h-[240px] mx-auto object-contain" />
+                  <img 
+                    src={getAssetUrl('docs/figures/fig5_honeycomb_network_damping.png')} 
+                    alt="Figura 5" 
+                    className="max-h-[240px] mx-auto object-contain" 
+                    onError={(e) => {
+                      if (!e.target.dataset.tried) {
+                        e.target.dataset.tried = '1';
+                        e.target.src = '/hombros/docs/figures/fig5_honeycomb_network_damping.png';
+                      }
+                    }}
+                  />
                 </div>
                 <p className="text-[11px] text-slate-700 font-sans">
                   <strong>Gobernanza Policéntrica:</strong> El acoplamiento en red panal reduce la varianza de estrés en un 38.4% y erradica los picos que provocan fractura catastrófica.
@@ -1063,6 +1109,17 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                   src={activeFigure.image} 
                   alt={activeFigure.title}
                   className="max-h-[520px] w-auto object-contain rounded-lg shadow-2xl" 
+                  onError={(e) => {
+                    if (!e.target.dataset.tried) {
+                      e.target.dataset.tried = '1';
+                      const figFilename = activeFigure.id === 'fig1' ? 'fig1_stress_strain_hysteresis.png' :
+                                          activeFigure.id === 'fig2' ? 'fig2_scope3_displacement_biplot.png' :
+                                          activeFigure.id === 'fig3' ? 'fig3_multimodel_ranking_inversion.png' :
+                                          activeFigure.id === 'fig4' ? 'fig4_sobol_sensitivity_montecarlo.png' :
+                                          'fig5_honeycomb_network_damping.png';
+                      e.target.src = `/hombros/docs/figures/${figFilename}`;
+                    }
+                  }}
                 />
               </div>
 

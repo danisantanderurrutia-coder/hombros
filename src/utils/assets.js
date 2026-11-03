@@ -11,6 +11,13 @@ export function getAssetUrl(path) {
   if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.DEV) {
     return `/${cleanPath}`;
   }
-  const base = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.BASE_URL) || './';
+  
+  let base = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.BASE_URL) || './';
+
+  // If deployed on GitHub Pages under /hombros, ensure base is properly scoped with absolute repository path
+  if (typeof window !== 'undefined' && (window.location.pathname.startsWith('/hombros') || window.location.hostname.includes('github.io'))) {
+    base = '/hombros/';
+  }
+
   return base.endsWith('/') ? `${base}${cleanPath}` : `${base}/${cleanPath}`;
 }
