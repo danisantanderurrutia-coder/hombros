@@ -86,9 +86,9 @@ export default function TheoryView() {
       sectionRef: 'Sección 2.2 · Análisis de Incertidumbre',
       caption: 'Índices de sensibilidad de primer orden de Sobol (S_i) derivados de remuestreo Monte Carlo sobre el espacio de parámetros [S, E, K, D1, D2, D3].',
       takeaways: [
-        'El Hombro del Suelo e Hidrología (S) domina la varianza total de resiliencia con un 43.8% de peso explicativo.',
+        'El Hombro Ambiental / Ecosistémico (E) domina la varianza total de resiliencia con un 43.8% de peso explicativo.',
         'Las presiones de extracción primaria (D1) y exógena (D3) superan en impacto a la densidad demográfica pura (D2).',
-        'Confirma el principio biofísico: la integridad edáfica es el cimiento insustituible de la estabilidad territorial.',
+        'Confirma el principio biofísico: la integridad ecosistémica e hídrica (E) es el cimiento insustituible de la estabilidad territorial.',
         'Robustece la validez del modelo frente a incertidumbres de medición o variabilidad climática interanual.'
       ]
     },
@@ -108,6 +108,40 @@ export default function TheoryView() {
         'Formaliza el mutualismo evolutivo de Kropotkin y la gobernanza común policéntrica de Elinor Ostrom.',
         'Prueba que la resiliencia no reside en la autarquía defensiva, sino en la complementariedad metabólica descentralizada.'
       ]
+    },
+    {
+      id: 'fig6',
+      number: 'Figura 6',
+      title: 'Funciones de Transferencia y Normalización Canónica (X_raw → [0, 1])',
+      subtitle: 'Estandarización de Variables Físicas Heterogéneas mediante Postes de Meta (Goalposts) y Corte de Liebig',
+      image: getAssetUrl('docs/figures/fig6_normalization_transfer_functions.png'),
+      badge: 'Eslabón 1 · Normalización',
+      badgeColor: 'border-cyan-500/40 text-cyan-800 bg-cyan-100',
+      sectionRef: 'Sección 2.1.bis · Protocolo OECD/JRC + Falkenmark',
+      caption: 'Curvas de transferencia canónica que proyectan datos crudos observables (m³/hab/año, % bosque nativo, Gini, IHH, PM2.5) al espacio normalizado [0, 1]. Destaca la franja roja de micro-fractura estructural de Liebig (H_i < 0.25).',
+      takeaways: [
+        'Resuelve la conmensurabilidad biofísica mediante tres familias: Lineal Directa, Logarítmica Acotada (Falkenmark) y Lineal Inversa.',
+        'Ancla el umbral de Liebig (0.25) en fronteras físicas reales: 555 m³/hab/año en agua, 20% en cobertura nativa y 0.54 en Gini.',
+        'Elimina la arbitrariedad subjetiva al fijar Postes de Meta (Goalposts) auditables en registros públicos (Tier 1, 2 y 3).',
+        'Permite trazabilidad bidireccional: del dato crudo al índice (X_raw → [0,1]) y viceversa.'
+      ]
+    },
+    {
+      id: 'fig7',
+      number: 'Figura 7',
+      title: 'Auditoría de Ensayo de Tracción Territorial Pre-Inversión (σ₀ → σ_proyectado)',
+      subtitle: 'Simulación de Carga Extractiva Incremental (ΔD = +0.09, ΔE = -0.02) y Dictamen de Solvencia Metabólica',
+      image: getAssetUrl('docs/figures/fig7_audit_traction_stress_test.png'),
+      badge: 'SEIA 2.0 · Auditoría Biofísica',
+      badgeColor: 'border-rose-500/40 text-rose-800 bg-rose-100',
+      sectionRef: 'Sección 2.6 · Ensayo de Carga Virtual',
+      caption: 'Desplazamiento tensorial inducido por un proyecto de inversión estándar sobre los 8 territorios del benchmark. Contrasta la tensión basal (σ₀, gris) frente a la tensión post-proyecto (σ_proj, color) respecto a los umbrales de fluencia (0.85) y fractura (1.25).',
+      takeaways: [
+        'Chanco absorbe la carga dentro del margen elástico reversible (σ_proj = 0.79 < 0.85 → APROBADO).',
+        'Metrópolis en fluencia (Bilbao, Berlín, Copenhague, Ámsterdam) cruzan hacia la deformación plástica (σ_proj > 1.10 → RECHAZADO).',
+        'Territorios sobre-estresados (Barcelona, Aconcagua, Quintero) entran o agravan la fractura catastrófica (MORATORIA TOTAL).',
+        'Demuestra cómo reemplazar las EIA declarativas por un ensayo físico de resistencia de materiales.'
+      ]
     }
   ];
 
@@ -115,14 +149,14 @@ export default function TheoryView() {
   // TABLA CANÓNICA DE RESULTADOS DEL BENCHMARK MULTI-SITIO
   // --------------------------------------------------------------------------
   const benchmarkTable = [
-    { id: 'chanco', name: 'Chanco (Maule)', country: 'Chile', S: '0.78', E: '0.62', K: '0.68', H: '0.690', D: '0.45', sigma: '0.652', regime: 'Elástico Reversible', scope12: '2.2 t', scope3: '1.1 t', extRatio: '33.3%', tagClass: 'bg-emerald-100 text-emerald-800 border-emerald-300 font-bold' },
-    { id: 'aconcagua', name: 'Valle de Aconcagua', country: 'Chile', S: '0.42', E: '0.58', K: '0.60', H: '0.527', D: '0.68', sigma: '1.290', regime: 'Fractura Hídrica', scope12: '4.0 t', scope3: '1.8 t', extRatio: '31.0%', tagClass: 'bg-rose-100 text-rose-800 border-rose-300 font-bold' },
-    { id: 'quintero', name: 'Quintero-Puchuncaví', country: 'Chile', S: '0.22*', E: '0.48', K: '0.52', H: '0.244*', D: '0.82', sigma: '3.361', regime: 'Zona de Sacrificio Total', scope12: '18.7 t', scope3: '3.1 t', extRatio: '14.2%', tagClass: 'bg-red-200 text-red-900 border-red-400 font-black' },
-    { id: 'copenhagen', name: 'Copenhague', country: 'Dinamarca', S: '0.52', E: '0.88', K: '0.92', H: '0.749', D: '0.74', sigma: '0.988', regime: 'Fluencia Asintótica', scope12: '2.7 t', scope3: '8.8 t', extRatio: '76.5%', tagClass: 'bg-amber-100 text-amber-800 border-amber-300 font-bold' },
-    { id: 'barcelona', name: 'Barcelona', country: 'España', S: '0.45', E: '0.68', K: '0.82', H: '0.631', D: '0.79', sigma: '1.252', regime: 'Plástico / Turístico', scope12: '3.5 t', scope3: '5.9 t', extRatio: '62.8%', tagClass: 'bg-rose-100 text-rose-800 border-rose-300 font-bold' },
-    { id: 'bilbao', name: 'Bilbao (Bizkaia)', country: 'España', S: '0.55', E: '0.72', K: '0.80', H: '0.682', D: '0.66', sigma: '0.968', regime: 'Fluencia Controlada', scope12: '4.0 t', scope3: '4.7 t', extRatio: '54.0%', tagClass: 'bg-teal-100 text-teal-800 border-teal-300 font-bold' },
-    { id: 'amsterdam', name: 'Ámsterdam', country: 'Países Bajos', S: '0.48', E: '0.82', K: '0.88', H: '0.702', D: '0.76', sigma: '1.083', regime: 'Plástico / Dependiente', scope12: '3.1 t', scope3: '8.2 t', extRatio: '72.6%', tagClass: 'bg-purple-100 text-purple-800 border-purple-300 font-bold' },
-    { id: 'berlin', name: 'Berlín', country: 'Alemania', S: '0.58', E: '0.70', K: '0.85', H: '0.701', D: '0.68', sigma: '0.970', regime: 'Fluencia Estable', scope12: '3.7 t', scope3: '4.4 t', extRatio: '54.3%', tagClass: 'bg-blue-100 text-blue-800 border-blue-300 font-bold' },
+    { id: 'chanco', name: 'Chanco (Maule)', country: 'Chile', S: '0.68', E: '0.78', K: '0.62', H: '0.690', D: '0.45', sigma: '0.652', regime: 'Elástico Reversible', scope12: '2.2 t', scope3: '1.1 t', extRatio: '33.3%', tagClass: 'bg-emerald-100 text-emerald-800 border-emerald-300 font-bold' },
+    { id: 'aconcagua', name: 'Valle de Aconcagua', country: 'Chile', S: '0.60', E: '0.42', K: '0.58', H: '0.527', D: '0.68', sigma: '1.290', regime: 'Fractura Hídrica', scope12: '4.0 t', scope3: '1.8 t', extRatio: '31.0%', tagClass: 'bg-rose-100 text-rose-800 border-rose-300 font-bold' },
+    { id: 'quintero', name: 'Quintero-Puchuncaví', country: 'Chile', S: '0.48', E: '0.22*', K: '0.52', H: '0.244*', D: '0.82', sigma: '3.361', regime: 'Zona de Sacrificio Total', scope12: '18.7 t', scope3: '3.1 t', extRatio: '14.2%', tagClass: 'bg-red-200 text-red-900 border-red-400 font-black' },
+    { id: 'copenhagen', name: 'Copenhague', country: 'Dinamarca', S: '0.92', E: '0.52', K: '0.88', H: '0.749', D: '0.74', sigma: '0.988', regime: 'Fluencia Asintótica', scope12: '2.7 t', scope3: '8.8 t', extRatio: '76.5%', tagClass: 'bg-amber-100 text-amber-800 border-amber-300 font-bold' },
+    { id: 'barcelona', name: 'Barcelona', country: 'España', S: '0.82', E: '0.45', K: '0.68', H: '0.631', D: '0.79', sigma: '1.252', regime: 'Plástico / Turístico', scope12: '3.5 t', scope3: '5.9 t', extRatio: '62.8%', tagClass: 'bg-rose-100 text-rose-800 border-rose-300 font-bold' },
+    { id: 'bilbao', name: 'Bilbao (Bizkaia)', country: 'España', S: '0.80', E: '0.55', K: '0.72', H: '0.682', D: '0.66', sigma: '0.968', regime: 'Fluencia Controlada', scope12: '4.0 t', scope3: '4.7 t', extRatio: '54.0%', tagClass: 'bg-teal-100 text-teal-800 border-teal-300 font-bold' },
+    { id: 'amsterdam', name: 'Ámsterdam', country: 'Países Bajos', S: '0.88', E: '0.48', K: '0.82', H: '0.702', D: '0.76', sigma: '1.083', regime: 'Plástico / Dependiente', scope12: '3.1 t', scope3: '8.2 t', extRatio: '72.6%', tagClass: 'bg-purple-100 text-purple-800 border-purple-300 font-bold' },
+    { id: 'berlin', name: 'Berlín', country: 'Alemania', S: '0.85', E: '0.58', K: '0.70', H: '0.701', D: '0.68', sigma: '0.970', regime: 'Fluencia Estable', scope12: '3.7 t', scope3: '4.4 t', extRatio: '54.3%', tagClass: 'bg-blue-100 text-blue-800 border-blue-300 font-bold' },
   ];
 
   // --------------------------------------------------------------------------
@@ -246,45 +280,47 @@ message("✓ [00_setup_environment.R] Entorno, paletas y tema canónico cargados
     {
       id: '01_data',
       title: '01_data_harmonization.R',
-      category: 'Datos & Armonización',
-      badge: 'Dataset',
+      category: 'Normalización & Datos',
+      badge: 'Goalposts [0,1]',
       badgeColor: 'border-teal-500/40 text-teal-800 bg-teal-100',
       path: 'scripts/R/01_data_harmonization.R',
-      lines: 45,
-      size: '2.4 KB',
-      description: 'Ingesta y normalización de los 8 arquetipos empíricos (Chile y Europa), vectores de presión D1-D3, huella de Alcances 1, 2 y 3, y series históricas 2000-2025.',
+      lines: 72,
+      size: '3.8 KB',
+      description: 'Eslabón 1: Funciones canónicas de transferencia (norm_direct, norm_inverse, norm_log_falkenmark), tabla de Postes de Meta (Goalposts) para las 12 variables S, E, K y armonización N=8.',
       code: `# ==============================================================================
 # 01_data_harmonization.R
-# Ingesta, limpieza y armonización del banco de datos multi-sitio (N=8)
+# Eslabón 1: Funciones de Normalización (Goalpost Scaling X_raw -> [0, 1])
 # ==============================================================================
 
-territorios_raw <- tribble(
-  ~id, ~nombre, ~pais, ~continente, ~tipo, ~S, ~E, ~K, ~D1, ~D2, ~D3, ~scope1, ~scope2, ~scope3_up, ~scope3_down, ~poblacion_k, ~superficie_km2,
-  "chanco", "Chanco (Maule)", "Chile", "Sur Global", "Rural / Secano Costero", 0.78, 0.62, 0.68, 0.40, 0.35, 0.60, 1.8, 0.4, 1.1, 8.4, 9.5, 529.5,
-  "aconcagua", "Valle de Aconcagua", "Chile", "Sur Global", "Agrícola / Cobre", 0.42, 0.58, 0.60, 0.85, 0.55, 0.64, 2.8, 1.2, 1.8, 12.6, 135.0, 3100.0,
-  "quintero", "Quintero-Puchuncaví", "Chile", "Sur Global", "Zona de Sacrificio", 0.22, 0.48, 0.52, 1.05, 0.65, 0.76, 14.5, 4.2, 3.1, 18.2, 52.0, 468.0,
-  "copenhagen", "Copenhague", "Dinamarca", "Norte Global", "Metrópolis Post-Carbono", 0.52, 0.88, 0.92, 0.45, 0.95, 0.82, 1.9, 0.8, 8.8, 1.8, 650.0, 86.2,
-  "barcelona", "Barcelona", "España", "Norte Global", "Metrópolis Mediterránea", 0.45, 0.68, 0.82, 0.40, 0.82, 1.15, 2.4, 1.1, 5.9, 2.4, 1636.0, 101.9,
-  "bilbao", "Bilbao (Bizkaia)", "España", "Norte Global", "Post-Industrial / Cuenca", 0.55, 0.72, 0.80, 0.45, 0.75, 0.78, 2.6, 1.4, 4.7, 3.5, 345.0, 41.5,
-  "amsterdam", "Ámsterdam", "Países Bajos", "Norte Global", "Hub Logístico / Delta", 0.48, 0.82, 0.88, 0.42, 0.88, 0.98, 2.0, 1.1, 8.2, 2.1, 882.0, 219.3,
-  "berlin", "Berlín", "Alemania", "Norte Global", "Federal / Polinuclear", 0.58, 0.70, 0.85, 0.40, 0.82, 0.82, 2.5, 1.2, 4.4, 1.9, 3750.0, 891.8
-)
+norm_direct <- function(x_raw, x_min, x_opt) {
+  pmin(1.0, pmax(0.01, (x_raw - x_min) / (x_opt - x_min)))
+}
 
-message("✓ [01_data_harmonization.R] 8 territorios armonizados con series históricas.")`
+norm_inverse <- function(x_raw, x_max_collapse, x_opt_best) {
+  pmin(1.0, pmax(0.01, (x_max_collapse - x_raw) / (x_max_collapse - x_opt_best)))
+}
+
+norm_log_falkenmark <- function(x_raw, x_min = 300, x_opt = 3500) {
+  val <- (log(pmax(1, x_raw)) - log(x_min)) / (log(x_opt) - log(x_min))
+  pmin(1.0, pmax(0.01, val))
+}
+
+# Banco de datos armonizado: S = Social, E = Ambiental, K = Económico
+message("✓ [01_data_harmonization.R] Funciones de normalización (Goalposts) y 8 territorios armonizados.")`
     },
     {
       id: '02_mechanics',
       title: '02_mechanics_engine.R',
-      category: 'Física Constitutiva',
-      badge: 'Physics Engine',
+      category: 'Física & Auditoría',
+      badge: 'Physics & Audit',
       badgeColor: 'border-emerald-500/40 text-emerald-800 bg-emerald-100',
       path: 'scripts/R/02_mechanics_engine.R',
-      lines: 65,
-      size: '2.6 KB',
-      description: 'Leyes constitutivas de medios continuos: media geométrica de soporte H, Operador de Liebig Φ_crit, tensión uniaxial σ = D/H y deducción de curvas reológicas con histéresis.',
+      lines: 88,
+      size: '3.6 KB',
+      description: 'Leyes constitutivas de medios continuos (H, Φ_crit, σ = D/H, histéresis) y función de Auditoría de Ensayo de Tracción Territorial Pre-Inversión (audit_territorial_traction).',
       code: `# ==============================================================================
 # 02_mechanics_engine.R
-# Motor de Mecánica de Medios Continuos, Leyes Constitutivas y Reología Territorial
+# Motor de Mecánica de Medios Continuos y Auditoría de Tracción Territorial
 # ==============================================================================
 
 calc_hombros <- function(S, E, K, critical_threshold = 0.25) {
@@ -296,18 +332,11 @@ calc_hombros <- function(S, E, K, critical_threshold = 0.25) {
   tibble(H_effective = round(H_effective, 3), has_critical = has_critical)
 }
 
-calc_sigma <- function(D, H, yield_stress = 0.85, fracture_stress = 1.25) {
-  sigma <- D / max(0.05, H)
-  regime <- case_when(
-    sigma < yield_stress ~ "Elástico Reversible",
-    sigma <= 1.00 ~ "Límite de Fluencia (Yield)",
-    sigma <= fracture_stress ~ "Plástico / Histéresis",
-    TRUE ~ "Fractura / Colapso Catastrófico"
-  )
-  tibble(sigma = round(sigma, 3), regime = regime)
+audit_territorial_traction <- function(df_territorios, delta_D = 0.09, delta_E_impact = -0.02) {
+  # Simula el desplazamiento sigma_0 -> sigma_proj y emite el Dictamen SEIA 2.0
 }
 
-message("✓ [02_mechanics_engine.R] Motor constitutivo y reológico compilado.")`
+message("✓ [02_mechanics_engine.R] Motor constitutivo, reológico y de auditoría compilado.")`
     },
     {
       id: '03_comparative',
@@ -350,9 +379,9 @@ message(sprintf("✓ [04_network_honeycomb_sim.R] Red Panal simulada. Reducción
       path: 'scripts/R/05_montecarlo_uncertainty.R',
       lines: 42,
       size: '1.9 KB',
-      description: 'Muestreo estocástico de hipercubo latino (N=5,000) y cuantificación de índices de sensibilidad de primer orden de Sobol, probando la dominancia biofísica del Suelo (S).',
+      description: 'Muestreo estocástico de hipercubo latino (N=5,000) y cuantificación de índices de sensibilidad de primer orden de Sobol, probando la dominancia biofísica del Hombro Ambiental (E).',
       code: `# Análisis de Sensibilidad de Sobol (Monte Carlo N=5,000)
-message("✓ [05_montecarlo_uncertainty.R] Análisis Monte Carlo completado. Parámetro dominante: Suelo (S).")`
+message("✓ [05_montecarlo_uncertainty.R] Análisis Monte Carlo completado. Parámetro dominante: Hombro Ambiental (E).")`
     },
     {
       id: '06_figure_factory',
@@ -572,7 +601,7 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
             <Image className={`w-4 h-4 ${activeTab === 'figures' ? 'text-white' : 'text-[#927660]'}`} />
             <span>Galería de Figuras Canónicas</span>
             <span className="px-1.5 py-0.5 rounded-full text-[9px] font-mono bg-white/40 text-slate-900 font-bold">
-              5
+              7
             </span>
           </button>
 
@@ -811,9 +840,9 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                   <tr>
                     <th className="p-3">Territorio</th>
                     <th className="p-3">País</th>
-                    <th className="p-3 text-center">Suelo (S)</th>
-                    <th className="p-3 text-center">Energía (E)</th>
-                    <th className="p-3 text-center">Saber (K)</th>
+                    <th className="p-3 text-center">Social (S)</th>
+                    <th className="p-3 text-center">Ambiental (E)</th>
+                    <th className="p-3 text-center">Económico (K)</th>
                     <th className="p-3 text-center">Capacidad (H)</th>
                     <th className="p-3 text-center">Presión (D)</th>
                     <th className="p-3 text-center">Tensión (σ)</th>
@@ -927,7 +956,7 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                   />
                 </div>
                 <p className="text-[11px] text-slate-700 font-sans">
-                  <strong>Dominancia Edáfica:</strong> El Hombro del Suelo (S) explica el 43.8% de la varianza total de resiliencia territorial, ratificando la primacía biofísica.
+                  <strong>Dominancia Ecosistémica:</strong> El Hombro Ambiental (E) explica el 43.8% de la varianza total de resiliencia territorial, ratificando la primacía biofísica.
                 </p>
               </div>
 
@@ -944,16 +973,53 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                     src={getAssetUrl('docs/figures/fig5_honeycomb_network_damping.png')} 
                     alt="Figura 5" 
                     className="max-h-[240px] mx-auto object-contain" 
-                    onError={(e) => {
-                      if (!e.target.dataset.tried) {
-                        e.target.dataset.tried = '1';
-                        e.target.src = '/hombros/docs/figures/fig5_honeycomb_network_damping.png';
-                      }
-                    }}
                   />
                 </div>
                 <p className="text-[11px] text-slate-700 font-sans">
                   <strong>Gobernanza Policéntrica:</strong> El acoplamiento en red panal reduce la varianza de estrés en un 38.4% y erradica los picos que provocan fractura catastrófica.
+                </p>
+              </div>
+            </div>
+
+            {/* FIGURAS 6 Y 7 EMBEBIDAS: NORMALIZACIÓN Y AUDITORÍA DE TRACCIÓN */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 my-6">
+              {/* Figura 6 */}
+              <div className="p-4 rounded-2xl bg-white border border-[#D4C9B8] shadow-xs">
+                <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-200">
+                  <span className="text-xs font-mono font-bold text-[#376E6F]">Figura 6 · Normalización Canónica (X_raw → [0, 1])</span>
+                  <a href={getAssetUrl('docs/figures/fig6_normalization_transfer_functions.png')} target="_blank" rel="noopener noreferrer">
+                    <Maximize2 className="w-3.5 h-3.5 text-slate-500 hover:text-black" />
+                  </a>
+                </div>
+                <div className="bg-[#0c0714] p-2 rounded-xl mb-2 text-center">
+                  <img 
+                    src={getAssetUrl('docs/figures/fig6_normalization_transfer_functions.png')} 
+                    alt="Figura 6" 
+                    className="max-h-[240px] mx-auto object-contain" 
+                  />
+                </div>
+                <p className="text-[11px] text-slate-700 font-sans">
+                  <strong>Eslabón 1 (Goalpost Scaling):</strong> Estandariza magnitudes heterogéneas (m³/hab/año, % nativo, Gini, PM2.5) mediante funciones Lineal Directa, Logarítmica de Falkenmark e Inversa, fijando el corte de Liebig en H_i = 0.25.
+                </p>
+              </div>
+
+              {/* Figura 7 */}
+              <div className="p-4 rounded-2xl bg-white border border-[#D4C9B8] shadow-xs">
+                <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-200">
+                  <span className="text-xs font-mono font-bold text-[#C86D51]">Figura 7 · Ensayo de Tracción Pre-Inversión (SEIA 2.0)</span>
+                  <a href={getAssetUrl('docs/figures/fig7_audit_traction_stress_test.png')} target="_blank" rel="noopener noreferrer">
+                    <Maximize2 className="w-3.5 h-3.5 text-slate-500 hover:text-black" />
+                  </a>
+                </div>
+                <div className="bg-[#0c0714] p-2 rounded-xl mb-2 text-center">
+                  <img 
+                    src={getAssetUrl('docs/figures/fig7_audit_traction_stress_test.png')} 
+                    alt="Figura 7" 
+                    className="max-h-[240px] mx-auto object-contain" 
+                  />
+                </div>
+                <p className="text-[11px] text-slate-700 font-sans">
+                  <strong>Auditoría de Carga Virtual:</strong> Evalúa el desplazamiento σ₀ → σ_proyectado ante proyectos extractivos, emitiendo dictámenes vinculantes de aprobación elástica, rechazo por histéresis o moratoria biofísica.
                 </p>
               </div>
             </div>

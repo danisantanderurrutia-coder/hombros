@@ -10,6 +10,8 @@ suppressPackageStartupMessages({
   library(scales)
 })
 
+invisible(Sys.setlocale("LC_ALL", "en_US.UTF-8"))
+
 # Directorios de salida
 DIR_FIGURES <- "scripts/figures"
 DIR_PUBLIC_DOCS <- "public/docs"

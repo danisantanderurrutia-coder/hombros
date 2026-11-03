@@ -982,9 +982,9 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
                 </h3>
               </div>
               <p className="text-xs text-slate-300 leading-relaxed">
-                Cuando un territorio supera el <strong>límite de fluencia ($\sigma &gt; 0.85$)</strong>, el sistema abandona el régimen elástico reversible. 
+                Cuando un territorio supera el <strong>límite de fluencia (σ &gt; 0.85)</strong>, el sistema abandona el régimen elástico reversible. 
                 Ocurre <strong>deformación plástica permanente</strong>: compactación y erosión irrecuperable de la capa arable, salinización de acuíferos o quebre del tejido de cuidados vecinales. 
-                Aunque se detenga la extracción a cero ($D \to 0$), <strong>el territorio no vuelve a su estado original sin subsidios masivos de energía y tiempo</strong>.
+                Aunque se detenga la extracción a cero (D → 0), <strong>el territorio no vuelve a su estado original sin subsidios masivos de energía y tiempo</strong>.
               </p>
             </div>
           </motion.div>

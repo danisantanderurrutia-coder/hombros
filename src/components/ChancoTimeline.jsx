@@ -97,7 +97,7 @@ export default function ChancoTimeline({ territory }) {
           Diagnóstico de Chanco: Del Extractivismo al Autogobierno Sintrópico
         </div>
         <p className="text-[11px] leading-relaxed">
-          Entre 2002 y 2024, Chanco experimentó un retroceso del 23% en su capacidad portante ($H = 0.56 \to 0.43$), impulsado por el monocultivo de pino/eucalipto que secó las napas litorales (Hombro Ambiental $E$ bajó de 0.58 a 0.36) y redujo la autonomía municipal (SINIM). La intervención con el modelo Hombros proyecta una senda sintrópica ($H = 0.68$ en 2030) basada en agroforestería de secano, algas comunitarias y restauración de cuencas.
+          Entre 2002 y 2024, Chanco experimentó un retroceso del 23% en su capacidad portante (H = 0.56 → 0.43), impulsado por el monocultivo de pino/eucalipto que secó las napas litorales (Hombro Ambiental E bajó de 0.58 a 0.36) y redujo la autonomía municipal (SINIM). La intervención con el modelo Hombros proyecta una senda sintrópica (H = 0.68 en 2030) basada en agroforestería de secano, algas comunitarias y restauración de cuencas.
         </p>
       </div>
     </div>

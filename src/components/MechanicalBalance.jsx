@@ -77,7 +77,7 @@ export default function MechanicalBalance({ santanderState }) {
             </h3>
           </div>
           <p className="text-xs text-slate-300 mt-0.5">
-            Equilibrio dinámico entre la <strong>Capacidad Portante ($H$)</strong> y la <strong>Carga de Desarrollo ($D$)</strong>
+            Equilibrio dinámico entre la <strong>Capacidad Portante (H)</strong> y la <strong>Carga de Desarrollo (D)</strong>
           </p>
         </div>
 

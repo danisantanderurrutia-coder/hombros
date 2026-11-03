@@ -98,7 +98,7 @@ export default function LandingView({ onNavigate }) {
           </p>
 
           <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-sans">
-            <strong>HOMBROS</strong> propone trascender la condena: si el territorio cultiva sus tres hombros basales —regenerando la cuenca (<strong className="text-[#487075]">E</strong>), tejiendo comunidad solidaria (<strong className="text-[#C86D51]">S</strong>) y democratizando el conocimiento técnico (<strong className="text-[#D4A373]">K</strong>)— la roca deja de ser una carga trágica y se transforma en una esfera celestial que asciende hacia la autonomía biosférica.
+            <strong>HOMBROS</strong> propone trascender la condena: si el territorio cultiva sus tres hombros basales —regenerando la cuenca (<strong className="text-[#487075]">E</strong>), tejiendo comunidad solidaria (<strong className="text-[#C86D51]">S</strong>) y fortaleciendo el hombro económico o capital regenerativo (<strong className="text-[#D4A373]">K</strong>)— la roca deja de ser una carga trágica y se transforma en una esfera celestial que asciende hacia la autonomía biosférica.
           </p>
 
           <div className="pt-2 flex flex-wrap items-center gap-4">
@@ -145,8 +145,8 @@ export default function LandingView({ onNavigate }) {
               <strong className="text-[#C86D51]">Cuidados y cohesión cívica</strong>
             </div>
             <div className="flex justify-between">
-              <span>Hombro Cognitivo (K):</span>
-              <strong className="text-[#927660]">Soberanía técnica local</strong>
+              <span>Hombro Económico o Capital (K):</span>
+              <strong className="text-[#927660]">Soberanía material y capital regenerativo</strong>
             </div>
             <div className="pt-2 border-t border-slate-200 text-center font-bold text-slate-900">
               H = (E · S · K)<sup>1/3</sup>

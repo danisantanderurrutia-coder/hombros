@@ -12,7 +12,7 @@ export default function LandingHeroBanner({ onNavigate }) {
   // Variables E, S, K state (starting at a balanced inspiring state)
   const [E, setE] = useState(0.72); // Ecológico
   const [S, setS] = useState(0.68); // Social
-  const [K, setK] = useState(0.70); // Cognitivo / Económico
+  const [K, setK] = useState(0.70); // Económico / Capital
 
   // Mathematical capacity calculations
   const H = Math.pow(E * S * K, 1 / 3);
@@ -92,9 +92,9 @@ export default function LandingHeroBanner({ onNavigate }) {
 
           <p className="text-sm sm:text-base md:text-lg text-slate-300 max-w-2xl mx-auto font-sans leading-relaxed">
             El peso del porvenir no se aligera disminuyendo aspiraciones, sino ensanchando la capacidad portante territorial: los tres hombros inseparables{' '}
-            <strong className="text-emerald-300">Ecológico ($E$)</strong>,{' '}
-            <strong className="text-rose-300">Social ($S$)</strong> y{' '}
-            <strong className="text-amber-300">Cognitivo ($K$)</strong>.
+            <strong className="text-emerald-300">Ecológico (E)</strong>,{' '}
+            <strong className="text-rose-300">Social (S)</strong> y{' '}
+            <strong className="text-amber-300">Económico o Capital (K)</strong>.
           </p>
         </div>
 
@@ -178,7 +178,7 @@ export default function LandingHeroBanner({ onNavigate }) {
               <div className="flex justify-between items-center">
                 <span className="text-xs font-serif font-bold text-[#7DB2B2] flex items-center gap-2">
                   <Trees className="w-4 h-4 text-[#7DB2B2]" />
-                  Hombro Ecológico ($E$)
+                  Hombro Ecológico (E)
                 </span>
                 <span className="font-mono text-lg font-bold text-emerald-400">
                   {E.toFixed(2)}
@@ -206,7 +206,7 @@ export default function LandingHeroBanner({ onNavigate }) {
               <div className="flex justify-between items-center">
                 <span className="text-xs font-serif font-bold text-rose-300 flex items-center gap-2">
                   <Users className="w-4 h-4 text-rose-400" />
-                  Hombro Social ($S$)
+                  Hombro Social (S)
                 </span>
                 <span className="font-mono text-lg font-bold text-rose-300">
                   {S.toFixed(2)}
@@ -229,12 +229,12 @@ export default function LandingHeroBanner({ onNavigate }) {
               </div>
             </div>
 
-            {/* Slider 3: Hombro Cognitivo / Económico (K) */}
+            {/* Slider 3: Hombro Económico o Capital (K) */}
             <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-b from-[#2a2418]/90 to-[#1e1910]/90 border border-[#F5D061]/40 shadow-lg space-y-3">
               <div className="flex justify-between items-center">
                 <span className="text-xs font-serif font-bold text-amber-300 flex items-center gap-2">
                   <Coins className="w-4 h-4 text-[#F5D061]" />
-                  Hombro Cognitivo ($K$)
+                  Hombro Económico o Capital (K)
                 </span>
                 <span className="font-mono text-lg font-bold text-amber-300">
                   {K.toFixed(2)}
@@ -253,7 +253,7 @@ export default function LandingHeroBanner({ onNavigate }) {
 
               <div className="text-[11px] text-slate-300 space-y-1">
                 <p><strong>Músculo:</strong> Fortalece el torso, la columna y la postura erguida.</p>
-                <p className="text-slate-400">Soberanía técnica, saberes locales, diversificación y diseño regenerativo.</p>
+                <p className="text-slate-400">Economía comunitaria, capital productivo regenerativo, diversificación y soberanía material.</p>
               </div>
             </div>
 

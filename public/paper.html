@@ -545,24 +545,24 @@
           <tbody>
             <tr>
               <td><strong>$S$</strong></td>
-              <td>Hombro del Suelo & Soporte Biofísico</td>
-              <td>Densidad de carbono orgánico edáfico, recarga freática y fracción vegetal perenne autóctona.</td>
+              <td>Hombro Social ($S_1..S_4$)</td>
+              <td>Cohesión comunitaria, capacidad institucional local, capital humano/saberes y paz territorial.</td>
+              <td>$[0.0, 1.0]$ (Adimensional)</td>
+              <td>Ostrom (1990); Max-Neef (1986)</td>
+            </tr>
+            <tr>
+              <td><strong>$E$</strong></td>
+              <td>Hombro Ecosistémico / Ambiental ($E_1..E_4$)</td>
+              <td>Integridad vegetacional nativa, seguridad hídrica de cuenca, calidad de suelo vivo y resiliencia climática.</td>
               <td>$[0.0, 1.0]$ (Adimensional)</td>
               <td>Odum (1988); Yeomans (1958)</td>
             </tr>
             <tr>
-              <td><strong>$E$</strong></td>
-              <td>Hombro de la Energía & Flujos Exergéticos</td>
-              <td>Tasa EROI renovable territorial, desfosilización de la matriz y balance exergético.</td>
-              <td>$[0.0, 1.0]$ (Adimensional)</td>
-              <td>Georgescu-Roegen (1971); Hall (2011)</td>
-            </tr>
-            <tr>
               <td><strong>$K$</strong></td>
-              <td>Hombro del Saber & Tejido Comunitario</td>
-              <td>Densidad de gobernanza común, soberanía técnica, reciprocidad institucional y capital social.</td>
+              <td>Hombro Económico ($K_1..K_4$)</td>
+              <td>Diversificación productiva (inverso IHH), autonomía económica local, equidad ($1-\text{Gini}$) y balance regeneración/extracción.</td>
               <td>$[0.0, 1.0]$ (Adimensional)</td>
-              <td>Ostrom (1990); Max-Neef (1986)</td>
+              <td>Georgescu-Roegen (1971); Daly (1996)</td>
             </tr>
             <tr>
               <td><strong>$H$</strong></td>
@@ -662,9 +662,9 @@
         Definimos los tres pilares ontológicos de soporte en el espacio normalizado $[0.0, 1.0]$:
       </p>
       <ul>
-        <li><strong>$S \in [0, 1]$ (Hombro del Suelo & Naturaleza):</strong> Integridad edáfica (materia orgánica $> 4\%$), tasa de recarga hídrica del acuífero y cobertura vegetal autóctona perenne.</li>
-        <li><strong>$E \in [0, 1]$ (Hombro de la Energía & Flujos):</strong> Tasa de retorno energético sobre energía invertida (EROI territorial), autosuficiencia exergética renovable y ausencia de dependencia de insumos fósiles externos.</li>
-        <li><strong>$K \in [0, 1]$ (Hombro del Saber & Tejido Comunitario):</strong> Densidad de capital social, soberanía técnica campesina/cooperativa, confianza institucional y gobernanza policéntrica de los bienes comunes (Ostrom, 1990).</li>
+        <li><strong>$S \in [0, 1]$ (Hombro Social — $S_1..S_4$):</strong> Cohesión comunitaria ($S_1$), capacidad institucional local ($S_2$), capital humano y saberes territoriales ($S_3$) y paz territorial / ausencia de violencia estructural ($S_4$).</li>
+        <li><strong>$E \in [0, 1]$ (Hombro Ecosistémico / Ambiental — $E_1..E_4$):</strong> Integridad ecosistémica y cobertura nativa ($E_1$), seguridad hídrica de cuenca ($E_2$), calidad de suelo vivo ($E_3$) y resiliencia climática/atmosférica ($E_4$).</li>
+        <li><strong>$K \in [0, 1]$ (Hombro Económico — $K_1..K_4$):</strong> Diversificación productiva inversa al Herfindahl ($K_1$), autonomía económica local ($K_2$), justicia distributiva $1-\text{Gini}$ ($K_3$) y balance metabólico regeneración/extracción ($K_4$).</li>
       </ul>
 
       <p>
@@ -825,9 +825,9 @@
             <tr>
               <th>Territorio</th>
               <th>País</th>
-              <th>Suelo ($S$)</th>
-              <th>Energía ($E$)</th>
-              <th>Saber ($K$)</th>
+              <th>Social ($S$)</th>
+              <th>Ambiental ($E$)</th>
+              <th>Económico ($K$)</th>
               <th>Capacidad ($H$)</th>
               <th>Presión ($D$)</th>
               <th>Tensión ($\sigma$)</th>
@@ -954,7 +954,7 @@
         </table>
       </div>
       <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 2rem;">
-        *Nota: En Quintero-Puchuncaví el Hombro del Suelo ($S = 0.22$) cruza el umbral crítico ($< 0.25$), disparando el operador de Liebig y precipitando $H$ a $0.244$, lo que arroja un estrés récord de $\sigma = 3.361$ (fractura reológica irreversible).
+        *Nota: En Quintero-Puchuncaví el Hombro Ambiental ($E = 0.22$) cruza el umbral crítico ($< 0.25$), disparando el operador de Liebig y precipitando $H$ a $0.244$, lo que arroja un estrés récord de $\sigma = 3.361$ (fractura reológica irreversible).
       </p>
 
       <!-- Figura 2: Bi-plot de Tensión vs Scope 3 Upstream -->
@@ -978,13 +978,29 @@
         <div style="background: var(--bg-surface); padding: 1.25rem; border-radius: 0.75rem; border: 1px solid var(--border-soft); text-align: center;">
           <img src="./docs/figures/fig4_sobol_sensitivity_montecarlo.png" alt="Figura 4: Sensibilidad de Sobol" style="max-width: 100%; height: auto; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.1);" onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='/hombros/docs/figures/fig4_sobol_sensitivity_montecarlo.png';}">
           <p style="font-size: 0.8rem; color: #cbd5e1; margin-top: 0.75rem; font-family: var(--font-sans); text-align: left;">
-            <strong>Figura 4:</strong> <em>Análisis de Sensibilidad de Sobol (Monte Carlo $N=5,000$): El Suelo e Hidrología ($S$) explica el $43.8\%$ de la varianza total de resiliencia.</em>
+            <strong>Figura 4:</strong> <em>Análisis de Sensibilidad de Sobol (Monte Carlo $N=5,000$): El Hombro Ambiental/Ecosistémico ($E$) domina la varianza total de resiliencia territorial.</em>
           </p>
         </div>
         <div style="background: var(--bg-surface); padding: 1.25rem; border-radius: 0.75rem; border: 1px solid var(--border-soft); text-align: center;">
           <img src="./docs/figures/fig5_honeycomb_network_damping.png" alt="Figura 5: Amortiguación Red Panal" style="max-width: 100%; height: auto; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.1);" onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='/hombros/docs/figures/fig5_honeycomb_network_damping.png';}">
           <p style="font-size: 0.8rem; color: #cbd5e1; margin-top: 0.75rem; font-family: var(--font-sans); text-align: left;">
             <strong>Figura 5:</strong> <em>Amortiguación Tensora en Red Panal: Reducción del $38.4\%$ en la varianza de tensión bajo choque climático y erradicación del colapso de fractura.</em>
+          </p>
+        </div>
+      </div>
+
+      <!-- Grid de Figuras 6 y 7 (Normalización y Auditoría de Tracción) -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 1.5rem; margin: 2.5rem 0;">
+        <div style="background: var(--bg-surface); padding: 1.25rem; border-radius: 0.75rem; border: 1px solid var(--border-soft); text-align: center;">
+          <img src="./docs/figures/fig6_normalization_transfer_functions.png" alt="Figura 6: Funciones de Normalización Canónica" style="max-width: 100%; height: auto; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.1);" onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='/hombros/docs/figures/fig6_normalization_transfer_functions.png';}">
+          <p style="font-size: 0.8rem; color: #cbd5e1; margin-top: 0.75rem; font-family: var(--font-sans); text-align: left;">
+            <strong>Figura 6:</strong> <em>Funciones de Transferencia y Normalización Canónica ($X_{\text{raw}} \to [0, 1]$) mediante Postes de Meta (Lineal Directa, Logarítmica Hídrica de Falkenmark y Lineal Inversa) con umbral crítico de Liebig en $H_i = 0.25$.</em>
+          </p>
+        </div>
+        <div style="background: var(--bg-surface); padding: 1.25rem; border-radius: 0.75rem; border: 1px solid var(--border-soft); text-align: center;">
+          <img src="./docs/figures/fig7_audit_traction_stress_test.png" alt="Figura 7: Auditoría de Ensayo de Tracción Territorial" style="max-width: 100%; height: auto; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.1);" onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='/hombros/docs/figures/fig7_audit_traction_stress_test.png';}">
+          <p style="font-size: 0.8rem; color: #cbd5e1; margin-top: 0.75rem; font-family: var(--font-sans); text-align: left;">
+            <strong>Figura 7:</strong> <em>Auditoría de Ensayo de Tracción Territorial Pre-Inversión ($\sigma_0 \to \sigma_{\text{proj}}$) y Dictamen Vinculante de Solvencia Metabólica (SEIA 2.0).</em>
           </p>
         </div>
       </div>

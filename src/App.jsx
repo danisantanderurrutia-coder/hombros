@@ -8,6 +8,7 @@ import DeepDiveCasesView from './components/DeepDiveCasesView';
 import ScenarioSimulator from './components/ScenarioSimulator';
 import DataSourcesView from './components/DataSourcesView';
 import TheoryView from './components/TheoryView';
+import MetabolicAuditView from './components/MetabolicAuditView';
 import SolarpunkAtlasCanvas from './components/SolarpunkAtlasCanvas';
 import { INITIAL_TERRITORIES } from './models/territories';
 import { evaluateTerritoryState } from './models/mechanics';
@@ -54,6 +55,10 @@ function AppContent() {
 
           {activeTab === 'core' && (
             <CoreDashboard />
+          )}
+
+          {activeTab === 'audit' && (
+            <MetabolicAuditView />
           )}
 
           {(activeTab === 'world_map' || activeTab === 'cases' || activeTab === 'data_sources') && (

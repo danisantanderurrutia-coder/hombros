@@ -11,6 +11,14 @@ const TAB_METADATA = {
     icon: Activity,
     accent: '#7DB2B2',
   },
+  audit: {
+    tag: 'PROTOCOLO SEIA 2.0 & SOLVENCIA METABÓLICA',
+    title: 'Auditoría de Tracción Territorial, Normalización & Dictamen Biofísico',
+    subtitle: 'Trazabilidad desde el dato físico crudo al espacio [0, 1], ensayo de carga virtual pre-inversión (σ₀ → σ_proj) y certificación contra el canibalismo metabólico Scope 3.',
+    image: getAssetUrl('art/header_cases_metrics.jpg'),
+    icon: GitCompare,
+    accent: '#C86D51',
+  },
   world_map: {
     tag: 'ATLAS GEODÉSICO & CONTRASTE GLOBAL',
     title: 'Atlas Territorial, Flujos Metabólicos & Casos de Estudio',

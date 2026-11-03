@@ -106,7 +106,7 @@ function createTitanDeformer(e, s, k, aspect = 768 / 1376) {
       }
     }
 
-    // 3. Espalda Alta / Dorsales en V y Piernas de Ascenso (K - Hombro Cognitivo)
+    // 3. Espalda Alta / Dorsales en V y Piernas de Ascenso (K - Hombro Económico o Capital)
     const dBack = ((u - 0.5) / 0.24) ** 2 + ((v - 0.315) / 0.12) ** 2;
     if (dBack < 9) {
       // Ensancha dorsales preservando la cintura ceñida en v ~ 0.42

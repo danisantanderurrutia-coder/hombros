@@ -57,7 +57,7 @@ export default function OrganismVisualAvatar({ santanderState, activePreset }) {
           <div className="flex items-center gap-4">
             <div className="text-right">
               <span className="text-[10px] font-mono uppercase tracking-wider text-amber-300/80 block">
-                Índice Global ($H$)
+                Índice Global (H)
               </span>
               <span className="font-mono text-2xl font-bold text-white tracking-tight">
                 {H.toFixed(3)}
@@ -66,7 +66,7 @@ export default function OrganismVisualAvatar({ santanderState, activePreset }) {
             <div className="h-8 w-px bg-white/15" />
             <div className="text-right">
               <span className="text-[10px] font-mono uppercase tracking-wider text-blue-300/80 block">
-                Tensión ($\sigma$)
+                Tensión (σ)
               </span>
               <span className="font-mono text-2xl font-bold text-blue-300 tracking-tight">
                 {sigma.toFixed(2)}
@@ -110,7 +110,7 @@ export default function OrganismVisualAvatar({ santanderState, activePreset }) {
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-serif font-bold text-[#DA7B93] flex items-center gap-1.5">
                 <HeartHandshake className="w-4 h-4" />
-                Hombro Social ($S$)
+                Hombro Social (S)
               </span>
               <span className="font-mono text-base font-bold text-white">
                 {S.toFixed(2)}
@@ -132,7 +132,7 @@ export default function OrganismVisualAvatar({ santanderState, activePreset }) {
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-serif font-bold text-emerald-400 flex items-center gap-1.5">
                 <Leaf className="w-4 h-4" />
-                Hombro Ecológico ($E$)
+                Hombro Ecológico (E)
               </span>
               <span className="font-mono text-base font-bold text-white">
                 {E.toFixed(2)}
@@ -149,12 +149,12 @@ export default function OrganismVisualAvatar({ santanderState, activePreset }) {
             </p>
           </div>
 
-          {/* Hombro Cognitivo / Económico */}
+          {/* Hombro Económico o Capital */}
           <div className="p-4 rounded-2xl bg-black/40 border border-[#8D69A6]/40 hover:border-[#8D69A6] transition-all group">
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-serif font-bold text-cyan-300 flex items-center gap-1.5">
                 <BrainCircuit className="w-4 h-4" />
-                Hombro Cognitivo ($K$)
+                Hombro Económico o Capital (K)
               </span>
               <span className="font-mono text-base font-bold text-white">
                 {K.toFixed(2)}
@@ -167,7 +167,7 @@ export default function OrganismVisualAvatar({ santanderState, activePreset }) {
               />
             </div>
             <p className="text-[11px] text-slate-300 mt-2.5 leading-snug">
-              <strong>Pico 3:</strong> Sabiduría compartida, soberanía productiva y tecnología abierta.
+              <strong>Pico 3:</strong> Capital productivo regenerativo, soberanía económica y tecnología abierta.
             </p>
           </div>
 

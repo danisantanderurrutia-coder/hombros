@@ -80,21 +80,24 @@ export function calculateHombrosFullState(territoryData, userModifiers = { press
   const E = calculateShoulderE(currentVars);
   const K = calculateShoulderK(currentVars);
 
-  // 2. Geometric Mean for H: H = (S · E · K)^(1/3)
-  const H = Math.pow(S * E * K, 1 / 3);
+  // 2. Critical Rule Check & Liebig Operator (Φ_crit): If any shoulder < 0.25
+  const hasCriticalShoulder = S < 0.25 || E < 0.25 || K < 0.25;
+  const criticalDetails = [];
+  if (S < 0.25) criticalDetails.push('Hombro Social (S < 0.25)');
+  if (E < 0.25) criticalDetails.push('Hombro Ambiental (E < 0.25)');
+  if (K < 0.25) criticalDetails.push('Hombro Económico (K < 0.25)');
+
+  // Geometric Mean modulated by Generalized Liebig Operator Φ_crit
+  const H_base = Math.pow(S * E * K, 1 / 3);
+  const minShoulder = Math.min(S, E, K);
+  const phiCrit = hasCriticalShoulder ? (minShoulder / 0.25) * 0.73 : 1.0;
+  const H = Math.max(0.05, H_base * phiCrit);
 
   // 3. Development Pressure: D = (D1 + D2 + D3) / 3
   const D = calculateDevelopmentPressure(currentPressure);
 
   // 4. Systemic Stress: σ = D / H
   const sigma = D / H;
-
-  // 5. Critical Rule Check: If any shoulder < 0.25
-  const hasCriticalShoulder = S < 0.25 || E < 0.25 || K < 0.25;
-  const criticalDetails = [];
-  if (S < 0.25) criticalDetails.push('Hombro Social (S < 0.25)');
-  if (E < 0.25) criticalDetails.push('Hombro Ambiental (E < 0.25)');
-  if (K < 0.25) criticalDetails.push('Hombro Económico (K < 0.25)');
 
   // 6. Syntropy / Entropy Indicator Γ = ΔH / (H · Δt)
   // Compare with last historical checkpoint (e.g. 2017 to 2024, dt = 7 years)
@@ -193,6 +196,8 @@ export function calculateHombrosFullState(territoryData, userModifiers = { press
     S: parseFloat(S.toFixed(3)),
     E: parseFloat(E.toFixed(3)),
     K: parseFloat(K.toFixed(3)),
+    H_base: parseFloat(H_base.toFixed(3)),
+    phiCrit: parseFloat(phiCrit.toFixed(3)),
     H: parseFloat(H.toFixed(3)),
     D: parseFloat(D.toFixed(3)),
     sigma: parseFloat(sigma.toFixed(3)),

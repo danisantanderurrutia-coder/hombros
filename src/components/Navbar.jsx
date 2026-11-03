@@ -1,10 +1,11 @@
 import React from 'react';
-import { Activity, Globe, Layers, Database, BookOpen, GitCompare, Sparkles } from 'lucide-react';
+import { Activity, Globe, Layers, Database, BookOpen, GitCompare, Sparkles, ShieldCheck } from 'lucide-react';
 import { getAssetUrl } from '../utils/assets';
 
 export default function Navbar({ activeTab, setActiveTab }) {
   const navItems = [
     { id: 'core', label: 'El Núcleo', icon: Activity },
+    { id: 'audit', label: 'Auditoría Biofísica', icon: ShieldCheck },
     { id: 'world_map', label: 'Atlas Territorial', icon: Globe },
     { id: 'theory', label: 'Marco Epistémico', icon: BookOpen },
   ];

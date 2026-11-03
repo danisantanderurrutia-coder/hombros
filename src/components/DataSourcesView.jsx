@@ -270,8 +270,8 @@ export default function DataSourcesView() {
               Observabilidad Territorial & Calibración Empírica
             </h1>
             <p className="mt-2 text-xs sm:text-sm max-w-3xl leading-relaxed text-slate-200">
-              El modelo HOMBROS no formula hipótesis abstractas: <strong className="text-[#DA7B93]">cada una de las 12 variables observables ($S, E, K$)</strong>, 
-              las presiones extractivas ($D$) y las emisiones Scope 1, 2 y 3 se calibran contra <strong className="text-white">registros públicos abiertos, 
+              El modelo HOMBROS no formula hipótesis abstractas: <strong className="text-[#DA7B93]">cada una de las 12 variables observables (S, E, K)</strong>, 
+              las presiones extractivas (D) y las emisiones Scope 1, 2 y 3 se calibran contra <strong className="text-white">registros públicos abiertos, 
               APIs gubernamentales en tiempo real y teledetección satelital continua</strong>.
             </p>
           </div>
