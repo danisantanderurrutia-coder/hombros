@@ -56,22 +56,18 @@ function AppContent() {
             <CoreDashboard />
           )}
 
-          {(activeTab === 'world_map' || activeTab === 'cases') && (
+          {(activeTab === 'world_map' || activeTab === 'cases' || activeTab === 'data_sources') && (
             <WorldTerritoriesMap
               territories={territories}
               selectedTerritoryId={selectedTerritoryId}
               setSelectedTerritoryId={setSelectedTerritoryId}
               globalModifiers={modifiers}
-              initialSubTab={activeTab === 'cases' ? 'cases' : 'map'}
+              initialSubTab={activeTab === 'cases' ? 'cases' : activeTab === 'data_sources' ? 'data_sources' : 'map'}
             />
           )}
 
           {activeTab === 'scenarios' && (
             <CoreDashboard initialSubtab="prospectiva" />
-          )}
-
-          {activeTab === 'data_sources' && (
-            <DataSourcesView />
           )}
 
           {activeTab === 'theory' && (

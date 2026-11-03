@@ -12,6 +12,7 @@ import { calculateHombrosFullState, calculateScopeEmissionsMetrics } from '../mo
 import ScopeEmissionsBreakdown from './ScopeEmissionsBreakdown';
 import HoneycombNetwork from './HoneycombNetwork';
 import DeepDiveCasesView from './DeepDiveCasesView';
+import DataSourcesView from './DataSourcesView';
 import { useTheme } from '../context/ThemeContext';
 
 // Trade / Metabolic Geodesic Flow Arcs (from Global South extraction to Global North consumption hubs)
@@ -87,7 +88,52 @@ export default function WorldTerritoriesMap({
   const [activeTileKey, setActiveTileKey] = useState('satellite');
   const [filterRegion, setFilterRegion] = useState('all'); // 'all', 'chile', 'europe'
   const [showMetabolicFlows, setShowMetabolicFlows] = useState(true);
-  const [activeSubTab, setActiveSubTab] = useState(initialSubTab || 'map'); // 'map', 'cases', 'emissions', 'panal'
+  const [activeSubTab, setActiveSubTab] = useState(initialSubTab || 'map'); // 'map', 'cases', 'emissions', 'panal', 'data_sources'
+  const [mapReady, setMapReady] = useState(0);
+
+  // Atlas Subtabs (Styled as El Núcleo horizontal card grid)
+  const atlasSubtabs = [
+    {
+      id: 'map',
+      number: '1',
+      label: 'Cartografía Satelital',
+      tag: 'Mapa Plano & Datos',
+      icon: Globe,
+      color: 'from-[#376E6F] to-[#254b4c]'
+    },
+    {
+      id: 'cases',
+      number: '2',
+      label: 'Contraste de Modelos',
+      tag: 'Benchmarking & Casos',
+      icon: GitCompare,
+      color: 'from-[#DA7B93] to-[#D83F87]'
+    },
+    {
+      id: 'emissions',
+      number: '3',
+      label: 'Desplazamiento Scope 3',
+      tag: 'Metabolismo & Deuda',
+      icon: Factory,
+      color: 'from-[#8D69A6] to-[#44318D]'
+    },
+    {
+      id: 'panal',
+      number: '4',
+      label: 'El Panal Territorial',
+      tag: 'Red P2P & Resiliencia',
+      icon: Hexagon,
+      color: 'from-[#C86D51] to-[#927660]'
+    },
+    {
+      id: 'data_sources',
+      number: '5',
+      label: 'Fuentes de Datos',
+      tag: 'Geoportales & Registros',
+      icon: Database,
+      color: 'from-[#2C3539] to-[#1e132c]'
+    }
+  ];
 
   useEffect(() => {
     if (initialSubTab) {
@@ -145,47 +191,73 @@ export default function WorldTerritoriesMap({
     return calculateScopeEmissionsMetrics(activeTerritory);
   }, [activeTerritory]);
 
-  // Initialize Leaflet Map
+  // Initialize Leaflet Map whenever map subtab is active and container is mounted
   useEffect(() => {
-    if (!mapContainerRef.current) return;
+    if (activeSubTab !== 'map' || !mapContainerRef.current) return;
 
-    if (!mapInstanceRef.current) {
-      // Create Flat World Map (Mercator flat projection, planar, not a 3D sphere)
-      const map = L.map(mapContainerRef.current, {
-        center: [22, -15],
-        zoom: 2.2,
-        minZoom: 1.8,
-        maxZoom: 15,
-        worldCopyJump: true,
-        zoomControl: false,
-        attributionControl: false
-      });
-
-      mapInstanceRef.current = map;
-
-      // Base Tile Layer
-      const baseLayer = L.tileLayer(TILE_LAYERS[activeTileKey].url, {
-        maxZoom: 18,
-        subdomains: 'abcd',
-        noWrap: false
-      }).addTo(map);
-      tileLayerRef.current = baseLayer;
-
-      // Layers for Markers and Flow Arcs
-      const markersGroup = L.layerGroup().addTo(map);
-      markersLayerRef.current = markersGroup;
-
-      const flowsGroup = L.layerGroup().addTo(map);
-      flowsLayerRef.current = flowsGroup;
+    // Safely remove any existing instance
+    if (mapInstanceRef.current) {
+      try {
+        mapInstanceRef.current.remove();
+      } catch (e) {
+        console.warn('Map cleanup error:', e);
+      }
+      mapInstanceRef.current = null;
     }
 
-    return () => {
+    // Create Flat World Map (Mercator flat projection, planar, not a 3D sphere)
+    const map = L.map(mapContainerRef.current, {
+      center: [22, -15],
+      zoom: 2.2,
+      minZoom: 1.8,
+      maxZoom: 15,
+      worldCopyJump: true,
+      zoomControl: false,
+      attributionControl: false
+    });
+
+    mapInstanceRef.current = map;
+
+    // Base Tile Layer
+    const baseLayer = L.tileLayer(TILE_LAYERS[activeTileKey].url, {
+      maxZoom: 18,
+      subdomains: 'abcd',
+      noWrap: false
+    }).addTo(map);
+    tileLayerRef.current = baseLayer;
+
+    // Layers for Markers and Flow Arcs
+    const markersGroup = L.layerGroup().addTo(map);
+    markersLayerRef.current = markersGroup;
+
+    const flowsGroup = L.layerGroup().addTo(map);
+    flowsLayerRef.current = flowsGroup;
+
+    // Notify marker & flow listeners to draw on this new map instance
+    setMapReady(c => c + 1);
+
+    // Invalidate size to guarantee complete tile grid layout
+    const timer = setTimeout(() => {
       if (mapInstanceRef.current) {
-        mapInstanceRef.current.remove();
+        mapInstanceRef.current.invalidateSize();
+      }
+    }, 150);
+
+    return () => {
+      clearTimeout(timer);
+      if (mapInstanceRef.current) {
+        try {
+          mapInstanceRef.current.remove();
+        } catch (e) {
+          // ignore cleanup errors
+        }
         mapInstanceRef.current = null;
+        markersLayerRef.current = null;
+        flowsLayerRef.current = null;
+        tileLayerRef.current = null;
       }
     };
-  }, []);
+  }, [activeSubTab]);
 
   // Update Basemap Tiles when activeTileKey changes
   useEffect(() => {
@@ -285,7 +357,7 @@ export default function WorldTerritoriesMap({
 
       markersLayerRef.current.addLayer(marker);
     });
-  }, [territories, selectedTerritoryId, filterRegion, palette]);
+  }, [territories, selectedTerritoryId, filterRegion, palette, mapReady]);
 
   // Update Metabolic Trade Flow Arcs
   useEffect(() => {
@@ -326,7 +398,7 @@ export default function WorldTerritoriesMap({
 
       flowsLayerRef.current.addLayer(polyline);
     });
-  }, [showMetabolicFlows, palette]);
+  }, [showMetabolicFlows, palette, isFcinq, mapReady]);
 
   // Camera Fly-To Shortcuts
   const handleFlyToRegion = (region) => {
@@ -346,75 +418,73 @@ export default function WorldTerritoriesMap({
   return (
     <div className="space-y-8 animate-fade-in">
       
-      {/* Header Banner */}
-      <div className="p-6 sm:p-8 rounded-3xl transition-all shadow-2xl bio-hud-panel relative overflow-hidden">
+      {/* Header Banner - Alto Contraste y Legibilidad */}
+      <div className="p-6 sm:p-8 rounded-3xl transition-all shadow-xl bg-white/95 border-2 border-[#487075]/30 relative overflow-hidden text-black">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider mb-3 bg-cyan-950/80 text-cyan-300 border border-cyan-500/40 shadow-[0_0_12px_rgba(6,182,212,0.25)]">
-              <Globe className="w-3.5 h-3.5 text-cyan-400" />
-              Observatorio Territorial Empírico (Mapa Satelital Plano)
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider mb-3 bg-[#376E6F]/15 text-[#254b4c] border border-[#376E6F]/30 shadow-sm">
+              <Globe className="w-3.5 h-3.5 text-[#376E6F]" />
+              Observatorio Territorial Empírico (Atlas & Metabolismo)
             </div>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold tracking-tight text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold tracking-tight text-black drop-shadow-sm">
               Cartografía Global & Auditoría Metabólica
             </h1>
-            <p className="mt-2 text-xs sm:text-sm text-emerald-100/80 max-w-3xl leading-relaxed">
+            <p className="mt-2 text-xs sm:text-sm text-black/85 font-medium max-w-3xl leading-relaxed">
               Explora y audita los <strong>9 territorios biofísicos del mundo real</strong>. 
               Al seleccionar cualquier lugar se despliega su diagnóstico matemático de Hombros, 
-              <strong>encuestas sociales oficiales (CASEN, CIS, Eurobarometer)</strong>, métricas biofísicas de recarga hídrica y la huella Scope 1, 2 y 3.
+              <strong>encuestas sociales oficiales (CASEN, CIS, Eurobarometer)</strong>, métricas biofísicas de recarga hídrica, huella Scope 1, 2 y 3, y los geoportales de datos abiertos.
             </p>
           </div>
 
-          {/* Sub-tab view switch: Map + Cases + Emissions + Panal */}
-          <div className="flex flex-wrap items-center gap-1.5 p-1.5 rounded-2xl border border-white/10 bg-[#1e132c] shadow-md self-start lg:self-center">
-            <button
-              onClick={() => setActiveSubTab('map')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition-all ${
-                activeSubTab === 'map'
-                  ? 'bg-[#376E6F] text-white shadow-md shadow-[#376E6F]/40'
-                  : 'text-slate-400 hover:text-white'
-              }`}
-            >
-              <Globe className="w-3.5 h-3.5" />
-              Mapa & Datos Crudos
-            </button>
-            <button
-              onClick={() => setActiveSubTab('cases')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition-all ${
-                activeSubTab === 'cases'
-                  ? 'bg-[#DA7B93] text-white shadow-md shadow-[#DA7B93]/40'
-                  : 'text-slate-400 hover:text-white'
-              }`}
-            >
-              <GitCompare className="w-3.5 h-3.5" />
-              Contraste de Casos & Modelos
-            </button>
-            <button
-              onClick={() => setActiveSubTab('emissions')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition-all ${
-                activeSubTab === 'emissions'
-                  ? 'bg-[#44318D] text-white shadow-md shadow-[#44318D]/40'
-                  : 'text-slate-400 hover:text-white'
-              }`}
-            >
-              <Factory className="w-3.5 h-3.5" />
-              Matriz Scope 1-2-3 (Metabolismo)
-            </button>
-            <button
-              onClick={() => setActiveSubTab('panal')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition-all ${
-                activeSubTab === 'panal'
-                  ? 'bg-[#2C3539] text-white shadow-md shadow-black/40'
-                  : 'text-slate-400 hover:text-white'
-              }`}
-            >
-              <Hexagon className="w-3.5 h-3.5" />
-              Red Panal P2P
-            </button>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 shrink-0">
+            <div className="px-4 py-2.5 rounded-2xl bg-[#F5F2EB] border border-[#927660]/30 shadow-inner text-xs font-mono">
+              <span className="text-[#927660] font-bold block text-[10px] uppercase tracking-wider">Territorio Activo</span>
+              <strong className="text-black text-sm font-serif">{activeTerritory.name} ({activeTerritory.country})</strong>
+            </div>
           </div>
         </div>
+      </div>
 
-        {/* Basemap Switcher & Quick Navigation Bar */}
-        <div className="mt-6 pt-5 border-t border-emerald-500/20 flex flex-wrap items-center justify-between gap-4 font-mono text-xs">
+      {/* =========================================================================
+          BARRA DE NAVEGACIÓN EN SUBPESTAÑAS DEL ATLAS TERRITORIAL (ESTILO NÚCLEO)
+          ========================================================================= */}
+      <div className="bg-[#180e25]/95 border border-white/10 p-2 rounded-2xl shadow-xl backdrop-blur-md sticky top-20 z-40">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+          {atlasSubtabs.map(tab => {
+            const Icon = tab.icon;
+            const isActive = activeSubTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveSubTab(tab.id)}
+                className={`flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl transition-all text-left relative overflow-hidden group ${
+                  isActive
+                    ? 'bg-gradient-to-r from-[#D83F87] via-[#8D69A6] to-[#376E6F] text-white shadow-lg border border-white/30 font-bold'
+                    : 'text-slate-300 hover:text-white hover:bg-white/5 border border-transparent'
+                }`}
+              >
+                <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 text-xs font-mono font-bold ${
+                  isActive ? 'bg-black/30 text-white' : 'bg-white/5 text-[#DA7B93] group-hover:bg-white/10'
+                }`}>
+                  <Icon className="w-3.5 h-3.5" />
+                </div>
+                <div className="truncate">
+                  <div className="text-[10px] font-mono uppercase tracking-wider opacity-80 leading-none">
+                    {tab.tag}
+                  </div>
+                  <div className="text-xs font-serif font-semibold truncate leading-tight mt-0.5">
+                    {tab.label}
+                  </div>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Barra de Herramientas de la Capa Satelital (Exclusiva para la Subpestaña 1: Mapa) */}
+      {activeSubTab === 'map' && (
+        <div className="p-4 rounded-2xl bg-[#1e132c]/90 border border-white/10 shadow-lg flex flex-wrap items-center justify-between gap-4 font-mono text-xs">
           
           {/* Basemap Layers Toggle */}
           <div className="flex items-center gap-2">
@@ -478,7 +548,7 @@ export default function WorldTerritoriesMap({
           </div>
 
         </div>
-      </div>
+      )}
 
       {/* Main Map View, Panal Network, or Scope Breakdown */}
       {activeSubTab === 'map' && (
@@ -1347,6 +1417,13 @@ export default function WorldTerritoriesMap({
           selectedTerritoryId={selectedTerritoryId}
           setSelectedTerritoryId={setSelectedTerritoryId}
         />
+      )}
+
+      {/* Fuentes de Datos Oficiales y Geoportales */}
+      {activeSubTab === 'data_sources' && (
+        <div className="animate-fade-in">
+          <DataSourcesView />
+        </div>
       )}
 
     </div>

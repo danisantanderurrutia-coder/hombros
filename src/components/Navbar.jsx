@@ -4,10 +4,8 @@ import { getAssetUrl } from '../utils/assets';
 
 export default function Navbar({ activeTab, setActiveTab }) {
   const navItems = [
-    { id: 'landing', label: 'Inicio', icon: Sparkles },
     { id: 'core', label: 'El Núcleo', icon: Activity },
-    { id: 'world_map', label: 'Atlas Territorial & Contraste', icon: Globe },
-    { id: 'data_sources', label: 'Fuentes de Datos', icon: Database },
+    { id: 'world_map', label: 'Atlas Territorial', icon: Globe },
     { id: 'theory', label: 'Marco Epistémico', icon: BookOpen },
   ];
 
@@ -16,10 +14,11 @@ export default function Navbar({ activeTab, setActiveTab }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20 py-2 gap-4">
           
-          {/* Unboxed, Liberated Logo Brand */}
+          {/* Logo Brand (Clic para ir al Inicio) */}
           <div 
             onClick={() => setActiveTab('landing')}
             className="flex items-center gap-3.5 cursor-pointer group"
+            title="HOMBROS · Ir al Inicio"
           >
             <div className="relative flex items-center justify-center">
               <img 
