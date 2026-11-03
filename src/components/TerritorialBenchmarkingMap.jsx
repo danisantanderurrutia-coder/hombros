@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Globe, MapPin, AlertCircle, ShieldAlert, CheckCircle2, ChevronRight, Activity, Filter, Info, Sparkles, Building2, Droplets, Mountain } from 'lucide-react';
 import { InlineMath, LatexText } from './KaTeXMath';
@@ -450,6 +450,20 @@ export default function TerritorialBenchmarkingMap({ onSelectCity, selectedCityI
   const [activeRegion, setActiveRegion] = useState('chile_central'); // 'europa' | 'chile_central'
   const [statusFilter, setStatusFilter] = useState('all'); // 'all' | 'green' | 'amber' | 'red' | 'critical'
 
+  // Synchronize activeRegion when selectedCityId changes externally
+  useEffect(() => {
+    if (!selectedCityId) return;
+    const found = BENCHMARK_CITIES.find(c => c.id === selectedCityId);
+    if (found) {
+      const isEuro = found.region === 'Europa';
+      if (isEuro && activeRegion !== 'europa') {
+        setActiveRegion('europa');
+      } else if (!isEuro && activeRegion !== 'chile_central') {
+        setActiveRegion('chile_central');
+      }
+    }
+  }, [selectedCityId]);
+
   // Filter cities by selected region
   const regionCities = useMemo(() => {
     if (activeRegion === 'europa') {
@@ -484,7 +498,13 @@ export default function TerritorialBenchmarkingMap({ onSelectCity, selectedCityI
             <Globe className="w-4 h-4 text-[#487075]" /> Territorio:
           </span>
           <button
-            onClick={() => setActiveRegion('chile_central')}
+            onClick={() => {
+              setActiveRegion('chile_central');
+              if (onSelectCity) {
+                const isCurrentChilean = BENCHMARK_CITIES.find(c => c.id === selectedCityId)?.region !== 'Europa';
+                if (!isCurrentChilean) onSelectCity('quillota');
+              }
+            }}
             className={`px-3.5 py-2 rounded-xl text-xs font-bold font-mono transition-all flex items-center gap-2 shadow-xs ${
               activeRegion === 'chile_central'
                 ? 'bg-[#C86D51] text-white shadow-md'
@@ -498,7 +518,13 @@ export default function TerritorialBenchmarkingMap({ onSelectCity, selectedCityI
           </button>
 
           <button
-            onClick={() => setActiveRegion('europa')}
+            onClick={() => {
+              setActiveRegion('europa');
+              if (onSelectCity) {
+                const isCurrentEuro = BENCHMARK_CITIES.find(c => c.id === selectedCityId)?.region === 'Europa';
+                if (!isCurrentEuro) onSelectCity('madrid');
+              }
+            }}
             className={`px-3.5 py-2 rounded-xl text-xs font-bold font-mono transition-all flex items-center gap-2 shadow-xs ${
               activeRegion === 'europa'
                 ? 'bg-[#487075] text-white shadow-md'
@@ -781,16 +807,16 @@ export default function TerritorialBenchmarkingMap({ onSelectCity, selectedCityI
             </span>
             <div className="flex items-center gap-3">
               <span className="flex items-center gap-1">
-                <span className="w-2.5 h-2.5 rounded-full bg-[#487075]" /> Seguro (\(\sigma &lt; 0.70\))
+                <span className="w-2.5 h-2.5 rounded-full bg-[#487075]" /> Seguro (<InlineMath math="\sigma < 0.70" />)
               </span>
               <span className="flex items-center gap-1">
-                <span className="w-2.5 h-2.5 rounded-full bg-[#D4A373]" /> Ajuste (\(0.70 \le \sigma \le 1.00\))
+                <span className="w-2.5 h-2.5 rounded-full bg-[#D4A373]" /> Ajuste (<InlineMath math="0.70 \le \sigma \le 1.00" />)
               </span>
               <span className="flex items-center gap-1">
-                <span className="w-2.5 h-2.5 rounded-full bg-[#C86D51]" /> Sobrecarga (\(\sigma &gt; 1.00\))
+                <span className="w-2.5 h-2.5 rounded-full bg-[#C86D51]" /> Sobrecarga (<InlineMath math="\sigma > 1.00" />)
               </span>
               <span className="flex items-center gap-1">
-                <span className="w-2.5 h-2.5 rounded-full bg-[#991B1B]" /> Falla (\(H_i &lt; 0.25\))
+                <span className="w-2.5 h-2.5 rounded-full bg-[#991B1B]" /> Falla (<InlineMath math="H_i < 0.25" />)
               </span>
             </div>
           </div>

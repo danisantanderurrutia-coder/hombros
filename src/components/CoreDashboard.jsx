@@ -1139,7 +1139,7 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
               
               {/* SEMÁFORO BIOFÍSICO LUMINOSO (Columna Izquierda 4/12) */}
-              <div className="lg:col-span-4">
+              <div className="lg:col-span-4 space-y-4">
                 <PhysicalTrafficLight
                   trafficLight={activeCityData.state.trafficLight}
                   actionCode={activeCityData.state.actionCode}
@@ -1147,6 +1147,51 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
                   sigma={activeCityData.state.sigma}
                   hasCriticalShoulder={activeCityData.state.hasCriticalShoulder}
                 />
+
+                {/* Simulador de Estrés Dinámico para la Ciudad Seleccionada */}
+                <div className="p-4 rounded-3xl bg-white/95 border border-[#927660]/30 shadow-md space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-mono font-bold text-black flex items-center gap-1.5">
+                      <Flame className="w-4 h-4 text-[#C86D51]" /> Test de Estrés (Δσ):
+                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className={`px-2 py-0.5 rounded-lg font-mono font-bold text-xs ${
+                        cityStressDelta > 0 
+                          ? 'bg-[#FEECE8] text-[#C86D51]' 
+                          : cityStressDelta < 0 
+                            ? 'bg-[#E2F4F2] text-[#487075]' 
+                            : 'bg-[#FAF7F0] text-black border border-[#DDD5C5]'
+                      }`}>
+                        {cityStressDelta > 0 ? `+${(cityStressDelta * 100).toFixed(0)}%` : `${(cityStressDelta * 100).toFixed(0)}%`}
+                      </span>
+                      {cityStressDelta !== 0 && (
+                        <button
+                          onClick={() => setCityStressDelta(0)}
+                          title="Restablecer tensión nominal"
+                          className="p-1 rounded-md text-zinc-500 hover:text-black hover:bg-black/5"
+                        >
+                          <RotateCcw className="w-3.5 h-3.5" />
+                        </button>
+                      )}
+                    </div>
+                  </div>
+
+                  <input
+                    type="range"
+                    min="-0.4"
+                    max="0.8"
+                    step="0.05"
+                    value={cityStressDelta}
+                    onChange={(e) => setCityStressDelta(parseFloat(e.target.value))}
+                    className="w-full accent-[#C86D51] cursor-pointer"
+                  />
+
+                  <div className="flex justify-between text-[10px] font-mono text-black font-semibold">
+                    <span className="text-[#487075]">-40% Regeneración</span>
+                    <span className="text-zinc-600">Nominal (0%)</span>
+                    <span className="text-[#C86D51]">+80% Shock</span>
+                  </div>
+                </div>
               </div>
 
               {/* MAPA TERRITORIAL DE CIUDADES (Columna Derecha 8/12) */}

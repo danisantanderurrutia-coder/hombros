@@ -2,7 +2,14 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ShieldAlert, AlertTriangle, CheckCircle2, Flame, Shield, Activity } from 'lucide-react';
 
-export default function PhysicalTrafficLight({ trafficLight, actionCode, actionTitle, sigma, hasCriticalShoulder }) {
+export default function PhysicalTrafficLight({ 
+  trafficLight = 'green', 
+  actionCode = 'SAFE', 
+  actionTitle = 'Margen Biofísico Seguro', 
+  sigma = 0.65, 
+  hasCriticalShoulder = false 
+}) {
+  const safeSigma = typeof sigma === 'number' ? sigma : parseFloat(sigma) || 0;
   // Determine which lamps are lit
   // trafficLight can be: 'green' | 'amber' | 'red' | 'critical_red' | 'black'
   const isGreenLit = trafficLight === 'green';
@@ -130,7 +137,7 @@ export default function PhysicalTrafficLight({ trafficLight, actionCode, actionT
           {actionTitle}
         </strong>
         <span className="text-[11px] font-mono opacity-90 block mt-1">
-          Tensión Operativa: <strong>σ = {sigma.toFixed(3)}</strong>
+          Tensión Operativa: <strong>σ = {safeSigma.toFixed(3)}</strong>
         </span>
       </div>
     </div>
