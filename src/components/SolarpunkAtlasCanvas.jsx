@@ -10,12 +10,12 @@ import { getAssetUrl } from '../utils/assets';
 export default function SolarpunkAtlasCanvas() {
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none">
-      {/* 1. PAISAJE PANORÁMICO ALBA CAELESTIS */}
+      {/* 1. PAISAJE PANORÁMICO CONTINUO ULTRA-WIDE */}
       <div className="absolute inset-0 w-full h-full">
         <img
-          src={getAssetUrl('art/landing_hero_alba_caelestis.jpg')}
-          alt="Paisaje Panorámico Alba Caelestis Hombros"
-          className="w-full h-full object-cover object-center filter saturate-[1.08] contrast-[1.02]"
+          src={getAssetUrl('art/solarpunk_panoramic_canvas.jpg')}
+          alt="Paisaje Panorámico Solarpunk Hombros"
+          className="w-full h-full object-cover object-center filter saturate-[1.10] contrast-[1.04]"
         />
       </div>
 

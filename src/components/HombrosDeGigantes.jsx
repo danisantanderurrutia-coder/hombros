@@ -136,11 +136,11 @@ export default function HombrosDeGigantes() {
 
       {/* Resignificación de Atlas y Sísifo */}
       <div className="mt-6 p-5 rounded-2xl bg-gradient-to-r from-[#FAF7F0] via-[#E2F4F2] to-[#FEECE8] border border-[#D4C9B8] flex flex-col sm:flex-row items-center gap-5 shadow-sm">
-        <div className="w-20 h-20 rounded-2xl overflow-hidden flex-shrink-0 border border-[#927660]/40 shadow-sm bg-white">
+        <div className="w-20 h-20 rounded-2xl overflow-hidden flex-shrink-0 border border-[#1B4332]/30 shadow-sm bg-[#FAF8F5] p-1 flex items-center justify-center">
           <img 
             src={getAssetUrl('art/hombros_logo.png')} 
             alt="Atlas & Sísifo Colectivos" 
-            className="w-full h-full object-cover filter contrast-110"
+            className="w-full h-full object-contain filter contrast-105"
           />
         </div>
         <div className="space-y-1">

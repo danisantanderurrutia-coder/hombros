@@ -24,9 +24,9 @@ export default function Navbar({ activeTab, setActiveTab, onNavigateCustomAudit 
           >
             <div className="relative flex items-center justify-center">
               <img 
-                src={getAssetUrl('art/hombros_logo.png')} 
+                src={getAssetUrl('art/hombros_mark_transparent.png')} 
                 alt="Hombros" 
-                className="h-12 w-auto object-contain filter drop-shadow-[0_2px_8px_rgba(72,112,117,0.25)] group-hover:scale-105 transition-all duration-300"
+                className="h-12 w-auto object-contain filter drop-shadow-[0_2px_8px_rgba(27,67,50,0.20)] group-hover:scale-105 transition-all duration-300"
               />
             </div>
 
@@ -35,7 +35,7 @@ export default function Navbar({ activeTab, setActiveTab, onNavigateCustomAudit 
                 <span className="tracking-wide text-2xl font-bold font-serif text-slate-900 tracking-tight">
                   HOMBROS
                 </span>
-                <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full uppercase tracking-wider font-bold bg-[#28475A]/15 text-[#28475A] border border-[#28475A]/40">
+                <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full uppercase tracking-wider font-bold bg-[#1B4332]/15 text-[#1B4332] border border-[#1B4332]/40">
                   Think Tank & Lab
                 </span>
               </div>
