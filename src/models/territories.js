@@ -90,6 +90,7 @@ export const INITIAL_TERRITORIES = [
       d2: 0.50, // Presión demográfica
       d3: 0.85, // Extracción de rentas hacia grupos forestales externos
     },
+    kappa: 0.28,
 
     emissions: {
       scope1: 1.6, // tCO2e/capita (biomasa leña y transporte rural)
@@ -220,6 +221,7 @@ export const INITIAL_TERRITORIES = [
       d2: 0.80, // Alta presión de suelo y vivienda
       d3: 1.15, // Enorme flujo de importación de bienes de consumo (Scope 3)
     },
+    kappa: 0.52,
 
     emissions: {
       scope1: 1.9, // tCO2e/capita (muy baja por transporte ciclista y distrital)
@@ -347,6 +349,7 @@ export const INITIAL_TERRITORIES = [
       d2: 1.45, // Máxima densidad urbana europea (16.000 hab/km²) + 30M turistas
       d3: 1.20, // Inversión inmobiliaria global e impacto de cruceros portuarios
     },
+    kappa: 0.44,
 
     emissions: {
       scope1: 2.3, // tCO2e/capita (tráfico rodado, gas natural doméstico)
@@ -474,6 +477,7 @@ export const INITIAL_TERRITORIES = [
       d2: 0.65, // Valle encajonado pero población estable
       d3: 0.75, // Flujos de capital regulados por políticas de cluster local
     },
+    kappa: 0.35,
 
     emissions: {
       scope1: 3.4, // tCO2e/capita (industria siderúrgica y transporte comarcal)
@@ -601,6 +605,7 @@ export const INITIAL_TERRITORIES = [
       d2: 1.10, // Presión residencial y turística severa
       d3: 1.40, // Flujos de capital y mercancías portuarias masivas (Scope 3)
     },
+    kappa: 0.48,
 
     emissions: {
       scope1: 2.8, // tCO2e/capita (gas doméstico y transporte interior)
@@ -728,6 +733,7 @@ export const INITIAL_TERRITORIES = [
       d2: 0.95, // Crecimiento demográfico sostenido y demanda habitacional
       d3: 0.85, // Inversión inmobiliaria exterior en conflicto con cooperativas
     },
+    kappa: 0.46,
 
     emissions: {
       scope1: 3.2, // tCO2e/capita (calefacción fósil y tráfico urbano)
@@ -855,6 +861,7 @@ export const INITIAL_TERRITORIES = [
       d2: 0.75,
       d3: 1.10, // Capitales agroindustriales externos
     },
+    kappa: 0.18,
 
     emissions: {
       scope1: 2.9, // tCO2e/capita (bombeo diésel de pozos y agroquímicos)
@@ -982,6 +989,7 @@ export const INITIAL_TERRITORIES = [
       d2: 0.85,
       d3: 0.65,
     },
+    kappa: 0.22,
 
     emissions: {
       scope1: 1.4, // tCO2e/capita (botes artesanales y uso doméstico)
@@ -1109,6 +1117,7 @@ export const INITIAL_TERRITORIES = [
       d2: 0.85,
       d3: 1.90, // Megaproyectos industriales foráneos
     },
+    kappa: 0.08,
 
     emissions: {
       scope1: 42.5, // tCO2e/capita (una de las mayores del mundo por termoeléctricas a carbón)
@@ -1236,6 +1245,7 @@ export const INITIAL_TERRITORIES = [
       d2: 0.85, // Densidad demográfica en cuenca confinada
       d3: 0.60, // Flujos de capital externo
     },
+    kappa: 0.42,
 
     emissions: {
       scope1: 2.1,
@@ -1361,6 +1371,7 @@ export const INITIAL_TERRITORIES = [
       d2: 0.95, // Altísima densidad demográfica (20.000 hab/km²)
       d3: 0.80, // Hub financiero global e inmobiliario
     },
+    kappa: 0.38,
 
     emissions: {
       scope1: 2.2, // tCO2e/capita (calefacción gas y transporte residual)
@@ -1486,6 +1497,7 @@ export const INITIAL_TERRITORIES = [
       d2: 1.10, // Densidad demográfica límite insular
       d3: 0.85, // Enclave financiero y comercial global
     },
+    kappa: 0.3,
 
     emissions: {
       scope1: 3.5,
@@ -1611,6 +1623,7 @@ export const INITIAL_TERRITORIES = [
       d2: 0.75, // Crecimiento demográfico controlado por corredores
       d3: 0.55, // Inversión externa balanceada
     },
+    kappa: 0.5,
 
     emissions: {
       scope1: 1.8,
@@ -1736,6 +1749,7 @@ export const INITIAL_TERRITORIES = [
       d2: 0.40, // Baja presión demográfica (envejecimiento rural)
       d3: 0.35, // Poca penetración de capital extractivo externo
     },
+    kappa: 0.62,
 
     emissions: {
       scope1: 0.8,

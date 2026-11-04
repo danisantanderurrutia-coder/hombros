@@ -362,3 +362,50 @@ input[type="range"] {
   color: #1E293B !important;
   padding: 8px 12px !important;
 }
+
+/* Estilos de Impresión Ejecutiva Limpia para Dictamen / Acta Municipal */
+@media print {
+  /* Ocultar elementos de navegación y canvas de fondo */
+  header, nav, #solarpunk-canvas, .no-print, button, input[type="range"] {
+    display: none !important;
+  }
+  
+  body, main {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  .card-magenta, .card-teal, [class*="bg-\[#101A1E\]"], [class*="bg-\[#0B1518\]"], [class*="bg-\[#070D10\]"] {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: none !important;
+  }
+  
+  .text-white, .text-slate-100, .text-slate-200, .text-slate-300 {
+    color: #1e293b !important;
+  }
+
+  .text-emerald-300, .text-emerald-400 {
+    color: #047857 !important;
+  }
+
+  .text-amber-300, .text-amber-400 {
+    color: #b45309 !important;
+  }
+
+  .text-rose-300, .text-rose-400 {
+    color: #be123c !important;
+  }
+
+  .text-cyan-300, .text-cyan-400 {
+    color: #0369a1 !important;
+  }
+
+  /* Asegurar salto de página limpio y evitar cortes feos */
+  .page-break {
+    page-break-before: always;
+  }
+}
