@@ -110,21 +110,36 @@ const THINK_TANK_ARTICLES = [
           'La unidad de evaluación es la Cuenca Hidrográfica como medio continuo indivisible. Cuando un proyecto somete su expediente a revisión ciudadana o municipal, el kit computa la tensión proyectada sumando la carga del proyecto (ΔD) y su desgaste ecosistémico proyectado (ΔE) a la línea base:',
           'Bajo el principio de inconmensurabilidad de Liebig, queda prohibida toda compensación inter-hombros (destruir un acuífero no se subsana financiando canchas deportivas o sedes comunitarias). Si el esfuerzo basal preexistente ya supera el umbral plástico (σ₀ ≥ 1.00) o si rige el límite de Liebig (Hᵢ < 0.25), opera una moratoria legal ex-ante vinculante: el proyecto es inadmisible y no puede tramitarse hasta que se ejecute una restitución biofísica simétrica previa comprobable.'
         ],
-        equation: '\\sigma_{\\text{proj}} = \\frac{D_0 + \\Delta D}{\\left[ (E_0 + \\Delta E) \\cdot S_0 \\cdot K_0 \\right]^{1/3} \\cdot \\Phi_{\\text{crit}} \\cdot (1 + \\kappa)} \\le 0.85 \\quad (\\text{Condición de Seguridad Elástica})'
+        equation: '\\sigma_{\\text{proj}} = \\frac{D_0 + \\Delta D}{\\left[ (E_0 + \\Delta E) \\cdot S_0 \\cdot K_0 \\right]^{1/3} \\cdot \\Phi_{\\text{crit}} \\cdot (1 + \\kappa)} \\le 0.85 \\quad (\\text{Condición de Seguridad Elástica})',
+        figure: {
+          src: getAssetUrl('docs/figures/fig8_longavi_traction_archetypes.png'),
+          fallback: '/hombros/docs/figures/fig8_longavi_traction_archetypes.png',
+          caption: 'Figura 1: Ensayo de Tracción SEIA 2.0 en Cuenca Río Longaví ante 4 arquetipos de proyecto (Monocultivo frutal, Megaminería, Loteos periurbanos, Parque Agro-solar sintrópico) evaluados frente a los umbrales de fluencia (σ = 0.85) y fractura (σ = 1.25).'
+        }
       },
       {
         heading: '4. Caso de Estudio Piloto: Cuenca del Río Longaví - Bullileo acoplada a AgriTwin',
         paragraphs: [
           'La cuenca del Río Longaví (122.070 ha, 21.400 hab., Maule Sur) fue acoplada a la consola del Gemelo Digital AgriTwin. Mediante telemetría Sentinel-2 STAC/COG, balance hídrico del Embalse Bullileo y la red vecinal de 5 Comités APR (Bullileo, Retiro Centro, Copihue, Romeral y Villaseca), se estableció una línea base de H₀ = 0.578 y σ₀ = 0.552 (Rating AAA).',
           'Sometiendo la cuenca al ensayo de tracción en R (scripts/R/07_kit_audita_tu_cuenca.R), se auditaron 4 arquetipos: la expansión de monocultivo frutal intensivo disparó la tensión a σ_proj = 1.169 (Inadmisible, fractura de acuífero APR); un tranque de relaves minero colapsó la cuenca a σ_proj = 2.370 (Rechazo de plano, Rating D); un loteo inmobiliario de 600 parcelas arrojó σ_proj = 1.119 (Inadmisible); mientras que un parque agro-solar sintrópico con Keyline redujo el estrés a σ_proj = 0.541 (Admisible sintrópico).'
-        ]
+        ],
+        figure: {
+          src: getAssetUrl('docs/figures/fig10_honeycomb_aprs_network.png'),
+          fallback: '/hombros/docs/figures/fig10_honeycomb_aprs_network.png',
+          caption: 'Figura 2: Amortiguación Tensora en Red Panal de los 5 Comités APR en Cuenca Río Longaví. Muestra cómo la gobernanza comunitaria y los pactos territoriales (κ = 0.38) absorben las perturbaciones de sequía sin alcanzar el límite de fluencia.'
+        }
       },
       {
         heading: '5. Modelación Macrofiscal del Costo de Inacción y Transferencia Regresiva',
         paragraphs: [
           'El kit compara el Costo Anual de Inacción en la cuenca ($3.396.000 USD/año en abastecimiento con camiones aljibe y combate de incendios) frente a una Inversión Sintrópica Preventiva de $3.375.000 USD en 2.500 ha de Keyline y reforestación comunitaria de cabeceras, arrojando un ROI Biofísico a 10 años de +654.7% (amortizado al año 3).',
           'Asimismo, la modelación macrofiscal de financiamiento revela que el 88.2% del gasto recurrente de emergencia hídrica es pagado por el erario público (FNDR, SENAPRED y Fondo Común Municipal) y el 11.8% por endeudamiento de las propias familias campesinas, con un 0.0% de aporte privado de los grandes monocultivos. Esto demuestra que el sistema opera como una transferencia regresiva masiva de riqueza, donde el Estado socializa las pérdidas ambientales generadas por el agronegocio.'
-        ]
+        ],
+        figure: {
+          src: getAssetUrl('docs/figures/fig9_roi_inaction_transfer_regressive.png'),
+          fallback: '/hombros/docs/figures/fig9_roi_inaction_transfer_regressive.png',
+          caption: 'Figura 3: A) Amortización de Inversión Sintrópica vs Costo de Inacción a 10 años (ROI +655%, breakeven año 2.8). B) Radiografía de la transferencia regresiva: 88.2% del gasto en emergencia hídrica es asumido por fondos públicos y 0% aporte de monocultivos.'
+        }
       },
       {
         heading: '6. Procedimiento para Emitir Dictámenes Ciudadanos y Código Reproducible',
@@ -723,6 +738,25 @@ export default function ArticlesPolicyView({ onNavigateTab }) {
                           Formalización Matemática en el Motor HOMBROS:
                         </span>
                         <BlockMath math={section.equation} />
+                      </div>
+                    )}
+
+                    {section.figure && (
+                      <div className="my-6 p-4 rounded-2xl bg-[#0c0714] border border-[#28475A] shadow-xl text-center space-y-2.5">
+                        <img 
+                          src={section.figure.src} 
+                          alt={section.figure.caption} 
+                          className="w-full max-h-[460px] object-contain rounded-xl mx-auto"
+                          onError={(e) => {
+                            if (!e.target.dataset.tried && section.figure.fallback) {
+                              e.target.dataset.tried = '1';
+                              e.target.src = section.figure.fallback;
+                            }
+                          }}
+                        />
+                        <p className="text-xs font-mono text-slate-300 italic pt-1 text-center max-w-3xl mx-auto leading-relaxed">
+                          {section.figure.caption}
+                        </p>
                       </div>
                     )}
                   </section>

@@ -18,6 +18,7 @@ export default function TheoryView() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedScriptId, setSelectedScriptId] = useState('pipeline_runner');
   const [selectedFigureId, setSelectedFigureId] = useState('fig1');
+  const [figureFilter, setFigureFilter] = useState('all'); // 'all' | 'paper1' | 'paper2'
   const [activeFigureModal, setActiveFigureModal] = useState(null);
 
   // --------------------------------------------------------------------------
@@ -26,6 +27,7 @@ export default function TheoryView() {
   const paperFigures = [
     {
       id: 'fig1',
+      paper: 'paper1',
       number: 'Figura 1',
       title: 'Ley Constitutiva Socio-Ecológica Tensión-Deformación (σ vs. ε)',
       subtitle: 'Demostración de la Histéresis Plástica y Pérdida Irreversible de Capacidad Portante',
@@ -43,6 +45,7 @@ export default function TheoryView() {
     },
     {
       id: 'fig2',
+      paper: 'paper1',
       number: 'Figura 2',
       title: 'Tensión Sistémica (σ) vs. Huella Metabólica Total con Scope 3 Upstream',
       subtitle: 'Evidencia del Desplazamiento Entrópico: El Colonialismo Metabólico del Norte Global',
@@ -60,6 +63,7 @@ export default function TheoryView() {
     },
     {
       id: 'fig3',
+      paper: 'paper1',
       number: 'Figura 3',
       title: 'Inversión de Jerarquías en la Evaluación de Sostenibilidad (Slopegraph)',
       subtitle: 'Contraste entre IDH (PNUD), Huella Ecológica (GFN) y Tensión Sistémica HOMBROS',
@@ -77,6 +81,7 @@ export default function TheoryView() {
     },
     {
       id: 'fig4',
+      paper: 'paper1',
       number: 'Figura 4',
       title: 'Análisis Global de Sensibilidad de Sobol para la Tensión Sistémica (σ)',
       subtitle: 'Simulación Estocástica de Hipercubo Latino (Monte Carlo N=5,000)',
@@ -94,6 +99,7 @@ export default function TheoryView() {
     },
     {
       id: 'fig5',
+      paper: 'paper1',
       number: 'Figura 5',
       title: 'Amortiguación Tensora por Mutualismo en Red Panal (Density Violin Plots)',
       subtitle: 'Simulación de Choque Climático en Cuencas Aisladas vs. Cuencas Acopladas Policéntricamente',
@@ -111,6 +117,7 @@ export default function TheoryView() {
     },
     {
       id: 'fig6',
+      paper: 'paper1',
       number: 'Figura 6',
       title: 'Funciones de Transferencia y Normalización Canónica (X_raw → [0, 1])',
       subtitle: 'Estandarización de Variables Físicas Heterogéneas mediante Postes de Meta (Goalposts) y Corte de Liebig',
@@ -128,6 +135,7 @@ export default function TheoryView() {
     },
     {
       id: 'fig7',
+      paper: 'paper1',
       number: 'Figura 7',
       title: 'Auditoría de Ensayo de Tracción Territorial Pre-Inversión (σ₀ → σ_proyectado)',
       subtitle: 'Simulación de Carga Extractiva Incremental (ΔD = +0.09, ΔE = -0.02) y Dictamen de Solvencia Metabólica',
@@ -141,6 +149,60 @@ export default function TheoryView() {
         'Metrópolis en fluencia (Bilbao, Berlín, Copenhague, Ámsterdam) cruzan hacia la deformación plástica (σ_proj > 1.10 → RECHAZADO).',
         'Territorios sobre-estresados (Barcelona, Aconcagua, Quintero) entran o agravan la fractura catastrófica (MORATORIA TOTAL).',
         'Demuestra cómo reemplazar las EIA declarativas por un ensayo físico de resistencia de materiales.'
+      ]
+    },
+    {
+      id: 'fig8',
+      paper: 'paper2',
+      number: 'Figura 8 (Paper 2 · Fig 1)',
+      title: 'Ensayo de Tracción SEIA 2.0 en Cuenca Río Longaví - Bullileo',
+      subtitle: 'Respuesta reológica ante 4 arquetipos de inversión · Evaluación con salvaguarda pre-inversional ex-ante',
+      image: getAssetUrl('docs/figures/fig8_longavi_traction_archetypes.png'),
+      badge: 'SEIA 2.0 · Paper 2',
+      badgeColor: 'border-amber-500/40 text-amber-800 bg-amber-100',
+      sectionRef: 'Paper 2 · Sección 4.2',
+      caption: 'Desplazamiento tensorial de la Cuenca del Río Longaví ante cuatro proyectos de inversión: la expansión frutal (σ = 1.169), megaminería (σ = 2.370) y loteos periurbanos (σ = 1.119) son declarados INADMISIBLES por sobrepasar el límite de fluencia (σ = 0.85); solo el parque agro-solar sintrópico con Keyline resulta admisible (σ = 0.541).',
+      takeaways: [
+        'Cuenca Longaví parte de una línea base elástica segura: σ₀ = 0.552 (Rating AAA).',
+        'Monocultivo y loteos inducen deformación plástica irreversible en el acuífero de 3 comités APR.',
+        'Megaminería en cabecera genera fractura catastrófica inmediata (Rating D).',
+        'Demuestra la operatividad del dictamen pre-inversional ex-ante vinculante.'
+      ]
+    },
+    {
+      id: 'fig9',
+      paper: 'paper2',
+      number: 'Figura 9 (Paper 2 · Fig 2)',
+      title: 'Amortización de Inversión Sintrópica vs. Costo de Inacción & Transferencia Regresiva',
+      subtitle: 'Horizonte a 10 años en Cuenca Longaví y Radiografía de la Socialización de Pérdidas',
+      image: getAssetUrl('docs/figures/fig9_roi_inaction_transfer_regressive.png'),
+      badge: 'Macroeconomía Biofísica · Paper 2',
+      badgeColor: 'border-cyan-500/40 text-cyan-800 bg-cyan-100',
+      sectionRef: 'Paper 2 · Sección 5',
+      caption: 'Panel A: Curva de amortización y retorno biofísico neto (+654.7% ROI) de la intervención sintrópica preventiva en 2.500 ha de Keyline frente al costo de inacción recurrente ($3.39M USD/año). Panel B: Radiografía fiscal de camiones aljibe donde el 88.2% es asumido por fondos públicos (FNDR/SENAPRED/FCM) y 0% por los grandes monocultivos.',
+      takeaways: [
+        'El costo de inacción triplica el costo de una restauración biofísica integral en menos de 3 años.',
+        'El breakeven fiscal se alcanza en el año 2.8, liberando recursos públicos a perpetuidad.',
+        'Evidencia la socialización de pérdidas del modelo extractivo mediante subsidios estatales de emergencia.',
+        'Justifica la creación de tasas de restitución biofísica aplicadas directamente al gran agronegocio.'
+      ]
+    },
+    {
+      id: 'fig10',
+      paper: 'paper2',
+      number: 'Figura 10 (Paper 2 · Fig 3)',
+      title: 'Amortiguación Tensora en Red Panal de 5 Comités APR (Río Longaví)',
+      subtitle: 'Gobernanza Policéntrica (κ = 0.38) y Alivio Hídrico mediante Pactos Territoriales',
+      image: getAssetUrl('docs/figures/fig10_honeycomb_aprs_network.png'),
+      badge: 'Red Panal APR · Paper 2',
+      badgeColor: 'border-emerald-500/40 text-emerald-800 bg-emerald-100',
+      sectionRef: 'Paper 2 · Sección 4.3',
+      caption: 'Nivel de tensión hídrica en 5 comités APR de la cuenca (Bullileo, Retiro Centro, Copihue, Romeral, Villaseca). Compara la tensión en aislamiento frente a la amortiguación mutualista lograda mediante la Red Panal y pactos territoriales (Keyline, cortafuegos DAO y bombeo solar P2P).',
+      takeaways: [
+        'El nodo más estresado (Retiro Centro) reduce su tensión crítica desde σ = 0.89 a σ = 0.58.',
+        'Garantiza que ningún comité APR caiga bajo el umbral de racionamiento o compra en camiones aljibe.',
+        'Valida experimentalmente la teoría de bienes comunes de Elinor Ostrom en gestión comunitaria de aguas.',
+        'Muestra el rol catalizador del predio ancla agroecológico como regulador hidrológico.'
       ]
     }
   ];
@@ -429,9 +491,16 @@ message("✓ [07_kit_audita_tu_cuenca.R] Dictamen SEIA 2.0 y Dictamen JSON emiti
     return scriptsHubData.find(s => s.id === selectedScriptId) || scriptsHubData[0];
   }, [selectedScriptId, scriptsHubData]);
 
+  const filteredFigures = useMemo(() => {
+    if (figureFilter === 'paper1') return paperFigures.filter(f => f.paper === 'paper1');
+    if (figureFilter === 'paper2') return paperFigures.filter(f => f.paper === 'paper2');
+    return paperFigures;
+  }, [figureFilter, paperFigures]);
+
   const activeFigure = useMemo(() => {
-    return paperFigures.find(f => f.id === selectedFigureId) || paperFigures[0];
-  }, [selectedFigureId]);
+    const found = filteredFigures.find(f => f.id === selectedFigureId);
+    return found || filteredFigures[0] || paperFigures[0];
+  }, [selectedFigureId, filteredFigures, paperFigures]);
 
   const copyScriptToClipboard = (text) => {
     navigator.clipboard.writeText(text);
@@ -1126,14 +1195,58 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
               </div>
             </div>
 
+            {/* Selector de Colección (Filtro Paper 1 vs. Paper 2 vs. Todas) */}
+            <div className="flex flex-wrap items-center gap-2 pt-4 pb-2 border-b border-[#D4C9B8]/60">
+              <span className="text-[11px] font-mono font-bold text-slate-700 mr-1">Filtrar por Publicación:</span>
+              <button
+                onClick={() => {
+                  setFigureFilter('all');
+                  if (!paperFigures.some(f => f.id === selectedFigureId)) setSelectedFigureId('fig1');
+                }}
+                className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${
+                  figureFilter === 'all'
+                    ? 'bg-[#28475A] text-white shadow-sm'
+                    : 'bg-white text-slate-700 hover:bg-slate-100 border border-[#D4C9B8]'
+                }`}
+              >
+                Todas las Figuras (10)
+              </button>
+              <button
+                onClick={() => {
+                  setFigureFilter('paper1');
+                  setSelectedFigureId('fig1');
+                }}
+                className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${
+                  figureFilter === 'paper1'
+                    ? 'bg-[#376E6F] text-white shadow-sm'
+                    : 'bg-white text-slate-700 hover:bg-slate-100 border border-[#D4C9B8]'
+                }`}
+              >
+                Paper 1: Marco Sistémico (Fig. 1 a 7)
+              </button>
+              <button
+                onClick={() => {
+                  setFigureFilter('paper2');
+                  setSelectedFigureId('fig8');
+                }}
+                className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${
+                  figureFilter === 'paper2'
+                    ? 'bg-[#C86D51] text-white shadow-sm'
+                    : 'bg-white text-slate-700 hover:bg-slate-100 border border-[#D4C9B8]'
+                }`}
+              >
+                Paper 2: Kit Audita tu Cuenca (Fig. 8 a 10)
+              </button>
+            </div>
+
             {/* Selector de Figuras en Pestañas */}
-            <div className="flex flex-wrap gap-2 my-6">
-              {paperFigures.map((fig) => (
+            <div className="flex flex-wrap gap-2 my-4">
+              {filteredFigures.map((fig) => (
                 <button
                   key={fig.id}
                   onClick={() => setSelectedFigureId(fig.id)}
                   className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition-all ${
-                    selectedFigureId === fig.id
+                    activeFigure.id === fig.id
                       ? 'bg-[#C86D51] text-white shadow-md shadow-[#C86D51]/30'
                       : 'bg-white text-slate-800 hover:bg-slate-100 border border-[#D4C9B8]'
                   }`}
@@ -1160,9 +1273,9 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                   <h3 className="text-base sm:text-lg font-serif font-bold text-white">
                     {activeFigure.title}
                   </h3>
-                  <p className="text-xs text-slate-300 mt-0.5">
-                    {activeFigure.subtitle}
-                  </p>
+                  <div className="text-xs text-slate-300 mt-0.5">
+                    <LatexText text={activeFigure.subtitle} />
+                  </div>
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0">
@@ -1195,11 +1308,7 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                   onError={(e) => {
                     if (!e.target.dataset.tried) {
                       e.target.dataset.tried = '1';
-                      const figFilename = activeFigure.id === 'fig1' ? 'fig1_stress_strain_hysteresis.png' :
-                                          activeFigure.id === 'fig2' ? 'fig2_scope3_displacement_biplot.png' :
-                                          activeFigure.id === 'fig3' ? 'fig3_multimodel_ranking_inversion.png' :
-                                          activeFigure.id === 'fig4' ? 'fig4_sobol_sensitivity_montecarlo.png' :
-                                          'fig5_honeycomb_network_damping.png';
+                      const figFilename = activeFigure.image ? activeFigure.image.split('/').pop() : 'fig1_stress_strain_hysteresis.png';
                       e.target.src = `/hombros/docs/figures/${figFilename}`;
                     }
                   }}
@@ -1212,9 +1321,9 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                   <span className="text-[10px] font-mono uppercase font-bold text-[#45B69C] tracking-wider block mb-1.5">
                     Descripción & Epígrafe Canónico (Caption)
                   </span>
-                  <p className="text-slate-300 font-sans leading-relaxed text-xs">
-                    <em>{activeFigure.caption}</em>
-                  </p>
+                  <div className="text-slate-300 font-sans leading-relaxed text-xs italic">
+                    <LatexText text={activeFigure.caption} />
+                  </div>
                 </div>
 
                 <div className="bg-black/30 p-4 rounded-xl border border-white/5">
@@ -1225,7 +1334,7 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                     {activeFigure.takeaways.map((point, idx) => (
                       <li key={idx} className="flex items-start gap-1.5">
                         <span className="text-[#DA7B93] mt-0.5">•</span>
-                        <span>{point}</span>
+                        <span><LatexText text={point} /></span>
                       </li>
                     ))}
                   </ul>

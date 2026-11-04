@@ -128,6 +128,15 @@ Sometiendo la Cuenca del Río Longaví a la rutina de ensayo en R (`scripts/R/07
 | **3. Loteo Periurbano Inmobiliario (600 parcelas de agrado)** | $+0.38$ | $-0.12$ | $+0.04$ | $0.552$ | **$1.119$** | **C** | **INADMISIBLE** (Sellado de suelo y sobreconsumo en pozos profundos). |
 | **4. Parque Agro-Solar Sintrópico con Keyline Comunitario** | $+0.08$ | $+0.12$ | $+0.15$ | $0.552$ | **$0.541$** | **AAA** | **ADMISIBLE SISTRÓPICO** (Reduce el estrés global: $\Delta\sigma = -0.011$). |
 
+![Figura 1 (Paper 2): Ensayo de Tracción SEIA 2.0 en Cuenca Río Longaví](./figures/fig8_longavi_traction_archetypes.png)
+*Figura 1 (Paper 2 · Figura 8 Canónica): Ensayo de Tracción SEIA 2.0 en Cuenca Río Longaví - Bullileo. Desplazamiento tensorial ante cuatro arquetipos de inversión frente a los umbrales de fluencia elástica ($\sigma = 0.85$, amarillo), daño plástico ($\sigma = 1.00$, naranja) y fractura catastrófica ($\sigma = 1.25$, rojo).*
+
+### 4.3. Amortiguación Mutualista en Red Panal de 5 Comités APR
+La gobernanza comunitaria no opera en el vacío predial. La interconexión en red panal de los 5 comités APR (Bullileo, Retiro Centro, Copihue, Romeral y Villaseca) amortigua la tensión hídrica mediante pactos territoriales ($\kappa = 0.38$), evitando que el nodo más vulnerable (Retiro Centro) alcance el límite de fluencia ($\sigma = 0.89 \to 0.58$):
+
+![Figura 3 (Paper 2): Amortiguación Tensora en Red Panal de 5 Comités APR](./figures/fig10_honeycomb_aprs_network.png)
+*Figura 3 (Paper 2 · Figura 10 Canónica): Amortiguación de tensión hídrica mediante gobernanza policéntrica y pactos vecinales en la Red Panal de 5 Comités APR de la Cuenca del Río Longaví.*
+
 ---
 
 ## 5. Modelación Macrofiscal del Costo de Inacción y Transferencia Regresiva
@@ -161,6 +170,9 @@ FINANCIAMIENTO DEL GASTO EN CAMIONES ALJIBE Y EMERGENCIA HÍDRICA:
 └────────────────────────────────────────────────────────┴─────────┘
 ```
 **Conclusión de Economía Política:** El Estado y los hogares campesinos financian con sus propios recursos la mitigación del secado del acuífero, mientras que los grandes holdings exportadores capturan el $100\%$ de la renta privada libre de costos de remediación hidrológica.
+
+![Figura 2 (Paper 2): Amortización de Inversión Sintrópica y Radiografía de Transferencia Regresiva](./figures/fig9_roi_inaction_transfer_regressive.png)
+*Figura 2 (Paper 2 · Figura 9 Canónica): A) Curva de amortización y retorno biofísico a 10 años (ROI +655%, breakeven al año 2.8) comparando pérdidas acumuladas de inacción vs. inversión sintrópica preventiva en Cuenca Longaví. B) Desglose de la transferencia regresiva de costos: el 88.2% de la emergencia hídrica es pagado con fondos públicos, frente a un 0% de aporte directo de los monocultivos.*
 
 ---
 

@@ -154,7 +154,7 @@ p_fig6 <- ggplot(df_norm_curves, aes(x = progreso_rango, y = score, color = fami
   theme_hombros()
 
 # ------------------------------------------------------------------------------
-# FIGURA 7 (NUEVA): ENSAYO DE TRACCIÓN TERRITORIAL (AUDITORÍA PRE-INVERSIÓN)
+# FIGURA 7: ENSAYO DE TRACCIÓN TERRITORIAL (AUDITORÍA PRE-INVERSIÓN)
 # ------------------------------------------------------------------------------
 df_audit <- audit_territorial_traction(territorios_raw, delta_D = 0.09, delta_E_impact = -0.02)
 
@@ -184,8 +184,146 @@ p_fig7 <- ggplot(df_audit, aes(y = reorder(nombre, -sigma_0))) +
   ) +
   theme_hombros()
 
+# ==============================================================================
+# FIGURAS DEDICADAS DEL PAPER 2: KIT AUDITA TU PROPIA CUENCA & SEIA 2.0
+# ==============================================================================
+
 # ------------------------------------------------------------------------------
-# GUARDAR TODAS LAS FIGURAS (1 a 7)
+# FIGURA 8 (PAPER 2 · FIG 1): ENSAYO DE TRACCIÓN SEIA 2.0 EN CUENCA RÍO LONGAVÍ
+# ------------------------------------------------------------------------------
+df_longavi_traction <- tribble(
+  ~proyecto, ~sigma_basal, ~sigma_proj, ~rating, ~dictamen,
+  "1. Monocultivo Frutal Intensivo (2k ha)", 0.552, 1.169, "C", "INADMISIBLE (Deformación Plástica)",
+  "2. Megaminería / Tranque Relaves",        0.552, 2.370, "D", "RECHAZO DE PLANO (Fractura)",
+  "3. Loteo Periurbano Inmobiliario (600p)", 0.552, 1.119, "C", "INADMISIBLE (Deformación Plástica)",
+  "4. Parque Agro-Solar Sintrópico Keyline", 0.552, 0.541, "AAA","ADMISIBLE (Sintropía Neta)"
+)
+
+p_fig8 <- ggplot(df_longavi_traction, aes(y = reorder(proyecto, -sigma_proj))) +
+  geom_vline(xintercept = 0.85, linetype = "dashed", color = "#facc15", linewidth = 0.9) +
+  geom_vline(xintercept = 1.00, linetype = "dotdash", color = "#fb923c", linewidth = 0.9) +
+  geom_vline(xintercept = 1.25, linetype = "dotted", color = "#ef4444", linewidth = 1.0) +
+  geom_segment(aes(x = sigma_basal, xend = sigma_proj, yend = proyecto, color = dictamen),
+               arrow = arrow(length = unit(0.25, "cm"), type = "closed"), linewidth = 1.4) +
+  geom_point(aes(x = sigma_basal), color = "#38bdf8", size = 3.6) +
+  geom_point(aes(x = sigma_proj, color = dictamen), size = 4.5) +
+  geom_text(aes(x = sigma_proj, label = paste0("σ = ", round(sigma_proj, 3))), 
+            hjust = -0.18, size = 3.2, color = "#f1f5f9", fontface = "bold") +
+  scale_color_manual(values = c(
+    "ADMISIBLE (Sintropía Neta)" = "#45B69C",
+    "INADMISIBLE (Deformación Plástica)" = "#fb923c",
+    "RECHAZADO DE PLANO (Fractura)" = "#ef4444"
+  )) +
+  scale_x_continuous(limits = c(0.4, 2.8), breaks = seq(0.5, 2.5, by = 0.5)) +
+  annotate("text", x = 0.83, y = 4.4, label = "Límite Fluencia\n(σ = 0.85)", color = "#facc15", hjust = 1, size = 2.8) +
+  annotate("text", x = 1.02, y = 4.4, label = "Daño Plástico\n(σ = 1.00)", color = "#fb923c", hjust = 0, size = 2.8) +
+  annotate("text", x = 1.27, y = 4.4, label = "Fractura\n(σ = 1.25)", color = "#ef4444", hjust = 0, size = 2.8, fontface = "bold") +
+  annotate("text", x = 0.55, y = 0.7, label = "Línea Base Longaví: σ₀ = 0.552 (Rating AAA)", color = "#38bdf8", size = 3.0, fontface = "italic") +
+  labs(
+    title = "Figura 8 (Paper 2 · Fig 1): Ensayo de Tracción SEIA 2.0 en Cuenca Río Longaví - Bullileo",
+    subtitle = "Respuesta reológica ante 4 arquetipos de inversión · Evaluación con salvaguarda pre-inversional ex-ante",
+    x = "Tensión Sistémica Uniaxial σ = D / [H · (1 + κ)] (Azul = Basal σ₀ → Color = Proyectada σ_proj)",
+    y = "Arquetipo de Inversión Sometido a Ensayo",
+    color = "Dictamen Pre-Inversional SEIA 2.0"
+  ) +
+  theme_hombros()
+
+# ------------------------------------------------------------------------------
+# FIGURA 9 (PAPER 2 · FIG 2): ROI BIOFÍSICO & RADIOGRAFÍA DE LA TRANSFERENCIA REGRESIVA
+# ------------------------------------------------------------------------------
+library(patchwork)
+
+# Panel A: Curva de Amortización a 10 Años
+df_roi_horizon <- tibble(
+  year = 0:10,
+  costo_inaccion_acum = (year * 3.396), # Millones USD
+  inversion_sintropica = 3.375,         # Millones USD inversión inicial fija
+  ahorro_neto_acum = pmax(0, (year * 3.396 * 0.75) - 3.375)
+)
+
+p_fig9_a <- ggplot(df_roi_horizon, aes(x = year)) +
+  geom_line(aes(y = costo_inaccion_acum, color = "Pérdidas Acumuladas por Inacción (Aljibes + Incendios)"), linewidth = 1.2) +
+  geom_hline(aes(yintercept = inversion_sintropica, color = "Inversión Sintrópica Preventiva (2.5k ha Keyline)"), linetype = "dashed", linewidth = 1.1) +
+  geom_area(aes(y = ahorro_neto_acum, fill = "Retorno Biofísico Neto (Ahorro Fiscal Acumulado)"), alpha = 0.15) +
+  geom_vline(xintercept = 2.8, linetype = "dotted", color = "#45B69C", linewidth = 1.0) +
+  annotate("text", x = 2.9, y = 18, label = "Breakeven Fiscal\nAño 2.8 (ROI +655%)", color = "#45B69C", hjust = 0, size = 3.0, fontface = "bold") +
+  scale_color_manual(values = c(
+    "Pérdidas Acumuladas por Inacción (Aljibes + Incendios)" = "#ef4444",
+    "Inversión Sintrópica Preventiva (2.5k ha Keyline)" = "#38bdf8"
+  )) +
+  scale_fill_manual(values = c("Retorno Biofísico Neto (Ahorro Fiscal Acumulado)" = "#45B69C")) +
+  scale_x_continuous(breaks = 0:10) +
+  labs(
+    title = "A) Amortización de Inversión Sintrópica vs. Costo de Inacción",
+    subtitle = "Horizonte a 10 años en Cuenca del Río Longaví (Millones USD)",
+    x = "Años desde la Implementación del Plan de Restauración",
+    y = "Monto Acumulado (Millones USD)",
+    color = "Trayectoria Fiscal",
+    fill = ""
+  ) +
+  theme_hombros() +
+  theme(legend.position = "bottom")
+
+# Panel B: Transferencia Regresiva en Emergencia Hídrica (Camiones Aljibe)
+df_regressive_transfer <- tribble(
+  ~actor, ~porcentaje, ~monto_anual_usd, ~tipo,
+  "Erario Público\n(FNDR / SENAPRED / FCM)", 88.2, 1534680, "Socialización de Pérdidas",
+  "Familias Campesinas\n(Copago y Endeudamiento)", 11.8, 205320,  "Impacto Vulnerable",
+  "Holdings Monocultivo\n(Aporte Directo DAA)",   0.0, 0,       "Aporte Privado Nulo"
+)
+
+p_fig9_b <- ggplot(df_regressive_transfer, aes(x = reorder(actor, -porcentaje), y = porcentaje, fill = actor)) +
+  geom_col(width = 0.6, show.legend = FALSE) +
+  geom_text(aes(label = paste0(porcentaje, "%\n($", round(monto_anual_usd/1e3, 0), "k USD/año)")), 
+            vjust = -0.3, size = 3.1, color = "#f1f5f9", fontface = "bold") +
+  scale_fill_manual(values = c(
+    "Erario Público\n(FNDR / SENAPRED / FCM)" = "#38bdf8",
+    "Familias Campesinas\n(Copago y Endeudamiento)" = "#fb923c",
+    "Holdings Monocultivo\n(Aporte Directo DAA)" = "#ef4444"
+  )) +
+  scale_y_continuous(limits = c(0, 105), breaks = seq(0, 100, by = 20)) +
+  labs(
+    title = "B) Radiografía de la Transferencia Regresiva en Emergencia Hídrica",
+    subtitle = "Financiamiento de camiones aljibe: subsidio estatal implícito al modelo extractivo",
+    x = "Agente Financiador de la Emergencia",
+    y = "% del Gasto Total Anual en Camiones Aljibe"
+  ) +
+  theme_hombros()
+
+p_fig9 <- p_fig9_a + p_fig9_b + plot_layout(ncol = 2)
+
+# ------------------------------------------------------------------------------
+# FIGURA 10 (PAPER 2 · FIG 3): RED PANAL DE 5 COMITÉS APR EN CUENCA RÍO LONGAVÍ
+# ------------------------------------------------------------------------------
+df_aprs_network <- tribble(
+  ~apr, ~habitantes, ~estres_aislado, ~estres_panal, ~beneficio_kappa,
+  "Bullileo (Cabecera)",     1800,  0.42, 0.38, "Reserva biótica de recarga freática",
+  "Retiro Centro (Valle)",   8500,  0.89, 0.58, "Amortiguación de pozo profundo mediante zanjas Keyline",
+  "Copihue (Secano)",        3400,  0.74, 0.52, "Alivio de estrés por red de cortafuegos DAO y biofiltros",
+  "Romeral (Agrícola)",      4200,  0.68, 0.49, "Intercambio de excedentes de riego con predio ancla",
+  "Villaseca (Límite)",      3500,  0.79, 0.56, "Respaldo fotovoltaico P2P y bombeo solar coordinado"
+)
+
+p_fig10 <- ggplot(df_aprs_network, aes(y = reorder(apr, -estres_aislado))) +
+  geom_vline(xintercept = 0.85, linetype = "dashed", color = "#facc15", linewidth = 0.9) +
+  geom_segment(aes(x = estres_aislado, xend = estres_panal, yend = apr),
+               arrow = arrow(length = unit(0.25, "cm"), type = "closed"), color = "#45B69C", linewidth = 1.3) +
+  geom_point(aes(x = estres_aislado), color = "#fb923c", size = 4.0) +
+  geom_point(aes(x = estres_panal), color = "#45B69C", size = 4.5) +
+  geom_text(aes(x = estres_panal, label = paste0("σ = ", round(estres_panal, 2))), 
+            hjust = 1.25, size = 3.0, color = "#f1f5f9", fontface = "bold") +
+  annotate("text", x = 0.86, y = 5.3, label = "Límite Fluencia\n(σ = 0.85)", color = "#facc15", hjust = 0, size = 2.8) +
+  scale_x_continuous(limits = c(0.25, 1.05), breaks = seq(0.3, 1.0, by = 0.1)) +
+  labs(
+    title = "Figura 10 (Paper 2 · Fig 3): Amortiguación Tensora en Red Panal de 5 Comités APR (Río Longaví)",
+    subtitle = "Efecto de la Gobernanza Policéntrica (κ = 0.38) y Pactos Territoriales (Keyline, Cortafuegos y Micro-red)",
+    x = "Nivel de Tensión Hídrica σ (Naranja = APR Aislada sin Red → Verde = APR Acoplada en Red Panal)",
+    y = "Comité de Agua Potable Rural (APR)"
+  ) +
+  theme_hombros()
+
+# ------------------------------------------------------------------------------
+# GUARDAR TODAS LAS FIGURAS (1 a 10)
 # ------------------------------------------------------------------------------
 guardar_fig <- function(plot_obj, nombre_base, width = 10, height = 6) {
   ggsave(file.path(DIR_FIGURES, paste0(nombre_base, ".png")), plot_obj, width = width, height = height, dpi = 300)
@@ -203,4 +341,9 @@ guardar_fig(p_fig5, "fig5_honeycomb_network_damping")
 guardar_fig(p_fig6, "fig6_normalization_transfer_functions")
 guardar_fig(p_fig7, "fig7_audit_traction_stress_test")
 
-message("✓ [06_figure_factory.R] Las 7 figuras canónicas han sido exportadas a 300 DPI.")
+# Figuras de Paper 2
+guardar_fig(p_fig8, "fig8_longavi_traction_archetypes", width = 11, height = 6)
+guardar_fig(p_fig9, "fig9_roi_inaction_transfer_regressive", width = 13, height = 6)
+guardar_fig(p_fig10, "fig10_honeycomb_aprs_network", width = 11, height = 6)
+
+message("✓ [06_figure_factory.R] Las 10 figuras canónicas (Paper 1 y Paper 2) han sido exportadas a 300 DPI.")

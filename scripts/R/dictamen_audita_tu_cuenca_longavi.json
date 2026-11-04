@@ -1,9 +1,9 @@
 {
-  "protocolo": "HOMBROS SEIA 2.0 <c2><b7> Kit Audita tu Propia Cuenca",
+  "protocolo": "HOMBROS SEIA 2.0 · Kit Audita tu Propia Cuenca",
   "version": "1.0-canonica",
-  "fecha_emision": "2026-11-04 03:33:02",
+  "fecha_emision": "2026-11-04 03:41:56",
   "cuenca": {
-    "name": "Cuenca R<c3><ad>o Longav<c3><ad> - Bullileo (AgriTwin)",
+    "name": "Cuenca Río Longaví - Bullileo (AgriTwin)",
     "region": "Maule Sur, Chile",
     "superficie_ha": 122070,
     "poblacion": 21400,
@@ -18,7 +18,7 @@
     "capacidad_H": 0.578,
     "tension_sigma": 0.552,
     "rating": "AAA",
-    "regimen": "El<c3><a1>stico Reversible (Seguro)"
+    "regimen": "Elástico Reversible (Seguro)"
   },
   "ensayo_traccion": [
     {
@@ -28,17 +28,17 @@
       "sigma_proyectado": 1.169,
       "rating_proyectado": "C",
       "delta_sigma": 0.617,
-      "dictamen_legal": "INADMISIBLE: El proyecto supera el L<c3><ad>mite de Fluencia El<c3><a1>stica (<cf><83>_proj > 0.85)",
+      "dictamen_legal": "INADMISIBLE: El proyecto supera el Límite de Fluencia Elástica (σ_proj > 0.85)",
       "admisible": false
     },
     {
-      "proyecto": "2. Megaminer<c3><ad>a / Tranques de Relave Cabecera",
+      "proyecto": "2. Megaminería / Tranques de Relave Cabecera",
       "sigma_basal": 0.552,
       "rating_basal": "AAA",
       "sigma_proyectado": 2.37,
       "rating_proyectado": "D",
       "delta_sigma": 1.818,
-      "dictamen_legal": "INADMISIBLE: El proyecto supera el L<c3><ad>mite de Fluencia El<c3><a1>stica (<cf><83>_proj > 0.85)",
+      "dictamen_legal": "INADMISIBLE: El proyecto supera el Límite de Fluencia Elástica (σ_proj > 0.85)",
       "admisible": false
     },
     {
@@ -48,17 +48,17 @@
       "sigma_proyectado": 1.119,
       "rating_proyectado": "C",
       "delta_sigma": 0.567,
-      "dictamen_legal": "INADMISIBLE: El proyecto supera el L<c3><ad>mite de Fluencia El<c3><a1>stica (<cf><83>_proj > 0.85)",
+      "dictamen_legal": "INADMISIBLE: El proyecto supera el Límite de Fluencia Elástica (σ_proj > 0.85)",
       "admisible": false
     },
     {
-      "proyecto": "4. Parque Agro-Solar Sintr<c3><b3>pico con Keyline",
+      "proyecto": "4. Parque Agro-Solar Sintrópico con Keyline",
       "sigma_basal": 0.552,
       "rating_basal": "AAA",
       "sigma_proyectado": 0.541,
       "rating_proyectado": "AAA",
       "delta_sigma": -0.011,
-      "dictamen_legal": "ADMISIBLE CON SALVAGUARDA: El proyecto opera dentro del margen de resiliencia el<c3><a1>stica",
+      "dictamen_legal": "ADMISIBLE CON SALVAGUARDA: El proyecto opera dentro del margen de resiliencia elástica",
       "admisible": true
     }
   ],
