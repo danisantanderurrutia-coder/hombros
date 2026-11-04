@@ -10,12 +10,12 @@ import { getAssetUrl } from '../utils/assets';
 export default function SolarpunkAtlasCanvas() {
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none">
-      {/* 1. PAISAJE PANORÁMICO REALISTA ULTRA-WIDE */}
+      {/* 1. PAISAJE PANORÁMICO ALBA CAELESTIS */}
       <div className="absolute inset-0 w-full h-full">
         <img
-          src={getAssetUrl('art/solarpunk_panoramic_canvas.jpg')}
-          alt="Paisaje Panorámico Solarpunk Hombros"
-          className="w-full h-full object-cover object-center filter saturate-[1.12] contrast-[1.04]"
+          src={getAssetUrl('art/landing_hero_alba_caelestis.jpg')}
+          alt="Paisaje Panorámico Alba Caelestis Hombros"
+          className="w-full h-full object-cover object-center filter saturate-[1.08] contrast-[1.02]"
         />
       </div>
 
@@ -26,16 +26,16 @@ export default function SolarpunkAtlasCanvas() {
         style={{
           background: `
             linear-gradient(180deg, 
-              rgba(245, 242, 235, 0.60) 0%, 
-              rgba(245, 242, 235, 0.42) 35%, 
-              rgba(237, 230, 216, 0.58) 75%,
-              rgba(232, 224, 209, 0.75) 100%
+              rgba(250, 248, 245, 0.72) 0%, 
+              rgba(250, 248, 245, 0.50) 35%, 
+              rgba(240, 245, 248, 0.68) 75%,
+              rgba(235, 242, 246, 0.84) 100%
             ),
-            radial-gradient(ellipse 90% 60% at 50% -10%, rgba(125, 178, 178, 0.20) 0%, transparent 60%),
-            radial-gradient(circle 800px at 90% 70%, rgba(72, 112, 117, 0.15) 0%, transparent 65%)
+            radial-gradient(ellipse 90% 60% at 50% -10%, rgba(125, 178, 178, 0.22) 0%, transparent 60%),
+            radial-gradient(circle 800px at 90% 70%, rgba(42, 75, 99, 0.12) 0%, transparent 65%)
           `,
-          backdropFilter: 'blur(2px)',
-          WebkitBackdropFilter: 'blur(2px)'
+          backdropFilter: 'blur(3px)',
+          WebkitBackdropFilter: 'blur(3px)'
         }}
       />
 

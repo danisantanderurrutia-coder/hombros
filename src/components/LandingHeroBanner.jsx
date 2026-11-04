@@ -4,15 +4,17 @@ import {
   Sparkles, Sliders, ArrowRight, ShieldCheck, 
   RotateCcw, Trees, Users, Coins, Activity, 
   ChevronRight, Compass, Flame, Info, CheckCircle2,
-  TrendingUp, Award, Layers
+  TrendingUp, Award, Layers, Mountain, Eye
 } from 'lucide-react';
 import GoldenAtlasHillAscent from './GoldenAtlasHillAscent';
+import { getAssetUrl } from '../utils/assets';
 
 export default function LandingHeroBanner({ onNavigate }) {
   // Variables E, S, K state (starting at a balanced inspiring state)
   const [E, setE] = useState(0.72); // Ecológico
   const [S, setS] = useState(0.68); // Social
   const [K, setK] = useState(0.70); // Económico / Capital
+  const [heroMode, setHeroMode] = useState('sanctuary'); // 'sanctuary' | 'atlas'
 
   // Mathematical capacity calculations
   const H = Math.pow(E * S * K, 1 / 3);
@@ -29,27 +31,27 @@ export default function LandingHeroBanner({ onNavigate }) {
     if (minVal < 0.3) {
       return {
         title: 'Asimetría Crítica (Cuello de Botella)',
-        color: 'text-rose-400 bg-rose-950/80 border-rose-500/50',
+        color: 'text-rose-300 bg-rose-950/80 border-rose-500/50',
         desc: 'Un hombro colapsado impide levantar el mundo, sin importar cuánto crezcan los otros dos.',
       };
     }
     if (H < 0.5) {
       return {
         title: 'Fatiga de Ascenso',
-        color: 'text-amber-300 bg-amber-950/80 border-amber-500/50',
+        color: 'text-amber-200 bg-amber-950/80 border-amber-500/50',
         desc: 'La esfera se siente pesada y los músculos se fatigan en la pendiente.',
       };
     }
     if (H >= 0.8) {
       return {
         title: 'Autosustento Sintrópico Pleno',
-        color: 'text-emerald-300 bg-emerald-950/80 border-emerald-500/50',
+        color: 'text-cyan-200 bg-cyan-950/80 border-cyan-400/50',
         desc: 'Hombros gigantescos elevan la biosfera hacia las estrellas con solidez inquebrantable.',
       };
     }
     return {
       title: 'Desarrollo en Equilibrio Elástico',
-      color: 'text-teal-300 bg-[#16272b] border-teal-500/40',
+      color: 'text-teal-200 bg-[#0F232D] border-teal-400/40',
       desc: 'Capacidad portante suficiente para sostener la carga y continuar el ascenso.',
     };
   };
@@ -64,69 +66,115 @@ export default function LandingHeroBanner({ onNavigate }) {
   };
 
   return (
-    <div className="relative w-full rounded-3xl overflow-hidden border border-[#D4A373]/50 shadow-2xl bg-gradient-to-b from-[#0B1522] via-[#101C2B] to-[#182838] text-white">
+    <div className="relative w-full rounded-3xl overflow-hidden border border-[#7DB2B2]/40 shadow-2xl bg-gradient-to-b from-[#091522] via-[#0E2032] to-[#142A3E] text-white">
       {/* Dynamic Cosmic Background Atmosphere */}
-      <div className="absolute inset-0 bg-radial-gradient from-[#7DB2B2]/10 via-[#D4A373]/5 to-transparent pointer-events-none" />
-      <div className="absolute top-0 right-0 w-[550px] h-[550px] bg-gradient-to-bl from-[#F5D061]/15 via-[#38BDF8]/10 to-transparent pointer-events-none rounded-bl-full blur-2xl" />
+      <div className="absolute inset-0 bg-radial-gradient from-[#7DB2B2]/15 via-[#2B6CB0]/10 to-transparent pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[550px] h-[550px] bg-gradient-to-bl from-[#7FDBDA]/15 via-[#38BDF8]/10 to-transparent pointer-events-none rounded-bl-full blur-2xl" />
 
       {/* Decorative Top Accent Stripe */}
-      <div className="h-1.5 w-full bg-gradient-to-r from-[#D4A373] via-[#F5D061] to-[#7DB2B2]" />
+      <div className="h-1.5 w-full bg-gradient-to-r from-[#1A365D] via-[#7FDBDA] to-[#FAF8F5]" />
 
       <div className="p-6 sm:p-8 md:p-10 relative z-10 space-y-8">
         
         {/* ========================================================
-            HEADER MONUMENTAL / BRUTAL
+            HEADER MONUMENTAL ALBA CAELESTIS
             ======================================================== */}
         <div className="text-center max-w-4xl mx-auto space-y-4">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-white/10 text-[#F5D061] border border-[#F5D061]/40 shadow-sm backdrop-blur-md">
-            <Sparkles className="w-3.5 h-3.5 text-[#F5D061] animate-pulse" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-white/10 text-[#7FDBDA] border border-[#7FDBDA]/40 shadow-sm backdrop-blur-md">
+            <Sparkles className="w-3.5 h-3.5 text-[#7FDBDA] animate-pulse" />
             <span>SISTEMA METABÓLICO TERRITORIAL · LEY DE LIEBIG & CAUCHY</span>
           </div>
 
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-serif font-extrabold tracking-tight text-white leading-tight drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
             Desarrollar los hombros, <br className="hidden sm:inline" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFF4D0] via-[#F5D061] to-[#D4A373]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#A5D6D4] to-[#7DB2B2]">
               autosustentar el desarrollo
             </span>
           </h1>
 
-          <p className="text-sm sm:text-base md:text-lg text-slate-300 max-w-2xl mx-auto font-sans leading-relaxed">
+          <p className="text-sm sm:text-base md:text-lg text-slate-200 max-w-2xl mx-auto font-sans leading-relaxed">
             El peso del porvenir no se aligera disminuyendo aspiraciones, sino ensanchando la capacidad portante territorial: los tres hombros inseparables{' '}
             <strong className="text-emerald-300">Ecológico (E)</strong>,{' '}
             <strong className="text-rose-300">Social (S)</strong> y{' '}
-            <strong className="text-amber-300">Económico o Capital (K)</strong>.
+            <strong className="text-cyan-300">Económico o Capital (K)</strong>.
           </p>
         </div>
 
         {/* ========================================================
-            BANNER GRÁFICO: EL ATLAS DORADO SUBIENDO EL CERRO
+            BANNER GRÁFICO: SANTUARIO FLUVIAL SHINKAI & ATLAS
             ======================================================= */}
-        <div className="relative rounded-3xl p-2 sm:p-4 bg-gradient-to-b from-[#080E18]/80 to-[#121E2C]/90 border border-white/10 shadow-inner">
-          <GoldenAtlasHillAscent E={E} S={S} K={K} />
-
-          {/* Floating Live Telemetry Overlay in graphic */}
-          <div className="absolute top-4 left-4 sm:top-6 sm:left-6 flex flex-col gap-2 pointer-events-none">
-            <div className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold border backdrop-blur-md shadow-lg ${status.color}`}>
-              {status.title}
-            </div>
-            <div className="text-[11px] font-mono text-slate-300 bg-black/60 px-3 py-1 rounded-lg border border-white/10 backdrop-blur-md">
-              Capacidad Portante: <strong className="text-[#F5D061] text-sm font-bold">{H.toFixed(3)}</strong>
-            </div>
+        <div className="relative rounded-3xl p-2 sm:p-4 bg-gradient-to-b from-[#080E18]/85 to-[#101D2B]/90 border border-white/15 shadow-inner overflow-hidden">
+          
+          {/* Switcher de Vista */}
+          <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-20 flex items-center gap-1.5 p-1 rounded-xl bg-black/70 border border-white/20 backdrop-blur-md">
+            <button
+              onClick={() => setHeroMode('sanctuary')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${
+                heroMode === 'sanctuary'
+                  ? 'bg-gradient-to-r from-[#2B6CB0] to-[#7DB2B2] text-white shadow-md'
+                  : 'text-slate-300 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              <Mountain className="w-3.5 h-3.5" />
+              <span>Santuario Fluvial</span>
+            </button>
+            <button
+              onClick={() => setHeroMode('atlas')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all ${
+                heroMode === 'atlas'
+                  ? 'bg-gradient-to-r from-[#2B6CB0] to-[#7DB2B2] text-white shadow-md'
+                  : 'text-slate-300 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              <Activity className="w-3.5 h-3.5" />
+              <span>Atlas Biomecánico</span>
+            </button>
           </div>
 
-          <div className="absolute top-4 right-4 sm:top-6 sm:right-6 hidden sm:flex flex-col gap-1.5 pointer-events-none text-right font-mono text-xs">
-            <div className="bg-black/60 px-3 py-1.5 rounded-xl border border-white/10 backdrop-blur-md text-slate-300">
-              Desarrollo Muscular: <strong className="text-emerald-400">{musclePercent}%</strong>
+          {heroMode === 'sanctuary' ? (
+            <div className="relative w-full aspect-[16/9] max-h-[540px] rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+              <img
+                src={getAssetUrl('art/landing_hero_alba_caelestis.jpg')}
+                alt="Alba Caelestis: Santuario Fluvial Shinkai"
+                className="w-full h-full object-cover object-center filter saturate-[1.05] contrast-[1.02]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
+
+              {/* Floating Live Telemetry Overlay in Sanctuary Graphic */}
+              <div className="absolute top-4 left-4 sm:top-6 sm:left-6 flex flex-col gap-2 pointer-events-none">
+                <div className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold border backdrop-blur-md shadow-lg ${status.color}`}>
+                  {status.title}
+                </div>
+                <div className="text-[11px] font-mono text-slate-100 bg-black/65 px-3 py-1.5 rounded-xl border border-white/15 backdrop-blur-md">
+                  Capacidad Portante H: <strong className="text-[#7FDBDA] text-sm font-bold">{H.toFixed(3)}</strong>
+                </div>
+              </div>
+
+              <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 right-4 sm:right-6 flex flex-wrap items-center justify-between gap-3 text-xs font-mono bg-black/60 backdrop-blur-md p-3 rounded-xl border border-white/15">
+                <span className="text-slate-200">
+                  🏛️ <strong>Alba Caelestis:</strong> Terrazas de travertino, compuertas vítreas y las tres cumbres glaciares al amanecer.
+                </span>
+                <div className="flex items-center gap-3">
+                  <span className="text-[#38BDF8]">Elevación: {liftElevationPercent}%</span>
+                  <span className="text-emerald-400">Desarrollo: {musclePercent}%</span>
+                </div>
+              </div>
             </div>
-            <div className="bg-black/60 px-3 py-1.5 rounded-xl border border-white/10 backdrop-blur-md text-slate-300">
-              Elevación Celeste: <strong className="text-[#38BDF8]">{liftElevationPercent}%</strong>
+          ) : (
+            <div className="relative">
+              <GoldenAtlasHillAscent E={E} S={S} K={K} />
+
+              {/* Floating Live Telemetry Overlay in graphic */}
+              <div className="absolute top-4 left-4 sm:top-6 sm:left-6 flex flex-col gap-2 pointer-events-none">
+                <div className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold border backdrop-blur-md shadow-lg ${status.color}`}>
+                  {status.title}
+                </div>
+                <div className="text-[11px] font-mono text-slate-300 bg-black/60 px-3 py-1 rounded-lg border border-white/10 backdrop-blur-md">
+                  Capacidad Portante: <strong className="text-[#7FDBDA] text-sm font-bold">{H.toFixed(3)}</strong>
+                </div>
+              </div>
             </div>
-            <div className="bg-black/60 px-3 py-1.5 rounded-xl border border-white/10 backdrop-blur-md text-slate-300">
-              Escalinata del Olimpo: <strong className={1 - H > 0.5 ? 'text-rose-400' : 'text-[#F5D061]'}>
-                {Math.round((0.07 + 0.2 * (1 - H)) * 100)}% {1 - H > 0.5 ? '(Entropía)' : '(Sintropía)'}
-              </strong>
-            </div>
-          </div>
+          )}
         </div>
 
         {/* ========================================================
@@ -230,13 +278,13 @@ export default function LandingHeroBanner({ onNavigate }) {
             </div>
 
             {/* Slider 3: Hombro Económico o Capital (K) */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-b from-[#2a2418]/90 to-[#1e1910]/90 border border-[#F5D061]/40 shadow-lg space-y-3">
+            <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-b from-[#182635]/90 to-[#101b26]/90 border border-[#7DB2B2]/40 shadow-lg space-y-3">
               <div className="flex justify-between items-center">
-                <span className="text-xs font-serif font-bold text-amber-300 flex items-center gap-2">
-                  <Coins className="w-4 h-4 text-[#F5D061]" />
+                <span className="text-xs font-serif font-bold text-cyan-200 flex items-center gap-2">
+                  <Coins className="w-4 h-4 text-cyan-400" />
                   Hombro Económico o Capital (K)
                 </span>
-                <span className="font-mono text-lg font-bold text-amber-300">
+                <span className="font-mono text-lg font-bold text-cyan-300">
                   {K.toFixed(2)}
                 </span>
               </div>
@@ -248,7 +296,7 @@ export default function LandingHeroBanner({ onNavigate }) {
                 step="0.01"
                 value={K}
                 onChange={(e) => setK(parseFloat(e.target.value))}
-                className="w-full accent-[#F5D061] cursor-pointer h-2 bg-black/60 rounded-lg"
+                className="w-full accent-cyan-400 cursor-pointer h-2 bg-black/60 rounded-lg"
               />
 
               <div className="text-[11px] text-slate-300 space-y-1">
@@ -262,11 +310,11 @@ export default function LandingHeroBanner({ onNavigate }) {
           {/* METRIC BREAKDOWN BAR */}
           <div className="p-4 rounded-2xl bg-black/60 border border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 font-mono text-xs">
             <div className="flex items-center gap-3">
-              <div className="w-3 h-3 rounded-full bg-[#F5D061] animate-ping shrink-0" />
+              <div className="w-3 h-3 rounded-full bg-[#7FDBDA] animate-ping shrink-0" />
               <div>
                 <span className="text-slate-400 block text-[10px] uppercase">Fórmula de Liebig (Media Geométrica):</span>
                 <span className="text-white font-bold text-sm">
-                  H = (E · S · K)<sup>1/3</sup> = <strong className="text-[#F5D061] text-base">{H.toFixed(3)}</strong>
+                  H = (E · S · K)<sup>1/3</sup> = <strong className="text-[#7FDBDA] text-base">{H.toFixed(3)}</strong>
                 </span>
               </div>
             </div>
@@ -287,10 +335,10 @@ export default function LandingHeroBanner({ onNavigate }) {
               {onNavigate && (
                 <button
                   onClick={() => onNavigate('core')}
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-serif font-bold text-xs bg-gradient-to-r from-[#F5D061] to-[#D4A373] text-slate-950 hover:brightness-110 shadow-lg shadow-[#F5D061]/20 transition-all"
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-serif font-bold text-xs bg-gradient-to-r from-[#2B6CB0] via-[#38BDF8] to-[#7DB2B2] text-white hover:brightness-110 shadow-lg shadow-[#38BDF8]/20 transition-all border border-white/20"
                 >
                   Entrar a CORE
-                  <ArrowRight className="w-4 h-4 text-slate-950" />
+                  <ArrowRight className="w-4 h-4 text-white" />
                 </button>
               )}
             </div>

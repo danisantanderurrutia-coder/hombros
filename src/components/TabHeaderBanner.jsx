@@ -97,8 +97,8 @@ export default function TabHeaderBanner({ activeTab }) {
       {/* Content Overlay */}
       <div className="absolute inset-0 p-6 sm:p-8 flex flex-col justify-end text-white z-10 pointer-events-none">
         <div className="flex items-center gap-2 mb-2">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-mono font-bold tracking-wider uppercase bg-white/15 backdrop-blur-md border border-white/30 text-amber-300 shadow-sm">
-            <Icon className="w-3 h-3 text-amber-300" />
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-mono font-bold tracking-wider uppercase bg-black/40 backdrop-blur-md border border-white/20 text-[#7FDBDA] shadow-sm">
+            <Icon className="w-3 h-3 text-[#7FDBDA]" />
             {meta.tag}
           </span>
         </div>
@@ -113,7 +113,7 @@ export default function TabHeaderBanner({ activeTab }) {
       </div>
 
       {/* Travertine bottom rim */}
-      <div className="absolute bottom-0 inset-x-0 h-1 bg-gradient-to-r from-[#7DB2B2] via-[#D4A373] to-[#487075]" />
+      <div className="absolute bottom-0 inset-x-0 h-1 bg-gradient-to-r from-[#2B6CB0] via-[#7FDBDA] to-[#FAF8F5]" />
     </div>
   );
 }
