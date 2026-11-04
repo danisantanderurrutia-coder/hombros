@@ -14,6 +14,8 @@ import { getAssetUrl } from '../utils/assets';
 import KitAuditaTuCuencaBanner from './KitAuditaTuCuencaBanner';
 import AgriTwinBasinVecinalConsole from './AgriTwinBasinVecinalConsole';
 import ResumenSimple from './ResumenSimple';
+import GovernanceDamperVisual from './GovernanceDamperVisual';
+import { calculateEndogenousKappa } from '../models/santanderModel';
 
 const INVESTMENT_ARCHETYPES = [
   {
@@ -138,6 +140,7 @@ export default function MetabolicAuditView({ initialCustomMode }) {
   const [customDeltaD, setCustomDeltaD] = useState(null);
   const [customDeltaE, setCustomDeltaE] = useState(null);
   const [agritwinLive, setAgritwinLive] = useState(null);
+  const [kappaMode, setKappaMode] = useState('manual_slider'); // 'manual_slider' | 'ostrom_governance' | 'empirical_benchmark' | 'pacts_additive'
   const [activePacts, setActivePacts] = useState({
     keylineAPR: false,
     firebreakDAO: false,
@@ -907,18 +910,16 @@ export default function MetabolicAuditView({ initialCustomMode }) {
                         className="w-full accent-amber-400 cursor-pointer mt-2"
                       />
                     </div>
-                    <div>
-                      <label className="text-[10px] text-slate-400 uppercase block mb-1">
-                        Amortiguación Gobernanza (κ = {customMeta.kappa.toFixed(2)})
-                      </label>
-                      <input
-                        type="range"
-                        min="0.05"
-                        max="0.75"
-                        step="0.02"
-                        value={customMeta.kappa}
-                        onChange={(e) => setCustomMeta(prev => ({ ...prev, kappa: parseFloat(e.target.value) }))}
-                        className="w-full accent-emerald-400 cursor-pointer mt-2"
+                    <div className="lg:col-span-2">
+                      <GovernanceDamperVisual
+                        kappa={customMeta.kappa}
+                        onKappaChange={(newK) => setCustomMeta(prev => ({ ...prev, kappa: newK }))}
+                        kappaMode={kappaMode}
+                        onKappaModeChange={setKappaMode}
+                        endogenousKappa={calculateEndogenousKappa(effectiveVariables)}
+                        benchmarkKappa={territory.kappa || 0.38}
+                        pactsKappa={parseFloat((0.15 + (activePacts.keylineAPR ? 0.16 : 0) + (activePacts.firebreakDAO ? 0.21 : 0) + (activePacts.p2pEnergyRewild ? 0.15 : 0)).toFixed(2))}
+                        sigmaBaseline={baselineState.sigma}
                       />
                     </div>
                   </div>

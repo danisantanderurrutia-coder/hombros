@@ -40,6 +40,26 @@ export function calculateShoulderK(vars, weights = [0.25, 0.25, 0.25, 0.25]) {
   return Math.max(0.01, Math.min(1.0, val));
 }
 
+
+/**
+ * Cálculo del Coeficiente de Amortiguación Policéntrica (κ)
+ * según diferentes aproximaciones metodológicas seleccionables:
+ * 
+ * 1. 'ostrom_governance': Endógena calculada a partir de S1 (Asociatividad/APRs), S2 (Institucionalidad) y K3 (Gini inverso).
+ * 2. 'empirical_benchmark': Basada en el benchmark territorial calibrado según evidencia histórica.
+ * 3. 'pacts_additive': Construida paso a paso a partir de los pactos vecinales activos de El Panal (+0.16, +0.21, etc.).
+ * 4. 'manual_slider': Hipótesis libre del usuario.
+ */
+export function calculateEndogenousKappa(vars) {
+  const s1 = typeof vars?.s1 === 'number' ? vars.s1 : 0.5;
+  const s2 = typeof vars?.s2 === 'number' ? vars.s2 : 0.5;
+  const k3 = typeof vars?.k3 === 'number' ? vars.k3 : 0.5;
+  
+  // Ecuación de Ostrom: Mayor asociatividad comunitaria y equidad = Mayor disipación de estrés
+  const raw = 0.05 + 0.65 * (0.45 * s1 + 0.35 * s2 + 0.20 * k3);
+  return parseFloat(Math.min(0.75, Math.max(0.05, raw)).toFixed(2));
+}
+
 export function calculateDevelopmentPressure(dVars) {
   // D1: Intensidad extractiva (ratio extracción / regeneración)
   // D2: Presión demográfica relativa a infraestructura
