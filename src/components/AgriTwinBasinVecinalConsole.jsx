@@ -77,6 +77,8 @@ export default function AgriTwinBasinVecinalConsole({
   kappa,
   onKappaChange,
   onLoadAgriTwinPreset,
+  pacts: externalPacts,
+  onPactsChange,
   onLiveChange,
   onImportJson
 }) {
@@ -85,11 +87,20 @@ export default function AgriTwinBasinVecinalConsole({
   const [basinShock, setBasinShock] = useState('normal'); // 'normal' | 'megadrought' | 'puelche'
   const shockSnapshot = useRef(null);
 
-  const [pacts, setPacts] = useState({
+  const [localPacts, setLocalPacts] = useState({
     keylineAPR: false,
     firebreakDAO: false,
     p2pEnergyRewild: false
   });
+  const pacts = externalPacts || localPacts;
+  const setPactsState = (updater) => {
+    if (onPactsChange) {
+      const next = typeof updater === 'function' ? updater(pacts) : updater;
+      onPactsChange(next);
+    } else {
+      setLocalPacts(updater);
+    }
+  };
   const [selectedHex, setSelectedHex] = useState('meniel');
 
   // Conexión con AgriTwin (solo lectura)
@@ -129,7 +140,7 @@ export default function AgriTwinBasinVecinalConsole({
     const sign = turningOn ? 1 : -1;
     const eff = PACT_EFFECTS[key];
 
-    setPacts((p) => ({ ...p, [key]: turningOn }));
+    setPactsState((p) => ({ ...p, [key]: turningOn }));
     onKappaChange(parseFloat(clamp(kappa + sign * eff.kappa, 0.05, 0.75).toFixed(2)));
 
     const changes = {};
@@ -163,7 +174,7 @@ export default function AgriTwinBasinVecinalConsole({
   };
 
   const handleReset = () => {
-    setPacts({ keylineAPR: false, firebreakDAO: false, p2pEnergyRewild: false });
+    setPactsState({ keylineAPR: false, firebreakDAO: false, p2pEnergyRewild: false });
     setBasinShock('normal');
     shockSnapshot.current = null;
     setActiveBand('NDRE');

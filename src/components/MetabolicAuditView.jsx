@@ -137,7 +137,18 @@ export default function MetabolicAuditView({ initialCustomMode }) {
   const [rawOverrides, setRawOverrides] = useState({});
   const [customDeltaD, setCustomDeltaD] = useState(null);
   const [customDeltaE, setCustomDeltaE] = useState(null);
-  const [agritwinLive, setAgritwinLive] = useState(null); // última lectura de AgriTwin (o null)
+  const [agritwinLive, setAgritwinLive] = useState(null);
+  const [activePacts, setActivePacts] = useState({
+    keylineAPR: false,
+    firebreakDAO: false,
+    p2pEnergyRewild: false
+  });
+  // Deslizadores de mitigación interactiva de los pactos sobre el ROI
+  const [pactMitigationParams, setPactMitigationParams] = useState({
+    keylineWaterTruckMitigationPct: 65, // % de camiones aljibe mitigados si Keyline APR está activo
+    firebreakAreaMitigationPct: 55,     // % de ha vulnerables a incendio blindadas si Faja WUI está activa
+    p2pRevenueBoostPct: 30              // % de incremento de ingresos locales/kWh si P2P solar está activo
+  }); // última lectura de AgriTwin (o null)
 
   // Subpestañas del Sistema de Auditoría (Espejo de navegación por fases del CORE)
   const auditSubtabs = [
@@ -425,18 +436,39 @@ export default function MetabolicAuditView({ initialCustomMode }) {
     };
   }, [territory, effectiveVariables, baselineState, archetype, customDeltaD, customDeltaE]);
 
-  // Cálculo del ROI Biofísico: Costo de Inacción (Gasto Paliativo Entrópico) vs. Inversión Sintrópica (OLCA / Maule)
+  // Cálculo del ROI Biofísico: Costo de Inacción vs. Inversión Sintrópica con Mitigación Dinámica de Pactos
   const roiMetrics = useMemo(() => {
-    const annualWaterTruckUSD = roiInputs.aprFamiliesWaterTruck * 1450; // Costo fiscal camiones aljibe + logística DGA/SENAPRED
-    const annualFireSuppressionUSD = roiInputs.annualFireRiskHectares * 920; // Combate aéreo/terrestre + pérdida de suelo y subsidios de emergencia
+    // Si el pacto Keyline está activo en El Panal, reduce la demanda de camiones aljibe en la proporción configurada
+    const effectiveWaterTruckFactor = activePacts.keylineAPR 
+      ? (1 - pactMitigationParams.keylineWaterTruckMitigationPct / 100) 
+      : 1.0;
+    const effectiveWaterTruckFamilies = Math.round(roiInputs.aprFamiliesWaterTruck * effectiveWaterTruckFactor);
+
+    // Si la Faja Cortafuegos WUI 45m está activa en El Panal, reduce la superficie expuesta a siniestros
+    const effectiveFireRiskFactor = activePacts.firebreakDAO 
+      ? (1 - pactMitigationParams.firebreakAreaMitigationPct / 100) 
+      : 1.0;
+    const effectiveFireHectares = Math.round(roiInputs.annualFireRiskHectares * effectiveFireRiskFactor);
+
+    // Gasto anual de inacción ajustado por gobernanza vecinal
+    const annualWaterTruckUSD = effectiveWaterTruckFamilies * 1450;
+    const annualFireSuppressionUSD = effectiveFireHectares * 920;
     const annualInactionTotalUSD = annualWaterTruckUSD + annualFireSuppressionUSD;
     const cumulativeInactionUSD = annualInactionTotalUSD * roiInputs.horizonYears;
 
-    // Inversión Sintrópica (Keyline + Restauración de Vegas + Fajas Agroforestales WUI 45m + Soberanía APR)
+    // Ahorro directo anual derivado de los pactos vecinales
+    const rawWaterTruckUSD = roiInputs.aprFamiliesWaterTruck * 1450;
+    const rawFireUSD = roiInputs.annualFireRiskHectares * 920;
+    const annualPactSavingsUSD = (rawWaterTruckUSD - annualWaterTruckUSD) + (rawFireUSD - annualFireSuppressionUSD);
+
+    // Inversión Sintrópica
     const capexSyntropicUSD = roiInputs.syntropicHectaresTarget * 1350;
-    const annualMaintenanceUSD = capexSyntropicUSD * 0.06; // 6% OPEX cooperativo anual
-    const annualAgroforestryRevenueUSD = roiInputs.syntropicHectaresTarget * 410; // Retorno local biomasa, miel, frutales/agroforestería y agua infiltrada
-    const residualPalliativeUSD = annualInactionTotalUSD * 0.18; // Reducción del 82% en gasto de emergencia tras restaurar H
+    const annualMaintenanceUSD = capexSyntropicUSD * 0.06;
+    
+    // Si el pacto P2P Solar / Rewilding está activo, bonifica los retornos agroforestales y energéticos
+    const agroRevenueBonus = activePacts.p2pEnergyRewild ? (1 + pactMitigationParams.p2pRevenueBoostPct / 100) : 1.0;
+    const annualAgroforestryRevenueUSD = roiInputs.syntropicHectaresTarget * 410 * agroRevenueBonus;
+    const residualPalliativeUSD = annualInactionTotalUSD * 0.18;
 
     const cumulativeSyntropicNetCostUSD =
       capexSyntropicUSD +
@@ -455,10 +487,14 @@ export default function MetabolicAuditView({ initialCustomMode }) {
       capexSyntropicM: (capexSyntropicUSD / 1e6).toFixed(2),
       cumulativeSyntropicNetCostM: (Math.max(0, cumulativeSyntropicNetCostUSD) / 1e6).toFixed(2),
       netFiscalSavingsM: (netFiscalSavingsUSD / 1e6).toFixed(2),
+      annualPactSavingsM: (annualPactSavingsUSD / 1e6).toFixed(2),
+      annualPactSavingsUSD,
+      effectiveWaterTruckFamilies,
+      effectiveFireHectares,
       benefitCostRatio,
       paybackYears
     };
-  }, [roiInputs]);
+  }, [roiInputs, activePacts, pactMitigationParams]);
 
   const handleExportHypothesisJSON = () => {
     const payload = {
@@ -908,6 +944,8 @@ export default function MetabolicAuditView({ initialCustomMode }) {
                     setCustomMeta(prev => ({ ...prev, kappa: newKappa }));
                   }}
                   onLoadAgriTwinPreset={() => handleActivateCustomTerritory(true)}
+                  pacts={activePacts}
+                  onPactsChange={setActivePacts}
                   onLiveChange={setAgritwinLive}
                   onImportJson={handleImportAgriTwinJson}
                 />
@@ -1456,14 +1494,109 @@ export default function MetabolicAuditView({ initialCustomMode }) {
             {/* Left: Interactive Fiscal & Biophysical Sliders */}
             <div className="lg:col-span-5 p-5 rounded-2xl bg-black/45 border border-white/15 flex flex-col justify-between space-y-4 font-mono text-xs">
               <div className="space-y-4">
-                <span className="text-[10px] uppercase tracking-wider text-amber-300 font-bold block">
-                  Parámetros de Gasto Paliativo vs. Reconversión de Cuenca
+                {/* Panel de Acople Dinámico con Pactos de El Panal */}
+                <div className="p-3.5 rounded-xl bg-emerald-950/40 border border-emerald-500/40 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-mono font-bold text-emerald-300 uppercase tracking-wide flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+                      Acople Interactivo: Pactos Vecinales (El Panal ⇄ ROI)
+                    </span>
+                    <span className={`text-[10px] font-mono px-2 py-0.5 rounded font-bold ${roiMetrics.annualPactSavingsUSD > 0 ? 'bg-emerald-900 text-emerald-200 border border-emerald-400' : 'bg-black/50 text-slate-400'}`}>
+                      {roiMetrics.annualPactSavingsUSD > 0 ? `Ahorro Pactos: $${roiMetrics.annualPactSavingsM}M USD/año` : 'Pactos Inactivos'}
+                    </span>
+                  </div>
+
+                  {/* Estado de los 3 pactos conmutables */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[10px] font-mono">
+                    <button
+                      onClick={() => setActivePacts(prev => ({ ...prev, keylineAPR: !prev.keylineAPR }))}
+                      className={`p-2 rounded-lg border text-left transition-all ${activePacts.keylineAPR ? 'bg-cyan-900/60 border-cyan-400 text-white' : 'bg-black/40 border-slate-700 text-slate-400'}`}
+                    >
+                      <div className="font-bold flex items-center justify-between">
+                        <span>Pacto 1: Tranque Keyline</span>
+                        <span>{activePacts.keylineAPR ? '✓ ACTIVO' : 'OFF'}</span>
+                      </div>
+                      <div className="text-[9px] text-cyan-200 mt-0.5">Mitiga {pactMitigationParams.keylineWaterTruckMitigationPct}% aljibes</div>
+                    </button>
+
+                    <button
+                      onClick={() => setActivePacts(prev => ({ ...prev, firebreakDAO: !prev.firebreakDAO }))}
+                      className={`p-2 rounded-lg border text-left transition-all ${activePacts.firebreakDAO ? 'bg-emerald-900/60 border-emerald-400 text-white' : 'bg-black/40 border-slate-700 text-slate-400'}`}
+                    >
+                      <div className="font-bold flex items-center justify-between">
+                        <span>Pacto 2: Faja Cortafuegos</span>
+                        <span>{activePacts.firebreakDAO ? '✓ ACTIVO' : 'OFF'}</span>
+                      </div>
+                      <div className="text-[9px] text-emerald-200 mt-0.5">Blinda {pactMitigationParams.firebreakAreaMitigationPct}% ha fuego</div>
+                    </button>
+
+                    <button
+                      onClick={() => setActivePacts(prev => ({ ...prev, p2pEnergyRewild: !prev.p2pEnergyRewild }))}
+                      className={`p-2 rounded-lg border text-left transition-all ${activePacts.p2pEnergyRewild ? 'bg-amber-900/60 border-amber-400 text-white' : 'bg-black/40 border-slate-700 text-slate-400'}`}
+                    >
+                      <div className="font-bold flex items-center justify-between">
+                        <span>Pacto 3: Solar P2P / PBC</span>
+                        <span>{activePacts.p2pEnergyRewild ? '✓ ACTIVO' : 'OFF'}</span>
+                      </div>
+                      <div className="text-[9px] text-amber-200 mt-0.5">+{pactMitigationParams.p2pRevenueBoostPct}% retornos locales</div>
+                    </button>
+                  </div>
+
+                  {/* Deslizadores de intensidad de mitigación */}
+                  <div className="pt-2 border-t border-emerald-500/20 space-y-2">
+                    <span className="text-[10px] text-slate-300 block font-sans">
+                      Calibración interactiva de la efectividad comunitaria de los pactos:
+                    </span>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[10px]">
+                      <div>
+                        <div className="flex justify-between text-slate-300 mb-0.5">
+                          <span>Efectividad Keyline en Aljibes:</span>
+                          <strong className="text-cyan-300">{pactMitigationParams.keylineWaterTruckMitigationPct}%</strong>
+                        </div>
+                        <input
+                          type="range"
+                          min="20"
+                          max="95"
+                          step="5"
+                          value={pactMitigationParams.keylineWaterTruckMitigationPct}
+                          onChange={(e) => setPactMitigationParams(p => ({ ...p, keylineWaterTruckMitigationPct: parseInt(e.target.value, 10) }))}
+                          className="w-full accent-cyan-400 cursor-pointer h-1"
+                        />
+                      </div>
+                      <div>
+                        <div className="flex justify-between text-slate-300 mb-0.5">
+                          <span>Efectividad Faja WUI en Incendios:</span>
+                          <strong className="text-emerald-300">{pactMitigationParams.firebreakAreaMitigationPct}%</strong>
+                        </div>
+                        <input
+                          type="range"
+                          min="20"
+                          max="90"
+                          step="5"
+                          value={pactMitigationParams.firebreakAreaMitigationPct}
+                          onChange={(e) => setPactMitigationParams(p => ({ ...p, firebreakAreaMitigationPct: parseInt(e.target.value, 10) }))}
+                          className="w-full accent-emerald-400 cursor-pointer h-1"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <span className="text-[10px] uppercase tracking-wider text-amber-300 font-bold block pt-1">
+                  Parámetros de Gasto Paliativo Basal vs. Reconversión de Cuenca
                 </span>
 
                 <div>
                   <div className="flex justify-between mb-1">
                     <span className="text-slate-200">Familias APR con Camión Aljibe:</span>
-                    <strong className="text-rose-300">{roiInputs.aprFamiliesWaterTruck.toLocaleString()} hogares</strong>
+                    <div className="text-right">
+                      <strong className="text-rose-300">{roiInputs.aprFamiliesWaterTruck.toLocaleString()} hogares</strong>
+                      {activePacts.keylineAPR && (
+                        <span className="text-[10px] text-cyan-300 block font-mono">
+                          ➔ Efectivo tras Keyline: {roiMetrics.effectiveWaterTruckFamilies.toLocaleString()} (-{pactMitigationParams.keylineWaterTruckMitigationPct}%)
+                        </span>
+                      )}
+                    </div>
                   </div>
                   <input
                     type="range"
@@ -1499,7 +1632,14 @@ export default function MetabolicAuditView({ initialCustomMode }) {
                 <div>
                   <div className="flex justify-between mb-1">
                     <span className="text-slate-200">Superficie Anual Expuesta a Megaincendios:</span>
-                    <strong className="text-rose-300">{roiInputs.annualFireRiskHectares.toLocaleString()} ha/año</strong>
+                    <div className="text-right">
+                      <strong className="text-rose-300">{roiInputs.annualFireRiskHectares.toLocaleString()} ha/año</strong>
+                      {activePacts.firebreakDAO && (
+                        <span className="text-[10px] text-emerald-300 block font-mono">
+                          ➔ Efectivo tras Faja WUI: {roiMetrics.effectiveFireHectares.toLocaleString()} ha (-{pactMitigationParams.firebreakAreaMitigationPct}%)
+                        </span>
+                      )}
+                    </div>
                   </div>
                   <input
                     type="range"
