@@ -147,6 +147,51 @@ $$\sigma_{\text{proj}} = \frac{D_0 + \Delta D}{\left[ S \cdot (E_0 + \Delta E) \
 
 ---
 
+
+### 2.8. Contabilidad Metabólica de Alcance 1, 2 y 3, Fuga Entrópica y Restitución Biofísica
+
+Uno de los principales vacíos epistemológicos de los marcos de evaluación ambiental estándar (incluyendo el SEIA convencional y la Huella de Carbono corporativa ISO 14064) es el **confinamiento territorial estricto**: una jurisdicción urbana o industrial puede certificarse como "carbono neutral" o "ecosostenible" simplemente tercerizando sus procesos energéticamente intensivos y extractivos hacia cuencas periféricas o rurales.
+
+En el Modelo HOMBROS, el metabolismo socio-ecológico se formula a través de un tensor cuatripartito de flujos de masa y carbono equivalente por habitante:
+
+$$\vec{\mathcal{F}}_{\text{metab}} = \left\langle \mathcal{E}_{\text{Scope 1}},\, \mathcal{E}_{\text{Scope 2}},\, \mathcal{E}_{\text{Scope 3}}^{\text{up}},\, \mathcal{E}_{\text{Scope 3}}^{\text{down}},\, \mathcal{S}_{\text{bio}} \right\rangle \quad [\text{tCO}_2\text{e} / \text{hab} \cdot \text{año}]$$
+
+
+Donde:
+1. **$\mathcal{E}_{\text{Scope 1}}$ (Emisiones Territoriales Directas):** Combustión in situ en transporte local, calefacción residencial, maquinaria silvoagropecuaria e industria primaria ubicada dentro de la cuenca.
+2. **$\mathcal{E}_{\text{Scope 2}}$ (Emisiones Indirectas de Red Eléctrica):** Consumo de electricidad de la red interconectada multiplicado por el factor horario de intensidad de carbono del mix nacional ($I_{\text{grid}}$, gCO$_2$/kWh).
+3. **$\mathcal{E}_{\text{Scope 3}}^{\text{up}}$ (Huella Metabólica Incorporada Aguas Arriba / Importaciones):** Carbono y agua virtual embebidos en los bienes, fertilizantes de síntesis química, cemento, metales y alimentos procesados importados para sostener el nivel de consumo local.
+4. **$\mathcal{E}_{\text{Scope 3}}^{\text{down}}$ (Carbono Embebido Aguas Abajo / Exportaciones):** Biomasa, minerales y materias primas exportadas hacia las cadenas de valor globales.
+5. **$\mathcal{S}_{\text{bio}}$ (Secuestro Biogénico Territorial Activo):** Capacidad de captura neta anual de la biomasa nativa, vegas andinas, praderas silvopastoriles y carbono orgánico del suelo (COS) gestionado bajo diseños Keyline y permaculturales.
+
+#### 2.8.1. Ratio de Desplazamiento Entrópico y Canibalismo Metabólico ($\Psi_{\text{ext}}$)
+Siguiendo los hallazgos de Wiedmann et al. (2015) y Hornborg (2009) sobre intercambio ecológicamente desigual, se define el ratio de fuga o desplazamiento entrópico:
+
+$$\Psi_{\text{ext}} = \frac{\mathcal{E}_{\text{Scope 3}}^{\text{up}}}{\mathcal{E}_{\text{Scope 1}} + \mathcal{E}_{\text{Scope 2}} + \mathcal{E}_{\text{Scope 3}}^{\text{up}}}$$
+
+* **Régimen Parásito / Canibalismo Metabólico ($\Psi_{\text{ext}} > 0.50$ con $\mathcal{E}_{\text{Scope 3}}^{\text{up}} > 4.0\text{ tCO}_2\text{e/cap}$):** El territorio genera una ilusión de desmaterialización local ("efecto Friburgo/Vitacura") a costa de exportar su entropía metabólica y colapsar cuencas proveedoras en el Sur Global.
+* **Régimen de Autonomía Metabólica ($\Psi_{\text{ext}} \le 0.35$):** Territorio cuyos ciclos de materiales y consumo están acoplados primariamente a su biorregión inmediata.
+
+#### 2.8.2. Balance Metabólico Neto Sintrópico ($\Omega_{\text{net}}$)
+La verdadera solvencia biofísica no se alcanza con compensaciones contables en mercados de bonos de carbono especulativos, sino con la ratio termodinámica entre la absorción física real in situ y el consumo total:
+
+$$\Omega_{\text{net}} = \frac{\mathcal{S}_{\text{bio}}}{\mathcal{E}_{\text{Scope 1}} + \mathcal{E}_{\text{Scope 2}} + \mathcal{E}_{\text{Scope 3}}^{\text{up}}}$$
+
+* **$\Omega_{\text{net}} \ge 1.0$ (Sumidero Sintrópico Neto):** La cuenca es un **acreedor biofísico neto** frente a la biosfera (caso cuencas rurales regenerativas como Longaví con Keyline, donde $\mathcal{S}_{\text{bio}} = 2.8 > \text{Consumo} = 2.2$).
+* **$0.40 \le \Omega_{\text{net}} < 1.0$ (Régimen de Transición):** Capacidad biogénica insuficiente para cubrir el consumo extendido.
+* **$\Omega_{\text{net}} < 0.40$ (Déficit Entrópico Estructural):** Colapso de la función sumidero.
+
+#### 2.8.3. Mecanismo de Salvaguarda SEIA 2.0: Tasa de Restitución Biofísica
+Para neutralizar el dumping ambiental en las evaluaciones de impacto ambiental, todo proyecto o territorio que opere bajo régimen de canibalismo metabólico activa automáticamente una **Tasa de Restitución Biofísica per cápita vinculante**:
+
+$$\mathcal{T}_{\text{restitución}} = \max\left(0,\, \left[\mathcal{E}_{\text{Scope 3}}^{\text{up}} - 2.50
+ight] \times \Xi_{\text{costo}}
+ight) \quad [\text{USD} / \text{hab} \cdot \text{año}]$$
+
+Donde $\Xi_{\text{costo}} = \$145\text{ USD/tCO}_2\text{e}$ corresponde al costo social y físico de restauración ecohidrológica de cuenca (Reforestación nativa de cabeceras, recarga gestionada de acuíferos APR y habilitación de zanjas de infiltración Keyline). Dicha tasa no es un derecho a contaminar, sino un fondo indisponible administrado por la Mesa Vecinal y los Comités APR para recomponer la sección transversal portante ($H$) del territorio degradado.
+
+---
+
 ## 3. Sistema de Hipótesis Científicas ($H_1, H_2, H_3, H_4$)
 
 * **$H_1$ (No-Compensabilidad Fisiológica de Liebig):** En territorios donde $\min(S,E,K) < 0.25$, los índices aditivos (IDH, Huella Ecológica agregada) subestiman el riesgo real de colapso en más de un $40\%$ frente a la tensión $\sigma$ de HOMBROS.
