@@ -136,6 +136,7 @@ export default function MetabolicAuditView({ initialCustomMode }) {
   const [rawOverrides, setRawOverrides] = useState({});
   const [customDeltaD, setCustomDeltaD] = useState(null);
   const [customDeltaE, setCustomDeltaE] = useState(null);
+  const [agritwinLive, setAgritwinLive] = useState(null); // última lectura de AgriTwin (o null)
 
   // Subpestañas del Sistema de Auditoría (Espejo de navegación por fases del CORE)
   const auditSubtabs = [
@@ -896,6 +897,7 @@ export default function MetabolicAuditView({ initialCustomMode }) {
                     setCustomMeta(prev => ({ ...prev, kappa: newKappa }));
                   }}
                   onLoadAgriTwinPreset={() => handleActivateCustomTerritory(true)}
+                  onLiveChange={setAgritwinLive}
                   onImportJson={handleImportAgriTwinJson}
                 />
               </>
@@ -1462,6 +1464,25 @@ export default function MetabolicAuditView({ initialCustomMode }) {
                     className="w-full accent-rose-500 cursor-pointer"
                   />
                   <span className="text-[10px] text-slate-400">Costo fiscal medio: ~$1.450 USD/hogar/año en suministro de emergencia</span>
+                  {(() => {
+                    const atRisk = (agritwinLive?.aprs || [])
+                      .filter(a => a.status === 'warning_abatimiento' && typeof a.families === 'number')
+                      .reduce((sum, a) => sum + a.families, 0);
+                    if (!agritwinLive) {
+                      return <span className="block text-[10px] text-amber-300/90 mt-1">Conecta AgriTwin (Paso 1) para sugerir este valor con los comités en alerta.</span>;
+                    }
+                    if (atRisk === 0) {
+                      return <span className="block text-[10px] text-emerald-300 mt-1">AgriTwin no reporta comités en alerta de nivel de pozo.</span>;
+                    }
+                    return (
+                      <button
+                        onClick={() => setRoiInputs(prev => ({ ...prev, aprFamiliesWaterTruck: Math.min(5000, Math.max(200, atRisk)) }))}
+                        className="mt-1.5 px-2.5 py-1 rounded-lg bg-cyan-700 hover:bg-cyan-600 text-white text-[11px] font-bold"
+                      >
+                        Usar {atRisk.toLocaleString()} familias de comités en alerta (AgriTwin, modelado)
+                      </button>
+                    );
+                  })()}
                 </div>
 
                 <div>

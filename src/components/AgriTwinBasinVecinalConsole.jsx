@@ -77,6 +77,7 @@ export default function AgriTwinBasinVecinalConsole({
   kappa,
   onKappaChange,
   onLoadAgriTwinPreset,
+  onLiveChange,
   onImportJson
 }) {
   const [activeLens, setActiveLens] = useState('both'); // 'both' | 'basin' | 'vecinal'
@@ -111,8 +112,10 @@ export default function AgriTwinBasinVecinalConsole({
       const data = await fetchBasinSync(agriUrl);
       saveAgriTwinUrl(agriUrl.trim());
       setConn({ state: 'ok', live: data, error: null });
+      if (onLiveChange) onLiveChange(data);
     } catch (err) {
       setConn({ state: 'error', live: null, error: err.message });
+      if (onLiveChange) onLiveChange(null);
     }
   };
 
@@ -307,7 +310,7 @@ export default function AgriTwinBasinVecinalConsole({
             {' · '}Clima: <span className={live.weatherIsReal ? 'text-emerald-300 font-bold' : 'text-amber-300 font-bold'}>
               {live.weatherIsReal ? 'real (Open-Meteo)' : 'simulado'}
             </span>
-            {' · '}Caudal, embalse y riesgo de incendio son <strong>cálculos del modelo de AgriTwin</strong>, no lecturas directas de estaciones.
+            {' · '}Caudal, embalse y riesgo de incendio son <strong>modelados por AgriTwin (prototipo)</strong>: aún no hay base de datos de estaciones detrás.
           </p>
         )}
       </div>
