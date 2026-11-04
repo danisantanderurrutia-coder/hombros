@@ -13,6 +13,7 @@ import { InlineMath, BlockMath } from './KaTeXMath';
 import { getAssetUrl } from '../utils/assets';
 import KitAuditaTuCuencaBanner from './KitAuditaTuCuencaBanner';
 import AgriTwinBasinVecinalConsole from './AgriTwinBasinVecinalConsole';
+import ResumenSimple from './ResumenSimple';
 
 const INVESTMENT_ARCHETYPES = [
   {
@@ -637,6 +638,16 @@ export default function MetabolicAuditView({ initialCustomMode }) {
         Los resultados («dictamen», «rating», «moratoria») <strong>no son un dictamen legal, ni una calificación
         financiera, ni una resolución del SEIA</strong>. Los valores marcados como «ejemplo» no son mediciones reales.
       </div>
+
+      {/* RESUMEN EN PALABRAS SIMPLES + SEMÁFORO */}
+      <ResumenSimple
+        territoryName={territory.name}
+        baseline={baselineState}
+        projected={tractionAudit.projState}
+        archetypeName={archetype.name}
+        variables={effectiveVariables}
+        dataMode={agritwinLive ? 'agritwin' : 'example'}
+      />
       {/* =================================================================== */}
       {/* HEADER EJECUTIVO DEL SISTEMA DE AUDITORÍA & LABORATORIO DE HIPÓTESIS*/}
       {/* =================================================================== */}
