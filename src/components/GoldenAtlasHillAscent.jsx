@@ -190,7 +190,13 @@ function drawWarpedTriangle(ctx, img, u0, v0, u1, v1, u2, v2, x0, y0, x1, y1, x2
   ctx.restore();
 }
 
-export default function GoldenAtlasHillAscent({ E = 0.7, S = 0.65, K = 0.68, className = '' }) {
+export default function GoldenAtlasHillAscent({
+  E = 0.7,
+  S = 0.65,
+  K = 0.68,
+  className = '',
+  children,
+}) {
   const e = Math.max(0.1, Math.min(1, E));
   const s = Math.max(0.1, Math.min(1, S));
   const k = Math.max(0.1, Math.min(1, K));
@@ -385,7 +391,7 @@ export default function GoldenAtlasHillAscent({ E = 0.7, S = 0.65, K = 0.68, cla
   );
 
   return (
-    <div className={`relative w-full max-w-5xl mx-auto select-none aspect-[9/8] overflow-hidden rounded-2xl ${className}`}>
+    <div className={`relative w-full select-none aspect-[9/8] overflow-hidden ${className}`}>
       {/* =====================================================================
           CAPA 0: ESCALINATA MONUMENTAL 3D DEL MONTE OLIMPO (REACTIVA A H)
           ===================================================================== */}
@@ -620,6 +626,15 @@ export default function GoldenAtlasHillAscent({ E = 0.7, S = 0.65, K = 0.68, cla
           </g>
         )}
       </svg>
+
+      {/* =====================================================================
+          CAPA 4: CONTENIDO / OVERLAY SITUADO SOBRE EL GRÁFICO
+          ===================================================================== */}
+      {children && (
+        <div className="absolute inset-0 pointer-events-none z-20">
+          {children}
+        </div>
+      )}
     </div>
   );
 }

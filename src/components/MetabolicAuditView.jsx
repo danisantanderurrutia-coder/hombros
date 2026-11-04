@@ -1271,21 +1271,36 @@ export default function MetabolicAuditView({ initialCustomMode }) {
               </div>
 
               {/* Binding Verdict Banner */}
-              <div className={`p-4 rounded-2xl border ${tractionAudit.verdictBadge} shadow-lg`}>
-                <div className="flex items-center justify-between gap-2 mb-1">
-                  <span className="text-[10px] font-mono uppercase tracking-wider font-bold opacity-90">
-                    Dictamen Vinculante del Ensayo de Tracción Territorial (SEIA 2.0)
-                  </span>
-                  <span className="text-xs font-mono font-black px-2 py-0.5 rounded bg-black/30">
-                    Código: {tractionAudit.verdictCode}
-                  </span>
+              <div className={`p-4 rounded-2xl border ${tractionAudit.verdictBadge} shadow-lg space-y-3`}>
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-1">
+                    <span className="text-[10px] font-mono uppercase tracking-wider font-bold opacity-90">
+                      Dictamen Vinculante del Ensayo de Tracción Territorial (SEIA 2.0)
+                    </span>
+                    <span className="text-xs font-mono font-black px-2 py-0.5 rounded bg-black/30">
+                      Código: {tractionAudit.verdictCode}
+                    </span>
+                  </div>
+                  <h4 className="font-serif font-extrabold text-base sm:text-lg">
+                    {tractionAudit.verdictTitle}
+                  </h4>
+                  <p className="text-xs mt-1 leading-relaxed opacity-95 font-sans">
+                    {tractionAudit.verdictSummary}
+                  </p>
                 </div>
-                <h4 className="font-serif font-extrabold text-base sm:text-lg">
-                  {tractionAudit.verdictTitle}
-                </h4>
-                <p className="text-xs mt-1 leading-relaxed opacity-95 font-sans">
-                  {tractionAudit.verdictSummary}
-                </p>
+
+                {/* Inadmisibilidad Jurídica Ex-Ante No Negociable */}
+                <div className="p-3 rounded-xl bg-black/50 border border-white/20 text-xs font-sans text-slate-200 flex items-start gap-2.5">
+                  <ShieldAlert className="w-4 h-4 text-amber-300 shrink-0 mt-0.5" />
+                  <div className="space-y-0.5">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-amber-300 font-bold block">
+                      Inadmisibilidad Jurídica Ex-Ante No Negociable (SEIA 2.0)
+                    </span>
+                    <p className="text-[11px] leading-relaxed text-slate-200 font-sans">
+                      La <strong>Cláusula de Salvaguarda Pre-Inversional</strong> opera como un <strong>freno legal objetivo ex-ante</strong> y no como una mesa de compensación corporativa ni mitigación voluntaria (RSE). Si la cuenca registra tensión en régimen plástico (<InlineMath math="\sigma_0 \ge 1.00" />) o micro-fractura de Liebig (<InlineMath math="H_i < 0.25" />), la moratoria es vinculante por ley: ningún aporte monetario ni acuerdo privado puede sustituir la capacidad de soporte vital.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1434,6 +1449,19 @@ export default function MetabolicAuditView({ initialCustomMode }) {
                 <span>Estado Epistemológico:</span>
                 <strong>HIPÓTESIS PRE-INVERSIÓN VERIFICABLE</strong>
               </div>
+            </div>
+          </div>
+
+          {/* Banner de Salvaguarda Ex-Ante No Negociable */}
+          <div className="p-4 rounded-2xl bg-black/60 border border-rose-500/40 text-xs text-slate-200 flex flex-col sm:flex-row items-start gap-3.5 shadow-lg">
+            <ShieldAlert className="w-6 h-6 text-rose-400 shrink-0 mt-0.5" />
+            <div className="space-y-1">
+              <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-rose-300 block">
+                Carácter No Negociable de la Cláusula Pre-Inversional (Freno Legal Ex-Ante, No RSE)
+              </span>
+              <p className="text-xs text-slate-300 leading-relaxed font-sans">
+                La <strong>Cláusula de Salvaguarda Pre-Inversional</strong> opera como una <strong>inadmisibilidad jurídica ex-ante de orden público</strong>: no es una mesa de compensación voluntaria, ni un fondo de responsabilidad social empresarial (RSE), ni un espacio de negociación bilateral entre comunidades despojadas y corporaciones extractivas. Si la cuenca registra tensión en régimen plástico (<InlineMath math="\sigma_0 \ge 1.00" />) o micro-fractura de Liebig (<InlineMath math="H_i < 0.25" />), la ley prohíbe tramitar el expediente. La única vía habilitante es la previa restitución física simétrica de la capacidad portante de la cuenca.
+              </p>
             </div>
           </div>
         </div>
@@ -1748,6 +1776,36 @@ export default function MetabolicAuditView({ initialCustomMode }) {
 
               <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 text-xs text-slate-200 font-sans leading-relaxed">
                 <strong className="text-amber-300 font-mono uppercase">Conclusión para Fondos de Inversión Pública (ANID / GORE / BID):</strong> Cada dólar invertido en restaurar la sección transversal de la cuenca (<InlineMath math="H" />) ahorra <strong>{roiMetrics.benefitCostRatio} dólares</strong> en gasto fiscal reactivo, recuperando la inversión en <strong>{roiMetrics.paybackYears} años</strong> y dejando un activo hidro-edáfico permanente para las comunidades.
+              </div>
+
+              {/* Socialización de Pérdidas & Transferencia Regresiva (Modelado) */}
+              <div className="p-4 rounded-2xl bg-[#1c0f1e] border border-rose-500/40 space-y-2.5 font-mono text-xs">
+                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-rose-500/20 pb-2">
+                  <span className="text-[11px] uppercase tracking-wider text-rose-300 font-bold flex items-center gap-1.5">
+                    <AlertTriangle className="w-3.5 h-3.5 text-rose-400" />
+                    Socialización de Pérdidas & Transferencia Regresiva (Escenario Modelado)
+                  </span>
+                  <span className="text-[9px] px-2 py-0.5 rounded bg-black/60 text-slate-300 border border-white/10">
+                    Estimación modelada de política fiscal (no constituye extracción de datos tributarios en vivo)
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px] font-sans">
+                  <div className="p-3 rounded-xl bg-black/45 border border-white/10 space-y-1">
+                    <span className="text-slate-400 font-mono text-[10px] block uppercase">¿Quién financia el gasto reactivo de emergencia?</span>
+                    <p className="text-slate-200 leading-snug">
+                      <strong className="text-rose-400">~88% Fondos Públicos Colectivos (Modelado):</strong> Financiado vía FNDR regional, Ministerio del Interior / SENAPRED y Fondo Común Municipal (FCM), sustrayendo recursos esenciales a comunas rurales empobrecidas.
+                    </p>
+                  </div>
+                  <div className="p-3 rounded-xl bg-black/45 border border-white/10 space-y-1">
+                    <span className="text-slate-400 font-mono text-[10px] block uppercase">Aporte del gran extractivismo causante del déficit</span>
+                    <p className="text-slate-200 leading-snug">
+                      <strong className="text-amber-300">0% Aporte Privado Directo:</strong> Los grandes holdings agroexportadores y forestales de la cuenca retienen el 100% de las utilidades privadas libres de royalties hídricos, sin asumir el pasivo de los camiones aljibe.
+                    </p>
+                  </div>
+                </div>
+                <p className="text-[10px] text-slate-400 font-sans italic pt-0.5">
+                  *Conclusión analítica modelada:* El gasto paliativo perpetuo de Sísifo opera en la práctica como un subsidio estatal encubierto al monocultivo intensivo, socializando los costos del despojo hídrico sobre el erario público.
+                </p>
               </div>
             </div>
           </div>

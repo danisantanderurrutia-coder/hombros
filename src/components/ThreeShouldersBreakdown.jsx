@@ -39,12 +39,12 @@ export default function ThreeShouldersBreakdown({ santanderState, territory }) {
       cardClass: 'card-rose',
       textColor: 'text-[#DA7B93]',
       badgeBg: 'bg-[#301b24] text-[#DA7B93] border-[#DA7B93]/40',
-      description: 'Cohesión comunitaria, instituciones locales, capital humano y ausencia de violencia estructural.',
+      description: 'Cohesión comunitaria, redes de cuidados, trabajo rural digno y ausencia de violencia estructural.',
       variables: [
-        { key: 's1', name: 'Cohesión Social (S₁)', val: currentVars.s1, desc: 'Confianza comunitaria + organización territorial activa', source: 'Comunidad / CASEN' },
-        { key: 's2', name: 'Capacidad Institucional (S₂)', val: currentVars.s2, desc: 'Eficiencia presupuestaria municipal + participación local', source: 'SINIM / SUBDERE' },
-        { key: 's3', name: 'Capital Humano (S₃)', val: currentVars.s3, desc: 'Años de escolaridad promedio + saberes locales', source: 'CASEN / MINEDUC' },
-        { key: 's4', name: 'Ausencia de Violencia (S₄)', val: currentVars.s4, desc: 'Inverso de tasa de delitos y conflictividad socioambiental', source: 'CEAD / INDH' }
+        { key: 's1', name: 'Cohesión Social y Cuidados (S₁)', val: currentVars.s1, desc: 'Confianza comunitaria + tejido de cuidados y Comités APR', source: 'Comunidad / CASEN Redes' },
+        { key: 's2', name: 'Capacidad Institucional (S₂)', val: currentVars.s2, desc: 'Eficiencia municipal + fiscalización laboral/ambiental activa', source: 'SINIM / Dirección del Trabajo' },
+        { key: 's3', name: 'Trabajo y Saberes Locales (S₃)', val: currentVars.s3, desc: 'Saberes agroecológicos + estabilidad laboral (inverso temporerismo precario)', source: 'CASEN / ENE-INE / Saberes' },
+        { key: 's4', name: 'Ausencia de Violencia (S₄)', val: currentVars.s4, desc: 'Inverso de tasa de delitos y despojo socioambiental', source: 'CEAD / INDH' }
       ]
     },
     {
@@ -75,7 +75,7 @@ export default function ThreeShouldersBreakdown({ santanderState, territory }) {
       variables: [
         { key: 'k1', name: 'Diversificación Productiva (K₁)', val: currentVars.k1, desc: 'Inverso del Índice Herfindahl-Hirschman sectorial (IHH)', source: 'SII / Rubros' },
         { key: 'k2', name: 'Autonomía Económica (K₂)', val: currentVars.k2, desc: '% ingresos propios locales / ingresos totales municipales', source: 'SINIM / Municipal' },
-        { key: 'k3', name: 'Distribución del Ingreso (K₃)', val: currentVars.k3, desc: 'Re-escalado de equidad sobre Coeficiente de Gini [0.22 - 0.65]', source: 'CASEN / WID' },
+        { key: 'k3', name: 'Justicia Distributiva (K₃)', val: currentVars.k3, desc: 'Equidad Gini re-escalada y baja deuda de subsistencia familiar', source: 'CASEN / CMF / WID' },
         { key: 'k4', name: 'Balance Biótico (K₄)', val: currentVars.k4, desc: 'Ratio tasa regenerativa / tasa extractiva material', source: 'Cuentas MFA' }
       ]
     }

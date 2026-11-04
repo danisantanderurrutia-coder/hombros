@@ -21,60 +21,60 @@ export const NORMALIZATION_GOALPOSTS = {
     code: 'S₁',
     shoulder: 'S',
     shoulderName: 'Hombro Social (S)',
-    name: 'Cohesión Social Comunitaria',
-    rawMetricName: 'Tasa de Confianza Vecinal y Participación en Organizaciones de Base',
+    name: 'Cohesión Social Comunitaria y Cuidados',
+    rawMetricName: 'Tasa de Confianza Vecinal, Tejido de Cuidados y Participación en Comités de Base (APRs, Juntas, Cooperativas)',
     unit: '% población activa',
     polarity: 'DIRECT_LINEAR',
     formulaLatex: 'S_1 = \\text{clamp}_{[0,1]}\\left(\\frac{X_{\\text{raw}} - 10\\%}{85\\% - 10\\%}\\right)',
     goalposts: {
-      collapseMin: 10,    // 0.00: Atomización social extrema / anomia
-      liebigCrit: 28.75,  // 0.25: Umbral crítico de fractura comunitaria
-      syntropicOpt: 85,   // 1.00: Tejido cooperativo y minga consolidada
+      collapseMin: 10,    // 0.00: Atomización social extrema / anomia / desarticulación por endeudamiento
+      liebigCrit: 28.75,  // 0.25: Umbral crítico de fractura comunitaria y crisis de cuidados
+      syntropicOpt: 85,   // 1.00: Tejido cooperativo, custodia colectiva del agua y minga consolidada
     },
     defaultRawExample: 62, // Chanco: ~62% -> 0.69
-    dataTier: 'Tier 2 (Encuesta Comunal / CASEN Social)',
-    officialSources: ['CASEN (Módulo Participación)', 'Encuesta Barómetro Local', 'Catastro Juntas de Vecinos y Cooperativas'],
-    rationale: 'Por debajo del 10% de participación asociativa la acción colectiva para gestionar bienes comunes (Ostrom) se vuelve inviable; sobre el 85% alcanza saturación sintrópica.'
+    dataTier: 'Tier 2 (Encuesta Comunal / CASEN Social / Registro APR)',
+    officialSources: ['CASEN (Módulo Participación y Redes)', 'Catastro de Comités APR y Cooperativas Campesinas', 'Encuesta Barómetro Local'],
+    rationale: 'Mide la densidad de articulación solidaria comunitaria y redes de cuidado mutuo. Por debajo del 10% la acción colectiva para gestionar bienes comunes (Ostrom) se disuelve bajo el peso del endeudamiento individual; sobre el 85% alcanza soberanía comunitaria.'
   },
   s2: {
     id: 's2',
     code: 'S₂',
     shoulder: 'S',
     shoulderName: 'Hombro Social (S)',
-    name: 'Capacidad Institucional Local',
-    rawMetricName: 'Ejecución de Inversión Pública Local y Gobernanza Ambiental',
+    name: 'Capacidad Institucional y Fiscalización Laboral-Ambiental',
+    rawMetricName: 'Ejecución Presupuestaria Local, Fiscalización de Ordenanzas y Defensa de Bienes Comunes',
     unit: 'Índice SINIM (0-100 pts)',
     polarity: 'DIRECT_LINEAR',
     formulaLatex: 'S_2 = \\text{clamp}_{[0,1]}\\left(\\frac{X_{\\text{raw}} - 20}{95 - 20}\\right)',
     goalposts: {
-      collapseMin: 20,    // 0.00: Municipio fallido / sin capacidad técnica
-      liebigCrit: 38.75,  // 0.25: Umbral crítico de parálisis administrativa
-      syntropicOpt: 95,   // 1.00: Gestión municipal transparente y policéntrica
+      collapseMin: 20,    // 0.00: Municipio fallido / captura corporativa / sin fiscalización laboral
+      liebigCrit: 38.75,  // 0.25: Umbral crítico de parálisis administrativa y desprotección rural
+      syntropicOpt: 95,   // 1.00: Gestión municipal autónoma, transparente y fiscalizadora
     },
     defaultRawExample: 56,
     dataTier: 'Tier 3 (Registro Administrativo Auditado)',
-    officialSources: ['SINIM (SUBDERE)', 'Contraloría General / Transparencia Municipal', 'Eurostat Urban Audit'],
-    rationale: 'Mide la eficacia real del gobierno local para ejecutar presupuestos, fiscalizar ordenanzas ambientales y sostener infraestructura comunitaria.'
+    officialSources: ['SINIM (SUBDERE)', 'Dirección del Trabajo (Fiscalización Agrícola)', 'Contraloría General / Transparencia Municipal'],
+    rationale: 'Mide la eficacia del gobierno local y servicios públicos para ejecutar presupuestos, fiscalizar condiciones laborales de temporada y defender ordenanzas de protección de cuencas sin sujeción a intereses corporativos.'
   },
   s3: {
     id: 's3',
     code: 'S₃',
     shoulder: 'S',
     shoulderName: 'Hombro Social (S)',
-    name: 'Capital Humano y Saberes Territoriales',
-    rawMetricName: 'Índice Combinado de Escolaridad Formal (años) y Transmisión de Oficios Locales',
-    unit: 'Años equiv. (0-16)',
+    name: 'Trabajo Digno, Saberes Locales y Empleo Rural',
+    rawMetricName: 'Índice Integrado de Escolaridad/Saberes y Tasa de Formalidad y Estabilidad Laboral (Inverso de Asalarización Precaria)',
+    unit: 'Puntos equiv. (0-16)',
     polarity: 'DIRECT_LINEAR',
     formulaLatex: 'S_3 = \\text{clamp}_{[0,1]}\\left(\\frac{X_{\\text{raw}} - 4.0}{15.0 - 4.0}\\right)',
     goalposts: {
-      collapseMin: 4.0,   // 0.00: Exclusión educativa severa y pérdida de oficios
-      liebigCrit: 6.75,   // 0.25: Umbral crítico de vulnerabilidad cognitiva/técnica
-      syntropicOpt: 15.0, // 1.00: Plena soberanía educativa y técnica (PNUD ajustado)
+      collapseMin: 4.0,   // 0.00: Superexplotación temporera, analfabetismo y despojo de saberes tradicionales
+      liebigCrit: 6.75,   // 0.25: Umbral de precarización laboral y vulnerabilidad cognitiva
+      syntropicOpt: 15.0, // 1.00: Trabajo rural digno, estabilidad laboral y retención de saberes agroecológicos
     },
     defaultRawExample: 10.1,
-    dataTier: 'Tier 2 (Censo / CASEN / Saberes Locales)',
-    officialSources: ['CASEN / MINEDUC', 'PNUD Estándar Educación', 'Registro de Saberes Campesinos y Técnicos'],
-    rationale: 'Corrige el sesgo credencialista del IDH integrando tanto los años de escolaridad formal como la retención de saberes agroecológicos y técnicos en la cuenca.'
+    dataTier: 'Tier 2 (Censo / CASEN Trabajo / ENE-INE)',
+    officialSources: ['INE (Encuesta Nacional de Empleo - Informalidad Rural)', 'CASEN / MINEDUC', 'Catastro de Saberes Campesinos y Agroecológicos'],
+    rationale: 'Corrige el sesgo credencialista tradicional penalizando la informalidad laboral agraria, el subempleo temporero de temporada y la pérdida de oficios bioculturales campesinos.'
   },
   s4: {
     id: 's4',
@@ -229,20 +229,20 @@ export const NORMALIZATION_GOALPOSTS = {
     code: 'K₃',
     shoulder: 'K',
     shoulderName: 'Hombro Económico (K)',
-    name: 'Justicia Distributiva (1 − Gini)',
-    rawMetricName: 'Coeficiente de Desigualdad de Gini Comunal / Territorial',
+    name: 'Justicia Distributiva y Ausencia de Endeudamiento de Subsistencia',
+    rawMetricName: 'Coeficiente Gini Re-escalado y Ratio de Deuda de Subsistencia de los Hogares Rurales',
     unit: 'Coeficiente Gini (0-1)',
     polarity: 'INVERSE_LINEAR',
     formulaLatex: 'K_3 = \\text{clamp}_{[0,1]}\\left(\\frac{0.65 - \\text{Gini}}{0.65 - 0.22}\\right)',
     goalposts: {
-      collapseMin: 0.65,  // 0.00: Hiper-desigualdad oligárquica / apartheid socioeconómico
-      liebigCrit: 0.54,   // 0.25: Umbral de fractura distributiva (alerta ONU-Hábitat)
-      syntropicOpt: 0.22, // 1.00: Equidad distributiva óptima (estándar cooperativo/nórdico)
+      collapseMin: 0.65,  // 0.00: Hiper-desigualdad oligárquica, sobreendeudamiento usurario familiar y despojo
+      liebigCrit: 0.54,   // 0.25: Umbral de fractura distributiva y asfixia crediticia en hogares
+      syntropicOpt: 0.22, // 1.00: Equidad distributiva óptima, soberanía económica familiar y trabajo cooperativo
     },
     defaultRawExample: 0.42,
-    dataTier: 'Tier 2 (Encuesta de Ingresos / Impuestos)',
-    officialSources: ['CASEN / MDSF', 'World Inequality Database (WID)', 'Eurostat EU-SILC'],
-    rationale: 'En lugar de usar 1 - Gini bruto (donde un Gini desastroso de 0.60 daría 0.40), re-escala entre los extremos empíricos mundiales [0.22, 0.65] para reflejar el verdadero estrés distributivo.'
+    dataTier: 'Tier 2 (Encuesta de Ingresos / Impuestos / CMF Endeudamiento)',
+    officialSources: ['CASEN / MDSF', 'Comisión para el Mercado Financiero (Endeudamiento Rural)', 'World Inequality Database (WID)'],
+    rationale: 'Re-escala el Coeficiente de Gini penalizando la concentración oligárquica del excedente y la bancarización usuraria de la subsistencia que obliga a las familias campesinas a endeudarse para cubrir canasta básica y agua.'
   },
   k4: {
     id: 'k4',

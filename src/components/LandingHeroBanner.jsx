@@ -70,69 +70,44 @@ export default function LandingHeroBanner({ onNavigate }) {
       <div className="absolute top-0 right-0 w-[550px] h-[550px] bg-gradient-to-bl from-[#7FDBDA]/15 via-[#38BDF8]/10 to-transparent pointer-events-none rounded-bl-full blur-2xl" />
 
       {/* Decorative Top Accent Stripe */}
-      <div className="h-1.5 w-full bg-gradient-to-r from-[#1B4332] via-[#7DB2B2] to-[#C86D51]" />
+      <div className="h-1.5 w-full bg-gradient-to-r from-[#1B4332] via-[#7DB2B2] to-[#C86D51] relative z-20" />
 
-      <div className="p-6 sm:p-8 md:p-10 relative z-10 space-y-8">
-        
-        {/* ========================================================
-            HEADER MONUMENTAL
-            ======================================================== */}
-        <div className="text-center max-w-4xl mx-auto space-y-4">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-white/10 text-emerald-300 border border-emerald-400/40 shadow-sm backdrop-blur-md">
-            <Sparkles className="w-3.5 h-3.5 text-emerald-300 animate-pulse" />
-            <span>SISTEMA METABÓLICO TERRITORIAL · LEY DE LIEBIG & CAUCHY</span>
+      {/* ========================================================
+          HERO MONUMENTAL: El gráfico cubre toda el área, el texto se sitúa sobre él
+          ======================================================== */}
+      <div className="relative w-full overflow-hidden">
+        <GoldenAtlasHillAscent E={E} S={S} K={K} className="w-full">
+          {/* Atmósfera y gradiente de sombra superior para máxima legibilidad */}
+          <div className="absolute inset-x-0 top-0 h-64 sm:h-80 md:h-96 bg-gradient-to-b from-[#091522]/95 via-[#091522]/50 to-transparent pointer-events-none" />
+
+          {/* El texto se sitúa directamente sobre el gráfico */}
+          <div className="relative z-10 pt-6 sm:pt-10 md:pt-14 px-4 sm:px-6 md:px-8 text-center max-w-4xl mx-auto space-y-3 sm:space-y-4 pointer-events-auto">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-black/60 text-emerald-300 border border-emerald-400/40 shadow-lg backdrop-blur-md">
+              <Sparkles className="w-3.5 h-3.5 text-emerald-300 animate-pulse" />
+              <span>SISTEMA METABÓLICO TERRITORIAL · LEY DE LIEBIG & CAUCHY</span>
+            </div>
+
+            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-extrabold tracking-tight text-white leading-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
+              Desarrollar los hombros, <br className="hidden sm:inline" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#7DB2B2] to-[#C86D51]">
+                autosustentar el desarrollo
+              </span>
+            </h1>
+
+            <p className="text-xs sm:text-base md:text-lg text-slate-100 max-w-2xl mx-auto font-sans leading-relaxed drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)]">
+              El peso del porvenir no se aligera disminuyendo aspiraciones, sino ensanchando la capacidad portante territorial: los tres hombros inseparables{' '}
+              <strong className="text-emerald-300 font-semibold">Ecológico (E)</strong>,{' '}
+              <strong className="text-rose-300 font-semibold">Social (S)</strong> y{' '}
+              <strong className="text-amber-300 font-semibold">Económico o Capital (K)</strong>.
+            </p>
           </div>
+        </GoldenAtlasHillAscent>
+      </div>
 
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-serif font-extrabold tracking-tight text-white leading-tight drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
-            Desarrollar los hombros, <br className="hidden sm:inline" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#7DB2B2] to-[#C86D51]">
-              autosustentar el desarrollo
-            </span>
-          </h1>
-
-          <p className="text-sm sm:text-base md:text-lg text-slate-200 max-w-2xl mx-auto font-sans leading-relaxed">
-            El peso del porvenir no se aligera disminuyendo aspiraciones, sino ensanchando la capacidad portante territorial: los tres hombros inseparables{' '}
-            <strong className="text-emerald-300">Ecológico (E)</strong>,{' '}
-            <strong className="text-rose-300">Social (S)</strong> y{' '}
-            <strong className="text-amber-300">Económico o Capital (K)</strong>.
-          </p>
-        </div>
-
-        {/* ========================================================
-            EL ATLAS SUBIENDO EL CERRO (SIN MARCO, RELLENANDO DEBAJO DEL TÍTULO)
-            ======================================================= */}
-        <div className="relative w-full flex items-center justify-center overflow-hidden -my-4">
-          <GoldenAtlasHillAscent E={E} S={S} K={K} className="w-full max-w-4xl" />
-
-          {/* Floating Live Telemetry Overlay in graphic */}
-          <div className="absolute top-2 left-2 sm:top-4 sm:left-4 flex flex-col gap-2 pointer-events-none">
-            <div className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold border backdrop-blur-md shadow-lg ${status.color}`}>
-              {status.title}
-            </div>
-            <div className="text-[11px] font-mono text-slate-100 bg-black/60 px-3 py-1.5 rounded-lg border border-white/15 backdrop-blur-md">
-              Capacidad Portante: <strong className="text-emerald-300 text-sm font-bold">{H.toFixed(3)}</strong>
-            </div>
-          </div>
-
-          <div className="absolute top-2 right-2 sm:top-4 sm:right-4 hidden sm:flex flex-col gap-1.5 pointer-events-none text-right font-mono text-xs">
-            <div className="bg-black/60 px-3 py-1.5 rounded-xl border border-white/15 backdrop-blur-md text-slate-200">
-              Desarrollo Muscular: <strong className="text-emerald-400">{musclePercent}%</strong>
-            </div>
-            <div className="bg-black/60 px-3 py-1.5 rounded-xl border border-white/15 backdrop-blur-md text-slate-200">
-              Elevación Celeste: <strong className="text-[#38BDF8]">{liftElevationPercent}%</strong>
-            </div>
-            <div className="bg-black/60 px-3 py-1.5 rounded-xl border border-white/15 backdrop-blur-md text-slate-200">
-              Escalinata del Olimpo: <strong className={1 - H > 0.5 ? 'text-rose-400' : 'text-emerald-300'}>
-                {Math.round((0.07 + 0.2 * (1 - H)) * 100)}% {1 - H > 0.5 ? '(Entropía)' : '(Sintropía)'}
-              </strong>
-            </div>
-          </div>
-        </div>
-
-        {/* ========================================================
-            PANEL DE CONTROL INTERACTIVO DE VARIABLES E, S, K
-            ======================================================== */}
-        <div className="p-6 sm:p-8 rounded-3xl bg-black/40 border border-white/15 backdrop-blur-xl shadow-2xl space-y-6">
+      {/* ========================================================
+          PANEL DE CONTROL INTERACTIVO DE VARIABLES E, S, K
+          ======================================================== */}
+      <div className="p-6 sm:p-8 md:p-10 relative z-10 bg-[#0A1624]/90 border-t border-white/10 backdrop-blur-xl shadow-2xl space-y-6">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-4 border-b border-white/10">
             <div>
               <div className="flex items-center gap-2.5">
@@ -299,6 +274,5 @@ export default function LandingHeroBanner({ onNavigate }) {
         </div>
 
       </div>
-    </div>
   );
 }
