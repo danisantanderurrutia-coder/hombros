@@ -20,22 +20,22 @@ export default function SolarpunkAtlasCanvas() {
       </div>
 
       {/* 2. VELO ARQUITECTÓNICO VELLUM / CRISTAL TRAVERTINO Y CELADÓN */}
-      {/* Garantiza legibilidad 100% nítida de los datos mientras el paisaje respira alrededor */}
+      {/* Equilibrio armónico: permite apreciar los detalles del canal solarpunk y vegetación manteniendo legibilidad */}
       <div 
         className="absolute inset-0"
         style={{
           background: `
             linear-gradient(180deg, 
-              rgba(250, 248, 245, 0.72) 0%, 
-              rgba(250, 248, 245, 0.50) 35%, 
-              rgba(240, 245, 248, 0.68) 75%,
-              rgba(235, 242, 246, 0.84) 100%
+              rgba(250, 248, 245, 0.52) 0%, 
+              rgba(250, 248, 245, 0.38) 35%, 
+              rgba(240, 245, 248, 0.48) 75%,
+              rgba(235, 242, 246, 0.65) 100%
             ),
-            radial-gradient(ellipse 90% 60% at 50% -10%, rgba(125, 178, 178, 0.22) 0%, transparent 60%),
-            radial-gradient(circle 800px at 90% 70%, rgba(42, 75, 99, 0.12) 0%, transparent 65%)
+            radial-gradient(ellipse 90% 60% at 50% -10%, rgba(125, 178, 178, 0.15) 0%, transparent 60%),
+            radial-gradient(circle 800px at 90% 70%, rgba(42, 75, 99, 0.08) 0%, transparent 65%)
           `,
-          backdropFilter: 'blur(3px)',
-          WebkitBackdropFilter: 'blur(3px)'
+          backdropFilter: 'blur(1.5px)',
+          WebkitBackdropFilter: 'blur(1.5px)'
         }}
       />
 
