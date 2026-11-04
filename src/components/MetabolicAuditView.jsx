@@ -13,6 +13,7 @@ import { InlineMath, BlockMath } from './KaTeXMath';
 import { getAssetUrl } from '../utils/assets';
 import KitAuditaTuCuencaBanner from './KitAuditaTuCuencaBanner';
 import AgriTwinBasinVecinalConsole from './AgriTwinBasinVecinalConsole';
+import SelectorCuencasDGA from './SelectorCuencasDGA';
 import ResumenSimple from './ResumenSimple';
 import GovernanceDamperVisual from './GovernanceDamperVisual';
 import { calculateEndogenousKappa } from '../models/santanderModel';
@@ -139,6 +140,7 @@ export default function MetabolicAuditView({ initialCustomMode }) {
   const [rawOverrides, setRawOverrides] = useState({});
   const [customDeltaD, setCustomDeltaD] = useState(null);
   const [customDeltaE, setCustomDeltaE] = useState(null);
+  const [selectedCuencaDgaId, setSelectedCuencaDgaId] = useState('cuenca_maule_longavi');
   const [agritwinLive, setAgritwinLive] = useState(null);
   const [kappaMode, setKappaMode] = useState('manual_slider'); // 'manual_slider' | 'ostrom_governance' | 'empirical_benchmark' | 'pacts_additive'
   const [activePacts, setActivePacts] = useState({
@@ -254,6 +256,30 @@ export default function MetabolicAuditView({ initialCustomMode }) {
   const handleSelectTerritory = (id) => {
     setSelectedTerritoryId(id);
     setRawOverrides({});
+  };
+
+
+  // Manejador cuando el usuario selecciona una cuenca en el Selector Georreferenciado DGA
+  const handleSelectCuencaDGA = (cuenca) => {
+    setSelectedCuencaDgaId(cuenca.id);
+    setSelectedTerritoryId('custom_territory');
+    
+    // Carga automática de metadatos comunales y satelitales preliminares de AgriTwin
+    setCustomMeta(prev => ({
+      ...prev,
+      name: cuenca.nombre,
+      region: cuenca.region,
+      scale: `Cuenca DGA ${cuenca.dga_code} (${cuenca.comunas.slice(0, 3).join(', ')})`,
+      population: cuenca.poblacion_estimada,
+      d1: cuenca.suggested_d1 || 0.50,
+      kappa: cuenca.suggested_kappa || 0.32,
+      agritwinLinked: true
+    }));
+
+    // Cargar automáticamente las 12 variables sugeridas calibradas para esa cuenca
+    if (cuenca.suggested_variables) {
+      applyNormalizedChanges(cuenca.suggested_variables);
+    }
   };
 
   const handleActivateCustomTerritory = (useAgriTwinPreset = true) => {
@@ -935,6 +961,12 @@ export default function MetabolicAuditView({ initialCustomMode }) {
                     </div>
                   )}
                 </div>
+
+                {/* Selector Georreferenciado Oficial de Cuencas DGA & Comunas de Chile */}
+                <SelectorCuencasDGA
+                  selectedCuencaId={selectedCuencaDgaId}
+                  onSelectCuenca={handleSelectCuencaDGA}
+                />
 
                 <AgriTwinBasinVecinalConsole
                   effectiveVariables={effectiveVariables}
