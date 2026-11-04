@@ -67,7 +67,7 @@ export default function LandingHeroBanner({ onNavigate }) {
     <div className="relative w-full rounded-3xl overflow-hidden border border-[#D4C9B8]/70 shadow-2xl bg-gradient-to-b from-[#091522] via-[#0E2032] to-[#142A3E] text-white">
       {/* Dynamic Cosmic Background Atmosphere */}
       <div className="absolute inset-0 bg-radial-gradient from-[#7DB2B2]/15 via-[#1B4332]/10 to-transparent pointer-events-none" />
-      <div className="absolute top-0 right-0 w-[550px] h-[550px] bg-gradient-to-bl from-[#7FDBDA]/15 via-[#38BDF8]/10 to-transparent pointer-events-none rounded-bl-full blur-2xl" />
+      <div className="absolute top-0 right-0 w-[450px] h-[350px] bg-gradient-to-bl from-[#7FDBDA]/10 via-[#38BDF8]/5 to-transparent pointer-events-none rounded-bl-full blur-3xl opacity-50" />
 
       {/* Decorative Top Accent Stripe */}
       <div className="h-1.5 w-full bg-gradient-to-r from-[#1B4332] via-[#7DB2B2] to-[#C86D51] relative z-20" />
@@ -101,9 +101,18 @@ export default function LandingHeroBanner({ onNavigate }) {
           EL GRÁFICO CUBRIENDO EL ÁREA CON DIFUMINADO INTEGRADO
           El planeta queda completamente libre y despejado
           ======================================================== */}
-      <div className="relative w-full overflow-hidden -mt-6 sm:-mt-10 md:-mt-14">
-        {/* Difuminado suave entre el bloque oscuro superior y el cielo del gráfico */}
-        <div className="absolute inset-x-0 top-0 h-28 sm:h-36 md:h-48 bg-gradient-to-b from-[#091522] via-[#091522]/80 to-transparent pointer-events-none z-10" />
+      <div
+        className="relative w-full overflow-hidden -mt-6 sm:-mt-10 md:-mt-14"
+        style={{
+          maskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 12%, rgba(0,0,0,0.95) 24%, black 36%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 12%, rgba(0,0,0,0.95) 24%, black 36%)',
+        }}
+      >
+        {/* Difuminado suave continuo entre el bloque oscuro superior y el cielo del gráfico */}
+        <div className="absolute inset-x-0 top-0 h-44 sm:h-56 md:h-68 bg-gradient-to-b from-[#091522] via-[#091522]/85 to-transparent pointer-events-none z-10" />
+        
+        {/* Velo complementario específico en el lado superior derecho para igualar perfectamente la disolución al fondo */}
+        <div className="absolute top-0 right-0 w-2/3 h-52 sm:h-64 md:h-76 bg-gradient-to-bl from-[#091522] via-[#091522]/85 to-transparent pointer-events-none z-10" />
 
         <GoldenAtlasHillAscent E={E} S={S} K={K} className="w-full" />
       </div>

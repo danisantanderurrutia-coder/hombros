@@ -418,6 +418,24 @@ export default function GoldenAtlasHillAscent({
       />
 
       {/* =====================================================================
+          FUNDIDO SUPERIOR ATMOSFÉRICO: DISUELVE LAS COLUMNAS Y NUBES SUPERIORES
+          EN EL COLOR EXACTO DEL FONDO (#091522), CON ÉNFASIS EN EL LADO DERECHO
+          ===================================================================== */}
+      <div
+        className="absolute inset-x-0 top-0 h-48 pointer-events-none"
+        style={{
+          background: 'linear-gradient(to bottom, #091522 0%, rgba(9, 21, 34, 0.96) 25%, rgba(9, 21, 34, 0.65) 60%, transparent 100%)',
+        }}
+      />
+      {/* Velo adicional en la esquina superior derecha para disolver el brillo del capitel y nubes derechas */}
+      <div
+        className="absolute top-0 right-0 w-3/5 h-64 pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse at 100% 0%, #091522 0%, rgba(9, 21, 34, 0.95) 30%, rgba(9, 21, 34, 0.55) 65%, transparent 100%)',
+        }}
+      />
+
+      {/* =====================================================================
           CAPA 1 (SVG): DESTELLOS EN PELDAÑOS 3D Y ESFERA CÓSMICA CON ESTRELLAS
           ===================================================================== */}
       <svg
