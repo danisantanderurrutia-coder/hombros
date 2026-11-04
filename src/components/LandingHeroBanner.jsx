@@ -73,35 +73,39 @@ export default function LandingHeroBanner({ onNavigate }) {
       <div className="h-1.5 w-full bg-gradient-to-r from-[#1B4332] via-[#7DB2B2] to-[#C86D51] relative z-20" />
 
       {/* ========================================================
-          HERO MONUMENTAL: El gráfico cubre toda el área, el texto se sitúa sobre él
+          BLOQUE SUPERIOR EXTENDIDO (BASE OSCURA CON DIFUMINADO)
+          El texto se sitúa alto para dejar el planeta cósmico 100% libre y visible
           ======================================================== */}
-      <div className="relative w-full overflow-hidden">
-        <GoldenAtlasHillAscent E={E} S={S} K={K} className="w-full">
-          {/* Atmósfera y gradiente de sombra superior para máxima legibilidad */}
-          <div className="absolute inset-x-0 top-0 h-64 sm:h-80 md:h-96 bg-gradient-to-b from-[#091522]/95 via-[#091522]/50 to-transparent pointer-events-none" />
+      <div className="relative z-10 pt-10 sm:pt-14 md:pt-16 pb-4 sm:pb-6 px-4 sm:px-6 md:px-8 text-center max-w-4xl mx-auto space-y-3 sm:space-y-4">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-black/60 text-emerald-300 border border-emerald-400/40 shadow-lg backdrop-blur-md">
+          <Sparkles className="w-3.5 h-3.5 text-emerald-300 animate-pulse" />
+          <span>SISTEMA METABÓLICO TERRITORIAL · LEY DE LIEBIG & CAUCHY</span>
+        </div>
 
-          {/* El texto se sitúa directamente sobre el gráfico */}
-          <div className="relative z-10 pt-6 sm:pt-10 md:pt-14 px-4 sm:px-6 md:px-8 text-center max-w-4xl mx-auto space-y-3 sm:space-y-4 pointer-events-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-black/60 text-emerald-300 border border-emerald-400/40 shadow-lg backdrop-blur-md">
-              <Sparkles className="w-3.5 h-3.5 text-emerald-300 animate-pulse" />
-              <span>SISTEMA METABÓLICO TERRITORIAL · LEY DE LIEBIG & CAUCHY</span>
-            </div>
+        <h1 className="text-3xl sm:text-5xl md:text-6xl font-serif font-extrabold tracking-tight text-white leading-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
+          Desarrollar los hombros, <br className="hidden sm:inline" />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#7DB2B2] to-[#C86D51]">
+            autosustentar el desarrollo
+          </span>
+        </h1>
 
-            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-extrabold tracking-tight text-white leading-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
-              Desarrollar los hombros, <br className="hidden sm:inline" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#7DB2B2] to-[#C86D51]">
-                autosustentar el desarrollo
-              </span>
-            </h1>
+        <p className="text-sm sm:text-base md:text-lg text-slate-200 max-w-2xl mx-auto font-sans leading-relaxed drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)]">
+          El peso del porvenir no se aligera disminuyendo aspiraciones, sino ensanchando la capacidad portante territorial: los tres hombros inseparables{' '}
+          <strong className="text-emerald-300 font-semibold">Ecológico (E)</strong>,{' '}
+          <strong className="text-rose-300 font-semibold">Social (S)</strong> y{' '}
+          <strong className="text-amber-300 font-semibold">Económico o Capital (K)</strong>.
+        </p>
+      </div>
 
-            <p className="text-xs sm:text-base md:text-lg text-slate-100 max-w-2xl mx-auto font-sans leading-relaxed drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)]">
-              El peso del porvenir no se aligera disminuyendo aspiraciones, sino ensanchando la capacidad portante territorial: los tres hombros inseparables{' '}
-              <strong className="text-emerald-300 font-semibold">Ecológico (E)</strong>,{' '}
-              <strong className="text-rose-300 font-semibold">Social (S)</strong> y{' '}
-              <strong className="text-amber-300 font-semibold">Económico o Capital (K)</strong>.
-            </p>
-          </div>
-        </GoldenAtlasHillAscent>
+      {/* ========================================================
+          EL GRÁFICO CUBRIENDO EL ÁREA CON DIFUMINADO INTEGRADO
+          El planeta queda completamente libre y despejado
+          ======================================================== */}
+      <div className="relative w-full overflow-hidden -mt-6 sm:-mt-10 md:-mt-14">
+        {/* Difuminado suave entre el bloque oscuro superior y el cielo del gráfico */}
+        <div className="absolute inset-x-0 top-0 h-28 sm:h-36 md:h-48 bg-gradient-to-b from-[#091522] via-[#091522]/80 to-transparent pointer-events-none z-10" />
+
+        <GoldenAtlasHillAscent E={E} S={S} K={K} className="w-full" />
       </div>
 
       {/* ========================================================
