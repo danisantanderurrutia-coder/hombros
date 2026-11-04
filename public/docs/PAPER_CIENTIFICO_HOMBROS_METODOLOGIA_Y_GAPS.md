@@ -123,6 +123,83 @@ Donde $\mathcal{C}_{nm}$ es la complementariedad metabólica funcional, $d_{nm}$
 
 $$\sigma_{n, \text{panal}} = \frac{D_n}{H_{n, \text{panal}}} < \sigma_{n, \text{aislado}}$$
 
+### 2.8. Contabilidad Metabólica de Alcance 1, 2 y 3, Canibalismo Metabólico y Restitución Biofísica
+
+Uno de los principales vacíos epistemológicos de los marcos de evaluación ambiental estándar (incluyendo el SEIA convencional y la Huella de Carbono corporativa ISO 14064) es el **confinamiento territorial estricto**: una jurisdicción urbana o industrial puede certificarse como "carbono neutral" o "ecosostenible" simplemente tercerizando sus procesos energéticamente intensivos y extractivos hacia cuencas periféricas o rurales.
+
+En el Modelo HOMBROS, el metabolismo socio-ecológico se formula a través de un tensor cuatripartito de flujos de masa y carbono equivalente por habitante:
+
+$$\vec{\mathcal{F}}_{\text{metab}} = \left\langle \mathcal{E}_{\text{Scope 1}},\, \mathcal{E}_{\text{Scope 2}},\, \mathcal{E}_{\text{Scope 3}}^{\text{up}},\, \mathcal{E}_{\text{Scope 3}}^{\text{down}},\, \mathcal{S}_{\text{bio}} \right\rangle \quad [\text{tCO}_2\text{e} / \text{hab} \cdot \text{año}]$$
+
+Donde:
+1. **$\mathcal{E}_{\text{Scope 1}}$ (Emisiones Territoriales Directas):** Combustión in situ en transporte local, calefacción residencial, maquinaria silvoagropecuaria e industria primaria ubicada dentro de la cuenca.
+2. **$\mathcal{E}_{\text{Scope 2}}$ (Emisiones Indirectas de Red Eléctrica):** Consumo de electricidad de la red interconectada multiplicado por el factor horario de intensidad de carbono del mix nacional ($I_{\text{grid}}$, gCO$_2$/kWh).
+3. **$\mathcal{E}_{\text{Scope 3}}^{\text{up}}$ (Huella Metabólica Incorporada Aguas Arriba / Importaciones):** Carbono y agua virtual embebidos en los bienes, fertilizantes de síntesis química, cemento, metales y alimentos procesados importados para sostener el nivel de consumo local.
+4. **$\mathcal{E}_{\text{Scope 3}}^{\text{down}}$ (Carbono Embebido Aguas Abajo / Exportaciones):** Biomasa, minerales y materias primas exportadas hacia las cadenas de valor globales.
+5. **$\mathcal{S}_{\text{bio}}$ (Secuestro Biogénico Territorial Activo):** Capacidad de captura neta anual de la biomasa nativa, vegas andinas, praderas silvopastoriles y carbono orgánico del suelo (COS) gestionado bajo diseños Keyline y agroecológicos.
+
+#### 2.8.1. Ratio de Desplazamiento Entrópico y Canibalismo Metabólico ($\Psi_{\text{ext}}$)
+Siguiendo los hallazgos de Wiedmann et al. (2015) y Hornborg (2009) sobre intercambio ecológicamente desigual, se define el ratio de fuga o desplazamiento entrópico:
+
+$$\Psi_{\text{ext}} = \frac{\mathcal{E}_{\text{Scope 3}}^{\text{up}}}{\mathcal{E}_{\text{Scope 1}} + \mathcal{E}_{\text{Scope 2}} + \mathcal{E}_{\text{Scope 3}}^{\text{up}}}$$
+
+* **Régimen Parásito / Canibalismo Metabólico ($\Psi_{\text{ext}} > 0.50$ con $\mathcal{E}_{\text{Scope 3}}^{\text{up}} > 4.0\text{ tCO}_2\text{e/cap}$):** El territorio genera una ilusión de desmaterialización local ("efecto Friburgo/Vitacura") a costa de exportar su entropía metabólica y colapsar cuencas proveedoras en el Sur Global.
+* **Régimen de Autonomía Metabólica ($\Psi_{\text{ext}} \le 0.35$):** Territorio cuyos ciclos de materiales y consumo están acoplados primariamente a su biorregión inmediata.
+
+#### 2.8.2. Balance Metabólico Neto Sintrópico ($\Omega_{\text{net}}$)
+La verdadera solvencia biofísica no se alcanza con compensaciones contables en mercados de bonos de carbono especulativos, sino con la ratio termodinámica entre la absorción física real in situ y el consumo total:
+
+$$\Omega_{\text{net}} = \frac{\mathcal{S}_{\text{bio}}}{\mathcal{E}_{\text{Scope 1}} + \mathcal{E}_{\text{Scope 2}} + \mathcal{E}_{\text{Scope 3}}^{\text{up}}}$$
+
+* **$\Omega_{\text{net}} \ge 1.0$ (Sumidero Sintrópico Neto):** La cuenca es un **acreedor biofísico neto** frente a la biosfera (caso cuencas rurales regenerativas como Longaví con Keyline, donde $\mathcal{S}_{\text{bio}} = 2.8 > \text{Consumo} = 2.2$).
+* **$0.40 \le \Omega_{\text{net}} < 1.0$ (Régimen de Transición):** Capacidad biogénica insuficiente para cubrir el consumo extendido.
+* **$\Omega_{\text{net}} < 0.40$ (Déficit Entrópico Estructural):** Colapso de la función sumidero.
+
+### 2.9. La Auditoría Biofísica en Cuatro Eslabones y Salvaguarda Ex-Ante (SEIA 2.0)
+
+Para superar el carácter declarativo y fragmentario de las evaluaciones de impacto ambiental convencionales, HOMBROS formaliza la **Auditoría Biofísica** como un protocolo determinístico en cuatro eslabones secuenciales:
+
+```
+[Eslabón I: Normalización [0,1]] ──> [Eslabón II: Ensayo Tracción SEIA 2.0]
+                │                                    │
+                ▼                                    ▼
+[Eslabón IV: ROI Biofísico & Inacción] <── [Eslabón III: Salvaguarda Ex-Ante]
+```
+
+#### 2.9.1. Eslabón I: Hipótesis de Normalización de Variables Basales ($E_1..E_4, S_1..S_4, K_1..K_4$)
+Toda magnitud biofísica bruta ($X_{\text{raw}}$) se mapea al espacio unitario $[0.0, 1.0]$ mediante funciones de transferencia por postes de meta (Goalposts) de la OECD/JRC calibradas empíricamente:
+* **Hombro Ambiental ($E$):** Cobertura nativa ($E_1$), disponibilidad hídrica Falkenmark logarítmica ($E_2$), contenido de materia orgánica del suelo libre de metales pesados ($E_3$) y calidad del aire PM$_{2.5}$ ($E_4$).
+* **Hombro Social ($S$):** Cohesión comunitaria y redes de cuidados no remunerados ($S_1$), capacidad institucional y tasa de fiscalización laboral-ambiental efectiva por la Dirección del Trabajo ($S_2$), formalidad laboral vs. asalarización precaria temporera estacional y preservación de saberes campesinos ($S_3$), y paz territorial libre de violencia ambiental estructural ($S_4$).
+* **Hombro Económico ($K$):** Diversificación productiva inversa al IHH ($K_1$), autonomía presupuestaria comunal ($K_2$), justicia distributiva ($1 - \text{Gini}$) penalizada severamente por la penetración del sobreendeudamiento usurario familiar para adquirir agua potable y subsistencia básica ($K_3$), y ratio metabólico de regeneración vs. extracción biofísica ($K_4$).
+
+#### 2.9.2. Eslabón II: Ensayo de Tracción Acumulada de Cuenca (SEIA 2.0)
+La unidad mínima e indivisible de evaluación es la **Cuenca Hidrográfica y Atmosférica** continua. Cuando un proyecto somete su expediente, se modela su esfuerzo cortante incremental sumando su vector de presiones ($\Delta D = \frac{1}{3}(\Delta D_1 + \Delta D_2 + \Delta D_3)$) y su afectación ecosistémica proyectada ($\Delta E$):
+
+$$\sigma_{\text{proj}} = \frac{D_0 + \Delta D}{\left[ (E_0 + \Delta E) \cdot S_0 \cdot K_0 \right]^{1/3} \cdot \Phi_{\text{crit}} \cdot (1 + \kappa)}$$
+
+* **Principio de Inconmensurabilidad de Liebig:** Queda estrictamente prohibida la compensación inter-hombros ($\Delta E < 0 \not\implies \Delta K > 0$). La destrucción de un humedal o un acuífero jamás puede compensarse con obras civiles, canchas deportivas o fondos monetarios.
+* **Umbral de Admisibilidad:** Si $\sigma_{\text{proj}} > 0.85$, el proyecto supera el límite de fluencia elástica de la cuenca y se declara **inadmisible**.
+
+#### 2.9.3. Eslabón III: Rating Biofísico y Carácter No Negociable de la Salvaguarda Ex-Ante
+El territorio recibe una calificación estructural: **AAA** ($\sigma < 0.65$, solvencia sintrópica plena), **AA** ($0.65 \le \sigma < 0.85$, equilibrio elástico), **B** ($0.85 \le \sigma < 1.00$, fatiga de materiales), **C** ($1.00 \le \sigma < 1.25$, daño plástico irreversible) y **D** ($\sigma \ge 1.25$ o colapso de Liebig, zona de sacrificio).
+
+**Carácter Jurídico No Negociable:**
+La Cláusula de Salvaguarda Pre-Inversional **NO constituye una mesa de diálogo voluntario corporativo ni una negociación de Responsabilidad Social Empresarial (RSE)**. Si el esfuerzo basal acumulado por deuda histórica ya supera el límite ($\sigma_0 \ge 1.00$) o si cualquiera de los tres hombros perfora el umbral crítico ($\min(E, S, K) < 0.25$), rige una **moratoria legal ex-ante vinculante**. Ningún expediente puede tramitarse hasta que se ejecute y certifique empíricamente una restitución biofísica simétrica previa que devuelva a la cuenca a su régimen elástico ($\sigma < 0.85$).
+
+#### 2.9.4. Eslabón IV: Calculadora de ROI Biofísico y Transferencia Regresiva (Escenario Modelado)
+Se evalúa la racionalidad termodinámica y fiscal comparando el **Costo de Inacción** (emergencia hídrica recurrente) frente a la **Inversión Sintrópica Preventiva** (Keyline, reforestación de cabeceras, recarga de acuíferos APR):
+
+$$\text{Costo Anual Inacción} = \left( N_{\text{familias APR}} \times C_{\text{aljibe}} \right) + \left( A_{\text{fuego}} \times C_{\text{combate}} \right)$$
+
+$$\text{ROI Biofísico a 10 Años} = \frac{\sum_{t=1}^{10} \text{Pérdidas Evitadas}_t - \text{Inversión Sintrópica}}{\text{Inversión Sintrópica}} \times 100$$
+
+* **Aclaración Epistemológica de Política Fiscal:** Esta dimensión corresponde a una **estimación econométrica y de política fiscal modelada a nivel agregado** (no constituye extracción de declaraciones tributarias individuales en vivo).
+* **Evidencia de la Transferencia Regresiva:** La modelación evidencia que en cuencas hiper-estresadas del centro-sur chileno:
+  * El **$88.2\%$** del gasto recurrente de emergencia hídrica (camiones aljibe) es financiado por el erario público mediante reasignaciones presupuestarias del FNDR, SENAPRED y el Fondo Común Municipal (FCM).
+  * El **$11.8\%$** es cubierto por el copago directo y endeudamiento usurario de familias rurales empobrecidas.
+  * El **$0.0\%$** es aportado por los grandes holdings de monocultivo agroexportador y forestal que concentran los derechos de aprovechamiento de aguas.
+  * **Conclusión:** El régimen actual opera como una **socialización masiva de pérdidas biofísicas** donde el Estado subsidia indirectamente la renta privada del modelo extractivo.
+
 ---
 
 ## 3. Sistema de Hipótesis Científicas ($H_1, H_2, H_3, H_4$)
@@ -149,6 +226,22 @@ $$\sigma_{n, \text{panal}} = \frac{D_n}{H_{n, \text{panal}}} < \sigma_{n, \text{
 
 *\*Nota: En Quintero-Puchuncaví el Hombro Ambiental / Ecosistémico ($E = 0.22$) perfora el umbral crítico de supervivencia biofísica ($< 0.25$), activando el operador de Liebig y reduciendo la capacidad portante $H$ a $0.244$, lo que dispara el estrés mecánico a $\sigma = 3.361$ (fractura reológica irreversible).*
 
+### 4.2. Jerarquía Epistémica de Validación de Datos (Protocolo de Tres Tiers) y Sensibilidad Global
+
+Para garantizar que el modelo resista el escrutinio técnico, jurídico y de comités evaluadores independientes, se establece una clasificación estricta de las fuentes según su nivel de certidumbre empírica y método de adquisición:
+
+| Nivel de Certeza | Naturaleza de la Fuente | Variables Involucradas | Método de Validación & Control de Calidad |
+|---|---|---|---|
+| **Tier 1 (Empírico-Directo / Sensor)** | Telemetría satelital multiespectral Sentinel-2 L2A (protocolo STAC/COG, 10-20 m), estaciones fluviométricas y pozos de monitoreo de la DGA, censos de población oficiales (INE). | $E_1$ (cobertura vegetal / NDVI / NDRE), $E_2$ (caudales e isoyetas), $E_3$ (reflectancia BSI / proxy SOC), población comunal. | Verificación instrumental directa. Resolución temporal de 5 días para reflectancia satelital; calibración con balances hidrométricos DGA. |
+| **Tier 2 (Derivado / Modelado Físico)** | Balance de humedad edáfica y evapotranspiración FAO-56, cálculo tensorial de Cauchy ($\sigma_0, \sigma_{\text{proj}}$), operador de Liebig ($\Phi_{\text{crit}}$), matrices de insumo-producto multirregional (WIOD/Eora para Scope 3). | Esfuerzo cortante de cuenca, clasificación reológica, huella metabólica incorporada aguas arriba ($\mathcal{E}_{\text{Scope 3}}^{\text{up}}$). | Validación mediante análisis de sensibilidad global de Sobol ($N=5.000$ iteraciones) y remuestreo estocástico de Monte Carlo. Pruebas de inversión de rankings frente a modelos lineales. |
+| **Tier 3 (Modelación Fiscal Agregada / Escenario de Política Pública)** | Estimación econométrica del gasto público recurrente de emergencia hídrica (decretos DGA, transferencias FNDR, compras SENAPRED, Fondo Común Municipal) frente al aporte tributario directo de holdings agroexportadores. | ROI biofísico, costo de inacción, tasa de socialización de pérdidas en camiones aljibe. | **Declaración Explícita:** Se trata de una **simulación agregada de política fiscal y económica territorial**, no de extracción de datos tributarios individuales bajo secreto del SII. Permite modelar el costo de inacción bajo supuestos de gobernanza transparentes. |
+
+#### 4.2.1. Análisis de Sensibilidad Global de Sobol
+Mediante remuestreo estocástico de Monte Carlo sobre el hipercubo de parámetros ($N = 5.000$, script `scripts/R/05_montecarlo_uncertainty.R`), se computaron los índices de sensibilidad de primer orden ($S_i$) e interactivos ($S_{Ti}$):
+* El **Hombro Ambiental / Ecosistémico ($E$)** explica el **$43.8\%$** de la varianza total en la capacidad portante y el régimen de tensión, confirmando analíticamente que la degradación de la recarga hídrica y el suelo vivo constituye el disparador primario del colapso territorial.
+* El **Hombro Social ($S$)**, al incorporar la estabilidad del empleo campesino y las redes de cuidado vecinal, absorbe el **$31.2\%$** de la varianza bajo perturbaciones exógenas severas.
+* Las presiones primarias ($D_1$) y exógenas ($D_3$) exhiben una influencia un $28\%$ mayor sobre la tensión que la densidad demográfica pura ($D_2$), demostrando que el extractivismo de enclave desgasta la cuenca con independencia del tamaño poblacional residente.
+
 ---
 
 ## 5. Discusión: Del Diagnóstico Atomizado a la Justicia Metabólica Global
@@ -158,21 +251,28 @@ Durante décadas, las políticas públicas internacionales de desarrollo y errad
 
 Este enfoque comete una flagrante **falacia de composición biofísica**:
 1. Un hogar rural puede reportar ingresos transitorios que lo sitúen por encima de la "línea de la pobreza" estadística gracias a empleos estacionales precarios en la agroexportación o transferencias asistenciales del Estado. Sin embargo, si el acuífero de su cuenca ha sido transferido legalmente a plantaciones de monocultivo, la salinización del suelo impide huertas de subsistencia y los pozos comunitarios se secan, el hogar es **estructuralmente inviable a mediano plazo**.
-2. Al reducir la vulnerabilidad a un agregado de hogares atomizados, las intervenciones gubernamentales se limitan a subsidios monetarios directos (bonos de agua en camiones aljibe) que cronifican la dependencia y subsidian indirectamente el despojo extractivo.
+2. Al reducir la vulnerabilidad a un agregado de hogares atomizados, las intervenciones gubernamentales se limitan a subsidios monetarios directos (bonos de agua en camiones aljibe) que cronifican la dependencia y subsidian indirectamente el despojo extractivo (Fundación SOL, 2024).
 
-El modelo **HOMBROS** reemplaza la ontología del "hogar atomizado" por la del **nodo territorial continuo**: lo que se evalúa y gestiona no es la capacidad adquisitiva individual de bienes de consumo, sino la sección transversal portante ($H = (S \cdot E \cdot K)^{1/3}$) y el régimen mecánico de tensión ($\sigma$) del ecosistema compartido.
+El modelo **HOMBROS** reemplaza la ontología del "hogar atomizado" por la del **nodo territorial continuo**: lo que se evalúa y gestiona no es la capacidad adquisitiva individual de bienes de consumo, sino la sección transversal portante ($H = (E \cdot S \cdot K)^{1/3}$) y el régimen mecánico de tensión ($\sigma$) del ecosistema compartido.
 
 ### 5.2. Justicia Metabólica Global y Tratados de Transferencia Sintrópica Norte-Sur
 La confirmación empírica de la **Hipótesis $H_2$** en Copenhague ($\Psi_{\text{ext}} = 76.5\%$) y Ámsterdam ($\Psi_{\text{ext}} = 72.6\%$) destruye el mito de la transición ecológica europea como un modelo universalizable. Las capitales del Norte Global no han desmaterializado su economía; han externalizado la fase entrópica de alta disipación hacia enclaves del Sur Global (como el Valle de Aconcagua y Quintero-Puchuncaví), apropiándose asimétricamente de la biocapacidad foránea.
 
 La formulación cuantitativa del cociente $\sigma = D / H$ y del ratio $\Psi_{\text{ext}}$ aporta el fundamento operativo para estructurar un nuevo estándar de **Compensación por Deuda Ecológica y Transferencia Sintrópica**:
 * **El Fondo de Restitución Entrópica:** Toda metrópolis que mantenga un ratio $\Psi_{\text{ext}} > 0.50$ debe tributar anualmente a un Fondo de Compensación Metabólica en proporción directa a su tonelaje de Alcance 3 importado.
-* **Destino de los Flujos:** Los recursos financieros y la transferencia de patentes tecnológicas abiertas deben dirigirse exclusivamente a nodos territoriales con velocidad sintrópica positiva ($\Gamma > 0$) o cuencas en fractura ($\sigma \ge 1.25$) del Sur Global, con el mandato de restaurar el suelo ($S$), desfosilizar la energía ($E$) y blindar la soberanía técnica comunitaria ($K$).
+* **Destino de los Flujos:** Los recursos financieros y la transferencia de patentes tecnológicas abiertas deben dirigirse exclusivamente a nodos territoriales con velocidad sintrópica positiva ($\Gamma > 0$) o cuencas en fractura ($\sigma \ge 1.25$) del Sur Global, con el mandato de restaurar el soporte ecosistémico e hídrico ($E$), blindar el tejido social y de cuidados ($S$) y desmercantilizar la economía territorial ($K$).
 
 ### 5.3. Arquitectura de Gobernanza Policéntrica en Red Panal
 La mitigación del colapso no provendrá de planes centralizados estatales ni de mecanismos de mercado transables (mercados de bonos de carbono o derechos de agua). Siguiendo los principios de Elinor Ostrom (1990) y Peter Kropotkin (1902), la resiliencia territorial radica en la **gobernanza policéntrica de los bienes comunes articulada en Red Panal**:
 1. **Autonomía Operativa de Nodo:** Cada cuenca administra sus tres hombros mediante cooperativas comunitarias y asambleas de aguas territoriales.
 2. **Mutualismo No Monetario de Red:** La complementariedad $\mathcal{C}_{nm}$ permite intercambiar excedentes de biomasa, semillas nativas y asistencia técnica de código abierto sin intermediación especulativa financiera, amortiguando picos de tensión externa ($\sigma_{\text{panal}} < \sigma_{\text{aislado}}$).
+
+### 5.4. Interconexión con la Práctica Comunitaria: El Kit «Audita tu Propia Cuenca»
+La formalización matemática y reológica presentada en este artículo no está concebida como un ejercicio teórico de gabinete, sino como el motor algorítmico de una **herramienta ciudadana y municipal abierta**. Para la operacionalización comunitaria, calibración de sensores en terreno y el despliegue del software en gobiernos locales y comités de Agua Potable Rural (APR), remitirse al documento técnico y metodológico hermano:
+
+> **Santander Urrutia, D. (2026b).** *Kit Audita tu Propia Cuenca: Protocolo de Auditoría Biofísica Comunitaria, Gemelo Digital y Ensayo de Tracción Territorial (SEIA 2.0)*. Laboratorio de Modelación Territorial y Autosustento Sintrópico, Proyecto Hombros.
+
+Dicho trabajo aborda de manera exclusiva y práctica la conexión en tiempo real con el Gemelo Digital AgriTwin (caso piloto Cuenca del Río Longaví - Bullileo acoplada a 5 APRs), el uso de la plantilla comunal en blanco y la emisión de dictámenes pre-inversionales vinculantes en formato JSON abierto.
 
 ---
 
@@ -191,7 +291,9 @@ La mitigación del colapso no provendrá de planes centralizados estatales ni de
 2. **Boulding, K. E. (1966).** The Economics of the Coming Spaceship Earth. In H. Jarrett (Ed.), *Environmental Quality in a Growing Economy* (pp. 3–14). Resources for the Future, Johns Hopkins University Press.
 3. **Cauchy, A. L. (1827).** De la pression ou tension dans un corps solide. *Exercices de Mathématiques*, 2, 42–56.
 4. **Daly, H. E. (1996).** *Beyond Growth: The Economics of Sustainable Development*. Beacon Press.
-5. **Foster, J. B. (1999).** Marx's theory of metabolic rift: Classical foundations for environmental sociology. *American Journal of Sociology*, 105(2), 366–405. https://doi.org/10.1086/210315
+5. **Dirección General de Aguas [DGA]. (2023).** *Informe Consolidado de Decretos de Escasez Hídrica y Vulnerabilidad de Comités de Agua Potable Rural (APR)*. Ministerio de Obras Públicas, Gobierno de Chile.
+6. **Durán, G., & Kremerman, M. (2024).** *Los bajos salarios, endeudamiento y la precarización del trabajo agrícola de temporada en Chile*. Fundación SOL.
+7. **Foster, J. B. (1999).** Marx's theory of metabolic rift: Classical foundations for environmental sociology. *American Journal of Sociology*, 105(2), 366–405. https://doi.org/10.1086/210315
 6. **Georgescu-Roegen, N. (1971).** *The Entropy Law and the Economic Process*. Harvard University Press. https://doi.org/10.4159/harvard.9780674281653
 7. **Griffith, A. A. (1921).** The phenomena of rupture and flow in solids. *Philosophical Transactions of the Royal Society of London. Series A*, 221(582-593), 163–198. https://doi.org/10.1098/rsta.1921.0006
 8. **Hall, C. A. S., & Klitgaard, K. A. (2011).** *Energy and the Wealth of Nations: Understanding the Biophysical Economy*. Springer. https://doi.org/10.1007/978-1-4419-9398-4
@@ -209,7 +311,8 @@ La mitigación del colapso no provendrá de planes centralizados estatales ni de
 20. **Raworth, K. (2017).** *Doughnut Economics: Seven Ways to Think Like a 21st-Century Economist*. Chelsea Green Publishing.
 21. **Rice, J. (2007).** Ecological unequal exchange: Consumption, equity, and unsustainable structural relationships within the global economy. *International Journal of Comparative Sociology*, 48(1), 43–72. https://doi.org/10.1177/0020715207072159
 22. **Rockström, J., Steffen, W., Noone, K., Persson, Å., Chapin, F. S., Lambin, E. F., ... & Foley, J. A. (2009).** A safe operating space for humanity. *Nature*, 461(7263), 472–475. https://doi.org/10.1038/461472a
-23. **Santander Urrutia, D. (2026).** *Hombros: Un Modelo de Mecánica de Medios Continuos y Metabolismo Socio-Ecológico*. Laboratorio de Modelación Territorial y Autosustento Sintrópico. DOI: 10.5281/zenodo.hombros.2026
+25. **Santander Urrutia, D. (2026a).** *Hombros: Un Modelo de Mecánica de Medios Continuos y Metabolismo Socio-Ecológico*. Laboratorio de Modelación Territorial y Autosustento Sintrópico. DOI: 10.5281/zenodo.hombros.2026
+26. **Santander Urrutia, D. (2026b).** *Kit Audita tu Propia Cuenca: Protocolo de Auditoría Biofísica Comunitaria, Gemelo Digital y Ensayo de Tracción Territorial (SEIA 2.0)*. Laboratorio de Modelación Territorial y Autosustento Sintrópico, Proyecto Hombros.
 24. **Schrödinger, E. (1944).** *What is Life? The Physical Aspect of the Living Cell*. Cambridge University Press.
 25. **Steffen, W., Richardson, K., Rockström, J., Cornell, S. E., Fetzer, I., Bennett, E. M., ... & Sörlin, S. (2015).** Planetary boundaries: Guiding human development on a changing planet. *Science*, 347(6223), 1259855. https://doi.org/10.1126/science.1259855
 26. **Von Liebig, J. (1840).** *Die organische Chemie in ihrer Anwendung auf Agricultur und Physiologie*. Friedrich Vieweg und Sohn.

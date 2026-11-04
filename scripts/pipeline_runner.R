@@ -34,6 +34,9 @@ source("scripts/R/05_montecarlo_uncertainty.R")
 # 7. Factoría de Figuras Canónicas a Alta Resolución (300 DPI)
 source("scripts/R/06_figure_factory.R")
 
+# 8. Módulo Práctico Paper 2: Kit Audita tu Cuenca & Ensayo de Tracción SEIA 2.0
+source("scripts/R/07_kit_audita_tu_cuenca.R")
+
 elapsed <- round(difftime(Sys.time(), start_time, units = "secs"), 2)
 
 cat("\n=================================================================\n")

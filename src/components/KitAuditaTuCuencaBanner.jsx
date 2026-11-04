@@ -3,8 +3,9 @@ import { motion } from 'framer-motion';
 import { 
   Radio, Sparkles, Cpu, Droplets, ShieldCheck, 
   ArrowRight, Compass, FileText, Mountain, CheckCircle2,
-  Sliders, RotateCcw, AlertTriangle, Layers
+  Sliders, RotateCcw, AlertTriangle, Layers, BookOpen
 } from 'lucide-react';
+import { getAssetUrl } from '../utils/assets';
 
 export default function KitAuditaTuCuencaBanner({ 
   isCustomActive = false,
@@ -53,6 +54,15 @@ export default function KitAuditaTuCuencaBanner({
             <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-[#28475A]/60 text-slate-200 border border-white/10">
               Protocolo SEIA 2.0
             </span>
+            <a 
+              href={getAssetUrl('docs/PAPER_PRACTICO_AUDITA_TU_CUENCA.md')}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-amber-500/25 hover:bg-amber-500/40 text-amber-200 border border-amber-400/50 transition-all shadow-sm"
+            >
+              <BookOpen className="w-3 h-3 text-amber-300" />
+              <span>Paper Práctico N° 2 (Manual Comunal)</span>
+            </a>
           </div>
 
           {/* Banner Heading */}

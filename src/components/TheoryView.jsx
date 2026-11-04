@@ -395,6 +395,23 @@ message("✓ [05_montecarlo_uncertainty.R] Análisis Monte Carlo completado. Par
       description: 'Generador de todas las figuras canónicas del paper en ggplot2 con estética de alta resolución (300 DPI) para publicación directa en Ecological Economics o Nature Sustainability.',
       code: `# Exporta figuras 1 a 5 a scripts/figures y public/docs/figures a 300 DPI
 message("✓ [06_figure_factory.R] Todas las figuras canónicas exportadas a 300 DPI.")`
+    },
+    {
+      id: '07_audita_cuenca',
+      title: '07_kit_audita_tu_cuenca.R',
+      category: 'Auditoría Ciudadana (Paper 2)',
+      badge: 'SEIA 2.0 Engine',
+      badgeColor: 'border-emerald-500/40 text-emerald-800 bg-emerald-100',
+      path: 'scripts/R/07_kit_audita_tu_cuenca.R',
+      lines: 168,
+      size: '7.4 KB',
+      description: 'Motor ejecutable del Paper 2: Ensayo de Tracción SEIA 2.0 en Cuenca Río Longaví - Bullileo (5 APRs), cálculo de moratoria pre-inversional ex-ante, ROI biofísico de inacción y exportación de Dictamen JSON.',
+      code: `# ==============================================================================
+# 07_kit_audita_tu_cuenca.R · Script Canónico del Paper 2
+# ==============================================================================
+# Evalúa la Cuenca del Río Longaví ante 4 arquetipos de inversión y calcula
+# el ROI biofísico contra el costo de inacción en camiones aljibe.
+message("✓ [07_kit_audita_tu_cuenca.R] Dictamen SEIA 2.0 y Dictamen JSON emitidos con éxito.")`
     }
   ];
 

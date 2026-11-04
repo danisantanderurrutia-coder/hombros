@@ -782,6 +782,30 @@
       <p>
         Donde $\mathcal{C}_{nm} \in [0, 1]$ representa la <em>complementariedad metabólica</em> entre territorios (e.g., transferencia de biomasa y nutrientes de un nodo agroecológico hacia un nodo con alta capacidad técnica de reciclaje de agua), $d_{nm}$ es la distancia relacional de transporte, y $\lambda$ es la constante de acoplamiento mutualista. La propiedad fundamental de la Red Panal es la <strong>amortiguación de picos de tensión</strong>: la red distribuye los excesos de perturbación exógena, evitando que un territorio individual alcance el umbral de fractura ($\sigma \ge 1.25$).
       </p>
+      <h3 class="subsection-title">2.5. Contabilidad Metabólica de Alcance 1, 2 y 3, Canibalismo Metabólico y Restitución Biofísica</h3>
+      <p>
+        Uno de los mayores vacíos del marco regulatorio actual es el <strong>confinamiento territorial estricto</strong>: un territorio urbano o minero puede registrar balances locales limpios simplemente externalizando su huella metabólica hacia cuencas periféricas. En HOMBROS, el metabolismo socio-ecológico se formaliza mediante el tensor de flujos per cápita:
+      </p>
+
+      <div class="formula-card">
+        <span class="formula-tag">ECUACIÓN FUNDAMENTAL 5 · BALANCE EXTENDIDO</span>
+        $$\vec{\mathcal{F}}_{\text{metab}} = \left\langle \mathcal{E}_{\text{Scope 1}},\, \mathcal{E}_{\text{Scope 2}},\, \mathcal{E}_{\text{Scope 3}}^{\text{up}},\, \mathcal{E}_{\text{Scope 3}}^{\text{down}},\, \mathcal{S}_{\text{bio}} \right\rangle \quad [\text{tCO}_2\text{e} / \text{hab} \cdot \text{año}]$$
+      </div>
+
+      <p>
+        Definimos el <strong>Ratio de Desplazamiento Entrópico</strong> ($\Psi_{\text{ext}} = \frac{\mathcal{E}_{\text{Scope 3}}^{\text{up}}}{\mathcal{E}_{\text{Scope 1}} + \mathcal{E}_{\text{Scope 2}} + \mathcal{E}_{\text{Scope 3}}^{\text{up}}}$) y el <strong>Balance Neto Sintrópico</strong> ($\Omega_{\text{net}} = \frac{\mathcal{S}_{\text{bio}}}{\text{Consumo}}$). Cuando $\Psi_{\text{ext}} > 0.50$ con alta huella importada, el territorio opera en <em>régimen de canibalismo metabólico</em>, transfiriendo su entropía a zonas de sacrificio del Sur Global.
+      </p>
+
+      <h3 class="subsection-title">2.6. Protocolo de Auditoría Biofísica en 4 Eslabones y Salvaguarda Ex-Ante (SEIA 2.0)</h3>
+      <p>
+        Para dotar a los gobiernos locales y comités de base de una herramienta determinística, el modelo se estructura en cuatro eslabones:
+      </p>
+      <ol style="margin-left: 1.5rem; margin-bottom: 1.5rem; line-height: 1.8;">
+        <li><strong>Eslabón I (Normalización Goalposts [0, 1]):</strong> Estandarización de 12 variables físicas ($E_1..E_4, S_1..S_4, K_1..K_4$) incorporando la economía del cuidado mutuo ($S_1$), fiscalización activa de faenas temporeras ($S_2$), empleo digno vs. precarización estacional ($S_3$) y justicia distributiva libre de sobreendeudamiento usurario de subsistencia ($K_3$).</li>
+        <li><strong>Eslabón II (Ensayo de Tracción SEIA 2.0):</strong> Evaluación del proyecto sobre la cuenca hidrográfica indivisible calculando la tensión proyectada $\sigma_{\text{proj}} = \frac{D_0 + \Delta D}{[(E_0 + \Delta E) \cdot S_0 \cdot K_0]^{1/3} \cdot \Phi_{\text{crit}} \cdot (1 + \kappa)}$. Rige el principio de inconmensurabilidad de Liebig ($\Delta E < 0 \not\implies \Delta K > 0$): la destrucción de un acuífero jamás puede compensarse con dinero ni obras civiles.</li>
+        <li><strong>Eslabón III (Rating Biofísico y Salvaguarda Ex-Ante No Negociable):</strong> Calificación de solvencia estructural (AAA a D). Si $\sigma_0 \ge 1.00$ o rige el corte de Liebig ($H_i < 0.25$), el proyecto queda <strong>vetado ex-ante por ley</strong>. Se prohíben taxativamente las mesas de diálogo voluntario o compensaciones de Responsabilidad Social Empresarial (RSE); la única vía legal es una restitución biofísica simétrica previa comprobable.</li>
+        <li><strong>Eslabón IV (ROI Biofísico e Inacción · Escenario Modelado):</strong> Comparación fiscal del costo de inacción frente a la inversión sintrópica preventiva (Keyline, cortafuegos y recarga APR). La modelación macrofiscal visibiliza una <strong>transferencia regresiva neta</strong>: el $88.2\%$ de la emergencia hídrica (camiones aljibe) es financiado con erario público (FNDR/SENAPRED/FCM) y $0\%$ aporte directo de los monocultivos que agotaron la napa.</li>
+      </ol>
     </section>
 
     <!-- SECTION 3 -->
@@ -1033,7 +1057,7 @@
         <li>Al reducir la vulnerabilidad a un agregado de hogares atomizados, las intervenciones gubernamentales se limitan a subsidios monetarios directos (bonos de agua en camiones aljibe) que cronifican la dependencia y subsidian indirectamente el despojo extractivo.</li>
       </ul>
       <p>
-        El modelo <strong>HOMBROS</strong> reemplaza la ontología del "hogar atomizado" por la del <strong>nodo territorial continuo</strong>: lo que se evalúa y gestiona no es la capacidad adquisitiva individual de bienes de consumo, sino la sección transversal portante ($H = (S \cdot E \cdot K)^{1/3}$) y el régimen mecánico de tensión ($\sigma$) del ecosistema compartido.
+        El modelo <strong>HOMBROS</strong> reemplaza la ontología del "hogar atomizado" por la del <strong>nodo territorial continuo</strong>: lo que se evalúa y gestiona no es la capacidad adquisitiva individual de bienes de consumo, sino la sección transversal portante ($H = (E \cdot S \cdot K)^{1/3}$) y el régimen mecánico de tensión ($\sigma$) del ecosistema compartido.
       </p>
 
       <h3 class="subsection-title">5.2. Justicia Metabólica Global y Tratados de Transferencia Sintrópica Norte-Sur</h3>
@@ -1045,7 +1069,7 @@
       </p>
       <ul>
         <li><strong>Fondo de Restitución Entrópica:</strong> Toda metrópolis que mantenga un ratio $\Psi_{\text{ext}} > 0.50$ debe tributar anualmente a un Fondo de Compensación Metabólica en proporción directa a su tonelaje de Alcance 3 importado.</li>
-        <li><strong>Destino de los Flujos:</strong> Los recursos financieros y la transferencia de patentes tecnológicas abiertas deben dirigirse exclusivamente a nodos territoriales con velocidad sintrópica positiva ($\Gamma > 0$) o cuencas en fractura ($\sigma \ge 1.25$) del Sur Global, con el mandato de restaurar el suelo ($S$), desfosilizar la energía ($E$) y blindar la soberanía técnica comunitaria ($K$).</li>
+        <li><strong>Destino de los Flujos:</strong> Los recursos financieros y la transferencia de patentes tecnológicas abiertas deben dirigirse exclusivamente a nodos territoriales con velocidad sintrópica positiva ($\Gamma > 0$) o cuencas en fractura ($\sigma \ge 1.25$) del Sur Global, con el mandato de restaurar la integridad ecosistémica ($E$), sostener el cuidado y la justicia laboral comunitaria ($S$) y blindar la autonomía distributiva ($K$).</li>
       </ul>
 
       <h3 class="subsection-title">5.3. Arquitectura de Gobernanza Policéntrica en Red Panal</h3>
@@ -1056,6 +1080,17 @@
         <li><strong>Autonomía Operativa de Nodo:</strong> Cada cuenca administra sus tres hombros mediante cooperativas comunitarias y asambleas de aguas territoriales.</li>
         <li><strong>Mutualismo No Monetario de Red:</strong> La complementariedad $\mathcal{C}_{nm}$ permite intercambiar excedentes de biomasa, semillas nativas y asistencia técnica de código abierto sin intermediación especulativa financiera, amortiguando picos de tensión externa ($\sigma_{\text{panal}} < \sigma_{\text{aislado}}$).</li>
       </ol>
+
+      <h3 class="subsection-title">5.4. Interconexión con el Manual Práctico: El Kit «Audita tu Propia Cuenca»</h3>
+      <p>
+        La formalización matemática y reológica expuesta en este trabajo encuentra su operacionalización computacional, comunitaria y ciudadana en el manual técnico hermano:
+      </p>
+      <blockquote style="background: rgba(55, 110, 111, 0.15); border-left: 3px solid var(--brand-teal); padding: 1rem 1.25rem; margin: 1rem 0; border-radius: 0 0.5rem 0.5rem 0; font-size: 0.95rem;">
+        <strong>Santander Urrutia, D. (2026b).</strong> <em>Kit Audita tu Propia Cuenca: Protocolo de Auditoría Biofísica Comunitaria, Gemelo Digital y Ensayo de Tracción Territorial (SEIA 2.0)</em>. Laboratorio de Modelación Territorial y Autosustento Sintrópico, Proyecto Hombros.
+      </blockquote>
+      <p>
+        Dicho manual aborda el acoplamiento directo a la telemetría satelital en tiempo real con el Gemelo Digital AgriTwin (Cuenca Río Longaví - Bullileo acoplada a 5 APRs), el uso de la plantilla comunal en blanco y la emisión de dictámenes pre-inversionales abiertos en formato JSON.
+      </p>
     </section>
 
     <!-- SECTION 6 -->

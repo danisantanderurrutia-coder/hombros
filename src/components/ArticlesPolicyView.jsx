@@ -71,6 +71,76 @@ const THINK_TANK_ARTICLES = [
     citations: 'Ley N° 19.300 sobre Bases Generales del Medio Ambiente; Georgescu-Roegen, N. (1971). The Entropy Law and the Economic Process; Liebig, J. von (1840). Die organische Chemie in ihrer Anwendung auf Agricultur und Physiologie; Ostrom, E. (1990). Governing the Commons; Santander, D. (2026). Propuesta Doctoral HOMBROS: Mecánica de Medios Continuos y Salvaguarda Pre-Inversional.'
   },
   {
+    id: 'audita-tu-cuenca-protocolo',
+    category: 'Paper Práctico & Manual Comunal',
+    folio: 'PAPER CIENTÍFICO APLICADO N° 02 · PROTOCOLO CIUDADANO SEIA 2.0',
+    date: 'Noviembre 2026',
+    readTime: '16 min de lectura',
+    author: 'Daniel Sebastián Santander Urrutia',
+    authorRole: 'Investigador Principal · Geofísico (U. de Chile) & Dual M.Sc. (CAU Kiel / AMU Poznań)',
+    image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80',
+    imageCaption: 'Cuenca del Río Longaví - Embalse Bullileo: El territorio piloto de auditoría ciudadana acoplado al Gemelo Digital AgriTwin (Fotografía: Unsplash).',
+    title: 'Kit Audita tu Propia Cuenca: Protocolo de Auditoría Biofísica Comunitaria, Gemelo Digital y Ensayo de Tracción Territorial (SEIA 2.0)',
+    subtitle: 'Manual metodológico y guía operativa para que municipios, comités de Agua Potable Rural (APR) y asambleas ciudadanas auditen la solvencia de sus territorios y emitan dictámenes pre-inversionales vinculantes.',
+    excerpt: 'La física de medios continuos y la telemetría satelital (Sentinel-2 STAC/COG) puestas al servicio de la soberanía técnica comunitaria. Guía paso a paso para calibrar las 12 variables de los tres hombros (E, S, K), correr el ensayo de tracción mecánica en R y modelar la socialización regresiva de pérdidas en el abastecimiento hídrico de emergencia.',
+    tags: ['Kit Audita tu Cuenca', 'Paper Práctico', 'SEIA 2.0', 'AgriTwin Longaví', 'Comités APR', 'ROI Biofísico', 'Ciencia Abierta'],
+    hombrosVariables: ['12 Variables Físicas [0, 1]', 'Hombro Ambiental (E)', 'Hombro Social (S)', 'Hombro Económico (K)', 'Ensayo de Tracción σ_proj', 'Gobernanza κ'],
+    leadQuote: '«La soberanía territorial no se defiende con pancartas vacías ni con estudios de 5.000 páginas pagados por el titular: se defiende con modelos matemáticos públicos que demuestren objetivamente cuándo la cuenca ya no soporta una gota más de extracción.»',
+    sections: [
+      {
+        heading: '1. Diagnóstico: La Trampa de la Asimetría Técnica en el SEIA 1.0',
+        paragraphs: [
+          'En los conflictos socioambientales de Chile y América Latina, las comunidades campesinas y las municipalidades rurales se enfrentan sistemáticamente a una encrucijada desigual. Por una parte, los titulares de proyectos mineros, agroindustriales, forestales o inmobiliarios disponen de presupuestos millonarios para contratar consultoras de ingeniería que redactan expedientes hiper-técnicos de miles de páginas. Por otra parte, las direcciones de obras municipales y las directivas de comités de Agua Potable Rural (APR) disponen de plazos perentorios de participación ciudadana (PAC) para formular observaciones sin contar con software ni modelos de balance de masa.',
+          'Esta desigualdad se agrava por el sesgo de la "línea base naturalizada": el SEIA tradicional trata la degradación histórica de una cuenca seca como un punto de partida incuestionable. Si un acuífero ya perdió el 70% de su capacidad por sobreotorgamiento de derechos de agua, el sistema solo analiza el impacto marginal del nuevo pozo, ignorando que la cuenca se encuentra en deformación plástica irreversible. El Kit Audita tu Cuenca nace para dotar a los territorios de una herramienta matemática rigurosa, pública y de código abierto para revertir esta asimetría.'
+        ]
+      },
+      {
+        heading: '2. Arquitectura de las Doce Variables Físicas Normalizadas (E, S, K)',
+        paragraphs: [
+          'El protocolo de auditoría se funda en doce variables biofísicas empíricas mapeadas al intervalo unitario [0.0, 1.0] mediante funciones de transferencia de postes de meta (Goalposts) calibradas con umbrales de supervivencia biofísica:',
+          '• Hombro Ambiental (E): Integridad de vegetación nativa (E₁), disponibilidad hídrica per cápita con curva logarítmica de Falkenmark (E₂), calidad de suelo vivo y materia orgánica libre de metales pesados (E₃), y resiliencia atmosférica PM2.5 (E₄).',
+          '• Hombro Social (S): Cohesión comunitaria y redes de cuidado mutuo no remunerado (S₁), capacidad institucional y tasa de fiscalización inspectiva efectiva de faenas temporeras por la Dirección del Trabajo (S₂), formalidad laboral vs. asalarización precaria estacional y preservación de saberes campesinos (S₃), y paz territorial (S₄).',
+          '• Hombro Económico o Capital (K): Diversificación productiva inversa al IHH (K₁), autonomía económica comunal (K₂), justicia distributiva (1 - Gini) penalizada por la penetración del sobreendeudamiento usurario familiar para adquirir agua y subsistencia básica (K₃), y ratio metabólico de regeneración biótica vs. extracción (K₄).'
+        ],
+        equation: 'H = \\left( E \\cdot S \\cdot K \\right)^{1/3} \\times \\prod_{i \\in \\{E, S, K\\}} \\left[ 1 - \\Theta(0.25 - H_i) \\cdot \\left( 1 - \\frac{H_i}{0.25} \\right) \\right]'
+      },
+      {
+        heading: '3. El Ensayo de Tracción Comunal y la Moratoria Legal Ex-Ante',
+        paragraphs: [
+          'La unidad de evaluación es la Cuenca Hidrográfica como medio continuo indivisible. Cuando un proyecto somete su expediente a revisión ciudadana o municipal, el kit computa la tensión proyectada sumando la carga del proyecto (ΔD) y su desgaste ecosistémico proyectado (ΔE) a la línea base:',
+          'Bajo el principio de inconmensurabilidad de Liebig, queda prohibida toda compensación inter-hombros (destruir un acuífero no se subsana financiando canchas deportivas o sedes comunitarias). Si el esfuerzo basal preexistente ya supera el umbral plástico (σ₀ ≥ 1.00) o si rige el límite de Liebig (Hᵢ < 0.25), opera una moratoria legal ex-ante vinculante: el proyecto es inadmisible y no puede tramitarse hasta que se ejecute una restitución biofísica simétrica previa comprobable.'
+        ],
+        equation: '\\sigma_{\\text{proj}} = \\frac{D_0 + \\Delta D}{\\left[ (E_0 + \\Delta E) \\cdot S_0 \\cdot K_0 \\right]^{1/3} \\cdot \\Phi_{\\text{crit}} \\cdot (1 + \\kappa)} \\le 0.85 \\quad (\\text{Condición de Seguridad Elástica})'
+      },
+      {
+        heading: '4. Caso de Estudio Piloto: Cuenca del Río Longaví - Bullileo acoplada a AgriTwin',
+        paragraphs: [
+          'La cuenca del Río Longaví (122.070 ha, 21.400 hab., Maule Sur) fue acoplada a la consola del Gemelo Digital AgriTwin. Mediante telemetría Sentinel-2 STAC/COG, balance hídrico del Embalse Bullileo y la red vecinal de 5 Comités APR (Bullileo, Retiro Centro, Copihue, Romeral y Villaseca), se estableció una línea base de H₀ = 0.578 y σ₀ = 0.552 (Rating AAA).',
+          'Sometiendo la cuenca al ensayo de tracción en R (scripts/R/07_kit_audita_tu_cuenca.R), se auditaron 4 arquetipos: la expansión de monocultivo frutal intensivo disparó la tensión a σ_proj = 1.169 (Inadmisible, fractura de acuífero APR); un tranque de relaves minero colapsó la cuenca a σ_proj = 2.370 (Rechazo de plano, Rating D); un loteo inmobiliario de 600 parcelas arrojó σ_proj = 1.119 (Inadmisible); mientras que un parque agro-solar sintrópico con Keyline redujo el estrés a σ_proj = 0.541 (Admisible sintrópico).'
+        ]
+      },
+      {
+        heading: '5. Modelación Macrofiscal del Costo de Inacción y Transferencia Regresiva',
+        paragraphs: [
+          'El kit compara el Costo Anual de Inacción en la cuenca ($3.396.000 USD/año en abastecimiento con camiones aljibe y combate de incendios) frente a una Inversión Sintrópica Preventiva de $3.375.000 USD en 2.500 ha de Keyline y reforestación comunitaria de cabeceras, arrojando un ROI Biofísico a 10 años de +654.7% (amortizado al año 3).',
+          'Asimismo, la modelación macrofiscal de financiamiento revela que el 88.2% del gasto recurrente de emergencia hídrica es pagado por el erario público (FNDR, SENAPRED y Fondo Común Municipal) y el 11.8% por endeudamiento de las propias familias campesinas, con un 0.0% de aporte privado de los grandes monocultivos. Esto demuestra que el sistema opera como una transferencia regresiva masiva de riqueza, donde el Estado socializa las pérdidas ambientales generadas por el agronegocio.'
+        ]
+      },
+      {
+        heading: '6. Procedimiento para Emitir Dictámenes Ciudadanos y Código Reproducible',
+        paragraphs: [
+          'Cualquier asamblea o municipio puede ejecutar la auditoría descargando el script libre en R scripts/R/07_kit_audita_tu_cuenca.R. El software genera un dictamen en formato JSON estandarizado (dictamen_audita_tu_cuenca_longavi.json) que resume la capacidad portante H, la tensión proyectada σ_proj, la calificación estructural (AAA a D) y el dictamen de admisibilidad jurídica, listo para adjuntarse en observaciones ciudadanas ante el SEA y tribunales ambientales.'
+        ]
+      }
+    ],
+    policyRecommendations: [
+      'Facultar a las municipalidades y asambleas de APR para ingresar Dictámenes Pre-Inversionales vinculantes basados en el Kit Audita tu Cuenca al momento del ingreso de cualquier EIA o DIA.',
+      'Establecer por ley que ningún proyecto extractivo pueda someterse a calificación en cuencas declaradas en deformación plástica (σ₀ ≥ 1.00) sin un plan de restitución biofísica simétrica previo verificado.',
+      'Reorientar los fondos de emergencia de camiones aljibe (FNDR/SENAPRED) hacia inversiones sintrópicas permanentes de diseño Keyline y reforestación de cabeceras, eliminando el subsidio estatal implícito al monocultivo.'
+    ],
+    citations: 'Santander Urrutia, D. (2026a). Hombros: Un Modelo de Mecánica de Medios Continuos y Metabolismo Socio-Ecológico; Dirección General de Aguas (2023). Informe de Escasez Hídrica y Vulnerabilidad APR; Durán, G., & Kremerman, M. (2024). Fundación SOL: Precarización laboral agraria; Ostrom, E. (1990). Governing the Commons; Yeomans, P.A. (1958). The Challenge of Landscape: Keyline.'
+  },
+  {
     id: 'olca-policy-1',
     category: 'Serie OLCA · Policy',
     folio: 'POLICY ARTICLE N° 01 · MACROECONOMÍA BIOFÍSICA',
