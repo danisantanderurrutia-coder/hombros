@@ -96,8 +96,11 @@ export function calculateHombrosFullState(territoryData, userModifiers = { press
   // 3. Development Pressure: D = (D1 + D2 + D3) / 3
   const D = calculateDevelopmentPressure(currentPressure);
 
-  // 4. Systemic Stress: σ = D / H
-  const sigma = D / H;
+  // 4. Systemic Stress modulated by Polycentric Governance Damping (κ):
+  // σ = D / [H · (1 + κ)]
+  const kappa = typeof territoryData.kappa === 'number' ? Math.max(0, territoryData.kappa) : 0;
+  const effectiveCarryingCapacity = H * (1 + kappa);
+  const sigma = D / effectiveCarryingCapacity;
 
   // 6. Syntropy / Entropy Indicator Γ = ΔH / (H · Δt)
   // Compare with last historical checkpoint (e.g. 2017 to 2024, dt = 7 years)
@@ -199,6 +202,8 @@ export function calculateHombrosFullState(territoryData, userModifiers = { press
     H_base: parseFloat(H_base.toFixed(3)),
     phiCrit: parseFloat(phiCrit.toFixed(3)),
     H: parseFloat(H.toFixed(3)),
+    kappa: parseFloat(kappa.toFixed(3)),
+    effectiveCarryingCapacity: parseFloat(effectiveCarryingCapacity.toFixed(3)),
     D: parseFloat(D.toFixed(3)),
     sigma: parseFloat(sigma.toFixed(3)),
     gamma,

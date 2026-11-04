@@ -2,7 +2,7 @@ import React from 'react';
 import { Activity, Globe, Layers, Database, BookOpen, GitCompare, Sparkles, ShieldCheck, FileText } from 'lucide-react';
 import { getAssetUrl } from '../utils/assets';
 
-export default function Navbar({ activeTab, setActiveTab }) {
+export default function Navbar({ activeTab, setActiveTab, onNavigateCustomAudit }) {
   const navItems = [
     { id: 'articles', label: 'Artículos & Policy', icon: FileText },
     { id: 'core', label: 'CORE', icon: Activity },
@@ -65,6 +65,25 @@ export default function Navbar({ activeTab, setActiveTab }) {
                 </button>
               );
             })}
+
+            {/* Direct CTA: Kit Audita tu Cuenca + AgriTwin */}
+            <button
+              onClick={() => {
+                if (onNavigateCustomAudit) {
+                  onNavigateCustomAudit('agritwin');
+                } else {
+                  setActiveTab('audit');
+                }
+              }}
+              className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold bg-gradient-to-r from-emerald-700 via-teal-700 to-[#122227] text-emerald-100 hover:text-white border border-emerald-400/40 shadow-sm hover:shadow-emerald-900/30 hover:scale-[1.02] transition-all"
+              title="Acceso directo al Kit Biescala AgriTwin (Cuenca Longaví + Mesa Vecinal El Panal)"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+              </span>
+              <span>⚡ Audita tu Cuenca</span>
+            </button>
           </nav>
 
         </div>

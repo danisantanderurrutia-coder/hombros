@@ -12,6 +12,7 @@ import { NORMALIZATION_GOALPOSTS, normalizeRawValue, denormalizeScoreToRaw } fro
 import { InlineMath, BlockMath } from './KaTeXMath';
 import { getAssetUrl } from '../utils/assets';
 import KitAuditaTuCuencaBanner from './KitAuditaTuCuencaBanner';
+import AgriTwinBasinVecinalConsole from './AgriTwinBasinVecinalConsole';
 
 const INVESTMENT_ARCHETYPES = [
   {
@@ -108,6 +109,14 @@ const AGRITWIN_LONGAVI_PRESET = {
     modulusElasticity: 1.28,
     yieldStrength: 0.85,
     fractureToughness: 1.25
+  },
+  emissions: {
+    scope1: 1.4,
+    scope2: 0.8,
+    scope3Upstream: 1.9,
+    scope3Downstream: 0.9,
+    localSequestration: 2.8,
+    gridCarbonIntensity: 140
   },
   emissionsMetrics: {
     scope1Direct: 1.4,
@@ -464,6 +473,69 @@ export default function MetabolicAuditView({ initialCustomMode }) {
       className="space-y-8 max-w-7xl mx-auto"
     >
       {/* =================================================================== */}
+      {/* HUD STICKY PERSISTENTE: PULSO BIOFÍSICO EN VIVO (SEIA 2.0 + HOMBROS) */}
+      {/* =================================================================== */}
+      <div className="sticky top-20 z-40 bg-[#0F1B1E]/95 backdrop-blur-md border border-emerald-500/30 rounded-2xl p-3 shadow-xl text-white">
+        <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+          <div className="flex items-center gap-2">
+            <span className="flex h-2.5 w-2.5 relative">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+            </span>
+            <span className="font-bold text-emerald-300 font-serif text-sm">
+              {territory.name}
+            </span>
+            <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-500/30">
+              κ={baselineState.kappa?.toFixed(2) ?? '0.00'}
+            </span>
+          </div>
+
+          {/* Trípode S, E, K y Capacidad H */}
+          <div className="hidden sm:flex items-center gap-3 border-x border-white/10 px-3">
+            <span className="text-[#DA7B93]">S={baselineState.S.toFixed(2)}</span>
+            <span className="text-[#38bdf8]">E={baselineState.E.toFixed(2)}</span>
+            <span className="text-[#c084fc]">K={baselineState.K.toFixed(2)}</span>
+            <span className="font-bold text-white">➔ H={baselineState.H.toFixed(2)}</span>
+          </div>
+
+          {/* Tensión sigma_0 y Dictamen SEIA 2.0 */}
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1.5">
+              <span className="text-slate-400 text-[11px]">Tensión:</span>
+              <span className={`font-bold px-2 py-0.5 rounded text-[11px] ${
+                baselineState.sigma < 0.70 ? 'bg-emerald-950 text-emerald-300 border border-emerald-500/30' :
+                baselineState.sigma <= 1.00 ? 'bg-amber-950 text-amber-300 border border-amber-500/30' :
+                'bg-rose-950 text-rose-300 border border-rose-500/30'
+              }`}>
+                σ₀={baselineState.sigma.toFixed(2)}
+              </span>
+            </div>
+
+            <div className="hidden md:flex items-center gap-1.5">
+              <span className="text-slate-400 text-[11px]">Rating:</span>
+              <span className={`font-bold ${tractionAudit.solvencyColor}`}>
+                {tractionAudit.solvencyRating.split('·')[0]}
+              </span>
+            </div>
+
+            <div className="hidden lg:flex items-center gap-1.5">
+              <span className="text-slate-400 text-[11px]">Ahorro Aljibes:</span>
+              <span className="font-bold text-emerald-400">
+                ${roiMetrics.annualWaterTruckM}M USD/año
+              </span>
+            </div>
+
+            <button
+              onClick={handleExportHypothesisJSON}
+              className="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-bold shadow-sm flex items-center gap-1 transition-all"
+            >
+              <Download className="w-3 h-3" />
+              <span>Exportar</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      {/* =================================================================== */}
       {/* BANNER PROTAGÓNICO: KIT AUDITA TU PROPIA CUENCA & GEMELO AGRITWIN    */}
       {/* =================================================================== */}
       <KitAuditaTuCuencaBanner
@@ -472,6 +544,51 @@ export default function MetabolicAuditView({ initialCustomMode }) {
         onActivateCustom={handleActivateCustomTerritory}
         onResetToBenchmark={() => handleSelectTerritory('chanco')}
       />
+
+      {/* =================================================================== */}
+      {/* CONSOLA BIESCALA AGRITWIN ⇄ HOMBROS (MACRO-CUENCA + EL PANAL VECINAL)*/}
+      {/* Visible de forma destacada en Modo Kit Audita tu Cuenca            */}
+      {/* =================================================================== */}
+      {selectedTerritoryId === 'custom_territory' && (
+        <AgriTwinBasinVecinalConsole
+          effectiveVariables={effectiveVariables}
+          onVariableChange={(varKey, normVal) => {
+            if (varKey === 'd1') {
+              setCustomMeta(prev => ({ ...prev, d1: normVal }));
+            } else {
+              setRawOverrides(prev => ({
+                ...prev,
+                [varKey]: denormalizeScoreToRaw(varKey, normVal)
+              }));
+            }
+          }}
+          kappa={customMeta.kappa}
+          onKappaChange={(newKappa) => {
+            setCustomMeta(prev => ({ ...prev, kappa: newKappa }));
+          }}
+          customMeta={customMeta}
+          onMetaChange={setCustomMeta}
+          onLoadAgriTwinPreset={() => handleActivateCustomTerritory(true)}
+          onImportJson={(jsonData) => {
+            if (jsonData.variables) {
+              const newOverrides = {};
+              for (const [k, v] of Object.entries(jsonData.variables)) {
+                newOverrides[k] = denormalizeScoreToRaw(k, v);
+              }
+              setRawOverrides(newOverrides);
+            }
+            if (jsonData.kappa !== undefined) {
+              setCustomMeta(prev => ({ ...prev, kappa: jsonData.kappa }));
+            }
+            if (jsonData.d1 !== undefined) {
+              setCustomMeta(prev => ({ ...prev, d1: jsonData.d1 }));
+            }
+            if (jsonData.name) {
+              setCustomMeta(prev => ({ ...prev, name: jsonData.name }));
+            }
+          }}
+        />
+      )}
 
       {/* =================================================================== */}
       {/* HEADER EJECUTIVO DEL SISTEMA DE AUDITORÍA & LABORATORIO DE HIPÓTESIS*/}
