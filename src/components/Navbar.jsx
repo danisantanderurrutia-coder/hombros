@@ -50,6 +50,29 @@ export default function Navbar({ activeTab, setActiveTab, onNavigateCustomAudit 
             {navItems.map(item => {
               const Icon = item.icon;
               const isActive = activeTab === item.id;
+              const isAudit = item.id === 'audit';
+
+              if (isAudit) {
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => setActiveTab(item.id)}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs transition-all font-mono font-bold ${
+                      isActive
+                        ? 'bg-gradient-to-r from-emerald-700 via-teal-800 to-[#122227] text-white border border-amber-400 ring-2 ring-amber-400/50 shadow-md shadow-emerald-950/40'
+                        : 'bg-gradient-to-r from-[#122227] via-[#1A2E33] to-[#28475A] text-amber-300 border border-amber-400/60 hover:brightness-115 shadow-xs'
+                    }`}
+                  >
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-400"></span>
+                    </span>
+                    <Icon className="w-3.5 h-3.5 text-amber-300" />
+                    <span>{item.label}</span>
+                  </button>
+                );
+              }
+
               return (
                 <button
                   key={item.id}
@@ -65,25 +88,6 @@ export default function Navbar({ activeTab, setActiveTab, onNavigateCustomAudit 
                 </button>
               );
             })}
-
-            {/* Direct CTA: Kit Audita tu Cuenca + AgriTwin */}
-            <button
-              onClick={() => {
-                if (onNavigateCustomAudit) {
-                  onNavigateCustomAudit('agritwin');
-                } else {
-                  setActiveTab('audit');
-                }
-              }}
-              className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold bg-gradient-to-r from-emerald-700 via-teal-700 to-[#122227] text-emerald-100 hover:text-white border border-emerald-400/40 shadow-sm hover:shadow-emerald-900/30 hover:scale-[1.02] transition-all"
-              title="Acceso directo al Kit Biescala AgriTwin (Cuenca Longaví + Mesa Vecinal El Panal)"
-            >
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
-              </span>
-              <span>⚡ Audita tu Cuenca</span>
-            </button>
           </nav>
 
         </div>
@@ -93,6 +97,26 @@ export default function Navbar({ activeTab, setActiveTab, onNavigateCustomAudit 
           {navItems.map(item => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
+            const isAudit = item.id === 'audit';
+
+            if (isAudit) {
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => setActiveTab(item.id)}
+                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold whitespace-nowrap transition-all ${
+                    isActive
+                      ? 'bg-gradient-to-r from-emerald-700 to-[#122227] text-white border border-amber-400 shadow-md'
+                      : 'bg-gradient-to-r from-[#122227] to-[#28475A] text-amber-300 border border-amber-400/50'
+                  }`}
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
+                  <Icon className="w-3.5 h-3.5 text-amber-300" />
+                  {item.label}
+                </button>
+              );
+            }
+
             return (
               <button
                 key={item.id}

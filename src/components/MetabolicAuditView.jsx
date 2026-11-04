@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   ShieldCheck, ShieldAlert, Scale, Calculator, Activity, FileCheck2,
   AlertTriangle, CheckCircle2, Flame, Globe, Sliders, Printer,
@@ -132,10 +132,46 @@ export default function MetabolicAuditView({ initialCustomMode }) {
     initialCustomMode ? 'custom_territory' : 'chanco'
   );
   const [selectedArchetypeId, setSelectedArchetypeId] = useState('agro_forestal');
-  const [activeAuditStep, setActiveAuditStep] = useState('all'); // 'all' | 'step1_norm' | 'step2_traction' | 'step3_rating' | 'step4_roi'
+  const [activeSubtab, setActiveSubtab] = useState('step1_norm'); // 'step1_norm' | 'step2_traction' | 'step3_rating' | 'step4_roi'
   const [rawOverrides, setRawOverrides] = useState({});
   const [customDeltaD, setCustomDeltaD] = useState(null);
   const [customDeltaE, setCustomDeltaE] = useState(null);
+
+  // Subpestañas del Sistema de Auditoría (Espejo de navegación por fases del CORE)
+  const auditSubtabs = [
+    { 
+      id: 'step1_norm', 
+      number: '1', 
+      label: 'Hipótesis & Variables [0, 1]', 
+      tag: 'Calibración & Cuenca', 
+      icon: Calculator,
+      color: 'from-[#376E6F] to-[#254b4c]' 
+    },
+    { 
+      id: 'step2_traction', 
+      number: '2', 
+      label: 'Ensayo de Tracción SEIA 2.0', 
+      tag: 'Carga Pre-Inversión', 
+      icon: Scale,
+      color: 'from-[#8D69A6] to-[#44318D]' 
+    },
+    { 
+      id: 'step3_rating', 
+      number: '3', 
+      label: 'Rating & Salvaguarda', 
+      tag: 'Dictamen Vinculante', 
+      icon: ShieldCheck,
+      color: 'from-[#C86D51] to-[#927660]' 
+    },
+    { 
+      id: 'step4_roi', 
+      number: '4', 
+      label: 'ROI Biofísico vs. Inacción', 
+      tag: 'Gasto Sísifo vs. Sintropía', 
+      icon: Coins,
+      color: 'from-[#DA7B93] to-[#D83F87]' 
+    }
+  ];
 
   // Estado para "+ Evaluar Tu Propio Territorio / Comuna"
   const [customMeta, setCustomMeta] = useState(() => {
@@ -206,6 +242,7 @@ export default function MetabolicAuditView({ initialCustomMode }) {
 
   const handleActivateCustomTerritory = (useAgriTwinPreset = true) => {
     setSelectedTerritoryId('custom_territory');
+    setActiveSubtab('step1_norm');
     setRawOverrides({});
     if (useAgriTwinPreset) {
       setCustomMeta({
@@ -459,6 +496,63 @@ export default function MetabolicAuditView({ initialCustomMode }) {
     URL.revokeObjectURL(url);
   };
 
+  // Aplica cambios de variables ya normalizadas (0–1) en un solo paso.
+  // 'd1' vive en customMeta (presión); el resto en rawOverrides.
+  const applyNormalizedChanges = (changes) => {
+    const { d1, ...vars } = changes;
+    if (typeof d1 === 'number') {
+      setCustomMeta(prev => ({ ...prev, d1: Math.min(0.95, Math.max(0.1, d1)) }));
+    }
+    if (Object.keys(vars).length > 0) {
+      setRawOverrides(prev => {
+        const next = { ...prev };
+        for (const [k, v] of Object.entries(vars)) {
+          next[k] = denormalizeScoreToRaw(k, v);
+        }
+        return next;
+      });
+    }
+  };
+
+  // Importa un JSON validando rangos. Avisa qué se aceptó y qué se descartó.
+  const handleImportAgriTwinJson = (jsonData) => {
+    const VALID_KEYS = ['s1','s2','s3','s4','e1','e2','e3','e4','k1','k2','k3','k4'];
+    const accepted = {};
+    const rejected = [];
+    const source = jsonData && typeof jsonData === 'object' ? jsonData : {};
+    const vars = source.variables && typeof source.variables === 'object' ? source.variables : {};
+
+    for (const [k, v] of Object.entries(vars)) {
+      if (VALID_KEYS.includes(k) && typeof v === 'number' && Number.isFinite(v) && v >= 0 && v <= 1) {
+        accepted[k] = v;
+      } else {
+        rejected.push(k);
+      }
+    }
+    if (typeof source.d1 === 'number' && source.d1 >= 0.1 && source.d1 <= 0.95) accepted.d1 = source.d1;
+    else if (source.d1 !== undefined) rejected.push('d1');
+
+    applyNormalizedChanges(accepted);
+
+    if (typeof source.kappa === 'number' && source.kappa >= 0 && source.kappa <= 1) {
+      setCustomMeta(prev => ({ ...prev, kappa: source.kappa }));
+      accepted.kappa = source.kappa;
+    } else if (source.kappa !== undefined) {
+      rejected.push('kappa');
+    }
+    if (typeof source.name === 'string' && source.name.trim()) {
+      setCustomMeta(prev => ({ ...prev, name: source.name.trim().slice(0, 120) }));
+      accepted.name = true;
+    }
+
+    const okCount = Object.keys(accepted).length;
+    if (okCount === 0) {
+      alert('El archivo no tenía datos válidos. Se esperan números entre 0 y 1 en "variables" (s1…k4), y opcionalmente "kappa", "d1" y "name".');
+    } else if (rejected.length > 0) {
+      alert(`Se cargaron ${okCount} datos. Se descartaron por estar fuera de rango o mal escritos: ${rejected.join(', ')}.`);
+    }
+  };
+
   const varGroups = [
     { shoulder: 'S', title: 'Hombro Social (S)', keys: ['s1', 's2', 's3', 's4'], color: 'border-[#DA7B93]/40 bg-[#301b24]/60' },
     { shoulder: 'E', title: 'Hombro Ambiental (E)', keys: ['e1', 'e2', 'e3', 'e4'], color: 'border-[#376E6F]/50 bg-[#173132]/60' },
@@ -519,8 +613,8 @@ export default function MetabolicAuditView({ initialCustomMode }) {
             </div>
 
             <div className="hidden lg:flex items-center gap-1.5">
-              <span className="text-slate-400 text-[11px]">Ahorro Aljibes:</span>
-              <span className="font-bold text-emerald-400">
+              <span className="text-slate-300 text-[11px]">Costo camiones aljibe:</span>
+              <span className="font-bold text-amber-300" title="Gasto anual estimado con los supuestos del Eslabón IV (ejemplo, no medido)">
                 ${roiMetrics.annualWaterTruckM}M USD/año
               </span>
             </div>
@@ -535,61 +629,13 @@ export default function MetabolicAuditView({ initialCustomMode }) {
           </div>
         </div>
       </div>
-      {/* =================================================================== */}
-      {/* BANNER PROTAGÓNICO: KIT AUDITA TU PROPIA CUENCA & GEMELO AGRITWIN    */}
-      {/* =================================================================== */}
-      <KitAuditaTuCuencaBanner
-        isCustomActive={selectedTerritoryId === 'custom_territory'}
-        customMeta={customMeta}
-        onActivateCustom={handleActivateCustomTerritory}
-        onResetToBenchmark={() => handleSelectTerritory('chanco')}
-      />
 
-      {/* =================================================================== */}
-      {/* CONSOLA BIESCALA AGRITWIN ⇄ HOMBROS (MACRO-CUENCA + EL PANAL VECINAL)*/}
-      {/* Visible de forma destacada en Modo Kit Audita tu Cuenca            */}
-      {/* =================================================================== */}
-      {selectedTerritoryId === 'custom_territory' && (
-        <AgriTwinBasinVecinalConsole
-          effectiveVariables={effectiveVariables}
-          onVariableChange={(varKey, normVal) => {
-            if (varKey === 'd1') {
-              setCustomMeta(prev => ({ ...prev, d1: normVal }));
-            } else {
-              setRawOverrides(prev => ({
-                ...prev,
-                [varKey]: denormalizeScoreToRaw(varKey, normVal)
-              }));
-            }
-          }}
-          kappa={customMeta.kappa}
-          onKappaChange={(newKappa) => {
-            setCustomMeta(prev => ({ ...prev, kappa: newKappa }));
-          }}
-          customMeta={customMeta}
-          onMetaChange={setCustomMeta}
-          onLoadAgriTwinPreset={() => handleActivateCustomTerritory(true)}
-          onImportJson={(jsonData) => {
-            if (jsonData.variables) {
-              const newOverrides = {};
-              for (const [k, v] of Object.entries(jsonData.variables)) {
-                newOverrides[k] = denormalizeScoreToRaw(k, v);
-              }
-              setRawOverrides(newOverrides);
-            }
-            if (jsonData.kappa !== undefined) {
-              setCustomMeta(prev => ({ ...prev, kappa: jsonData.kappa }));
-            }
-            if (jsonData.d1 !== undefined) {
-              setCustomMeta(prev => ({ ...prev, d1: jsonData.d1 }));
-            }
-            if (jsonData.name) {
-              setCustomMeta(prev => ({ ...prev, name: jsonData.name }));
-            }
-          }}
-        />
-      )}
-
+      {/* DESCARGO: este kit NO emite dictámenes ni ratings oficiales */}
+      <div role="note" className="rounded-xl border border-amber-500/50 bg-amber-50 text-amber-950 px-4 py-2.5 text-xs sm:text-sm font-medium leading-relaxed">
+        <strong>Importante:</strong> este kit es una <strong>herramienta de hipótesis y simulación</strong>.
+        Los resultados («dictamen», «rating», «moratoria») <strong>no son un dictamen legal, ni una calificación
+        financiera, ni una resolución del SEIA</strong>. Los valores marcados como «ejemplo» no son mediciones reales.
+      </div>
       {/* =================================================================== */}
       {/* HEADER EJECUTIVO DEL SISTEMA DE AUDITORÍA & LABORATORIO DE HIPÓTESIS*/}
       {/* =================================================================== */}
@@ -632,316 +678,393 @@ export default function MetabolicAuditView({ initialCustomMode }) {
           </div>
         </div>
 
-        {/* Selector de Territorio + Botón "+ Evaluar Tu Propio Territorio / AgriTwin" */}
-        <div className="mt-6 pt-5 border-t border-[#D4C9B8] flex flex-col gap-4 relative z-10">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="flex flex-wrap items-center gap-1.5">
-              <span className="text-[11px] font-mono font-bold text-black mr-1">Hipótesis de Cuenca:</span>
-              {INITIAL_TERRITORIES.map(t => (
-                <button
-                  key={t.id}
-                  onClick={() => handleSelectTerritory(t.id)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold transition-all border ${
-                    selectedTerritoryId === t.id
-                      ? 'bg-[#487075] text-white border-[#376E6F] shadow-md'
-                      : 'bg-white/85 text-slate-800 border-[#D4C9B8] hover:bg-white'
-                  }`}
-                >
-                  {t.name}
-                </button>
-              ))}
-
-              {/* Botón + Kit: Audita tu Propia Cuenca */}
+        {/* Selector de Territorio + Acceso Rápido al Kit Comunal */}
+        <div className="mt-6 pt-5 border-t border-[#D4C9B8] flex flex-wrap items-center justify-between gap-3 relative z-10">
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className="text-[11px] font-mono font-bold text-black mr-1">Hipótesis de Cuenca:</span>
+            {INITIAL_TERRITORIES.map(t => (
               <button
-                onClick={() => handleActivateCustomTerritory(true)}
-                className={`inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-mono font-bold transition-all border ${
-                  selectedTerritoryId === 'custom_territory'
-                    ? 'bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 border-amber-600 ring-2 ring-amber-400/60 shadow-lg'
-                    : 'bg-gradient-to-r from-[#122227] to-[#28475A] text-amber-300 border-amber-400/60 hover:brightness-115 shadow-md'
+                key={t.id}
+                onClick={() => handleSelectTerritory(t.id)}
+                className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold transition-all border ${
+                  selectedTerritoryId === t.id
+                    ? 'bg-[#487075] text-white border-[#376E6F] shadow-md'
+                    : 'bg-white/85 text-slate-800 border-[#D4C9B8] hover:bg-white'
                 }`}
               >
-                <Sparkles className={`w-3.5 h-3.5 ${selectedTerritoryId === 'custom_territory' ? 'text-slate-950' : 'text-amber-300'}`} />
-                <span>⚡ Kit: Audita tu Propia Cuenca</span>
+                {t.name}
               </button>
-            </div>
+            ))}
 
-            <div className="flex flex-wrap items-center gap-1.5">
-              {[
-                { id: 'all', label: 'Flujo Completo (I–IV)' },
-                { id: 'step1_norm', label: 'I. Hipótesis [0,1]' },
-                { id: 'step2_traction', label: 'II. Tracción SEIA 2.0' },
-                { id: 'step3_rating', label: 'III. Rating & Acta' },
-                { id: 'step4_roi', label: 'IV. ROI Biofísico vs. Inacción' }
-              ].map(st => (
-                <button
-                  key={st.id}
-                  onClick={() => setActiveAuditStep(st.id)}
-                  className={`px-3 py-1.5 rounded-xl text-[11px] font-mono font-bold transition-all border ${
-                    activeAuditStep === st.id
-                      ? 'bg-[#C86D51] text-white border-[#927660]'
-                      : 'bg-white/70 text-slate-800 border-[#D4C9B8] hover:bg-white'
-                  }`}
-                >
-                  {st.label}
-                </button>
-              ))}
-            </div>
+            {/* Botón + Kit: Audita tu Propia Cuenca */}
+            <button
+              onClick={() => handleActivateCustomTerritory(true)}
+              className={`inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-mono font-bold transition-all border ${
+                selectedTerritoryId === 'custom_territory'
+                  ? 'bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 border-amber-600 ring-2 ring-amber-400/60 shadow-lg'
+                  : 'bg-gradient-to-r from-[#122227] to-[#28475A] text-amber-300 border-amber-400/60 hover:brightness-115 shadow-md'
+              }`}
+            >
+              <Sparkles className={`w-3.5 h-3.5 ${selectedTerritoryId === 'custom_territory' ? 'text-slate-950' : 'text-amber-300'}`} />
+              <span>⚡ Kit: Audita tu Propia Cuenca</span>
+            </button>
           </div>
 
-          {/* Panel Desplegable cuando se activa "+ Evaluar Tu Propio Territorio / Acople AgriTwin" */}
-          {selectedTerritoryId === 'custom_territory' && (
-            <div className="p-5 rounded-2xl bg-[#140b22] text-white border border-amber-400/40 shadow-xl space-y-4">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-white/10">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <Cpu className="w-4 h-4 text-emerald-300" />
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-300 font-bold">
-                      Kit de Autoevaluación Municipal & Conector de Telemetría AgriTwin (Sentinel-2 STAC/COG + FAO-56)
-                    </span>
-                  </div>
-                  <h3 className="font-serif font-bold text-base sm:text-lg text-white mt-0.5">
-                    Configura tu Propia Hipótesis Comunal o Carga el Gemelo Digital de la Cuenca del Río Longaví
-                  </h3>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  <button
-                    onClick={() => handleActivateCustomTerritory(true)}
-                    className={`px-3 py-1.5 rounded-xl text-[11px] font-mono font-bold border transition-all ${
-                      customMeta.agritwinLinked
-                        ? 'bg-emerald-600 text-white border-emerald-300'
-                        : 'bg-white/10 text-slate-200 border-white/20 hover:bg-white/20'
-                    }`}
-                  >
-                    📡 Preset AgriTwin: Cuenca Longaví / Bullileo
-                  </button>
-                  <button
-                    onClick={() => handleActivateCustomTerritory(false)}
-                    className={`px-3 py-1.5 rounded-xl text-[11px] font-mono font-bold border transition-all ${
-                      !customMeta.agritwinLinked
-                        ? 'bg-amber-600 text-white border-amber-300'
-                        : 'bg-white/10 text-slate-200 border-white/20 hover:bg-white/20'
-                    }`}
-                  >
-                    ✏️ Plantilla Comunal en Blanco
-                  </button>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 text-xs font-mono">
-                <div>
-                  <label className="text-[10px] text-slate-400 uppercase block mb-1">Nombre Cuenca / Comuna</label>
-                  <input
-                    type="text"
-                    value={customMeta.name}
-                    onChange={(e) => setCustomMeta(prev => ({ ...prev, name: e.target.value }))}
-                    className="w-full px-3 py-1.5 rounded-lg bg-black/50 border border-white/20 text-white font-bold"
-                  />
-                </div>
-                <div>
-                  <label className="text-[10px] text-slate-400 uppercase block mb-1">Región / País</label>
-                  <input
-                    type="text"
-                    value={customMeta.region}
-                    onChange={(e) => setCustomMeta(prev => ({ ...prev, region: e.target.value }))}
-                    className="w-full px-3 py-1.5 rounded-lg bg-black/50 border border-white/20 text-white"
-                  />
-                </div>
-                <div>
-                  <label className="text-[10px] text-slate-400 uppercase block mb-1">Población Expuesta</label>
-                  <input
-                    type="number"
-                    value={customMeta.population}
-                    onChange={(e) => setCustomMeta(prev => ({ ...prev, population: parseInt(e.target.value || '0', 10) }))}
-                    className="w-full px-3 py-1.5 rounded-lg bg-black/50 border border-white/20 text-amber-300 font-bold"
-                  />
-                </div>
-                <div>
-                  <label className="text-[10px] text-slate-400 uppercase block mb-1">
-                    Presión Extractiva Basal (D₁ = {customMeta.d1.toFixed(2)})
-                  </label>
-                  <input
-                    type="range"
-                    min="0.10"
-                    max="0.95"
-                    step="0.02"
-                    value={customMeta.d1}
-                    onChange={(e) => setCustomMeta(prev => ({ ...prev, d1: parseFloat(e.target.value) }))}
-                    className="w-full accent-amber-400 cursor-pointer mt-2"
-                  />
-                </div>
-                <div>
-                  <label className="text-[10px] text-slate-400 uppercase block mb-1">
-                    Amortiguación Gobernanza (κ = {customMeta.kappa.toFixed(2)})
-                  </label>
-                  <input
-                    type="range"
-                    min="0.05"
-                    max="0.75"
-                    step="0.02"
-                    value={customMeta.kappa}
-                    onChange={(e) => setCustomMeta(prev => ({ ...prev, kappa: parseFloat(e.target.value) }))}
-                    className="w-full accent-emerald-400 cursor-pointer mt-2"
-                  />
-                </div>
-              </div>
-
-              {customMeta.agritwinLinked && (
-                <div className="p-3 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-[11px] font-mono text-emerald-200 flex flex-wrap items-center justify-between gap-2">
-                  <span>
-                    <strong>✓ Acople Tele-Hidrológico AgriTwin Activo:</strong> Las variables E₁..E₄ se inicializan con la reflectancia BOA Sentinel-2 L2A (Tile 18HYD: NDRE, NDMI, MNDWI, NBR, BSI/SOC) y el balance de masa del Embalse Bullileo (110 hm³) + 5 Comités APR.
-                  </span>
-                  <span className="px-2 py-0.5 rounded bg-emerald-500/30 text-white font-bold">
-                    Tier 2 → Tier 3 Ready
-                  </span>
-                </div>
-              )}
-            </div>
-          )}
+          <div className="text-xs font-mono text-slate-800 bg-white/70 px-3 py-1.5 rounded-xl border border-[#D4C9B8]">
+            Fase de auditoría: <span className="font-bold text-[#8D69A6]">{auditSubtabs.find(s => s.id === activeSubtab)?.label}</span>
+          </div>
         </div>
       </div>
 
-      {/* =================================================================== */}
-      {/* ESLABÓN I: AUDITORÍA DE HIPÓTESIS DE NORMALIZACIÓN (X_raw -> [0,1]) */}
-      {/* =================================================================== */}
-      {(activeAuditStep === 'all' || activeAuditStep === 'step1_norm') && (
-        <div className="card-teal rounded-3xl p-6 sm:p-8 shadow-2xl border border-[#7DB2B2]/40 space-y-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-white/15">
-            <div>
-              <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-black/40 text-emerald-300 border border-emerald-500/30">
-                Eslabón Metodológico I · Hipótesis Paramétricas de Pre-Validación Empírica (OECD/JRC + Falkenmark + Liebig)
-              </span>
-              <h2 className="text-xl sm:text-2xl font-serif font-extrabold text-white mt-1.5 flex items-center gap-2">
-                <Calculator className="w-6 h-6 text-emerald-300" />
-                1. Formulación de Hipótesis sobre los Tres Hombros: Del Dato Físico Crudo al Espacio [0, 1]
-              </h2>
-              <p className="text-xs text-slate-200 mt-1 max-w-3xl leading-relaxed">
-                En el marco de nuestra postulación a fondos de investigación, los valores de <strong>{territory.name}</strong> no se presentan como dogmas estadísticos cerrados, sino como <strong>hipótesis de trabajo transparentes y refutables</strong>. Ajusta cualquier deslizador físico para simular campañas de medición en terreno y observar cómo recalcula la capacidad portante (<InlineMath math="H" />) y el corte de Liebig (<InlineMath math="H_i < 0.25" />).
-              </p>
-            </div>
-
-            {Object.keys(rawOverrides).length > 0 && (
+      {/* =========================================================================
+          BARRA DE NAVEGACIÓN EN SUBPESTAÑAS DE AUDITORÍA (ESTILO CORE DASHBOARD)
+          ========================================================================= */}
+      <div className="bg-[#180e25]/90 border border-white/10 p-1.5 rounded-2xl shadow-xl backdrop-blur-md sticky top-20 z-30">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-1.5">
+          {auditSubtabs.map(tab => {
+            const Icon = tab.icon;
+            const isActive = activeSubtab === tab.id;
+            return (
               <button
-                onClick={() => setRawOverrides({})}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-mono font-bold shadow-md shrink-0"
+                key={tab.id}
+                onClick={() => setActiveSubtab(tab.id)}
+                className={`flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl transition-all text-left relative overflow-hidden group ${
+                  isActive
+                    ? 'bg-gradient-to-r from-[#D83F87] via-[#8D69A6] to-[#376E6F] text-white shadow-lg border border-white/30 font-bold'
+                    : 'text-slate-300 hover:text-white hover:bg-white/5 border border-transparent'
+                }`}
               >
-                <RotateCcw className="w-3.5 h-3.5" />
-                <span>Restaurar Hipótesis Base ({Object.keys(rawOverrides).length})</span>
-              </button>
-            )}
-          </div>
-
-          {/* 3 Columns for S, E, K Raw-to-Normalized Audit */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-            {varGroups.map(group => {
-              const shoulderScore = baselineState[group.shoulder];
-              const isShoulderCrit = shoulderScore < 0.25;
-
-              return (
-                <div key={group.shoulder} className={`p-4 rounded-2xl border ${group.color} space-y-3`}>
-                  <div className="flex items-center justify-between pb-2.5 border-b border-white/10">
-                    <div>
-                      <h3 className="font-serif font-bold text-base text-white">{group.title}</h3>
-                      <span className="text-[10px] font-mono text-slate-300">Hipótesis Nivel 2 (Pre-Fondo)</span>
-                    </div>
-                    <span className={`px-3 py-1 rounded-xl font-mono text-sm font-black border ${
-                      isShoulderCrit ? 'bg-rose-600 text-white border-rose-300 animate-pulse' : 'bg-black/50 text-emerald-300 border-white/20'
-                    }`}>
-                      {group.shoulder} = {shoulderScore.toFixed(3)}
-                    </span>
+                <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 text-xs font-mono font-bold ${
+                  isActive ? 'bg-black/30 text-white' : 'bg-white/5 text-[#DA7B93] group-hover:bg-white/10'
+                }`}>
+                  <Icon className="w-3.5 h-3.5" />
+                </div>
+                <div className="truncate">
+                  <div className="text-[10px] font-mono uppercase tracking-wider opacity-80 leading-none">
+                    {tab.tag}
                   </div>
-
-                  <div className="space-y-2.5">
-                    {group.keys.map(k => {
-                      const spec = NORMALIZATION_GOALPOSTS[k];
-                      const normVal = effectiveVariables[k];
-                      const currentRaw = rawOverrides[k] !== undefined
-                        ? rawOverrides[k]
-                        : denormalizeScoreToRaw(k, territory.variables[k]);
-                      const isCritVar = normVal < 0.25;
-
-                      return (
-                        <div key={k} className="p-3 rounded-xl bg-black/40 border border-white/10 space-y-1.5 font-mono text-xs">
-                          <div className="flex items-center justify-between">
-                            <span className="font-bold text-white">{spec.code} · {spec.name}</span>
-                            <span className={`px-2 py-0.5 rounded text-[11px] font-bold ${
-                              isCritVar ? 'bg-rose-500/30 text-rose-300 border border-rose-500/40' : 'bg-emerald-500/20 text-emerald-300'
-                            }`}>
-                              {normVal.toFixed(2)}
-                            </span>
-                          </div>
-
-                          <div className="flex items-center justify-between text-[10px] text-slate-300">
-                            <span>Hipótesis Cruda: <strong className="text-amber-300">{currentRaw} {spec.unit}</strong></span>
-                            <span className="text-slate-400">{spec.dataTier.split(' ')[0]} {spec.dataTier.split(' ')[1]}</span>
-                          </div>
-
-                          <input
-                            type="range"
-                            min={Math.min(spec.goalposts.collapseMin, spec.goalposts.syntropicOpt)}
-                            max={Math.max(spec.goalposts.collapseMin, spec.goalposts.syntropicOpt)}
-                            step={(Math.abs(spec.goalposts.syntropicOpt - spec.goalposts.collapseMin) / 100) || 0.01}
-                            value={currentRaw}
-                            onChange={(e) => setRawOverrides(prev => ({ ...prev, [k]: parseFloat(e.target.value) }))}
-                            className="w-full accent-[#D83F87] cursor-pointer h-1.5"
-                          />
-
-                          <div className="flex justify-between text-[9px] text-slate-400 pt-0.5">
-                            <span>0.0: {spec.goalposts.collapseMin}</span>
-                            <span className="text-amber-300/90">Liebig(0.25): {spec.goalposts.liebigCrit}</span>
-                            <span>1.0: {spec.goalposts.syntropicOpt}</span>
-                          </div>
-                        </div>
-                      );
-                    })}
+                  <div className="text-xs font-serif font-semibold truncate leading-tight mt-0.5">
+                    {tab.label}
                   </div>
                 </div>
-              );
-            })}
-          </div>
-
-          {/* Embedded Canonical Figure 6 */}
-          <div className="p-4 rounded-2xl bg-[#0c0714] border border-white/15 grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
-            <div className="lg:col-span-7">
-              <img
-                src={getAssetUrl('docs/figures/fig6_normalization_transfer_functions.png')}
-                alt="Figura 6: Funciones de Transferencia y Normalización Canónica"
-                className="w-full max-h-[300px] object-contain rounded-xl border border-white/10"
-              />
-            </div>
-            <div className="lg:col-span-5 space-y-2.5 text-xs text-slate-200 p-2">
-              <span className="px-2.5 py-1 rounded-md bg-[#376E6F] text-white font-mono text-[10px] font-bold uppercase">
-                Figura 6 Canónica · Pipeline R v4.5.2
-              </span>
-              <h4 className="font-serif font-bold text-base text-white">
-                Curvas de Transferencia Multi-Polaridad y Umbral de Liebig
-              </h4>
-              <p className="text-slate-300 leading-relaxed font-sans">
-                Generada por <code className="text-emerald-300">scripts/R/01_data_harmonization.R</code> y <code className="text-emerald-300">06_figure_factory.R</code>. Demuestra cómo las tres familias matemáticas (Lineal Directa, Logarítmica Hídrica de Falkenmark y Lineal Inversa) proyectan magnitudes heterogéneas al intervalo <InlineMath math="[0, 1]" />, fijando en <InlineMath math="H_i = 0.25" /> la zona roja de micro-fractura de Liebig.
-              </p>
-            </div>
-          </div>
+              </button>
+            );
+          })}
         </div>
-      )}
+      </div>
 
-      {/* =================================================================== */}
-      {/* ESLABÓN II: ENSAYO DE TRACCIÓN TERRITORIAL PRE-INVERSIÓN (SEIA 2.0) */}
-      {/* =================================================================== */}
-      {(activeAuditStep === 'all' || activeAuditStep === 'step2_traction') && (
-        <div className="card-indigo rounded-3xl p-6 sm:p-8 shadow-2xl border border-[#8D69A6]/40 space-y-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-white/15">
-            <div>
-              <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-black/40 text-amber-300 border border-amber-500/30">
-                Eslabón Metodológico II · Ensayo de Carga Virtual Uniaxial (Cauchy + Hooke + Cláusula Pre-Inversional)
-              </span>
-              <h2 className="text-xl sm:text-2xl font-serif font-extrabold text-white mt-1.5 flex items-center gap-2">
-                <Scale className="w-6 h-6 text-amber-300" />
-                2. Ensayo de Tracción Territorial Pre-Inversión (Simulador de Reforma al SEIA)
-              </h2>
-              <p className="text-xs text-slate-200 mt-1 max-w-3xl leading-relaxed">
-                Aplica nuestra propuesta de <strong>Cláusula de Salvaguarda Pre-Inversional</strong> sobre <strong>{territory.name}</strong>: antes de autorizar un proyecto extractivo, energético o inmobiliario, sometemos la hipótesis de capacidad portante (<InlineMath math="H" />) a la tracción incremental del proyecto (<InlineMath math="\Delta D, \Delta E" />).
-              </p>
+      {/* =========================================================================
+          CONTENIDO DINÁMICO EN SUBPESTAÑAS CON ANIMACIÓN (ANIMATE PRESENCE)
+          ========================================================================= */}
+      <AnimatePresence mode="wait">
+        {/* =================================================================== */}
+        {/* SUBPESTAÑA 1: HIPÓTESIS, VARIABLES [0, 1] & GEMELO DIGITAL AGRITWIN */}
+        {/* =================================================================== */}
+        {activeSubtab === 'step1_norm' && (
+          <motion.div
+            key="subtab_norm"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.25 }}
+            className="space-y-6"
+          >
+            {/* Banner Kit Audita tu Cuenca */}
+            <KitAuditaTuCuencaBanner
+              isCustomActive={selectedTerritoryId === 'custom_territory'}
+              customMeta={customMeta}
+              onActivateCustom={handleActivateCustomTerritory}
+              onResetToBenchmark={() => handleSelectTerritory('chanco')}
+            />
+
+            {/* Consola AgriTwin y Configuración Municipal cuando se activa el Modo Cuenca Personalizada */}
+            {selectedTerritoryId === 'custom_territory' && (
+              <>
+                <div className="p-5 rounded-2xl bg-[#140b22] text-white border border-amber-400/40 shadow-xl space-y-4">
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-white/10">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <Cpu className="w-4 h-4 text-emerald-300" />
+                        <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-300 font-bold">
+                          Kit de Autoevaluación Municipal & Conector de Telemetría AgriTwin (Sentinel-2 STAC/COG + FAO-56)
+                        </span>
+                      </div>
+                      <h3 className="font-serif font-bold text-base sm:text-lg text-white mt-0.5">
+                        Configura tu Propia Hipótesis Comunal o Carga el Gemelo Digital de la Cuenca del Río Longaví
+                      </h3>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      <button
+                        onClick={() => handleActivateCustomTerritory(true)}
+                        className={`px-3 py-1.5 rounded-xl text-[11px] font-mono font-bold border transition-all ${
+                          customMeta.agritwinLinked
+                            ? 'bg-emerald-600 text-white border-emerald-300'
+                            : 'bg-white/10 text-slate-200 border-white/20 hover:bg-white/20'
+                        }`}
+                      >
+                        📡 Preset AgriTwin: Cuenca Longaví / Bullileo
+                      </button>
+                      <button
+                        onClick={() => handleActivateCustomTerritory(false)}
+                        className={`px-3 py-1.5 rounded-xl text-[11px] font-mono font-bold border transition-all ${
+                          !customMeta.agritwinLinked
+                            ? 'bg-amber-600 text-white border-amber-300'
+                            : 'bg-white/10 text-slate-200 border-white/20 hover:bg-white/20'
+                        }`}
+                      >
+                        ✏️ Plantilla Comunal en Blanco
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 text-xs font-mono">
+                    <div>
+                      <label className="text-[10px] text-slate-400 uppercase block mb-1">Nombre Cuenca / Comuna</label>
+                      <input
+                        type="text"
+                        value={customMeta.name}
+                        onChange={(e) => setCustomMeta(prev => ({ ...prev, name: e.target.value }))}
+                        className="w-full px-3 py-1.5 rounded-lg bg-black/50 border border-white/20 text-white font-bold"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[10px] text-slate-400 uppercase block mb-1">Región / País</label>
+                      <input
+                        type="text"
+                        value={customMeta.region}
+                        onChange={(e) => setCustomMeta(prev => ({ ...prev, region: e.target.value }))}
+                        className="w-full px-3 py-1.5 rounded-lg bg-black/50 border border-white/20 text-white"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[10px] text-slate-400 uppercase block mb-1">Población Expuesta</label>
+                      <input
+                        type="number"
+                        value={customMeta.population}
+                        onChange={(e) => setCustomMeta(prev => ({ ...prev, population: parseInt(e.target.value || '0', 10) }))}
+                        className="w-full px-3 py-1.5 rounded-lg bg-black/50 border border-white/20 text-amber-300 font-bold"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[10px] text-slate-400 uppercase block mb-1">
+                        Presión Extractiva Basal (D₁ = {customMeta.d1.toFixed(2)})
+                      </label>
+                      <input
+                        type="range"
+                        min="0.10"
+                        max="0.95"
+                        step="0.02"
+                        value={customMeta.d1}
+                        onChange={(e) => setCustomMeta(prev => ({ ...prev, d1: parseFloat(e.target.value) }))}
+                        className="w-full accent-amber-400 cursor-pointer mt-2"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[10px] text-slate-400 uppercase block mb-1">
+                        Amortiguación Gobernanza (κ = {customMeta.kappa.toFixed(2)})
+                      </label>
+                      <input
+                        type="range"
+                        min="0.05"
+                        max="0.75"
+                        step="0.02"
+                        value={customMeta.kappa}
+                        onChange={(e) => setCustomMeta(prev => ({ ...prev, kappa: parseFloat(e.target.value) }))}
+                        className="w-full accent-emerald-400 cursor-pointer mt-2"
+                      />
+                    </div>
+                  </div>
+
+                  {customMeta.agritwinLinked && (
+                    <div className="p-3 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-[11px] font-mono text-emerald-200 flex flex-wrap items-center justify-between gap-2">
+                      <span>
+                        <strong>✓ Acople Tele-Hidrológico AgriTwin Activo:</strong> Las variables E₁..E₄ se inicializan con la reflectancia BOA Sentinel-2 L2A (Tile 18HYD: NDRE, NDMI, MNDWI, NBR, BSI/SOC) y el balance de masa del Embalse Bullileo (110 hm³) + 5 Comités APR.
+                      </span>
+                      <span className="px-2 py-0.5 rounded bg-emerald-500/30 text-white font-bold">
+                        Tier 2 → Tier 3 Ready
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                <AgriTwinBasinVecinalConsole
+                  effectiveVariables={effectiveVariables}
+                  onVariableChange={(varKey, normVal) => applyNormalizedChanges({ [varKey]: normVal })}
+                  onVariablesChange={applyNormalizedChanges}
+                  kappa={customMeta.kappa}
+                  onKappaChange={(newKappa) => {
+                    setCustomMeta(prev => ({ ...prev, kappa: newKappa }));
+                  }}
+                  onLoadAgriTwinPreset={() => handleActivateCustomTerritory(true)}
+                  onImportJson={handleImportAgriTwinJson}
+                />
+              </>
+            )}
+
+            {/* =================================================================== */}
+            {/* ESLABÓN I: AUDITORÍA DE HIPÓTESIS DE NORMALIZACIÓN (X_raw -> [0,1]) */}
+            {/* =================================================================== */}
+            <div className="card-teal rounded-3xl p-6 sm:p-8 shadow-2xl border border-[#7DB2B2]/40 space-y-6">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-white/15">
+                <div>
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-black/40 text-emerald-300 border border-emerald-500/30">
+                    Eslabón Metodológico I · Hipótesis Paramétricas de Pre-Validación Empírica (OECD/JRC + Falkenmark + Liebig)
+                  </span>
+                  <h2 className="text-xl sm:text-2xl font-serif font-extrabold text-white mt-1.5 flex items-center gap-2">
+                    <Calculator className="w-6 h-6 text-emerald-300" />
+                    1. Formulación de Hipótesis sobre los Tres Hombros: Del Dato Físico Crudo al Espacio [0, 1]
+                  </h2>
+                  <p className="text-xs text-slate-200 mt-1 max-w-3xl leading-relaxed">
+                    En el marco de nuestra postulación a fondos de investigación, los valores de <strong>{territory.name}</strong> no se presentan como dogmas estadísticos cerrados, sino como <strong>hipótesis de trabajo transparentes y refutables</strong>. Ajusta cualquier deslizador físico para simular campañas de medición en terreno y observar cómo recalcula la capacidad portante (<InlineMath math="H" />) y el corte de Liebig (<InlineMath math="H_i < 0.25" />).
+                  </p>
+                </div>
+
+                {Object.keys(rawOverrides).length > 0 && (
+                  <button
+                    onClick={() => setRawOverrides({})}
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-mono font-bold shadow-md shrink-0"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" />
+                    <span>Restaurar Hipótesis Base ({Object.keys(rawOverrides).length})</span>
+                  </button>
+                )}
+              </div>
+
+              {/* 3 Columns for S, E, K Raw-to-Normalized Audit */}
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+                {varGroups.map(group => {
+                  const shoulderScore = baselineState[group.shoulder];
+                  const isShoulderCrit = shoulderScore < 0.25;
+
+                  return (
+                    <div key={group.shoulder} className={`p-4 rounded-2xl border ${group.color} space-y-3`}>
+                      <div className="flex items-center justify-between pb-2.5 border-b border-white/10">
+                        <div>
+                          <h3 className="font-serif font-bold text-base text-white">{group.title}</h3>
+                          <span className="text-[10px] font-mono text-slate-300">Hipótesis Nivel 2 (Pre-Fondo)</span>
+                        </div>
+                        <span className={`px-3 py-1 rounded-xl font-mono text-sm font-black border ${
+                          isShoulderCrit ? 'bg-rose-600 text-white border-rose-300 animate-pulse' : 'bg-black/50 text-emerald-300 border-white/20'
+                        }`}>
+                          {group.shoulder} = {shoulderScore.toFixed(3)}
+                        </span>
+                      </div>
+
+                      <div className="space-y-2.5">
+                        {group.keys.map(k => {
+                          const spec = NORMALIZATION_GOALPOSTS[k];
+                          const normVal = effectiveVariables[k];
+                          const currentRaw = rawOverrides[k] !== undefined
+                            ? rawOverrides[k]
+                            : denormalizeScoreToRaw(k, territory.variables[k]);
+                          const isCritVar = normVal < 0.25;
+
+                          return (
+                            <div key={k} className="p-3 rounded-xl bg-black/40 border border-white/10 space-y-1.5 font-mono text-xs">
+                              <div className="flex items-center justify-between">
+                                <span className="font-bold text-white">{spec.code} · {spec.name}</span>
+                                <span className={`px-2 py-0.5 rounded text-[11px] font-bold ${
+                                  isCritVar ? 'bg-rose-500/30 text-rose-300 border border-rose-500/40' : 'bg-emerald-500/20 text-emerald-300'
+                                }`}>
+                                  {normVal.toFixed(2)}
+                                </span>
+                              </div>
+
+                              <div className="flex items-center justify-between text-[10px] text-slate-300">
+                                <span>Hipótesis Cruda: <strong className="text-amber-300">{currentRaw} {spec.unit}</strong></span>
+                                <span className="text-slate-400">{spec.dataTier.split(' ')[0]} {spec.dataTier.split(' ')[1]}</span>
+                              </div>
+
+                              <input
+                                type="range"
+                                min={Math.min(spec.goalposts.collapseMin, spec.goalposts.syntropicOpt)}
+                                max={Math.max(spec.goalposts.collapseMin, spec.goalposts.syntropicOpt)}
+                                step={(Math.abs(spec.goalposts.syntropicOpt - spec.goalposts.collapseMin) / 100) || 0.01}
+                                value={currentRaw}
+                                onChange={(e) => setRawOverrides(prev => ({ ...prev, [k]: parseFloat(e.target.value) }))}
+                                className="w-full accent-[#D83F87] cursor-pointer h-1.5"
+                              />
+
+                              <div className="flex justify-between text-[9px] text-slate-400 pt-0.5">
+                                <span>0.0: {spec.goalposts.collapseMin}</span>
+                                <span className="text-amber-300/90">Liebig(0.25): {spec.goalposts.liebigCrit}</span>
+                                <span>1.0: {spec.goalposts.syntropicOpt}</span>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Embedded Canonical Figure 6 */}
+              <div className="p-4 rounded-2xl bg-[#0c0714] border border-white/15 grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
+                <div className="lg:col-span-7">
+                  <img
+                    src={getAssetUrl('docs/figures/fig6_normalization_transfer_functions.png')}
+                    alt="Figura 6: Funciones de Transferencia y Normalización Canónica"
+                    className="w-full max-h-[300px] object-contain rounded-xl border border-white/10"
+                  />
+                </div>
+                <div className="lg:col-span-5 space-y-2.5 text-xs text-slate-200 p-2">
+                  <span className="px-2.5 py-1 rounded-md bg-[#376E6F] text-white font-mono text-[10px] font-bold uppercase">
+                    Figura 6 Canónica · Pipeline R v4.5.2
+                  </span>
+                  <h4 className="font-serif font-bold text-base text-white">
+                    Curvas de Transferencia Multi-Polaridad y Umbral de Liebig
+                  </h4>
+                  <p className="text-slate-300 leading-relaxed font-sans">
+                    Generada por <code className="text-emerald-300">scripts/R/01_data_harmonization.R</code> y <code className="text-emerald-300">06_figure_factory.R</code>. Demuestra cómo las tres familias matemáticas (Lineal Directa, Logarítmica Hídrica de Falkenmark y Lineal Inversa) proyectan magnitudes heterogéneas al intervalo <InlineMath math="[0, 1]" />, fijando en <InlineMath math="H_i = 0.25" /> la zona roja de micro-fractura de Liebig.
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
+
+            {/* Navegación Progresiva al Eslabón II */}
+            <div className="flex justify-end pt-2">
+              <button
+                onClick={() => {
+                  setActiveSubtab('step2_traction');
+                  window.scrollTo({ top: 120, behavior: 'smooth' });
+                }}
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#8D69A6] to-[#44318D] text-white font-serif font-bold text-sm shadow-xl hover:brightness-110 transition-all border border-white/20"
+              >
+                <span>Avanzar al Eslabón II: Ensayo de Tracción SEIA 2.0</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          </motion.div>
+        )}
+
+        {/* =================================================================== */}
+        {/* SUBPESTAÑA 2: ENSAYO DE TRACCIÓN SEIA 2.0 (CARGA PRE-INVERSIÓN)    */}
+        {/* =================================================================== */}
+        {activeSubtab === 'step2_traction' && (
+          <motion.div
+            key="subtab_traction"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.25 }}
+            className="space-y-6"
+          >
+            <div className="card-indigo rounded-3xl p-6 sm:p-8 shadow-2xl border border-[#8D69A6]/40 space-y-6">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-white/15">
+                <div>
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-black/40 text-amber-300 border border-amber-500/30">
+                    Eslabón Metodológico II · Ensayo de Carga Virtual Uniaxial (Cauchy + Hooke + Cláusula Pre-Inversional)
+                  </span>
+                  <h2 className="text-xl sm:text-2xl font-serif font-extrabold text-white mt-1.5 flex items-center gap-2">
+                    <Scale className="w-6 h-6 text-amber-300" />
+                    2. Ensayo de Tracción Territorial Pre-Inversión (Simulador de Reforma al SEIA)
+                  </h2>
+                  <p className="text-xs text-slate-200 mt-1 max-w-3xl leading-relaxed">
+                    Aplica nuestra propuesta de <strong>Cláusula de Salvaguarda Pre-Inversional</strong> sobre <strong>{territory.name}</strong>: antes de autorizar un proyecto extractivo, energético o inmobiliario, sometemos la hipótesis de capacidad portante (<InlineMath math="H" />) a la tracción incremental del proyecto (<InlineMath math="\Delta D, \Delta E" />).
+                  </p>
+                </div>
+              </div>
 
           {/* Selector de Arquetipo de Proyecto a Auditar */}
           <div className="space-y-2">
@@ -1137,12 +1260,44 @@ export default function MetabolicAuditView({ initialCustomMode }) {
             </div>
           </div>
         </div>
-      )}
 
-      {/* =================================================================== */}
-      {/* ESLABÓN III: RATING DE SOLVENCIA METABÓLICA & ACTA OFICIAL          */}
-      {/* =================================================================== */}
-      {(activeAuditStep === 'all' || activeAuditStep === 'step3_rating') && (
+        {/* Botones de Navegación Progresiva */}
+        <div className="flex items-center justify-between pt-2">
+          <button
+            onClick={() => {
+              setActiveSubtab('step1_norm');
+              window.scrollTo({ top: 120, behavior: 'smooth' });
+            }}
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-mono text-xs font-bold transition-all border border-white/20"
+          >
+            <span>← Volver a Hipótesis & Variables</span>
+          </button>
+          <button
+            onClick={() => {
+              setActiveSubtab('step3_rating');
+              window.scrollTo({ top: 120, behavior: 'smooth' });
+            }}
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#C86D51] to-[#927660] text-white font-serif font-bold text-sm shadow-xl hover:brightness-110 transition-all border border-white/20"
+          >
+            <span>Avanzar al Eslabón III: Rating & Acta</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
+      </motion.div>
+    )}
+
+    {/* =================================================================== */}
+    {/* SUBPESTAÑA 3: RATING DE SOLVENCIA METABÓLICA & ACTA OFICIAL        */}
+    {/* =================================================================== */}
+    {activeSubtab === 'step3_rating' && (
+      <motion.div
+        key="subtab_rating"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{ duration: 0.25 }}
+        className="space-y-6"
+      >
         <div className="card-slate rounded-3xl p-6 sm:p-8 shadow-2xl border border-[#927660]/40 space-y-6">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#D4C9B8]">
             <div>
@@ -1230,12 +1385,44 @@ export default function MetabolicAuditView({ initialCustomMode }) {
             </div>
           </div>
         </div>
-      )}
 
-      {/* =================================================================== */}
-      {/* ESLABÓN IV: CALCULADORA DE ROI BIOFÍSICO VS. COSTO DE INACCIÓN      */}
-      {/* =================================================================== */}
-      {(activeAuditStep === 'all' || activeAuditStep === 'step4_roi') && (
+        {/* Botones de Navegación Progresiva */}
+        <div className="flex items-center justify-between pt-2">
+          <button
+            onClick={() => {
+              setActiveSubtab('step2_traction');
+              window.scrollTo({ top: 120, behavior: 'smooth' });
+            }}
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-mono text-xs font-bold transition-all border border-white/20"
+          >
+            <span>← Volver a Ensayo de Tracción</span>
+          </button>
+          <button
+            onClick={() => {
+              setActiveSubtab('step4_roi');
+              window.scrollTo({ top: 120, behavior: 'smooth' });
+            }}
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#DA7B93] to-[#D83F87] text-white font-serif font-bold text-sm shadow-xl hover:brightness-110 transition-all border border-white/20"
+          >
+            <span>Avanzar al Eslabón IV: ROI Biofísico vs. Inacción</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
+      </motion.div>
+    )}
+
+    {/* =================================================================== */}
+    {/* SUBPESTAÑA 4: CALCULADORA DE ROI BIOFÍSICO VS. COSTO DE INACCIÓN    */}
+    {/* =================================================================== */}
+    {activeSubtab === 'step4_roi' && (
+      <motion.div
+        key="subtab_roi"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{ duration: 0.25 }}
+        className="space-y-6"
+      >
         <div className="card-rose rounded-3xl p-6 sm:p-8 shadow-2xl border border-[#DA7B93]/40 space-y-6">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-white/15">
             <div>
@@ -1392,7 +1579,31 @@ export default function MetabolicAuditView({ initialCustomMode }) {
             </div>
           </div>
         </div>
-      )}
-    </motion.div>
-  );
+
+        {/* Botones de Navegación Progresiva */}
+        <div className="flex items-center justify-between pt-2">
+          <button
+            onClick={() => {
+              setActiveSubtab('step3_rating');
+              window.scrollTo({ top: 120, behavior: 'smooth' });
+            }}
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-mono text-xs font-bold transition-all border border-white/20"
+          >
+            <span>← Volver a Rating & Acta</span>
+          </button>
+          <button
+            onClick={() => {
+              setActiveSubtab('step1_norm');
+              window.scrollTo({ top: 120, behavior: 'smooth' });
+            }}
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#376E6F] to-[#254b4c] text-white font-serif font-bold text-sm shadow-xl hover:brightness-110 transition-all border border-white/20"
+          >
+            <span>↺ Reiniciar en Calibración de Hipótesis</span>
+          </button>
+        </div>
+      </motion.div>
+    )}
+  </AnimatePresence>
+</motion.div>
+);
 }
