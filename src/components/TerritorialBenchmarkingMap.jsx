@@ -1,7 +1,12 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Globe, MapPin, AlertCircle, ShieldAlert, CheckCircle2, ChevronRight, Activity, Filter, Info, Sparkles, Building2, Droplets, Mountain } from 'lucide-react';
+import { 
+  Globe, MapPin, AlertCircle, ShieldAlert, CheckCircle2, ChevronRight, 
+  Activity, Filter, Info, Sparkles, Building2, Droplets, Mountain,
+  Flame, RotateCcw, AlertOctagon
+} from 'lucide-react';
 import { InlineMath, LatexText } from './KaTeXMath';
+import PhysicalTrafficLight from './PhysicalTrafficLight';
 
 export const BENCHMARK_CITIES = [
   // =========================================================================
@@ -447,13 +452,23 @@ export const BENCHMARK_CITIES = [
 ];
 
 export default function TerritorialBenchmarkingMap({ onSelectCity, selectedCityId }) {
+  const [internalCityId, setInternalCityId] = useState('quillota');
+  const [cityStressDelta, setCityStressDelta] = useState(0);
   const [activeRegion, setActiveRegion] = useState('chile_central'); // 'europa' | 'chile_central'
   const [statusFilter, setStatusFilter] = useState('all'); // 'all' | 'green' | 'amber' | 'red' | 'critical'
 
-  // Synchronize activeRegion when selectedCityId changes externally
+  const effectiveCityId = selectedCityId || internalCityId;
+
+  const handleSelectCity = (cityId) => {
+    setInternalCityId(cityId);
+    setCityStressDelta(0);
+    if (onSelectCity) onSelectCity(cityId);
+  };
+
+  // Synchronize activeRegion when effectiveCityId changes
   useEffect(() => {
-    if (!selectedCityId) return;
-    const found = BENCHMARK_CITIES.find(c => c.id === selectedCityId);
+    if (!effectiveCityId) return;
+    const found = BENCHMARK_CITIES.find(c => c.id === effectiveCityId);
     if (found) {
       const isEuro = found.region === 'Europa';
       if (isEuro && activeRegion !== 'europa') {
@@ -462,7 +477,7 @@ export default function TerritorialBenchmarkingMap({ onSelectCity, selectedCityI
         setActiveRegion('chile_central');
       }
     }
-  }, [selectedCityId]);
+  }, [effectiveCityId]);
 
   // Filter cities by selected region
   const regionCities = useMemo(() => {
@@ -485,12 +500,205 @@ export default function TerritorialBenchmarkingMap({ onSelectCity, selectedCityI
 
   // Active city inspection object
   const activeCity = useMemo(() => {
-    return BENCHMARK_CITIES.find(c => c.id === selectedCityId) || regionCities[0];
-  }, [selectedCityId, regionCities]);
+    return BENCHMARK_CITIES.find(c => c.id === effectiveCityId) || regionCities[0];
+  }, [effectiveCityId, regionCities]);
+
+  // Dynamic stress calculation for Hero Traffic Light & Governance Alerts
+  const heroTelemetry = useMemo(() => {
+    const adjustedSigma = activeCity.sigma * (1 + cityStressDelta);
+    const isCritical = activeCity.trafficLight === 'critical_red' || activeCity.S < 0.25 || activeCity.E < 0.25 || activeCity.K < 0.25;
+
+    let effectiveLight = activeCity.trafficLight;
+    if (adjustedSigma > 1.25) effectiveLight = 'black';
+    else if (adjustedSigma > 1.0) effectiveLight = 'red';
+    else if (adjustedSigma > 0.85) effectiveLight = 'amber';
+    else effectiveLight = 'green';
+    if (isCritical) effectiveLight = 'critical_red';
+
+    const activeAlerts = [];
+    if (isCritical) {
+      activeAlerts.push({
+        id: 'crit_shoulder',
+        condition: 'Falla Estructural de Hombro (H_i < 0.25)',
+        signal: '🔴',
+        action: activeCity.remedy,
+        severity: 'critical'
+      });
+    }
+    if (adjustedSigma > 1.20) {
+      activeAlerts.push({
+        id: 'crit_sigma',
+        condition: `σ = ${adjustedSigma.toFixed(2)} > 1.20`,
+        signal: '🔴🔴',
+        action: 'Ruptura inminente: moratoria a la extracción y penalización de flujos de exportación.',
+        severity: 'critical'
+      });
+    } else if (adjustedSigma > 0.85) {
+      activeAlerts.push({
+        id: 'amber_sigma',
+        condition: `0.85 ≤ σ = ${adjustedSigma.toFixed(2)} ≤ 1.20`,
+        signal: '🟡',
+        action: 'Zona de fluencia elástica: reorientar inversiones hacia regeneración y retención hídrica.',
+        severity: 'high'
+      });
+    } else {
+      activeAlerts.push({
+        id: 'safe_sigma',
+        condition: `σ = ${adjustedSigma.toFixed(2)} < 0.85`,
+        signal: '🟢',
+        action: 'Margen biofísico seguro: custodiar cuencas y fortalecer circuitos cortos de economía comunitaria.',
+        severity: 'safe'
+      });
+    }
+
+    return {
+      adjustedSigma,
+      isCritical,
+      effectiveLight,
+      activeAlerts
+    };
+  }, [activeCity, cityStressDelta]);
 
   return (
-    <div className="space-y-5">
-      {/* Top Region Navigation & Filter Bar */}
+    <div className="space-y-6">
+      {/* ===================================================================
+          1. HERO DEL SEMÁFORO OPERATIVO SITUADO (SEMÁFORO + TEST DE ESTRÉS + DICTÁMENES)
+          =================================================================== */}
+      <div className="p-6 sm:p-8 rounded-3xl bg-[#FAF7F0] border border-[#D4C9B8] shadow-xl">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          
+          {/* Left of Hero (4/12): Physical Traffic Light Chassis */}
+          <div className="lg:col-span-4">
+            <PhysicalTrafficLight
+              trafficLight={heroTelemetry.effectiveLight}
+              actionCode={activeCity.actionCode}
+              actionTitle={activeCity.actionTitle}
+              sigma={heroTelemetry.adjustedSigma}
+              hasCriticalShoulder={heroTelemetry.isCritical}
+            />
+          </div>
+
+          {/* Right of Hero (8/12): City Header, Stress Test Slider & Binding Governance Protocols */}
+          <div className="lg:col-span-8 space-y-5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#D4C9B8]">
+              <div>
+                <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                  <span className="px-3 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-[#28475A] text-white">
+                    Semáforo Biofísico Situado · {activeCity.country} ({activeCity.region})
+                  </span>
+                  <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase text-white ${
+                    heroTelemetry.effectiveLight === 'green' ? 'bg-[#487075]' :
+                    heroTelemetry.effectiveLight === 'amber' ? 'bg-[#D4A373]' :
+                    heroTelemetry.effectiveLight === 'red' ? 'bg-[#C86D51]' :
+                    'bg-[#991B1B]'
+                  }`}>
+                    Código: {activeCity.actionCode}
+                  </span>
+                </div>
+                <h2 className="text-2xl sm:text-3xl font-serif font-extrabold text-slate-900">
+                  {activeCity.name}: {activeCity.actionTitle}
+                </h2>
+              </div>
+
+              {/* Quick KPI Badges in Hero */}
+              <div className="flex items-center gap-2 font-mono text-xs shrink-0">
+                <div className="px-3 py-2 rounded-2xl bg-white border border-[#D4C9B8] text-center">
+                  <span className="text-[9px] uppercase text-slate-500 block font-bold">Capacidad H</span>
+                  <strong className="text-sm text-slate-900 font-black">{activeCity.H.toFixed(2)}</strong>
+                </div>
+                <div className="px-3 py-2 rounded-2xl bg-[#FEECE8] border border-[#F4A79D] text-center">
+                  <span className="text-[9px] uppercase text-[#991B1B] block font-bold">Tensión σ</span>
+                  <strong className="text-sm text-[#991B1B] font-black">{heroTelemetry.adjustedSigma.toFixed(2)}</strong>
+                </div>
+              </div>
+            </div>
+
+            {/* Interactive Stress Test Slider inside Hero */}
+            <div className="p-4 rounded-2xl bg-white border border-[#D4C9B8] shadow-xs space-y-2.5">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono font-bold text-slate-900 flex items-center gap-1.5">
+                  <Flame className="w-4 h-4 text-[#C86D51]" /> Simulador de Estrés sobre {activeCity.name} (Δσ):
+                </span>
+                <div className="flex items-center gap-2">
+                  <span className={`px-2.5 py-0.5 rounded-lg font-mono font-bold text-xs ${
+                    cityStressDelta > 0 
+                      ? 'bg-[#FEECE8] text-[#991B1B]' 
+                      : cityStressDelta < 0 
+                        ? 'bg-[#E2F4F2] text-[#1B4332]' 
+                        : 'bg-[#FAF7F0] text-slate-900 border border-[#DDD5C5]'
+                  }`}>
+                    {cityStressDelta > 0 ? `+${(cityStressDelta * 100).toFixed(0)}%` : `${(cityStressDelta * 100).toFixed(0)}%`}
+                  </span>
+                  {cityStressDelta !== 0 && (
+                    <button
+                      onClick={() => setCityStressDelta(0)}
+                      title="Restablecer tensión nominal"
+                      className="p-1 rounded-md text-slate-500 hover:text-slate-900 hover:bg-black/5"
+                    >
+                      <RotateCcw className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <input
+                type="range"
+                min="-0.4"
+                max="0.8"
+                step="0.05"
+                value={cityStressDelta}
+                onChange={(e) => setCityStressDelta(parseFloat(e.target.value))}
+                className="w-full accent-[#C86D51] cursor-pointer"
+              />
+
+              <div className="flex justify-between text-[10px] font-mono font-bold">
+                <span className="text-[#487075]">-40% Regeneración Sintrópica</span>
+                <span className="text-slate-500">0% Tensión Nominal</span>
+                <span className="text-[#C86D51]">+80% Shock Climático / Extractivo</span>
+              </div>
+            </div>
+
+            {/* Governance Alerts inside Hero */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] font-mono font-bold uppercase text-slate-800 flex items-center gap-1.5">
+                  <AlertOctagon className="w-3.5 h-3.5 text-[#28475A]" />
+                  Dictámenes de Gobernanza & Salvaguarda Pre-Inversional ({heroTelemetry.activeAlerts.length}):
+                </span>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {heroTelemetry.activeAlerts.map(alert => (
+                  <div 
+                    key={alert.id}
+                    className={`p-3.5 rounded-2xl border flex items-start gap-3 text-xs shadow-2xs ${
+                      alert.severity === 'critical'
+                        ? 'bg-[#FEECE8] border-[#F4A79D] text-slate-900'
+                        : alert.severity === 'high'
+                          ? 'bg-[#FFF9EE] border-[#E9D7A5] text-slate-900'
+                          : 'bg-[#E2F4F2] border-[#7DB2B2] text-slate-900'
+                    }`}
+                  >
+                    <span className="text-base shrink-0 mt-0.5">{alert.signal}</span>
+                    <div className="space-y-1">
+                      <span className="font-mono font-black text-slate-900 uppercase text-[10px] tracking-wider px-2 py-0.5 rounded bg-white/90 inline-block">
+                        {alert.condition}
+                      </span>
+                      <p className="font-sans text-xs text-slate-800 leading-snug font-semibold">
+                        {alert.action}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      {/* ===================================================================
+          2. BARRA DE CONMUTACIÓN DE TERRITORIO Y FILTROS DE SEMÁFORO
+          =================================================================== */}
       <div className="p-4 rounded-3xl bg-white/95 border border-[#927660]/30 shadow-md flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         {/* Region Toggle Buttons */}
         <div className="flex flex-wrap items-center gap-2">
@@ -500,10 +708,8 @@ export default function TerritorialBenchmarkingMap({ onSelectCity, selectedCityI
           <button
             onClick={() => {
               setActiveRegion('chile_central');
-              if (onSelectCity) {
-                const isCurrentChilean = BENCHMARK_CITIES.find(c => c.id === selectedCityId)?.region !== 'Europa';
-                if (!isCurrentChilean) onSelectCity('quillota');
-              }
+              const isCurrentChilean = BENCHMARK_CITIES.find(c => c.id === effectiveCityId)?.region !== 'Europa';
+              if (!isCurrentChilean) handleSelectCity('quillota');
             }}
             className={`px-3.5 py-2 rounded-xl text-xs font-bold font-mono transition-all flex items-center gap-2 shadow-xs ${
               activeRegion === 'chile_central'
@@ -520,10 +726,8 @@ export default function TerritorialBenchmarkingMap({ onSelectCity, selectedCityI
           <button
             onClick={() => {
               setActiveRegion('europa');
-              if (onSelectCity) {
-                const isCurrentEuro = BENCHMARK_CITIES.find(c => c.id === selectedCityId)?.region === 'Europa';
-                if (!isCurrentEuro) onSelectCity('madrid');
-              }
+              const isCurrentEuro = BENCHMARK_CITIES.find(c => c.id === effectiveCityId)?.region === 'Europa';
+              if (!isCurrentEuro) handleSelectCity('madrid');
             }}
             className={`px-3.5 py-2 rounded-xl text-xs font-bold font-mono transition-all flex items-center gap-2 shadow-xs ${
               activeRegion === 'europa'
@@ -683,7 +887,7 @@ export default function TerritorialBenchmarkingMap({ onSelectCity, selectedCityI
 
               {/* RENDER INTERACTIVE CITIES & CLICKABLE SEMAPHORES */}
               {displayedCities.map((city) => {
-                const isSelected = selectedCityId === city.id;
+                const isSelected = effectiveCityId === city.id;
                 const { x, y } = city.coords;
 
                 // Color mapping for physical traffic light
@@ -696,7 +900,7 @@ export default function TerritorialBenchmarkingMap({ onSelectCity, selectedCityI
                 return (
                   <g
                     key={city.id}
-                    onClick={() => onSelectCity(city.id)}
+                    onClick={() => handleSelectCity(city.id)}
                     className="cursor-pointer group"
                   >
                     {/* Pulsing ring on selected city */}
@@ -907,7 +1111,7 @@ export default function TerritorialBenchmarkingMap({ onSelectCity, selectedCityI
               {regionCities.map(c => (
                 <button
                   key={c.id}
-                  onClick={() => onSelectCity(c.id)}
+                  onClick={() => handleSelectCity(c.id)}
                   className={`px-2.5 py-1 rounded-xl text-[10px] font-mono font-bold transition-all ${
                     c.id === activeCity.id
                       ? 'bg-[#28475A] text-white shadow-xs'

@@ -4,10 +4,10 @@ import { getAssetUrl } from '../utils/assets';
 
 export default function Navbar({ activeTab, setActiveTab }) {
   const navItems = [
-    { id: 'core', label: 'El Núcleo', icon: Activity },
-    { id: 'audit', label: 'Auditoría Biofísica', icon: ShieldCheck },
     { id: 'articles', label: 'Artículos & Policy', icon: FileText },
+    { id: 'core', label: 'CORE', icon: Activity },
     { id: 'world_map', label: 'Atlas Territorial', icon: Globe },
+    { id: 'audit', label: 'Auditoría Biofísica', icon: ShieldCheck },
     { id: 'theory', label: 'Marco Epistémico', icon: BookOpen },
   ];
 

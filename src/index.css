@@ -290,6 +290,9 @@
 }
 
 /* Fondos oscuros internos adaptados a superficies de soporte claras */
+.bg-bio-deep,
+.bg-bio-void,
+.bg-bio-surface,
 .card-magenta .bg-black\/40,
 .card-teal .bg-black\/40,
 .card-rose .bg-black\/40,
@@ -304,9 +307,38 @@
 .card-slate .bg-black\/60,
 .card-plum .bg-black\/60,
 .bio-hud-panel .bg-black\/60 {
-  background-color: rgba(255, 255, 255, 0.75) !important;
-  border-color: rgba(146, 118, 96, 0.20) !important;
+  background-color: rgba(250, 247, 240, 0.90) !important;
+  border-color: rgba(146, 118, 96, 0.25) !important;
   color: #1E293B !important;
+}
+
+/* Mapeo de textos pastel neón sobre paneles claros para garantizar alto contraste */
+.bio-hud-panel .text-cyan-200, .bio-hud-panel .text-cyan-300, .bio-hud-panel .text-cyan-400,
+.card-teal .text-cyan-200, .card-teal .text-cyan-300, .card-teal .text-cyan-400 {
+  color: #1E4E58 !important;
+}
+
+.bio-hud-panel .text-emerald-100, .bio-hud-panel .text-emerald-200, .bio-hud-panel .text-emerald-300, .bio-hud-panel .text-emerald-400,
+.card-teal .text-emerald-200, .card-teal .text-emerald-300, .card-teal .text-emerald-400 {
+  color: #1B4332 !important;
+}
+
+.bio-hud-panel .text-teal-200, .bio-hud-panel .text-teal-300, .bio-hud-panel .text-teal-400 {
+  color: #28475A !important;
+}
+
+.bio-hud-panel .text-amber-200, .bio-hud-panel .text-amber-300, .bio-hud-panel .text-amber-400,
+.card-rose .text-amber-300, .card-magenta .text-amber-300 {
+  color: #9A4B1A !important;
+}
+
+.bio-hud-panel .text-rose-200, .bio-hud-panel .text-rose-300, .bio-hud-panel .text-rose-400,
+.card-rose .text-rose-300, .card-rose .text-rose-400 {
+  color: #991B1B !important;
+}
+
+.bio-hud-panel .text-pink-200, .bio-hud-panel .text-pink-300 {
+  color: #831843 !important;
 }
 
 /* Sliders / Ranges adaptados a fondo claro */

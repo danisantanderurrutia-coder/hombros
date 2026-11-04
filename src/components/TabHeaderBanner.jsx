@@ -4,9 +4,9 @@ import { getAssetUrl } from '../utils/assets';
 
 const TAB_METADATA = {
   core: {
-    tag: 'AGROECOLOGÍA & SINTROPÍA TERRITORIAL',
-    title: 'El Organismo Territorial y sus Tres Hombros',
-    subtitle: 'Laboratorio cibernético universal: palancas de soporte socioecológico, capacidad portante y balance metabólico en tiempo real.',
+    tag: 'MOTOR MATEMÁTICO & REOLÓGICO DEL MODELO HOMBROS',
+    title: 'CORE · El Corazón Constitutivo del Modelo Territorial',
+    subtitle: 'Este es el CORE del modelo HOMBROS donde operan sus ecuaciones biofísicas fundamentales. Incluye brevemente: (1) Capacidad Portante y Trípode de Liebig (H), (2) Tensión Sistémica y Curva Esfuerzo-Deformación (σ), (3) Tasa Sintrópica (Γ), (4) Simulador Prospectivo a 36 meses y (5) Vista del Organismo Integrado.',
     image: getAssetUrl('art/header_core_agroecology.jpg'),
     icon: Activity,
     accent: '#7DB2B2',
@@ -28,9 +28,9 @@ const TAB_METADATA = {
     accent: '#28475A',
   },
   world_map: {
-    tag: 'ATLAS GEODÉSICO & CONTRASTE GLOBAL',
-    title: 'Atlas Territorial, Flujos Metabólicos & Casos de Estudio',
-    subtitle: 'Cartografía orbital y contraste empírico multi-sitio: datos crudos oficiales, fuentes abiertas en vivo, emisiones Scope 1-3 y benchmarking frente a modelos urbanos tradicionales.',
+    tag: 'ATLAS GEODÉSICO, SEMÁFORO DE CIUDADES & CONTRASTE GLOBAL',
+    title: 'Atlas Territorial, Semáforo Operativo Situado & Metabolismo',
+    subtitle: 'Cartografía orbital, Semáforo Biofísico en 25 ciudades de Chile Central y Europa, contraste empírico multi-sitio, desplazamiento de emisiones Scope 1-3, Red Panal y fuentes de datos abiertas.',
     image: getAssetUrl('art/header_world_watershed.jpg'),
     icon: Globe,
     accent: '#487075',

@@ -289,7 +289,7 @@ export default function LandingHeroBanner({ onNavigate }) {
                   onClick={() => onNavigate('core')}
                   className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-serif font-bold text-xs bg-gradient-to-r from-[#F5D061] to-[#D4A373] text-slate-950 hover:brightness-110 shadow-lg shadow-[#F5D061]/20 transition-all"
                 >
-                  Entrar a El Núcleo
+                  Entrar a CORE
                   <ArrowRight className="w-4 h-4 text-slate-950" />
                 </button>
               )}

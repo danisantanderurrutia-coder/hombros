@@ -13,6 +13,7 @@ import ScopeEmissionsBreakdown from './ScopeEmissionsBreakdown';
 import HoneycombNetwork from './HoneycombNetwork';
 import DeepDiveCasesView from './DeepDiveCasesView';
 import DataSourcesView from './DataSourcesView';
+import TerritorialBenchmarkingMap from './TerritorialBenchmarkingMap';
 import KitAuditaTuCuencaBanner from './KitAuditaTuCuencaBanner';
 import { useTheme } from '../context/ThemeContext';
 
@@ -93,7 +94,7 @@ export default function WorldTerritoriesMap({
   const [activeSubTab, setActiveSubTab] = useState(initialSubTab || 'map'); // 'map', 'cases', 'emissions', 'panal', 'data_sources'
   const [mapReady, setMapReady] = useState(0);
 
-  // Atlas Subtabs (Styled as El Núcleo horizontal card grid)
+  // Atlas Subtabs (Styled as CORE horizontal card grid)
   const atlasSubtabs = [
     {
       id: 'map',
@@ -104,8 +105,16 @@ export default function WorldTerritoriesMap({
       color: 'from-[#376E6F] to-[#254b4c]'
     },
     {
-      id: 'cases',
+      id: 'semaforo',
       number: '2',
+      label: 'Semáforo & Ciudades',
+      tag: 'Protocolos & Mapa',
+      icon: ShieldAlert,
+      color: 'from-amber-500 to-rose-600'
+    },
+    {
+      id: 'cases',
+      number: '3',
       label: 'Contraste de Modelos',
       tag: 'Benchmarking & Casos',
       icon: GitCompare,
@@ -113,7 +122,7 @@ export default function WorldTerritoriesMap({
     },
     {
       id: 'emissions',
-      number: '3',
+      number: '4',
       label: 'Desplazamiento Scope 3',
       tag: 'Metabolismo & Deuda',
       icon: Factory,
@@ -121,7 +130,7 @@ export default function WorldTerritoriesMap({
     },
     {
       id: 'panal',
-      number: '4',
+      number: '5',
       label: 'El Panal Territorial',
       tag: 'Red P2P & Resiliencia',
       icon: Hexagon,
@@ -129,7 +138,7 @@ export default function WorldTerritoriesMap({
     },
     {
       id: 'data_sources',
-      number: '5',
+      number: '6',
       label: 'Fuentes de Datos',
       tag: 'Geoportales & Registros',
       icon: Database,
@@ -451,7 +460,7 @@ export default function WorldTerritoriesMap({
           BARRA DE NAVEGACIÓN EN SUBPESTAÑAS DEL ATLAS TERRITORIAL (ESTILO NÚCLEO)
           ========================================================================= */}
       <div className="bg-[#180e25]/95 border border-white/10 p-2 rounded-2xl shadow-xl backdrop-blur-md sticky top-20 z-40">
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
           {atlasSubtabs.map(tab => {
             const Icon = tab.icon;
             const isActive = activeSubTab === tab.id;
@@ -1389,6 +1398,13 @@ export default function WorldTerritoriesMap({
 
           </div>
 
+        </div>
+      )}
+
+      {/* Semáforo Biofísico Situado & Mapa de 25 Ciudades (Chile Central + Europa) */}
+      {activeSubTab === 'semaforo' && (
+        <div className="animate-fade-in">
+          <TerritorialBenchmarkingMap />
         </div>
       )}
 

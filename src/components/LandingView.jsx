@@ -11,28 +11,8 @@ import KitAuditaTuCuencaBanner from './KitAuditaTuCuencaBanner';
 export default function LandingView({ onNavigate, onNavigateCustomAudit }) {
   const modules = [
     {
-      id: 'core',
-      number: '01',
-      title: 'El Núcleo Metabólico',
-      tag: 'LEYES BIOFÍSICAS & MECÁNICA CONTINUA',
-      desc: 'Explora la Ley de Cauchy territorial (σ = D / H), el trípode de Liebig y la curva esfuerzo-deformación con simulaciones interactivas.',
-      icon: Activity,
-      accent: 'from-[#487075] to-[#28475A]',
-      btnText: 'Abrir Laboratorio',
-    },
-    {
-      id: 'audit',
-      number: '02',
-      title: 'Auditoría Biofísica SEIA 2.0 & ROI',
-      tag: 'HIPÓTESIS PRE-INVERSIÓN & TRACCIÓN',
-      desc: 'Evalúa tu propio territorio o conecta la telemetría de AgriTwin, somete proyectos al Ensayo de Tracción y calcula el ROI Sintrópico frente al gasto paliativo.',
-      icon: Shield,
-      accent: 'from-[#C86D51] to-[#927660]',
-      btnText: 'Auditar Cuenca',
-    },
-    {
       id: 'articles',
-      number: '03',
+      number: '01',
       title: 'Artículos & Policy (SEIA + OLCA)',
       tag: 'THINK TANK & ECOLOGÍA POLÍTICA',
       desc: 'Propuesta legislativa de Reforma Estructural al SEIA (Cláusula Pre-Inversional) y los 4 Policy Briefs adaptados de los ensayos publicados en el OLCA.',
@@ -41,34 +21,54 @@ export default function LandingView({ onNavigate, onNavigateCustomAudit }) {
       btnText: 'Leer Policy Briefs',
     },
     {
-      id: 'world_map',
-      number: '04',
-      title: 'Atlas Territorial & Casos',
-      tag: 'OBSERVATORIO DE CUENCAS',
-      desc: 'Telemetría geográfica comparada entre cuencas del Cono Sur y Europa: Chanco, Quintero-Puchuncaví, Copenhague, Barcelona y Ámsterdam.',
-      icon: Globe,
-      accent: 'from-[#376E6F] to-[#28475A]',
-      btnText: 'Ver Cartografía',
+      id: 'core',
+      number: '02',
+      title: 'CORE: El Motor del Modelo',
+      tag: 'LEYES BIOFÍSICAS & MECÁNICA CONTINUA',
+      desc: 'El corazón matemático del modelo HOMBROS: Capacidad Portante (H), Tensión Sistémica (σ = D/H), Tasa Sintrópica (Γ), Prospectiva y Organismo Integrado.',
+      icon: Activity,
+      accent: 'from-[#487075] to-[#28475A]',
+      btnText: 'Abrir CORE',
     },
     {
-      id: 'scenarios',
-      number: '05',
-      title: 'Simulador Prospectivo',
-      tag: 'PROYECCIONES ESTOCÁSTICAS',
-      desc: 'Pon a prueba cualquier territorio ante megasequías, colapsos de cadenas de suministro y transición agroecológica sintrópica.',
-      icon: Layers,
-      accent: 'from-[#927660] to-[#487075]',
-      btnText: 'Simular Futuros',
+      id: 'world_map',
+      number: '03',
+      title: 'Atlas Territorial & Semáforo',
+      tag: 'OBSERVATORIO SITUADO DE CUENCAS',
+      desc: 'Cartografía orbital, Semáforo Biofísico en 25 ciudades (Chile Central y Europa), Contraste de Modelos, Deuda Scope 3 y Red Panal.',
+      icon: Globe,
+      accent: 'from-[#376E6F] to-[#28475A]',
+      btnText: 'Ver Atlas Territorial',
+    },
+    {
+      id: 'audit',
+      number: '04',
+      title: 'Auditoría Biofísica SEIA 2.0 & ROI',
+      tag: 'HIPÓTESIS PRE-INVERSIÓN & TRACCIÓN',
+      desc: 'Evalúa tu propio territorio o conecta la telemetría de AgriTwin, somete proyectos al Ensayo de Tracción y calcula el ROI Sintrópico frente al gasto paliativo.',
+      icon: Shield,
+      accent: 'from-[#C86D51] to-[#927660]',
+      btnText: 'Auditar Cuenca',
     },
     {
       id: 'theory',
-      number: '06',
+      number: '05',
       title: 'Marco Epistémico',
       tag: 'SOBRE HOMBROS DE GIGANTES',
       desc: 'Genealogía conceptual: bioeconomía de Georgescu-Roegen, cibernética de Stafford Beer, buen vivir y ecología política latinoamericana.',
       icon: BookOpen,
       accent: 'from-[#D4A373] to-[#927660]',
       btnText: 'Leer Manifiesto',
+    },
+    {
+      id: 'scenarios',
+      number: '06',
+      title: 'Simulador Prospectivo',
+      tag: 'PROYECCIONES ESTOCÁSTICAS',
+      desc: 'Pon a prueba cualquier territorio ante megasequías, colapsos de cadenas de suministro y transición agroecológica sintrópica.',
+      icon: Layers,
+      accent: 'from-[#927660] to-[#487075]',
+      btnText: 'Simular Futuros',
     },
   ];
 
@@ -114,7 +114,7 @@ export default function LandingView({ onNavigate, onNavigateCustomAudit }) {
               onClick={() => onNavigate('core')}
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-mono font-bold text-slate-700 bg-white hover:bg-slate-50 border border-[#D4C9B8] shadow-sm transition-all"
             >
-              Ver Ecuaciones en el Núcleo
+              Ver Ecuaciones en CORE
               <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
             </button>
           </div>
