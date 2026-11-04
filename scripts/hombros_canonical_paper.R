@@ -18,12 +18,12 @@ suppressPackageStartupMessages({
 #' Cálculo de Capacidad Portante Estructural (H)
 #' @description Media geométrica estricta no-compensatoria de los 3 hombros (S, E, K)
 #' con Operador de Liebig Generalizado ante quiebre crítico (min < 0.25).
-calc_hombros <- function(S, E, K, critical_threshold = 0.25) {
-  has_critical <- (S < critical_threshold) | (E < critical_threshold) | (K < critical_threshold)
-  H_base <- (S * E * K)^(1/3)
+calc_hombros <- function(E, S, K, critical_threshold = 0.25) {
+  has_critical <- (E < critical_threshold) | (S < critical_threshold) | (K < critical_threshold)
+  H_base <- (E * S * K)^(1/3)
   
   # Operador de Liebig Generalizado
-  min_val <- min(S, E, K)
+  min_val <- min(E, S, K)
   phi_crit <- ifelse(has_critical, (min_val / critical_threshold) * 0.73, 1.0)
   H_effective <- H_base * phi_crit
   
@@ -32,9 +32,9 @@ calc_hombros <- function(S, E, K, critical_threshold = 0.25) {
     H_effective = round(H_effective, 3),
     has_critical = has_critical,
     critical_shoulder = case_when(
-      S < critical_threshold ~ "Suelo (S)",
-      E < critical_threshold ~ "Energía (E)",
-      K < critical_threshold ~ "Saber (K)",
+      E < critical_threshold ~ "Ambiental (E)",
+      S < critical_threshold ~ "Social (S)",
+      K < critical_threshold ~ "Económico (K)",
       TRUE ~ "Ninguno"
     )
   )
@@ -84,18 +84,19 @@ calc_gamma <- function(H_t0, H_t1, delta_t_years = 7) {
 
 # ------------------------------------------------------------------------------
 # 2. BANCO DE DATOS EMPÍRICOS: 8 TERRITORIOS (CHILE & EUROPA)
+# E: Hombro Ambiental, S: Hombro Social, K: Hombro Económico
 # ------------------------------------------------------------------------------
 
 territorios_df <- tribble(
-  ~id, ~nombre, ~pais, ~tipo, ~S, ~E, ~K, ~D1, ~D2, ~D3, ~scope1, ~scope2, ~scope3_up, ~scope3_down, ~gini, ~confianza_social,
-  "chanco", "Chanco (Maule)", "Chile", "Rural / Secano Costero", 0.78, 0.62, 0.68, 0.40, 0.35, 0.60, 1.8, 0.4, 1.1, 8.4, 0.46, 0.68,
-  "aconcagua", "Valle de Aconcagua", "Chile", "Agrícola / Cobre", 0.42, 0.58, 0.60, 0.85, 0.55, 0.64, 2.8, 1.2, 1.8, 12.6, 0.44, 0.52,
+  ~id, ~nombre, ~pais, ~tipo, ~E, ~S, ~K, ~D1, ~D2, ~D3, ~scope1, ~scope2, ~scope3_up, ~scope3_down, ~gini, ~confianza_social,
+  "chanco", "Chanco (Maule)", "Chile", "Rural / Secano Costero", 0.78, 0.68, 0.62, 0.40, 0.35, 0.60, 1.8, 0.4, 1.1, 8.4, 0.46, 0.68,
+  "aconcagua", "Valle de Aconcagua", "Chile", "Agrícola / Cobre", 0.42, 0.60, 0.58, 0.85, 0.55, 0.64, 2.8, 1.2, 1.8, 12.6, 0.44, 0.52,
   "quintero", "Quintero-Puchuncaví", "Chile", "Zona de Sacrificio", 0.22, 0.48, 0.52, 1.05, 0.65, 0.76, 14.5, 4.2, 3.1, 18.2, 0.48, 0.35,
-  "copenhagen", "Copenhague", "Dinamarca", "Metrópolis Post-Carbono", 0.52, 0.88, 0.92, 0.45, 0.95, 0.82, 1.9, 0.8, 8.8, 1.8, 0.26, 0.84,
-  "barcelona", "Barcelona", "España", "Metrópolis Mediterránea", 0.45, 0.68, 0.82, 0.40, 0.82, 1.15, 2.4, 1.1, 5.9, 2.4, 0.34, 0.58,
-  "bilbao", "Bilbao (Bizkaia)", "España", "Post-Industrial / Cuenca", 0.55, 0.72, 0.80, 0.45, 0.75, 0.78, 2.6, 1.4, 4.7, 3.5, 0.29, 0.71,
-  "amsterdam", "Ámsterdam", "Países Bajos", "Hub Logístico / Delta", 0.48, 0.82, 0.88, 0.42, 0.88, 0.98, 2.0, 1.1, 8.2, 2.1, 0.31, 0.79,
-  "berlin", "Berlín", "Alemania", "Federal / Polinuclear", 0.58, 0.70, 0.85, 0.40, 0.82, 0.82, 2.5, 1.2, 4.4, 1.9, 0.32, 0.65
+  "copenhagen", "Copenhague", "Dinamarca", "Metrópolis Post-Carbono", 0.52, 0.92, 0.88, 0.45, 0.95, 0.82, 1.9, 0.8, 8.8, 1.8, 0.26, 0.84,
+  "barcelona", "Barcelona", "España", "Metrópolis Mediterránea", 0.45, 0.82, 0.68, 0.40, 0.82, 1.15, 2.4, 1.1, 5.9, 2.4, 0.34, 0.58,
+  "bilbao", "Bilbao (Bizkaia)", "España", "Post-Industrial / Cuenca", 0.55, 0.80, 0.72, 0.45, 0.75, 0.78, 2.6, 1.4, 4.7, 3.5, 0.29, 0.71,
+  "amsterdam", "Ámsterdam", "Países Bajos", "Hub Logístico / Delta", 0.48, 0.88, 0.82, 0.42, 0.88, 0.98, 2.0, 1.1, 8.2, 2.1, 0.31, 0.79,
+  "berlin", "Berlín", "Alemania", "Federal / Polinuclear", 0.58, 0.85, 0.70, 0.40, 0.82, 0.82, 2.5, 1.2, 4.4, 1.9, 0.32, 0.65
 )
 
 # ------------------------------------------------------------------------------
@@ -106,7 +107,7 @@ benchmark_results <- territorios_df %>%
   rowwise() %>%
   mutate(
     # Hombros
-    hombros = list(calc_hombros(S, E, K)),
+    hombros = list(calc_hombros(E, S, K)),
     H = hombros$H_effective,
     has_critical = hombros$has_critical,
     critical_col = hombros$critical_shoulder,

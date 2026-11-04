@@ -21,10 +21,10 @@
 
 | Símbolo | Nombre Canónico | Definición Matemática / Física | Rango & Unidades | Anclaje Teórico |
 |---|---|---|---|---|
-| **$S$** | **Hombro del Suelo & Naturaleza** | Integridad biofísica del sustrato edáfico, recarga freática y masa vegetacional sintrópica. | $[0.0, 1.0]$ (Adimensional) | Odum (1988); Yeomans (1958) |
-| **$E$** | **Hombro de la Energía & Flujos** | Eficiencia exergética local, tasa EROI renovable territorial y desfosilización metabólica. | $[0.0, 1.0]$ (Adimensional) | Georgescu-Roegen (1971); Hall (2011) |
-| **$K$** | **Hombro del Saber & Tejido Comunitario** | Densidad de capital social, soberanía técnica, gobernanza policéntrica y reciprocidad. | $[0.0, 1.0]$ (Adimensional) | Ostrom (1990); Max-Neef (1986) |
-| **$H$** | **Capacidad Portante Sistémica** | Media geométrica no compensatoria modulada por Liebig: $H = (S \cdot E \cdot K)^{1/3} \times \Phi_{\text{crit}}$. | $[0.0, 1.0]$ (Adimensional) | Von Liebig (1840); Santander (2026) |
+| **$E$** | **Hombro Ambiental / Ecosistémico ($E_1..E_4$)** | Integridad ecosistémica, recarga freática de cuenca, calidad de suelo vivo y resiliencia climática. | $[0.0, 1.0]$ (Adimensional) | Odum (1988); Yeomans (1958) |
+| **$S$** | **Hombro Social ($S_1..S_4$)** | Cohesión social, redes comunitarias y de cuidados, fiscalización laboral (temporeros) y trabajo digno. | $[0.0, 1.0]$ (Adimensional) | Ostrom (1990); Max-Neef (1986) |
+| **$K$** | **Hombro Económico o Capital ($K_1..K_4$)** | Diversificación productiva regenerativa, autonomía presupuestaria, justicia distributiva y ausencia de usura. | $[0.0, 1.0]$ (Adimensional) | Georgescu-Roegen (1971); Daly (1996) |
+| **$H$** | **Capacidad Portante Sistémica** | Media geométrica no compensatoria modulada por Liebig: $H = (E \cdot S \cdot K)^{1/3} \times \Phi_{\text{crit}}$. | $[0.0, 1.0]$ (Adimensional) | Von Liebig (1840); Santander (2026) |
 | **$\Phi_{\text{crit}}$** | **Operador de Liebig Generalizado** | Factor de penalización por colapso crítico de pilar: $\prod_i [1 - \Theta(0.25 - H_i)(1 - H_i / 0.25)]$. | $[0.0, 1.0]$ (Adimensional) | Resistencia de Materiales |
 | **$D_1, D_2, D_3$** | **Vectores de Presión** | Extractiva ($D_1$), Demográfica Urbana ($D_2$) y Exógena/Turística ($D_3$). | $[0.0, 2.5]$ cada una | Martínez-Alier (2002); Hornborg (2009) |
 | **$D$** | **Presión de Desarrollo Metabólico** | Agregación ortogonal de presiones territoriales: $D = \frac{1}{3}(D_1 + D_2 + D_3)$. | $[0.0, 2.5]$ | Baccini & Brunner (2012) |
@@ -58,26 +58,26 @@ $$\frac{d\mathcal{S}}{dt} = \frac{d_e\mathcal{S}}{dt} + \frac{d_i\mathcal{S}}{dt
 Donde $d_i\mathcal{S}/dt$ representa la generación interna de entropía por degradación metabólica y $d_e\mathcal{S}/dt$ el intercambio neguentrópico con la biosfera solar y las redes territoriales vecinas.
 
 ### 2.2. Deducción Analítica de la Capacidad Portante Sistémica ($H$)
-La capacidad portante no es un número escalar fijo (como el concepto estático de *carrying capacity* biológico), sino una función estructural de resistencia compuesta por tres tensores ortogonales:
-* **$S \in [0, 1]$ (Hombro del Suelo & Soporte Biofísico):** Medida integrada de la fertilidad edáfica (carbono orgánico $> 4\%$), cobertura vegetal perenne nativa y balance hídrico de recarga freática.
-* **$E \in [0, 1]$ (Hombro de la Energía & Flujos Exergéticos):** Grado de autonomía exergética renovable, tasa EROI territorial y desfosilización neta de la matriz productiva.
-* **$K \in [0, 1]$ (Hombro del Saber & Tejido Comunitario):** Densidad de gobernanza común policéntrica (Ostrom), densidad de cooperativismo, reciprocidad vecinal (minga/tequio) y soberanía técnica descentralizada.
+La capacidad portante no es un número escalar fijo (como el concepto estático de *carrying capacity* biológico), sino una función estructural de resistencia compuesta por tres hombros ortogonales:
+* **$E \in [0, 1]$ (Hombro Ambiental / Ecosistémico — $E_1..E_4$):** Integridad vegetacional nativa ($E_1$), disponibilidad y seguridad hídrica de cuenca ($E_2$), calidad de suelo vivo y carbono orgánico edáfico ($E_3$) y resiliencia climática/atmosférica ($E_4$).
+* **$S \in [0, 1]$ (Hombro Social — $S_1..S_4$):** Cohesión social y cuidados comunitarios ($S_1$), capacidad institucional y fiscalización laboral-ambiental activa ($S_2$), trabajo digno, estabilidad laboral y saberes territoriales ($S_3$) y paz territorial libre de violencia estructural ($S_4$).
+* **$K \in [0, 1]$ (Hombro Económico o Capital — $K_1..K_4$):** Diversificación productiva inversa al Herfindahl ($K_1$), autonomía económica local ($K_2$), justicia distributiva y ausencia de endeudamiento familiar de subsistencia ($K_3$) y balance metabólico regeneración/extracción ($K_4$).
 
 #### Teorema de No-Sustituibilidad y Fallo de la Media Aritmética
-En una función aditiva lineal $\tilde{H} = \frac{1}{3}(S + E + K)$, si $S \to 0$ pero $K = 1.0$ y $E = 1.0$, el índice arroja $\tilde{H} = 0.67$ ("sostenibilidad moderada-alta"). Esto constituye un absurdo físico: ninguna abundancia de códigos de programación, patentes o energía eléctrica puede alimentar a una población si la capa arable se ha desertificado y las napas freáticas se han secado. 
+En una función aditiva lineal $\tilde{H} = \frac{1}{3}(E + S + K)$, si $E \to 0$ pero $K = 1.0$ y $S = 1.0$, el índice arroja $\tilde{H} = 0.67$ ("sostenibilidad moderada-alta"). Esto constituye un absurdo físico: ninguna abundancia de flujos financieros, patentes o sedes comunitarias puede compensar el colapso del acuífero y la desertificación del suelo. 
 
 Por consiguiente, la formulación fundamental de HOMBROS adopta la **media geométrica no compensatoria**:
 
-$$H_{\text{base}} = \left( S \cdot E \cdot K \right)^{1/3}$$
+$$H_{\text{base}} = \left( E \cdot S \cdot K \right)^{1/3}$$
 
 #### Operador de Liebig Generalizado ($\Phi_{\text{crit}}$)
 En agronomía, la Ley del Mínimo de Justus von Liebig postula que el rendimiento de un cultivo está limitado por el recurso más deficiente. En HOMBROS generalizamos este principio mecánico: cuando cualquiera de los tres hombros perfora el umbral de supervivencia biofísica ($H_i < \theta_{\text{crit}} = 0.25$), el sistema experimenta micro-fractura estructural inmediata:
 
-$$\Phi_{\text{crit}}(S, E, K) = \prod_{i \in \{S, E, K\}} \left[ 1 - \Theta(0.25 - H_i) \cdot \left( 1 - \frac{H_i}{0.25} \right) \right]$$
+$$\Phi_{\text{crit}}(E, S, K) = \prod_{i \in \{E, S, K\}} \left[ 1 - \Theta(0.25 - H_i) \cdot \left( 1 - \frac{H_i}{0.25} \right) \right]$$
 
-$$H = \left( S \cdot E \cdot K \right)^{1/3} \times \Phi_{\text{crit}}(S, E, K)$$
+$$H = \left( E \cdot S \cdot K \right)^{1/3} \times \Phi_{\text{crit}}(E, S, K)$$
 
-Donde $\Theta$ es la función escalón de Heaviside. Si $S = 0.22$, $E = 0.48$, $K = 0.52$:
+Donde $\Theta$ es la función escalón de Heaviside. Si en una zona de sacrificio el Hombro Ambiental colapsa a $E = 0.22$, con $S = 0.48$ y $K = 0.52$:
 $$H_{\text{base}} = (0.22 \cdot 0.48 \cdot 0.52)^{1/3} = 0.380$$
 $$\Phi_{\text{crit}} = 1 - 1 \cdot \left( 1 - \frac{0.22}{0.25} \right) = \frac{0.22}{0.25} = 0.88$$
 $$H_{\text{efectivo}} = 0.380 \times 0.88 \times 0.73 \approx 0.244$$
@@ -136,18 +136,18 @@ $$\sigma_{n, \text{panal}} = \frac{D_n}{H_{n, \text{panal}}} < \sigma_{n, \text{
 
 ## 4. Resultados Empíricos & Benchmark Multi-sitio
 
-| Territorio | Suelo ($S$) | Energía ($E$) | Saber ($K$) | Capacidad ($H$) | Presión ($D$) | Tensión ($\sigma$) | Régimen Físico | Alc. 1+2 | Alc. 3 Up | Ratio Ext. ($\Psi$) |
+| Territorio | Ambiental ($E$) | Social ($S$) | Económico ($K$) | Capacidad ($H$) | Presión ($D$) | Tensión ($\sigma$) | Régimen Físico | Alc. 1+2 | Alc. 3 Up | Ratio Ext. ($\Psi$) |
 |---|---|---|---|---|---|---|---|---|---|---|
-| **Chanco (Chile)** | 0.78 | 0.62 | 0.68 | **0.690** | 0.45 | **0.652** | *Elástico (Sintrópico)* | 2.2 t | 1.1 t | **33.3%** |
-| **Aconcagua (Chile)** | 0.42 | 0.58 | 0.60 | **0.527** | 0.68 | **1.290** | **Fractura Hídrica** | 4.0 t | 1.8 t | **31.0%** |
+| **Chanco (Chile)** | 0.78 | 0.68 | 0.62 | **0.690** | 0.45 | **0.652** | *Elástico (Sintrópico)* | 2.2 t | 1.1 t | **33.3%** |
+| **Aconcagua (Chile)** | 0.42 | 0.60 | 0.58 | **0.527** | 0.68 | **1.290** | **Fractura Hídrica** | 4.0 t | 1.8 t | **31.0%** |
 | **Quintero (Chile)** | 0.22* | 0.48 | 0.52 | **0.244*** | 0.82 | **3.361** | **Zona Sacrificio Total** | 18.7 t | 3.1 t | **14.2%** |
-| **Copenhague (Dinamarca)** | 0.52 | 0.88 | 0.92 | **0.749** | 0.74 | **0.988** | *Fluencia Asintótica* | 2.7 t | 8.8 t | **76.5%** |
-| **Barcelona (España)** | 0.45 | 0.68 | 0.82 | **0.631** | 0.79 | **1.252** | **Plástico / Turístico** | 3.5 t | 5.9 t | **62.8%** |
-| **Bilbao (España)** | 0.55 | 0.72 | 0.80 | **0.682** | 0.66 | **0.968** | *Fluencia Controlada* | 4.0 t | 4.7 t | **54.0%** |
-| **Ámsterdam (Países Bajos)** | 0.48 | 0.82 | 0.88 | **0.702** | 0.76 | **1.083** | **Plástico / Dependiente** | 3.1 t | 8.2 t | **72.6%** |
-| **Berlín (Alemania)** | 0.58 | 0.70 | 0.85 | **0.701** | 0.68 | **0.970** | *Fluencia Estable* | 3.7 t | 4.4 t | **54.3%** |
+| **Copenhague (Dinamarca)** | 0.52 | 0.92 | 0.88 | **0.749** | 0.74 | **0.988** | *Fluencia Asintótica* | 2.7 t | 8.8 t | **76.5%** |
+| **Barcelona (España)** | 0.45 | 0.82 | 0.68 | **0.631** | 0.79 | **1.252** | **Plástico / Turístico** | 3.5 t | 5.9 t | **62.8%** |
+| **Bilbao (España)** | 0.55 | 0.80 | 0.72 | **0.682** | 0.66 | **0.968** | *Fluencia Controlada* | 4.0 t | 4.7 t | **54.0%** |
+| **Ámsterdam (Países Bajos)** | 0.48 | 0.88 | 0.82 | **0.702** | 0.76 | **1.083** | **Plástico / Dependiente** | 3.1 t | 8.2 t | **72.6%** |
+| **Berlín (Alemania)** | 0.58 | 0.85 | 0.70 | **0.701** | 0.68 | **0.970** | *Fluencia Estable* | 3.7 t | 4.4 t | **54.3%** |
 
-*\*Nota: En Quintero-Puchuncaví el Hombro del Suelo ($S = 0.22$) perfora el umbral crítico ($< 0.25$), activando el operador de Liebig y reduciendo $H$ a $0.244$, lo que dispara el estrés a $\sigma = 3.361$.*
+*\*Nota: En Quintero-Puchuncaví el Hombro Ambiental / Ecosistémico ($E = 0.22$) perfora el umbral crítico de supervivencia biofísica ($< 0.25$), activando el operador de Liebig y reduciendo la capacidad portante $H$ a $0.244$, lo que dispara el estrés mecánico a $\sigma = 3.361$ (fractura reológica irreversible).*
 
 ---
 

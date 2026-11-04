@@ -21,10 +21,10 @@
 
 | Símbolo | Nombre Canónico | Definición Matemática / Física | Rango & Unidades | Anclaje Teórico |
 |---|---|---|---|---|
-| **$S$** | **Hombro Social ($S_1..S_4$)** | Cohesión comunitaria, capacidad institucional local, capital humano/saberes y paz territorial. | $[0.0, 1.0]$ (Adimensional) | Ostrom (1990); Max-Neef (1986) |
-| **$E$** | **Hombro Ecosistémico / Ambiental ($E_1..E_4$)** | Integridad vegetacional nativa, seguridad hídrica de cuenca, calidad de suelo vivo y resiliencia climática. | $[0.0, 1.0]$ (Adimensional) | Odum (1988); Yeomans (1958) |
-| **$K$** | **Hombro Económico ($K_1..K_4$)** | Diversificación productiva (inverso IHH), autonomía fiscal local, equidad ($1-\text{Gini}$) y balance regeneración/extracción. | $[0.0, 1.0]$ (Adimensional) | Georgescu-Roegen (1971); Daly (1996) |
-| **$H$** | **Capacidad Portante Sistémica** | Media geométrica no compensatoria modulada por Liebig: $H = (S \cdot E \cdot K)^{1/3} \times \Phi_{\text{crit}}$. | $[0.0, 1.0]$ (Adimensional) | Von Liebig (1840); Santander (2026) |
+| **$E$** | **Hombro Ambiental / Ecosistémico ($E_1..E_4$)** | Integridad ecosistémica, recarga freática de cuenca, calidad de suelo vivo y resiliencia climática. | $[0.0, 1.0]$ (Adimensional) | Odum (1988); Yeomans (1958) |
+| **$S$** | **Hombro Social ($S_1..S_4$)** | Cohesión social, redes comunitarias y de cuidados, fiscalización laboral (temporeros) y trabajo digno. | $[0.0, 1.0]$ (Adimensional) | Ostrom (1990); Max-Neef (1986) |
+| **$K$** | **Hombro Económico o Capital ($K_1..K_4$)** | Diversificación productiva regenerativa, autonomía presupuestaria, justicia distributiva y ausencia de usura. | $[0.0, 1.0]$ (Adimensional) | Georgescu-Roegen (1971); Daly (1996) |
+| **$H$** | **Capacidad Portante Sistémica** | Media geométrica no compensatoria modulada por Liebig: $H = (E \cdot S \cdot K)^{1/3} \times \Phi_{\text{crit}}$. | $[0.0, 1.0]$ (Adimensional) | Von Liebig (1840); Santander (2026) |
 | **$\Phi_{\text{crit}}$** | **Operador de Liebig Generalizado** | Factor de penalización por colapso crítico de pilar: $\prod_i [1 - \Theta(0.25 - H_i)(1 - H_i / 0.25)]$. | $[0.0, 1.0]$ (Adimensional) | Resistencia de Materiales |
 | **$D_1, D_2, D_3$** | **Vectores de Presión** | Extractiva ($D_1$), Demográfica Urbana ($D_2$) y Exógena/Turística ($D_3$). | $[0.0, 2.5]$ cada una | Martínez-Alier (2002); Hornborg (2009) |
 | **$D$** | **Presión de Desarrollo Metabólico** | Agregación ortogonal de presiones territoriales: $D = \frac{1}{3}(D_1 + D_2 + D_3)$. | $[0.0, 2.5]$ | Baccini & Brunner (2012) |
@@ -58,26 +58,26 @@ $$\frac{d\mathcal{S}}{dt} = \frac{d_e\mathcal{S}}{dt} + \frac{d_i\mathcal{S}}{dt
 Donde $d_i\mathcal{S}/dt$ representa la generación interna de entropía por degradación metabólica y $d_e\mathcal{S}/dt$ el intercambio neguentrópico con la biosfera solar y las redes territoriales vecinas.
 
 ### 2.2. Deducción Analítica de la Capacidad Portante Sistémica ($H$)
-La capacidad portante no es un número escalar fijo (como el concepto estático de *carrying capacity* biológico), sino una función estructural de resistencia compuesta por tres tensores ortogonales:
-* **$S \in [0, 1]$ (Hombro Social — $S_1, S_2, S_3, S_4$):** Medida integrada de la cohesión comunitaria ($S_1$), capacidad institucional municipal ($S_2$), capital humano y saberes locales ($S_3$) y ausencia de violencia estructural ($S_4$).
-* **$E \in [0, 1]$ (Hombro Ecosistémico / Ambiental — $E_1, E_2, E_3, E_4$):** Medida integrada de la cobertura vegetacional nativa ($E_1$), disponibilidad hídrica renovable por cuenca ($E_2$), fertilidad de suelo vivo libre de tóxicos ($E_3$) y resiliencia climática/atmosférica ($E_4$).
-* **$K \in [0, 1]$ (Hombro Económico — $K_1, K_2, K_3, K_4$):** Diversificación productiva inversa al índice de Herfindahl ($K_1$), autonomía económica local ($K_2$), justicia distributiva $1-\text{Gini}$ ($K_3$) y balance metabólico regeneración/extracción ($K_4$).
+La capacidad portante no es un número escalar fijo (como el concepto estático de *carrying capacity* biológico), sino una función estructural de resistencia compuesta por tres hombros ortogonales:
+* **$E \in [0, 1]$ (Hombro Ambiental / Ecosistémico — $E_1..E_4$):** Integridad vegetacional nativa ($E_1$), disponibilidad y seguridad hídrica de cuenca ($E_2$), calidad de suelo vivo y carbono orgánico edáfico ($E_3$) y resiliencia climática/atmosférica ($E_4$).
+* **$S \in [0, 1]$ (Hombro Social — $S_1..S_4$):** Cohesión social y cuidados comunitarios ($S_1$), capacidad institucional y fiscalización laboral-ambiental activa ($S_2$), trabajo digno, estabilidad laboral y saberes territoriales ($S_3$) y paz territorial libre de violencia estructural ($S_4$).
+* **$K \in [0, 1]$ (Hombro Económico o Capital — $K_1..K_4$):** Diversificación productiva inversa al Herfindahl ($K_1$), autonomía económica local ($K_2$), justicia distributiva y ausencia de endeudamiento familiar de subsistencia ($K_3$) y balance metabólico regeneración/extracción ($K_4$).
 
 #### Teorema de No-Sustituibilidad y Fallo de la Media Aritmética
-En una función aditiva lineal $\tilde{H} = \frac{1}{3}(S + E + K)$, si $E \to 0$ pero $K = 1.0$ y $S = 1.0$, el índice arroja $\tilde{H} = 0.67$ ("sostenibilidad moderada-alta"). Esto constituye un absurdo físico: ninguna abundancia financiera o institucional puede sostener a una población si la capa arable se ha desertificado y las napas freáticas se han secado. 
+En una función aditiva lineal $\tilde{H} = \frac{1}{3}(E + S + K)$, si $E \to 0$ pero $K = 1.0$ y $S = 1.0$, el índice arroja $\tilde{H} = 0.67$ ("sostenibilidad moderada-alta"). Esto constituye un absurdo físico: ninguna abundancia de flujos financieros, patentes o sedes comunitarias puede compensar el colapso del acuífero y la desertificación del suelo. 
 
 Por consiguiente, la formulación fundamental de HOMBROS adopta la **media geométrica no compensatoria**:
 
-$$H_{\text{base}} = \left( S \cdot E \cdot K \right)^{1/3}$$
+$$H_{\text{base}} = \left( E \cdot S \cdot K \right)^{1/3}$$
 
 #### Operador de Liebig Generalizado ($\Phi_{\text{crit}}$)
 En agronomía, la Ley del Mínimo de Justus von Liebig postula que el rendimiento de un cultivo está limitado por el recurso más deficiente. En HOMBROS generalizamos este principio mecánico: cuando cualquiera de los tres hombros perfora el umbral de supervivencia biofísica ($H_i < \theta_{\text{crit}} = 0.25$), el sistema experimenta micro-fractura estructural inmediata:
 
-$$\Phi_{\text{crit}}(S, E, K) = \prod_{i \in \{S, E, K\}} \left[ 1 - \Theta(0.25 - H_i) \cdot \left( 1 - \frac{H_i}{0.25} \right) \right]$$
+$$\Phi_{\text{crit}}(E, S, K) = \prod_{i \in \{E, S, K\}} \left[ 1 - \Theta(0.25 - H_i) \cdot \left( 1 - \frac{H_i}{0.25} \right) \right]$$
 
-$$H = \left( S \cdot E \cdot K \right)^{1/3} \times \Phi_{\text{crit}}(S, E, K)$$
+$$H = \left( E \cdot S \cdot K \right)^{1/3} \times \Phi_{\text{crit}}(E, S, K)$$
 
-Donde $\Theta$ es la función escalón de Heaviside. Si $S = 0.22$, $E = 0.48$, $K = 0.52$:
+Donde $\Theta$ es la función escalón de Heaviside. Si en una zona de sacrificio el Hombro Ambiental colapsa a $E = 0.22$, con $S = 0.48$ y $K = 0.52$:
 $$H_{\text{base}} = (0.22 \cdot 0.48 \cdot 0.52)^{1/3} = 0.380$$
 $$\Phi_{\text{crit}} = 1 - 1 \cdot \left( 1 - \frac{0.22}{0.25} \right) = \frac{0.22}{0.25} = 0.88$$
 $$H_{\text{efectivo}} = 0.380 \times 0.88 \times 0.73 \approx 0.244$$
@@ -123,73 +123,6 @@ Donde $\mathcal{C}_{nm}$ es la complementariedad metabólica funcional, $d_{nm}$
 
 $$\sigma_{n, \text{panal}} = \frac{D_n}{H_{n, \text{panal}}} < \sigma_{n, \text{aislado}}$$
 
-### 2.6. Eslabón 1: Funciones de Normalización Canónica ($X_{\text{raw}} \to [0, 1]$) y Postes de Meta
-Para erradicar la arbitrariedad en la construcción de los tres hombros ($S, E, K$), HOMBROS implementa el protocolo de **Escalado por Postes de Meta (*Goalpost Scaling*)** conforme a las directrices de la OCDE/JRC y umbrales biofísicos de Falkenmark y Liebig. Cada variable observable bruta $X_{\text{raw}}$ se proyecta al espacio adimensional $[0, 1]$ mediante tres familias de funciones de transferencia:
-
-1. **Lineal Directa (*Más es Mejor* — $S_1, S_2, S_3, E_1, E_3, K_2, K_4$):**
-   $$H_i = \text{clamp}_{[0,1]}\left( \frac{X_{\text{raw}} - X_{\min}}{X_{\text{opt}} - X_{\min}} \right)$$
-2. **Lineal Inversa (*Menos es Mejor* — $S_4, E_4, K_1, K_3$):**
-   $$H_i = \text{clamp}_{[0,1]}\left( \frac{X_{\max} - X_{\text{raw}}}{X_{\max} - X_{\text{opt}}} \right)$$
-3. **Logarítmica Acotada de Falkenmark (*Seguridad Hídrica* — $E_2$):**
-   $$E_2 = \text{clamp}_{[0,1]}\left( \frac{\ln(X_{\text{raw}}) - \ln(300)}{\ln(3500) - \ln(300)} \right)$$
-
-En todas las funciones, la frontera crítica de Liebig ($H_i = 0.25$) corresponde a un umbral físico verificable (e.g., $555\,\text{m}^3/\text{hab/año}$ en disponibilidad hídrica $E_2$, $20\%$ de cobertura vegetacional nativa en $E_1$, o $\text{Gini} = 0.54$ en $K_3$).
-
-### 2.7. Protocolo de Auditoría de Tracción Territorial Pre-Inversión ($\sigma_0 \to \sigma_{\text{proj}}$)
-En sustitución de las Evaluaciones de Impacto Ambiental (EIA) meramente declarativas, todo proyecto de inversión con carga incremental $(\Delta D, \Delta E)$ se somete a un **Ensayo de Carga Virtual Uniaxial**:
-
-$$\sigma_{\text{proj}} = \frac{D_0 + \Delta D}{\left[ S \cdot (E_0 + \Delta E) \cdot K \right]^{1/3} \cdot \Phi_{\text{crit}}}$$
-
-* Si $\sigma_{\text{proj}} < 0.85$: **Aprobado en Margen Elástico Reversible**.
-* Si $0.85 \le \sigma_{\text{proj}} < 1.00$: **Condicionado a Regeneración Simétrica Previa**.
-* Si $1.00 \le \sigma_{\text{proj}} < 1.25$: **Rechazado por Inducción de Histéresis Plástica Irreversible**.
-* Si $\sigma_{\text{proj}} \ge 1.25$ o $\min(S,E,K) < 0.25$: **Moratoria Biofísica Total por Fractura de Cuenca**.
-
----
-
-
-### 2.8. Contabilidad Metabólica de Alcance 1, 2 y 3, Fuga Entrópica y Restitución Biofísica
-
-Uno de los principales vacíos epistemológicos de los marcos de evaluación ambiental estándar (incluyendo el SEIA convencional y la Huella de Carbono corporativa ISO 14064) es el **confinamiento territorial estricto**: una jurisdicción urbana o industrial puede certificarse como "carbono neutral" o "ecosostenible" simplemente tercerizando sus procesos energéticamente intensivos y extractivos hacia cuencas periféricas o rurales.
-
-En el Modelo HOMBROS, el metabolismo socio-ecológico se formula a través de un tensor cuatripartito de flujos de masa y carbono equivalente por habitante:
-
-$$\vec{\mathcal{F}}_{\text{metab}} = \left\langle \mathcal{E}_{\text{Scope 1}},\, \mathcal{E}_{\text{Scope 2}},\, \mathcal{E}_{\text{Scope 3}}^{\text{up}},\, \mathcal{E}_{\text{Scope 3}}^{\text{down}},\, \mathcal{S}_{\text{bio}} \right\rangle \quad [\text{tCO}_2\text{e} / \text{hab} \cdot \text{año}]$$
-
-
-Donde:
-1. **$\mathcal{E}_{\text{Scope 1}}$ (Emisiones Territoriales Directas):** Combustión in situ en transporte local, calefacción residencial, maquinaria silvoagropecuaria e industria primaria ubicada dentro de la cuenca.
-2. **$\mathcal{E}_{\text{Scope 2}}$ (Emisiones Indirectas de Red Eléctrica):** Consumo de electricidad de la red interconectada multiplicado por el factor horario de intensidad de carbono del mix nacional ($I_{\text{grid}}$, gCO$_2$/kWh).
-3. **$\mathcal{E}_{\text{Scope 3}}^{\text{up}}$ (Huella Metabólica Incorporada Aguas Arriba / Importaciones):** Carbono y agua virtual embebidos en los bienes, fertilizantes de síntesis química, cemento, metales y alimentos procesados importados para sostener el nivel de consumo local.
-4. **$\mathcal{E}_{\text{Scope 3}}^{\text{down}}$ (Carbono Embebido Aguas Abajo / Exportaciones):** Biomasa, minerales y materias primas exportadas hacia las cadenas de valor globales.
-5. **$\mathcal{S}_{\text{bio}}$ (Secuestro Biogénico Territorial Activo):** Capacidad de captura neta anual de la biomasa nativa, vegas andinas, praderas silvopastoriles y carbono orgánico del suelo (COS) gestionado bajo diseños Keyline y permaculturales.
-
-#### 2.8.1. Ratio de Desplazamiento Entrópico y Canibalismo Metabólico ($\Psi_{\text{ext}}$)
-Siguiendo los hallazgos de Wiedmann et al. (2015) y Hornborg (2009) sobre intercambio ecológicamente desigual, se define el ratio de fuga o desplazamiento entrópico:
-
-$$\Psi_{\text{ext}} = \frac{\mathcal{E}_{\text{Scope 3}}^{\text{up}}}{\mathcal{E}_{\text{Scope 1}} + \mathcal{E}_{\text{Scope 2}} + \mathcal{E}_{\text{Scope 3}}^{\text{up}}}$$
-
-* **Régimen Parásito / Canibalismo Metabólico ($\Psi_{\text{ext}} > 0.50$ con $\mathcal{E}_{\text{Scope 3}}^{\text{up}} > 4.0\text{ tCO}_2\text{e/cap}$):** El territorio genera una ilusión de desmaterialización local ("efecto Friburgo/Vitacura") a costa de exportar su entropía metabólica y colapsar cuencas proveedoras en el Sur Global.
-* **Régimen de Autonomía Metabólica ($\Psi_{\text{ext}} \le 0.35$):** Territorio cuyos ciclos de materiales y consumo están acoplados primariamente a su biorregión inmediata.
-
-#### 2.8.2. Balance Metabólico Neto Sintrópico ($\Omega_{\text{net}}$)
-La verdadera solvencia biofísica no se alcanza con compensaciones contables en mercados de bonos de carbono especulativos, sino con la ratio termodinámica entre la absorción física real in situ y el consumo total:
-
-$$\Omega_{\text{net}} = \frac{\mathcal{S}_{\text{bio}}}{\mathcal{E}_{\text{Scope 1}} + \mathcal{E}_{\text{Scope 2}} + \mathcal{E}_{\text{Scope 3}}^{\text{up}}}$$
-
-* **$\Omega_{\text{net}} \ge 1.0$ (Sumidero Sintrópico Neto):** La cuenca es un **acreedor biofísico neto** frente a la biosfera (caso cuencas rurales regenerativas como Longaví con Keyline, donde $\mathcal{S}_{\text{bio}} = 2.8 > \text{Consumo} = 2.2$).
-* **$0.40 \le \Omega_{\text{net}} < 1.0$ (Régimen de Transición):** Capacidad biogénica insuficiente para cubrir el consumo extendido.
-* **$\Omega_{\text{net}} < 0.40$ (Déficit Entrópico Estructural):** Colapso de la función sumidero.
-
-#### 2.8.3. Mecanismo de Salvaguarda SEIA 2.0: Tasa de Restitución Biofísica
-Para neutralizar el dumping ambiental en las evaluaciones de impacto ambiental, todo proyecto o territorio que opere bajo régimen de canibalismo metabólico activa automáticamente una **Tasa de Restitución Biofísica per cápita vinculante**:
-
-$$\mathcal{T}_{\text{restitución}} = \max\left(0,\, \left[\mathcal{E}_{\text{Scope 3}}^{\text{up}} - 2.50
-ight] \times \Xi_{\text{costo}}
-ight) \quad [\text{USD} / \text{hab} \cdot \text{año}]$$
-
-Donde $\Xi_{\text{costo}} = \$145\text{ USD/tCO}_2\text{e}$ corresponde al costo social y físico de restauración ecohidrológica de cuenca (Reforestación nativa de cabeceras, recarga gestionada de acuíferos APR y habilitación de zanjas de infiltración Keyline). Dicha tasa no es un derecho a contaminar, sino un fondo indisponible administrado por la Mesa Vecinal y los Comités APR para recomponer la sección transversal portante ($H$) del territorio degradado.
-
 ---
 
 ## 3. Sistema de Hipótesis Científicas ($H_1, H_2, H_3, H_4$)
@@ -203,18 +136,18 @@ Donde $\Xi_{\text{costo}} = \$145\text{ USD/tCO}_2\text{e}$ corresponde al costo
 
 ## 4. Resultados Empíricos & Benchmark Multi-sitio
 
-| Territorio | Social ($S$) | Ambiental ($E$) | Económico ($K$) | Capacidad ($H$) | Presión ($D$) | Tensión ($\sigma$) | Régimen Físico | Alc. 1+2 | Alc. 3 Up | Ratio Ext. ($\Psi$) |
+| Territorio | Ambiental ($E$) | Social ($S$) | Económico ($K$) | Capacidad ($H$) | Presión ($D$) | Tensión ($\sigma$) | Régimen Físico | Alc. 1+2 | Alc. 3 Up | Ratio Ext. ($\Psi$) |
 |---|---|---|---|---|---|---|---|---|---|---|
-| **Chanco (Chile)** | 0.68 | 0.78 | 0.62 | **0.690** | 0.45 | **0.652** | *Elástico (Sintrópico)* | 2.2 t | 1.1 t | **33.3%** |
-| **Aconcagua (Chile)** | 0.60 | 0.42 | 0.58 | **0.527** | 0.68 | **1.290** | **Fractura Hídrica** | 4.0 t | 1.8 t | **31.0%** |
-| **Quintero (Chile)** | 0.48 | 0.22* | 0.52 | **0.244*** | 0.82 | **3.361** | **Zona Sacrificio Total** | 18.7 t | 3.1 t | **14.2%** |
-| **Copenhague (Dinamarca)** | 0.92 | 0.52 | 0.88 | **0.749** | 0.74 | **0.988** | *Fluencia Asintótica* | 2.7 t | 8.8 t | **76.5%** |
-| **Barcelona (España)** | 0.82 | 0.45 | 0.68 | **0.631** | 0.79 | **1.252** | **Plástico / Turístico** | 3.5 t | 5.9 t | **62.8%** |
-| **Bilbao (España)** | 0.80 | 0.55 | 0.72 | **0.682** | 0.66 | **0.968** | *Fluencia Controlada* | 4.0 t | 4.7 t | **54.0%** |
-| **Ámsterdam (Países Bajos)** | 0.88 | 0.48 | 0.82 | **0.702** | 0.76 | **1.083** | **Plástico / Dependiente** | 3.1 t | 8.2 t | **72.6%** |
-| **Berlín (Alemania)** | 0.85 | 0.58 | 0.70 | **0.701** | 0.68 | **0.970** | *Fluencia Estable* | 3.7 t | 4.4 t | **54.3%** |
+| **Chanco (Chile)** | 0.78 | 0.68 | 0.62 | **0.690** | 0.45 | **0.652** | *Elástico (Sintrópico)* | 2.2 t | 1.1 t | **33.3%** |
+| **Aconcagua (Chile)** | 0.42 | 0.60 | 0.58 | **0.527** | 0.68 | **1.290** | **Fractura Hídrica** | 4.0 t | 1.8 t | **31.0%** |
+| **Quintero (Chile)** | 0.22* | 0.48 | 0.52 | **0.244*** | 0.82 | **3.361** | **Zona Sacrificio Total** | 18.7 t | 3.1 t | **14.2%** |
+| **Copenhague (Dinamarca)** | 0.52 | 0.92 | 0.88 | **0.749** | 0.74 | **0.988** | *Fluencia Asintótica* | 2.7 t | 8.8 t | **76.5%** |
+| **Barcelona (España)** | 0.45 | 0.82 | 0.68 | **0.631** | 0.79 | **1.252** | **Plástico / Turístico** | 3.5 t | 5.9 t | **62.8%** |
+| **Bilbao (España)** | 0.55 | 0.80 | 0.72 | **0.682** | 0.66 | **0.968** | *Fluencia Controlada* | 4.0 t | 4.7 t | **54.0%** |
+| **Ámsterdam (Países Bajos)** | 0.48 | 0.88 | 0.82 | **0.702** | 0.76 | **1.083** | **Plástico / Dependiente** | 3.1 t | 8.2 t | **72.6%** |
+| **Berlín (Alemania)** | 0.58 | 0.85 | 0.70 | **0.701** | 0.68 | **0.970** | *Fluencia Estable* | 3.7 t | 4.4 t | **54.3%** |
 
-*\*Nota: En Quintero-Puchuncaví el Hombro Ambiental ($E = 0.22$) perfora el umbral crítico ($< 0.25$), activando el operador de Liebig y reduciendo $H$ a $0.244$, lo que dispara el estrés a $\sigma = 3.361$.*
+*\*Nota: En Quintero-Puchuncaví el Hombro Ambiental / Ecosistémico ($E = 0.22$) perfora el umbral crítico de supervivencia biofísica ($< 0.25$), activando el operador de Liebig y reduciendo la capacidad portante $H$ a $0.244$, lo que dispara el estrés mecánico a $\sigma = 3.361$ (fractura reológica irreversible).*
 
 ---
 
