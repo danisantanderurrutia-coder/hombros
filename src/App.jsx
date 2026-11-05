@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import LandingView from './components/LandingView';
 import TabHeaderBanner from './components/TabHeaderBanner';
@@ -15,16 +15,122 @@ import { INITIAL_TERRITORIES } from './models/territories';
 import { evaluateTerritoryState } from './models/mechanics';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 
+const TAB_SLUGS = {
+  landing: 'inicio',
+  articles: 'articulos',
+  core: 'nucleo',
+  world_map: 'atlas',
+  audit: 'auditoria-cuenca',
+  theory: 'teoria',
+  cases: 'casos',
+  data_sources: 'datos',
+  scenarios: 'escenarios'
+};
+
+const SLUG_TO_TAB = {
+  '': 'landing',
+  'inicio': 'landing',
+  'landing': 'landing',
+  'articulos': 'articles',
+  'articles': 'articles',
+  'nucleo': 'core',
+  'core': 'core',
+  'atlas': 'world_map',
+  'mapa': 'world_map',
+  'world_map': 'world_map',
+  'auditoria-cuenca': 'audit',
+  'auditoria': 'audit',
+  'audit': 'audit',
+  'teoria': 'theory',
+  'theory': 'theory',
+  'casos': 'cases',
+  'cases': 'cases',
+  'datos': 'data_sources',
+  'data_sources': 'data_sources',
+  'escenarios': 'scenarios',
+  'scenarios': 'scenarios'
+};
+
+function parseHashRoute() {
+  const raw = window.location.hash.replace(/^#\/?/, '');
+  if (!raw) return { tab: 'landing', anchor: null };
+
+  let [path, anchor] = raw.split('#');
+  const parts = path.split('/');
+  const slug = parts[0] ? parts[0].toLowerCase() : '';
+  const sub = parts[1] ? parts[1].toLowerCase() : null;
+
+  if (!anchor && sub) {
+    if (sub === 'corporeidad' || sub === 'corporeidad-compleja') {
+      anchor = 'corporeidad-compleja';
+    } else if (sub === 'abstract' || sub === 'resumen') {
+      anchor = 'abstract';
+    } else if (sub === 'gaps') {
+      anchor = 'gaps-estandares';
+    } else if (sub === 'mecanica' || sub === 'ecuaciones') {
+      anchor = 'formulacion-mecanica';
+    } else if (sub === 'benchmark') {
+      anchor = 'benchmark-empirico';
+    } else if (sub === 'figuras') {
+      anchor = 'galeria-figuras';
+    }
+  }
+
+  const tab = SLUG_TO_TAB[slug] || 'landing';
+  return { tab, anchor };
+}
+
 function AppContent() {
   const [territories] = useState(INITIAL_TERRITORIES);
   const [selectedTerritoryId, setSelectedTerritoryId] = useState('chanco');
-  const [activeTab, setActiveTab] = useState('landing');
+  const initialRoute = useMemo(() => parseHashRoute(), []);
+  const [activeTab, setActiveTabState] = useState(initialRoute.tab);
   const [customAuditMode, setCustomAuditMode] = useState(null); // null | 'agritwin' | 'blank'
+
+  // Función de navegación con actualización de slugs en la URL
+  const handleSelectTab = (tab, targetAnchor = null) => {
+    setActiveTabState(tab);
+    const slug = TAB_SLUGS[tab] || tab;
+    const targetHash = targetAnchor 
+      ? `#/${slug}#${targetAnchor}` 
+      : (slug === 'inicio' ? '#/' : `#/${slug}`);
+    
+    if (window.location.hash !== targetHash) {
+      window.history.pushState(null, '', targetHash);
+    }
+    if (!targetAnchor) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  // Sincronización bidireccional con eventos del navegador (atrás/adelante o enlaces compartidos)
+  useEffect(() => {
+    const handleHashSync = () => {
+      const { tab, anchor } = parseHashRoute();
+      setActiveTabState(tab);
+      if (anchor) {
+        setTimeout(() => {
+          const el = document.getElementById(anchor);
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 150);
+      }
+    };
+
+    // Si había un ancla al inicio, desplazarse
+    if (initialRoute.anchor) {
+      setTimeout(() => {
+        const el = document.getElementById(initialRoute.anchor);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300);
+    }
+
+    window.addEventListener('hashchange', handleHashSync);
+    return () => window.removeEventListener('hashchange', handleHashSync);
+  }, [initialRoute.anchor]);
 
   const handleNavigateCustomAudit = (mode = 'agritwin') => {
     setCustomAuditMode(mode);
-    setActiveTab('audit');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    handleSelectTab('audit');
   };
 
   const [modifiers, setModifiers] = useState({
@@ -49,7 +155,7 @@ function AppContent() {
       <div className="relative z-10">
         <Navbar 
           activeTab={activeTab} 
-          setActiveTab={setActiveTab} 
+          setActiveTab={handleSelectTab} 
           onNavigateCustomAudit={handleNavigateCustomAudit}
         />
 
@@ -60,7 +166,7 @@ function AppContent() {
 
           {activeTab === 'landing' && (
             <LandingView 
-              onNavigate={setActiveTab} 
+              onNavigate={handleSelectTab} 
               onNavigateCustomAudit={handleNavigateCustomAudit}
             />
           )}
@@ -74,7 +180,7 @@ function AppContent() {
           )}
 
           {activeTab === 'articles' && (
-            <ArticlesPolicyView onNavigateTab={setActiveTab} />
+            <ArticlesPolicyView onNavigateTab={handleSelectTab} />
           )}
 
           {(activeTab === 'world_map' || activeTab === 'cases' || activeTab === 'data_sources') && (

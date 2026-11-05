@@ -749,8 +749,38 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
               </div>
             </div>
 
+            {/* Quick Navigation Jump Bar */}
+            <div className="flex flex-wrap items-center gap-2 p-3 mt-4 rounded-2xl bg-[#EDE8DC]/80 border border-[#D4C9B8] text-xs font-mono">
+              <span className="font-bold text-slate-800 mr-1 flex items-center gap-1.5">
+                <Compass className="w-3.5 h-3.5 text-[#376E6F]" />
+                Navegación de Secciones:
+              </span>
+              <a href="#/teoria#abstract" className="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-800 border border-[#D4C9B8] transition-all">
+                Resumen
+              </a>
+              <a href="#/teoria#gaps-estandares" className="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-800 border border-[#D4C9B8] transition-all">
+                §1. Gaps
+              </a>
+              <a href="#/teoria#corporeidad-compleja" className="px-3 py-1 rounded-lg bg-[#376E6F] text-white font-bold hover:bg-[#2b595a] shadow-xs transition-all">
+                §2. Corporeidad Territorial
+              </a>
+              <a href="#/teoria#formulacion-mecanica" className="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-800 border border-[#D4C9B8] transition-all">
+                §3. Leyes Mecánicas
+              </a>
+              <a href="#/teoria#benchmark-empirico" className="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-800 border border-[#D4C9B8] transition-all">
+                §4. Benchmark N=8
+              </a>
+              <button 
+                onClick={() => setActiveTab('figures')} 
+                className="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-800 border border-[#D4C9B8] transition-all flex items-center gap-1"
+              >
+                <Image className="w-3 h-3 text-[#927660]" />
+                <span>Figuras (10)</span>
+              </button>
+            </div>
+
             {/* Abstract */}
-            <div className="mt-4 p-5 rounded-2xl bg-white/95 border border-[#D4C9B8]/80 shadow-xs space-y-3">
+            <div id="abstract" className="mt-4 p-5 rounded-2xl bg-white/95 border border-[#D4C9B8]/80 shadow-xs space-y-3 scroll-mt-24">
               <span className="text-[10px] font-mono uppercase font-extrabold text-[#487075] tracking-wider block">
                 Resumen Ejecutivo / Abstract
               </span>
@@ -778,7 +808,7 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
           </div>
 
           {/* 1. Matriz de Gaps Epistémicos */}
-          <div className="card-teal rounded-3xl p-6 sm:p-8 shadow-xl border border-[#7DB2B2]/40">
+          <div id="gaps-estandares" className="card-teal rounded-3xl p-6 sm:p-8 shadow-xl border border-[#7DB2B2]/40 scroll-mt-24">
             <div className="flex items-center gap-2 mb-2">
               <Scale className="w-5 h-5 text-[#376E6F]" />
               <h3 className="font-serif font-extrabold text-xl text-black">
@@ -827,7 +857,7 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
           </div>
 
           {/* 2. De la Metáfora Mecánica a la Corporeidad del Sistema Complejo */}
-          <div className="card-teal rounded-3xl p-6 sm:p-8 shadow-xl border border-[#376E6F]/40 space-y-6">
+          <div id="corporeidad-compleja" className="card-teal rounded-3xl p-6 sm:p-8 shadow-xl border border-[#376E6F]/40 space-y-6 scroll-mt-24">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-[#7DB2B2]/40">
               <div className="flex items-center gap-2.5">
                 <div className="p-2.5 rounded-2xl bg-[#376E6F] text-white shadow-sm">
@@ -1009,7 +1039,7 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
           </div>
 
           {/* 3. Formulación Matemática de Medios Continuos */}
-          <div className="card-indigo rounded-3xl p-6 sm:p-8 shadow-xl border border-[#927660]/30">
+          <div id="formulacion-mecanica" className="card-indigo rounded-3xl p-6 sm:p-8 shadow-xl border border-[#927660]/30 scroll-mt-24">
             <div className="flex items-center gap-2 mb-2">
               <Cpu className="w-5 h-5 text-[#927660]" />
               <h3 className="font-serif font-extrabold text-xl text-black">
@@ -1106,8 +1136,8 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
             </div>
           </div>
 
-          {/* 3. Benchmark Empírico Multi-sitio (N=8) */}
-          <div className="card-slate rounded-3xl p-6 sm:p-8 shadow-xl border border-[#927660]/30">
+          {/* 4. Benchmark Empírico Multi-sitio (N=8) */}
+          <div id="benchmark-empirico" className="card-slate rounded-3xl p-6 sm:p-8 shadow-xl border border-[#927660]/30 scroll-mt-24">
             <div className="flex items-center gap-2 mb-2">
               <Layers className="w-5 h-5 text-[#C86D51]" />
               <h3 className="font-serif font-extrabold text-xl text-black">
@@ -1369,7 +1399,7 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
       {/* ==================================================================== */}
       {activeTab === 'figures' && (
         <div className="space-y-8">
-          <div className="card-slate rounded-3xl p-6 sm:p-8 shadow-xl border border-[#927660]/30">
+          <div id="galeria-figuras" className="card-slate rounded-3xl p-6 sm:p-8 shadow-xl border border-[#927660]/30 scroll-mt-24">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#D4C9B8]">
               <div>
                 <span className="text-[10px] font-mono uppercase font-bold text-[#927660] tracking-widest block">
