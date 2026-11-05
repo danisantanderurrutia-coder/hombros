@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kit Audita tu Propia Cuenca: Protocolo de Auditoría Biofísica Comunitaria y Ensayo de Tracción (SEIA 2.0)</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="./favicon.png">
+  <link rel="apple-touch-icon" href="./favicon.png">
+  
+  <!-- Google Fonts: Newsreader for academic body, Inter for UI, Fira Code for code/formulas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&display=swap" rel="stylesheet">
+  
+  <!-- KaTeX for pristine LaTeX math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '\\[', right: '\\]', display: true},
+        {left: '$', right: '$', display: false},
+        {left: '\\(', right: '\\)', display: false}
+      ],
+      throwOnError: false
+    });"></script>
+
+  <style>
+    :root {
+      --bg-canvas: #090c10;
+      --bg-surface: #10161f;
+      --bg-card: #182230;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-accent: #f59e0b;
+      --brand-primary: #d97706;
+      --brand-teal: #0d9488;
+      --brand-mint: #10b981;
+      --border-soft: rgba(255, 255, 255, 0.12);
+      --font-serif: 'Newsreader', Georgia, serif;
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'Fira Code', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-canvas);
+      color: var(--text-main);
+      font-family: var(--font-serif);
+      font-size: 1.08rem;
+      line-height: 1.78;
+      padding: 0;
+      margin: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Sticky Navigation */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(16, 22, 31, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-soft);
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+    }
+
+    .top-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .badge-pill {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      padding: 0.2rem 0.65rem;
+      border-radius: 9999px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-action {
+      background: rgba(255, 255, 255, 0.05);
+      color: #f1f5f9;
+      border: 1px solid var(--border-soft);
+      padding: 0.4rem 0.85rem;
+      border-radius: 0.5rem;
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-action:hover {
+      background: rgba(245, 158, 11, 0.2);
+      border-color: #f59e0b;
+      color: #fff;
+    }
+
+    .btn-action.highlight {
+      background: linear-gradient(135deg, #d97706, #b45309);
+      border-color: #f59e0b;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* Layout Container */
+    .article-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 6rem;
+    }
+
+    /* Paper Header */
+    .paper-header {
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid var(--border-soft);
+      padding-bottom: 2rem;
+    }
+
+    .paper-category {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #fbbf24;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .paper-title {
+      font-size: 2.2rem;
+      line-height: 1.25;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 1rem;
+      letter-spacing: -0.015em;
+    }
+
+    .paper-subtitle {
+      font-family: var(--font-sans);
+      font-size: 1.15rem;
+      line-height: 1.5;
+      color: #94a3b8;
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+    }
+
+    .authors-block {
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      background: var(--bg-surface);
+      padding: 1.25rem 1.5rem;
+      border-radius: 0.75rem;
+      border: 1px solid var(--border-soft);
+    }
+
+    .author-name {
+      font-weight: 600;
+      color: #f8fafc;
+    }
+
+    .author-role {
+      color: #94a3b8;
+      font-size: 0.8rem;
+    }
+
+    /* Abstract / Resumen Ejecutivo */
+    .abstract-box {
+      background: linear-gradient(145deg, #182230, #131b26);
+      border-left: 4px solid #f59e0b;
+      padding: 1.5rem 1.75rem;
+      border-radius: 0 0.75rem 0.75rem 0;
+      margin: 2rem 0 3rem;
+      border-top: 1px solid var(--border-soft);
+      border-right: 1px solid var(--border-soft);
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .abstract-title {
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #fbbf24;
+      margin-bottom: 0.75rem;
+    }
+
+    .abstract-content {
+      font-size: 1.02rem;
+      line-height: 1.72;
+      color: #e2e8f0;
+    }
+
+    /* Headings */
+    h2.section-title {
+      font-size: 1.65rem;
+      line-height: 1.3;
+      color: #ffffff;
+      margin-top: 3.5rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-soft);
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+
+    h3.subsection-title {
+      font-size: 1.25rem;
+      line-height: 1.4;
+      color: #f1f5f9;
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    p {
+      margin-bottom: 1.25rem;
+      color: #cbd5e1;
+      text-align: justify;
+      hyphens: auto;
+    }
+
+    strong {
+      color: #ffffff;
+    }
+
+    /* Formulas & Callouts */
+    .formula-card {
+      background: var(--bg-surface);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      margin: 1.75rem 0;
+      position: relative;
+    }
+
+    .formula-tag {
+      position: absolute;
+      top: -0.65rem;
+      right: 1.25rem;
+      background: #b45309;
+      color: #ffffff;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.15rem 0.55rem;
+      border-radius: 0.35rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Tables */
+    .table-container {
+      overflow-x: auto;
+      margin: 2rem 0;
+      background: var(--bg-surface);
+      border-radius: 0.75rem;
+      border: 1px solid var(--border-soft);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+      text-align: left;
+    }
+
+    th {
+      background: rgba(255, 255, 255, 0.05);
+      color: #f8fafc;
+      font-weight: 600;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border-soft);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+    }
+
+    td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: #cbd5e1;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Code blocks */
+    pre {
+      background: #05080c;
+      border: 1px solid var(--border-soft);
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #e2e8f0;
+      margin: 1.5rem 0;
+    }
+
+    /* Figure Containers */
+    .figure-block {
+      text-align: center;
+      margin: 2.5rem 0;
+      background: var(--bg-surface);
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      border: 1px solid var(--border-soft);
+    }
+
+    .figure-block img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 0.5rem;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .figure-caption {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      margin-top: 1rem;
+      font-family: var(--font-sans);
+      text-align: left;
+      line-height: 1.6;
+    }
+
+    .figure-caption strong {
+      color: #fbbf24;
+    }
+
+    ol, ul {
+      margin-left: 1.75rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.75;
+      color: #cbd5e1;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Navigation Bar -->
+  <header class="top-bar">
+    <div class="top-bar-left">
+      <a href="./#/" class="btn-action" title="Volver al inicio de HOMBROS">
+        ← Plataforma HOMBROS
+      </a>
+      <span class="badge-pill">PAPER PRÁCTICO #2 · SEIA 2.0</span>
+    </div>
+
+    <div class="top-actions">
+      <a href="./paper.html" class="btn-action" title="Leer el Paper Metodológico Principal">
+        📄 Paper Canónico #1 (IMRAD)
+      </a>
+      <a href="./#/auditoria-cuenca" class="btn-action highlight" title="Abrir la consola interactiva de auditoría">
+        ⚡ Abrir Consola de Auditoría
+      </a>
+      <a href="https://raw.githubusercontent.com/danielsantander/Hombros/main/scripts/R/07_kit_audita_tu_cuenca.R" target="_blank" rel="noopener noreferrer" class="btn-action">
+        💻 Script R Reproducible
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Article Container -->
+  <main class="article-container">
+
+    <article class="paper-header">
+      <div class="paper-category">
+        <span>●</span> Protocolo Comunitario · Gemelo Digital & Soberanía Técnica
+      </div>
+      <h1 class="paper-title">
+        Kit Audita tu Propia Cuenca: Protocolo de Auditoría Biofísica Comunitaria, Gemelo Digital y Ensayo de Tracción Territorial (SEIA 2.0)
+      </h1>
+      <p class="paper-subtitle">
+        Manual metodológico y guía práctica de aplicación para gobiernos locales, comités de Agua Potable Rural (APR) y asambleas ciudadanas ante la asimetría del Sistema de Evaluación de Impacto Ambiental.
+      </p>
+
+      <div class="authors-block">
+        <div>
+          <div class="author-name">Daniel Sebastián Santander Urrutia</div>
+          <div class="author-role">Investigador Principal • Geofísico & Permacultor • Proyecto HOMBROS</div>
+          <div class="author-role" style="color: #64748b; font-size: 0.75rem; margin-top: 0.2rem;">Contacto: daniel@hombros.lat • Noviembre 2026 • Versión Canónica 1.0</div>
+        </div>
+        <div>
+          <div class="author-name">Caso Piloto de Aplicación:</div>
+          <div class="author-role">Cuenca del Río Longaví - Embalse Bullileo (Maule Sur, Chile)</div>
+          <div class="author-role">Acoplada al Gemelo Digital <em>AgriTwin</em> (Sentinel-2 STAC/COG & Red 5 APRs)</div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Resumen Ejecutivo / Abstract -->
+    <section class="abstract-box">
+      <div class="abstract-title">Resumen Ejecutivo / Abstract</div>
+      <div class="abstract-content">
+        <p>
+          El Sistema de Evaluación de Impacto Ambiental (SEIA 1.0, Ley N° 19.300) padece una asimetría estructural de información: los titulares de inversión presentan voluminosos Estudios de Impacto Ambiental (EIA) de miles de páginas elaborados por consultoras privadas, mientras los municipios rurales, los comités de Agua Potable Rural (APR) y las comunidades carecen de instrumentos matemáticos propios para auditar la solvencia biofísica de su cuenca.
+        </p>
+        <p>
+          Este manual presenta el <strong>«Kit Audita tu Propia Cuenca»</strong>, una tecnología social y computacional de código abierto derivada del modelo HOMBROS. El protocolo permite a cualquier territorio evaluar su <strong>capacidad portante no-compensatoria ($H = (E \cdot S \cdot K)^{1/3}$)</strong>, medir su nivel de fatiga territorial basal ($\sigma_0$) y someter cualquier proyecto de inversión al <strong>Ensayo de Tracción SEIA 2.0</strong> antes de que ingrese al sistema administrativo.
+        </p>
+        <p style="margin-bottom: 0;">
+          Presentamos la aplicación empírica en la Cuenca del Río Longaví - Bullileo acoplada a la consola del Gemelo Digital <strong>AgriTwin</strong>, modelando la interacción entre 5 comités APR, la telemetría satelital Sentinel-2 (NDVI, NDMI, reflectancia edáfica) y el impacto de pactos vecinales regenerativos (Keyline, cortafuegos agroforestales y redes solares). Asimismo, el kit incorpora una calculadora macrofiscal del <strong>Costo de Inacción</strong>, evidenciando que el $88.2\%$ del gasto recurrente en emergencia hídrica (camiones aljibe) es financiado por el erario público comunal y regional, subsidiando indirectamente las rentas privadas del agronegocio intensivo. Se entrega la rutina en R y el esquema JSON estandarizado para generar <strong>Dictámenes Pre-Inversionales Vinculantes</strong> de validez ciudadana y jurídica.
+        </p>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 1: INTRODUCCIÓN -->
+    <section>
+      <h2 class="section-title">1. Introducción: De la Ventanilla Corporativa a la Soberanía Técnica</h2>
+      
+      <h3 class="subsection-title">1.1. La Trampa de la Asimetría Técnica en el SEIA Tradicional</h3>
+      <p>
+        En los conflictos socioambientales de Chile y América Latina, las comunidades y los municipios rurales se enfrentan sistemáticamente a una encrucijada desigual:
+      </p>
+      <ol>
+        <li><strong>La Sobrecarga Documental Opaca:</strong> Los titulares de proyectos mineros, agroindustriales, forestales o inmobiliarios contratan equipos de ingeniería que redactan expedientes hiper-técnicos fragmentados en decenas de anexos. Las direcciones de obras municipales y las directivas de APR disponen de plazos perentorios de participación ciudadana (PAC) para formular observaciones sin contar con modelos cuantitativos de balance de masa.</li>
+        <li><strong>La Ficción de la Línea Base Estática:</strong> El SEIA tradicional considera que el estado degradado de una cuenca seca o contaminada es una condición "natural" de partida. Si un acuífero ya ha perdido el $70\%$ de su recarga por sobreotorgamiento histórico de derechos de aprovechamiento de aguas (DAA), el sistema evalúa únicamente la extracción adicional marginal del proyecto nuevo, omitiendo que la cuenca ya se encuentra en régimen de deformación plástica irreversible.</li>
+        <li><strong>El Cohecho Institucionalizado de la RSE:</strong> Ante la carencia de agua y servicios básicos, los titulares ofrecen convenios de Responsabilidad Social Empresarial (RSE), sedes comunitarias, transferencias financieras o camiones aljibe privados. Se sustituye la función vital del agua y el suelo por transferencias monetarias asimétricas.</li>
+      </ol>
+      <p>
+        El <strong>Kit «Audita tu Propia Cuenca»</strong> nace para disolver esta asimetría. Transforma la física de medios continuos y la ecología de cuencas en un algoritmo determinístico, auditable en asambleas vecinales o concejos municipales, entregando un dictamen técnico con fuerza jurídica.
+      </p>
+    </section>
+
+    <!-- SECCIÓN 2: ARQUITECTURA DE LAS 12 VARIABLES -->
+    <section>
+      <h2 class="section-title">2. Metodología: Las Doce Variables Físicas Canónicas [0, 1]</h2>
+      <p>
+        Para erradicar la compensabilidad neoclásica donde el dinero pretende sustituir al agua, el kit estandariza doce magnitudes físicas verificables mediante funciones de normalización de postes de meta (<em>goalpost scaling</em>).
+      </p>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Hombro</th>
+              <th>Variable Física</th>
+              <th>Unidad Cruda</th>
+              <th>Límite Crítico [0]</th>
+              <th>Límite Óptimo [1]</th>
+              <th>Tipo de Función</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>E₁</strong></td>
+              <td>Estrés Hídrico de Cuenca</td>
+              <td>m³ / hab · año</td>
+              <td>&lt; 500 (Escasez Absoluta)</td>
+              <td>&ge; 2.500 (Solvencia)</td>
+              <td>Logarítmica (Falkenmark)</td>
+            </tr>
+            <tr>
+              <td><strong>E₂</strong></td>
+              <td>Cobertura Vegetacional Nativa</td>
+              <td>% de cuenca</td>
+              <td>0%</td>
+              <td>&ge; 60%</td>
+              <td>Lineal Directa</td>
+            </tr>
+            <tr>
+              <td><strong>E₃</strong></td>
+              <td>Calidad de Aire / PM2.5</td>
+              <td>µg/m³ anual</td>
+              <td>&ge; 50 (Saturación)</td>
+              <td>&le; 5 (Limpio OMS)</td>
+              <td>Lineal Inversa</td>
+            </tr>
+            <tr>
+              <td><strong>E₄</strong></td>
+              <td>Salud Edáfica / Capacidad Campo</td>
+              <td>% Retención Hídrica</td>
+              <td>&le; 5% (Erosión/Sellado)</td>
+              <td>&ge; 40% (Esponja Viva)</td>
+              <td>Lineal Directa</td>
+            </tr>
+            <tr>
+              <td><strong>S₁</strong></td>
+              <td>Tiempo de Cuidado Familiar/Comunitario</td>
+              <td>Horas semanales</td>
+              <td>&ge; 45 h (Sobrecarga)</td>
+              <td>&le; 10 h (Equilibrio)</td>
+              <td>Lineal Inversa</td>
+            </tr>
+            <tr>
+              <td><strong>S₂</strong></td>
+              <td>Vulnerabilidad Temporera Agraria</td>
+              <td>Tasa informalidad</td>
+              <td>&ge; 70% (Precarización)</td>
+              <td>&le; 10% (Estabilidad)</td>
+              <td>Lineal Inversa</td>
+            </tr>
+            <tr>
+              <td><strong>S₃</strong></td>
+              <td>Salario Digno Territorial</td>
+              <td>Canastas Básicas</td>
+              <td>&le; 1.0 (Línea Pobreza)</td>
+              <td>&ge; 3.0 (Holgura)</td>
+              <td>Lineal Directa</td>
+            </tr>
+            <tr>
+              <td><strong>S₄</strong></td>
+              <td>Tejido Asociativo APR / Juntas Vecinales</td>
+              <td>Organizaciones / 1k hab</td>
+              <td>&le; 0.5 (Atomización)</td>
+              <td>&ge; 4.0 (Gobernanza Viva)</td>
+              <td>Lineal Directa</td>
+            </tr>
+            <tr>
+              <td><strong>K₁</strong></td>
+              <td>Autonomía Financiera Municipal / APR</td>
+              <td>% Ingresos Propios</td>
+              <td>&le; 10% (Dependencia)</td>
+              <td>&ge; 70% (Autosustento)</td>
+              <td>Lineal Directa</td>
+            </tr>
+            <tr>
+              <td><strong>K₂</strong></td>
+              <td>Diversificación Matriz Productiva</td>
+              <td>1 - Herfindahl-Hirschman</td>
+              <td>&le; 0.20 (Monocultivo)</td>
+              <td>&ge; 0.80 (Policultivo)</td>
+              <td>Lineal Directa</td>
+            </tr>
+            <tr>
+              <td><strong>K₃</strong></td>
+              <td>Endeudamiento Familiar de Subsistencia</td>
+              <td>Deuda / Ingreso Anual</td>
+              <td>&ge; 80% (Usura Crítica)</td>
+              <td>&le; 15% (Saneado)</td>
+              <td>Lineal Inversa</td>
+            </tr>
+            <tr>
+              <td><strong>K₄</strong></td>
+              <td>Soberanía Energética Distribuida</td>
+              <td>% Autogeneración Local</td>
+              <td>0%</td>
+              <td>&ge; 50%</td>
+              <td>Lineal Directa</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="formula-card">
+        <span class="formula-tag">ECUACIÓN FUNDAMENTAL · CAPACIDAD PORTANTE NO-SUSTITUIBLE</span>
+        $$H = \left( E \cdot S \cdot K \right)^{1/3} \cdot \Phi_{\text{crit}} \cdot (1 + \kappa)$$
+      </div>
+
+      <p>
+        Donde $E = \frac{1}{4}\sum E_i$, $S = \frac{1}{4}\sum S_i$, $K = \frac{1}{4}\sum K_i$, $\kappa \in [0, 0.40]$ es la bonificación institucional de gobernanza colectiva de Ostrom, y $\Phi_{\text{crit}}$ es el operador de Liebig:
+      </p>
+
+      <div class="formula-card">
+        <span class="formula-tag">OPERADOR DE LIEBIG DE MICRO-FRACTURA ESTRUCTURAL</span>
+        $$\Phi_{\text{crit}} = \begin{cases} 1.0 & \text{si } \min(E, S, K) \ge 0.25 \\ \frac{\min(E, S, K)}{0.25} & \text{si } \min(E, S, K) < 0.25 \end{cases}$$
+      </div>
+    </section>
+
+    <!-- SECCIÓN 3: ENSAYO DE TRACCIÓN SEIA 2.0 -->
+    <section>
+      <h2 class="section-title">3. Ensayo de Tracción Territorial y Dictamen Jurídico Pre-Inversional</h2>
+      <p>
+        Cuando un titular ingresa una Declaración de Impacto Ambiental (DIA) o un Estudio de Impacto Ambiental (EIA), el Kit somete el proyecto a un <strong>Ensayo de Tracción Mecánica Virtual</strong>. Se calcula la tensión proyectada ($\sigma_{\text{proj}}$):
+      </p>
+
+      <div class="formula-card">
+        <span class="formula-tag">ECUACIÓN DE TRACCIÓN PRE-INVERSIONAL (SEIA 2.0)</span>
+        $$\sigma_{\text{proj}} = \frac{D_0 + \Delta D}{\left[ (E_0 + \Delta E) \cdot S_0 \cdot K_0 \right]^{1/3} \cdot \Phi_{\text{crit}} \cdot (1 + \kappa)}$$
+      </div>
+
+      <!-- Figura 1 del Paper 2: Ensayo de Tracción -->
+      <div class="figure-block">
+        <img src="./docs/figures/fig8_agritwin_telemetry_spatial_mesh.png" alt="Figura 1: Malla Espacial y Telemetría Sentinel-2 Longaví" onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='/hombros/docs/figures/fig8_agritwin_telemetry_spatial_mesh.png';}">
+        <div class="figure-caption">
+          <strong>Figura 1 (Paper 2 · Figura 8 Canónica):</strong> <em>Arquitectura de Malla Espacial y Telemetría Sentinel-2 acoplada a la Cuenca del Río Longaví - Embalse Bullileo. Monitorea en tiempo real los balances hídricos de 5 comités de Agua Potable Rural (APR), la tasa de evapotranspiración de monocultivos de avellano y la reducción de escorrentía basal por deforestación.</em>
+        </div>
+      </div>
+
+      <h3 class="subsection-title">3.1. Escala de Calificación y Regímenes Reológicos</h3>
+      <ul>
+        <li><strong>Régimen Elástico ($\sigma_{\text{proj}} < 0.85$):</strong> Dictamen: <em>Admisible</em>. La cuenca posee solvencia estructural para absorber la carga sin deformaciones permanentes.</li>
+        <li><strong>Régimen de Fluencia y Fatiga ($0.85 \le \sigma_{\text{proj}} < 1.00$):</strong> Dictamen: <em>Admisible con Restricción Condicionada</em>. Exige planes de mitigación sintrópica comprobable antes de iniciar faenas.</li>
+        <li><strong>Régimen de Deformación Plástica Irreversible ($1.00 \le \sigma_{\text{proj}} < 1.25$):</strong> Dictamen: <em>Inadmisible por Ley</em>. El territorio acumula fatiga crónica; cualquier proyecto adicional precipita el secado de pozos comunitarios.</li>
+        <li><strong>Régimen de Fractura Catastrófica ($\sigma_{\text{proj}} \ge 1.25$ o colapso de Liebig):</strong> Dictamen: <em>Moratoria Total Inmediata</em>. Zona de Sacrificio. Queda prohibida por mandato jurídico la tramitación de nuevos derechos o proyectos extractivos.</li>
+      </ul>
+    </section>
+
+    <!-- SECCIÓN 4: GEMELO DIGITAL AGRITWIN -->
+    <section>
+      <h2 class="section-title">4. El Gemelo Digital AgriTwin y los Pactos Vecinales de Regeneración</h2>
+      <p>
+        El caso piloto en la Cuenca del Río Longaví integra las lecturas del Gemelo Digital <strong>AgriTwin</strong>:
+      </p>
+      <ul>
+        <li><strong>Telemetría Sentinel-2 (STAC/COG):</strong> Detección de pérdida de humedad en el suelo (NDMI) y estrés hídrico de la vegetación (NDVI) con resolución de 10 metros y revisita cada 5 días.</li>
+        <li><strong>Pacto Vecinal 1: Líneas Clave (Keyline) en Cabeceras:</strong> Retiene el $65\%$ del agua de lluvia infiltrándola en el perfil de suelo, reactivando vertientes secas y aliviando el gasto de camiones aljibe.</li>
+        <li><strong>Pacto Vecinal 2: Fajas Cortafuego Agroforestales (WUI):</strong> Sustitución perimetral de pino insigne por bosque nativo esclerófilo y franjas de pastoreo guiado, blindando los APRs contra incendios forestales.</li>
+        <li><strong>Pacto Vecinal 3: Micro-Red Eléctrica P2P Comunitaria:</strong> Autogeneración solar fotovoltaica comunitaria para alimentar las bombas de los pozos de APR a costo marginal cero.</li>
+      </ul>
+    </section>
+
+    <!-- SECCIÓN 5: COSTO DE INACCIÓN Y TRANSFERENCIA REGRESIVA -->
+    <section>
+      <h2 class="section-title">5. Calculadora Macrofiscal: Retorno Biofísico (ROI) vs. Costo de Inacción</h2>
+      <p>
+        El modelo incorpora un balance macrofiscal que cuantifica el <strong>Costo de Inacción Territorial</strong> frente al plan de inversión sintrópica:
+      </p>
+
+      <div class="formula-card">
+        <span class="formula-tag">BALANCE MACROFISCAL DE RETORNO BIOFÍSICO</span>
+        $$\text{ROI}_{\text{bio}} = \frac{\Delta \text{Pérdidas Evitadas a 10 Años} - \text{Inversión Sintrópica}}{\text{Inversión Sintrópica}} = +655\%$$
+      </div>
+
+      <!-- Figura 2 del Paper 2: ROI vs Costo de Inacción -->
+      <div class="figure-block">
+        <img src="./docs/figures/fig9_roi_inaction_transfer_regressive.png" alt="Figura 2: ROI y Transferencia Regresiva Longaví" onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='/hombros/docs/figures/fig9_roi_inaction_transfer_regressive.png';}">
+        <div class="figure-caption">
+          <strong>Figura 2 (Paper 2 · Figura 9 Canónica):</strong> <em>A) Curva de amortización y retorno biofísico a 10 años (ROI +655%, breakeven al año 2.8) comparando pérdidas acumuladas de inacción vs. inversión sintrópica preventiva en Cuenca Longaví. B) Desglose de la transferencia regresiva de costos: el 88.2% de la emergencia hídrica es pagado con fondos públicos, frente a un 0% de aporte directo de los monocultivos exportadores.</em>
+        </div>
+      </div>
+
+      <h3 class="subsection-title">5.1. Radiografía de la Socialización de Pérdidas</h3>
+      <p>
+        La modelación económica evidencia una injusticia distributiva estructural:
+      </p>
+      <pre>
+FINANCIAMIENTO DEL GASTO EN CAMIONES ALJIBE Y EMERGENCIA HÍDRICA:
+┌────────────────────────────────────────────────────────┬─────────┐
+│ Erario Público (FNDR + SENAPRED + Fondo Común Munic.)  │  88.2%  │
+├────────────────────────────────────────────────────────┼─────────┤
+│ Copago Directo y Endeudamiento de Familias Campesinas  │  11.8%  │
+├────────────────────────────────────────────────────────┼─────────┤
+│ Aporte Compensatorio Directo de Grandes Monocultivos   │   0.0%  │
+└────────────────────────────────────────────────────────┴─────────┘
+      </pre>
+      <p>
+        <strong>Conclusión de Economía Política:</strong> El Estado y los hogares campesinos financian con sus propios recursos la mitigación del secado del acuífero, mientras que los grandes holdings exportadores capturan el $100\%$ de la renta privada libre de costos de remediación hidrológica.
+      </p>
+    </section>
+
+    <!-- SECCIÓN 6: PROCEDIMIENTO OPERATIVO -->
+    <section>
+      <h2 class="section-title">6. Procedimiento Operativo para Emitir un Dictamen Ciudadano</h2>
+      <p>
+        Cualquier organización comunal o municipal puede ejecutar una auditoría biofísica siguiendo estos cuatro pasos determinísticos:
+      </p>
+      <ol>
+        <li><strong>Paso 1: Levantamiento de las 12 Variables Locales:</strong> Descargar la plantilla comunal o ingresar a la pestaña <em>Auditoría Biofísica</em> de la plataforma HOMBROS. Para datos satelitales, emplear Copernicus Browser (Sentinel-2 L2A) o conectar la cuenca al cliente de AgriTwin.</li>
+        <li><strong>Paso 2: Calibración del Esfuerzo Basal ($\sigma_0$):</strong> Introducir los vectores de presión extractiva ($D_1$), demográfica ($D_2$) y exógena ($D_3$). Si $\sigma_0 \ge 1.00$, solicitar formalmente al Municipio la declaración de <em>Zona de Saturación Biofísica</em>.</li>
+        <li><strong>Paso 3: Ejecución del Ensayo de Tracción:</strong> Ingresar las especificaciones técnicas del proyecto que solicita ingreso al SEIA (consumo hídrico en L/s, hectáreas taladas o selladas). Correr el script <code>scripts/R/07_kit_audita_tu_cuenca.R</code>.</li>
+        <li><strong>Paso 4: Exportación del Dictamen en JSON y Acta Impresa:</strong> El software genera el archivo <code>dictamen_audita_tu_cuenca.json</code> con firma hash criptográfica, apto para ser presentado como observación ciudadana vinculante ante la Dirección Regional del SEA y la Superintendencia del Medio Ambiente (SMA).</li>
+      </ol>
+
+      <!-- Figura 3 del Paper 2: Consola y Gemelo Digital -->
+      <div class="figure-block">
+        <img src="./docs/figures/fig10_holistic_territorial_twin_organism.png" alt="Figura 3: Consola Holística del Gemelo Digital" onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='/hombros/docs/figures/fig10_holistic_territorial_twin_organism.png';}">
+        <div class="figure-caption">
+          <strong>Figura 3 (Paper 2 · Figura 10 Canónica):</strong> <em>Consola Holística del Gemelo Digital Territorial: Integración del Semáforo Biofísico, el Trípode de Capacidad Portante H, el Ensayo de Tracción Pre-Inversional y la Red Panal de Solidaridad de Cuenca.</em>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 7: REFERENCIAS -->
+    <section>
+      <h2 class="section-title">7. Referencias Bibliográficas Canónicas</h2>
+      <ol style="font-family: var(--font-sans); font-size: 0.88rem;">
+        <li><strong>Baccini, P., & Brunner, P. H. (2012).</strong> <em>Metabolism of the Anthroposphere: Analysis, Evaluation, Design</em> (2nd ed.). The MIT Press.</li>
+        <li><strong>Cauchy, A. L. (1827).</strong> De la pression ou tension dans un corps solide. <em>Exercices de Mathématiques</em>, 2, 42–56.</li>
+        <li><strong>Dirección General de Aguas [DGA]. (2023).</strong> <em>Informe Consolidado de Decretos de Escasez Hídrica y Vulnerabilidad de Comités de Agua Potable Rural (APR)</em>. MOP Chile.</li>
+        <li><strong>Durán, G., & Kremerman, M. (2024).</strong> <em>Los bajos salarios, endeudamiento y la precarización del trabajo agrícola de temporada en Chile</em>. Fundación SOL.</li>
+        <li><strong>Ostrom, E. (1990).</strong> <em>Governing the Commons: The Evolution of Institutions for Collective Action</em>. Cambridge University Press.</li>
+        <li><strong>Santander Urrutia, D. (2026a).</strong> <em>Hombros: Un Modelo de Mecánica de Medios Continuos y Metabolismo Socio-Ecológico</em>. Laboratorio de Modelación Territorial y Autosustento Sintrópico. DOI: 10.5281/zenodo.hombros.2026.</li>
+        <li><strong>Von Liebig, J. (1840).</strong> <em>Die organische Chemie in ihrer Anwendung auf Agricultur und Physiologie</em>. Friedrich Vieweg und Sohn.</li>
+        <li><strong>Yeomans, P. A. (1958).</strong> <em>The Challenge of Landscape: The Development and Practice of Keyline</em>. Keyline Publishing Pty.</li>
+      </ol>
+    </section>
+
+  </main>
+</body>
+</html>

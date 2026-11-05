@@ -85,7 +85,9 @@ function AppContent() {
   const [selectedTerritoryId, setSelectedTerritoryId] = useState('chanco');
   const initialRoute = useMemo(() => parseHashRoute(), []);
   const [activeTab, setActiveTabState] = useState(initialRoute.tab);
-  const [customAuditMode, setCustomAuditMode] = useState(null); // null | 'agritwin' | 'blank'
+  const [customAuditMode, setCustomAuditMode] = useState(() => {
+    return window.location.hash.includes('auditoria-cuenca') ? 'kit_cuenca' : null;
+  });
 
   // Función de navegación con actualización de slugs en la URL
   const handleSelectTab = (tab, targetAnchor = null) => {
@@ -108,6 +110,9 @@ function AppContent() {
     const handleHashSync = () => {
       const { tab, anchor } = parseHashRoute();
       setActiveTabState(tab);
+      if (window.location.hash.includes('auditoria-cuenca')) {
+        setCustomAuditMode('kit_cuenca');
+      }
       if (anchor) {
         setTimeout(() => {
           const el = document.getElementById(anchor);
@@ -128,7 +133,7 @@ function AppContent() {
     return () => window.removeEventListener('hashchange', handleHashSync);
   }, [initialRoute.anchor]);
 
-  const handleNavigateCustomAudit = (mode = 'agritwin') => {
+  const handleNavigateCustomAudit = (mode = 'kit_cuenca') => {
     setCustomAuditMode(mode);
     handleSelectTab('audit');
   };

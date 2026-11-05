@@ -137,7 +137,7 @@ $$\sigma = \frac{D}{H} = \frac{\frac{1}{3}(D_1 + D_2 + D_3)}{(S \cdot E \cdot K)
    Ruptura de la sección transversal portante. El territorio entra en senescencia disipativa, colapso de servicios ecosistémicos y pérdida de habitabilidad: se consolida una **Zona de Sacrificio**.
 
 ### 2.4. Ley de Velocidad Sintrópica Territorial ($\Gamma(t)$)
-Definimos la velocidad sintrópica como la tasa logarítmica de variación de la capacidad portante:
+Basada en la termodinámica del no-equilibrio y la física de estructuras disipativas abiertas (Prigogine, 1977; Odum, 1988; Georgescu-Roegen, 1971), la capacidad portante de un territorio no es una constante estática, sino una variable de estado dinámica que acumula o disipa neguentropía (entendida como entropía negativa, es decir, la capacidad activa de un sistema territorial abierto para capturar energía útil, generar orden interno y regenerar su soporte biofísico frente a la degradación entrópica):
 
 $$\Gamma(t) = \frac{1}{H(t)} \frac{dH(t)}{dt} = \frac{d}{dt} \ln H(t)$$
 

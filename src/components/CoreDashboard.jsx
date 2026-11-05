@@ -15,6 +15,7 @@ import MechanicalBalance from './MechanicalBalance';
 import OrganismVisualAvatar from './OrganismVisualAvatar';
 import ThreeShouldersBreakdown from './ThreeShouldersBreakdown';
 import ScenarioSimulator from './ScenarioSimulator';
+import TerritoryBodyVisualizer from './TerritoryBodyVisualizer';
 
 // Specialized SVG Figures
 import ShouldersRadarTripod from './ShouldersRadarTripod';
@@ -322,8 +323,17 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
       color: 'from-[#DA7B93] to-[#D83F87]' 
     },
     { 
-      id: 'tension', 
+      id: 'cuerpo', 
       number: '2', 
+      label: 'Territorio como Cuerpo', 
+      tag: 'Corporeidad & 3D', 
+      icon: Layers,
+      color: 'from-emerald-500 via-teal-600 to-[#376E6F]',
+      highlight: true
+    },
+    { 
+      id: 'tension', 
+      number: '3', 
       label: 'Tensión Sistémica (σ)', 
       tag: 'Reología & Cargas', 
       icon: Scale,
@@ -331,7 +341,7 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
     },
     { 
       id: 'sintropia', 
-      number: '3', 
+      number: '4', 
       label: 'Tasa Sintrópica (Γ)', 
       tag: 'Metabolismo Basal', 
       icon: Sparkles,
@@ -339,15 +349,15 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
     },
     { 
       id: 'prospectiva', 
-      number: '4', 
+      number: '5', 
       label: 'Simulador Prospectivo', 
       tag: 'Dinámica a 36 Meses', 
-      icon: Layers,
+      icon: TrendingUp,
       color: 'from-[#44318D] to-[#8D69A6]' 
     },
     { 
       id: 'organismo', 
-      number: '5', 
+      number: '6', 
       label: 'Organismo Integrado', 
       tag: 'Vista Holística', 
       icon: Cpu,
@@ -526,7 +536,7 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
           BARRA DE NAVEGACIÓN PROGRESIVA EN SUBPESTAÑAS DEL NÚCLEO
           ========================================================================= */}
       <div className="bg-[#180e25]/90 border border-white/10 p-1.5 rounded-2xl shadow-xl backdrop-blur-md sticky top-20 z-40">
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1.5">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5">
           {subtabs.map(tab => {
             const Icon = tab.icon;
             const isActive = activeSubtab === tab.id;
@@ -920,7 +930,23 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
         )}
 
         {/* =======================================================================
-            SUBPESTAÑA 2: TENSIÓN SISTÉMICA (σ) & REOLOGÍA (VINCULADA A CURVA Y BALANZA)
+            SUBPESTAÑA 2: EL TERRITORIO COMO CUERPO (CORPOREIDAD & ECOSISTEMA 3D)
+            ======================================================================= */}
+        {activeSubtab === 'cuerpo' && (
+          <motion.div
+            key="subtab_cuerpo"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.25 }}
+            className="space-y-6"
+          >
+            <TerritoryBodyVisualizer santanderState={santanderState} territory={syntheticTerritory} />
+          </motion.div>
+        )}
+
+        {/* =======================================================================
+            SUBPESTAÑA 3: TENSIÓN SISTÉMICA (σ) & REOLOGÍA (VINCULADA A CURVA Y BALANZA)
             ======================================================================= */}
         {activeSubtab === 'tension' && (
           <motion.div

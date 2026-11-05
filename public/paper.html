@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hombros: Un Modelo de Mecánica de Medios Continuos y Metabolismo Socio-Ecológico</title>
-  <link rel="icon" type="image/png" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="./favicon.png">
+  <link rel="apple-touch-icon" href="./favicon.png">
   
   <!-- Google Fonts: Merriweather for academic body, Inter for UI/sans, JetBrains Mono for math/code -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -793,7 +795,7 @@
 
       <h3 class="subsection-title">2.3. Dinámica Temporal: Velocidad Sintrópica ($\Gamma$)</h3>
       <p>
-        Basada en la termodinámica del no-equilibrio y la física de estructuras disipativas abiertas (Prigogine, 1977; Odum, 1988; Georgescu-Roegen, 1971), la capacidad portante de un territorio no es una constante estática, sino una variable de estado dinámica que describe la capacidad de un sistema territorial para preservar su auto-organización y reproducir su soporte biofísico:
+        Basada en la termodinámica del no-equilibrio y la física de estructuras disipativas abiertas (Prigogine, 1977; Odum, 1988; Georgescu-Roegen, 1971), la capacidad portante de un territorio no es una constante estática, sino una variable de estado dinámica que acumula o disipa neguentropía (entendida como entropía negativa, es decir, la capacidad activa de un sistema territorial abierto para capturar energía útil, generar orden interno y regenerar su soporte biofísico frente a la degradación entrópica):
       </p>
 
       <div class="formula-card">
@@ -823,6 +825,15 @@
       <p>
         Donde $\mathcal{C}_{nm} \in [0, 1]$ representa la <em>complementariedad metabólica</em> entre territorios (e.g., transferencia de biomasa y nutrientes de un nodo agroecológico hacia un nodo con alta capacidad técnica de reciclaje de agua), $d_{nm}$ es la distancia relacional de transporte, y $\lambda$ es la constante de acoplamiento mutualista. La propiedad fundamental de la Red Panal es la <strong>amortiguación de picos de tensión</strong>: la red distribuye los excesos de perturbación exógena, evitando que un territorio individual alcance el umbral de fractura ($\sigma \ge 1.25$).
       </p>
+
+      <!-- Figura 5: Amortiguación en Red Panal -->
+      <div style="text-align: center; margin: 2.5rem 0; background: var(--bg-surface); padding: 1.5rem; border-radius: 0.75rem; border: 1px solid var(--border-soft);">
+        <img src="./docs/figures/fig5_honeycomb_network_damping.png" alt="Figura 5: Amortiguación Red Panal" style="max-width: 100%; height: auto; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.1);" onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='/hombros/docs/figures/fig5_honeycomb_network_damping.png';}">
+        <p style="font-size: 0.85rem; color: #cbd5e1; margin-top: 1rem; font-family: var(--font-sans); text-align: left;">
+          <strong>Figura 5:</strong> <em>Amortiguación Tensora por Mutualismo en Red Panal (Density Violin Plots): Comparación de la distribución de probabilidad de la tensión sistémica ante un choque exógeno de sequía ($\Delta D = +0.25$) entre cuencas aisladas y cuencas acopladas policéntricamente. Demuestra una reducción del $38.4\%$ en la varianza tensora y la erradicación del riesgo de cruce al régimen de fractura catastrófica.</em>
+        </p>
+      </div>
+
       <h3 class="subsection-title">2.5. Contabilidad Metabólica de Alcance 1, 2 y 3, Canibalismo Metabólico y Restitución Biofísica</h3>
       <p>
         Uno de los mayores vacíos del marco regulatorio actual es el <strong>confinamiento territorial estricto</strong>: un territorio urbano o minero puede registrar balances locales limpios simplemente externalizando su huella metabólica hacia cuencas periféricas. En HOMBROS, el metabolismo socio-ecológico se formaliza mediante el tensor de flujos per cápita:
@@ -839,11 +850,38 @@
 
       <h3 class="subsection-title">2.6. Protocolo de Auditoría Biofísica en 4 Eslabones y Salvaguarda Ex-Ante (SEIA 2.0)</h3>
       <p>
-        Para dotar a los gobiernos locales y comités de base de una herramienta determinística, el modelo se estructura en cuatro eslabones:
+        Para dotar a los gobiernos locales y comités de base de una herramienta determinística, el modelo se estructura en cuatro eslabones secuenciales:
       </p>
       <ol style="margin-left: 1.5rem; margin-bottom: 1.5rem; line-height: 1.8;">
-        <li><strong>Eslabón I (Normalización Goalposts [0, 1]):</strong> Estandarización de 12 variables físicas ($E_1..E_4, S_1..S_4, K_1..K_4$) incorporando la economía del cuidado mutuo ($S_1$), fiscalización activa de faenas temporeras ($S_2$), empleo digno vs. precarización estacional ($S_3$) y justicia distributiva libre de sobreendeudamiento usurario de subsistencia ($K_3$).</li>
-        <li><strong>Eslabón II (Ensayo de Tracción SEIA 2.0):</strong> Evaluación del proyecto sobre la cuenca hidrográfica indivisible calculando la tensión proyectada $\sigma_{\text{proj}} = \frac{D_0 + \Delta D}{[(E_0 + \Delta E) \cdot S_0 \cdot K_0]^{1/3} \cdot \Phi_{\text{crit}} \cdot (1 + \kappa)}$. Rige el principio de inconmensurabilidad de Liebig ($\Delta E < 0 \not\implies \Delta K > 0$): la destrucción de un acuífero jamás puede compensarse con dinero ni obras civiles.</li>
+        <li>
+          <strong>Eslabón I (Normalización Canónica mediante Postes de Meta [0, 1]):</strong> Estandarización de 12 variables físicas ($E_1..E_4, S_1..S_4, K_1..K_4$) incorporando la economía del cuidado mutuo ($S_1$), fiscalización activa de faenas temporeras ($S_2$), empleo digno vs. precarización estacional ($S_3$) y justicia distributiva libre de sobreendeudamiento usurario de subsistencia ($K_3$).
+          
+          <!-- Figura 6: Funciones de Transferencia -->
+          <div style="text-align: center; margin: 1.5rem 0; background: var(--bg-surface); padding: 1.25rem; border-radius: 0.75rem; border: 1px solid var(--border-soft);">
+            <img src="./docs/figures/fig6_normalization_transfer_functions.png" alt="Figura 6: Funciones de Normalización Canónica" style="max-width: 100%; height: auto; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.1);" onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='/hombros/docs/figures/fig6_normalization_transfer_functions.png';}">
+            <p style="font-size: 0.85rem; color: #cbd5e1; margin-top: 0.85rem; font-family: var(--font-sans); text-align: left;">
+              <strong>Figura 6:</strong> <em>Funciones de Transferencia y Normalización Canónica ($X_{\text{raw}} \to [0, 1]$): Mapeo de magnitudes biofísicas heterogéneas mediante familias Lineal Directa, Logarítmica Hídrica de Falkenmark y Lineal Inversa, con delimitación de la franja crítica de micro-fractura estructural de Liebig en $H_i < 0.25$.</em>
+            </p>
+          </div>
+        </li>
+        <li>
+          <strong>Eslabón II (Ensayo de Tracción SEIA 2.0):</strong> Evaluación pre-inversional del proyecto sobre la cuenca hidrográfica indivisible calculando la <strong>Tensión Proyectada ($\sigma_{\text{proj}}$)</strong> como ecuación fundamental aislada:
+
+          <div class="formula-card" style="margin: 1.25rem 0;">
+            <span class="formula-tag">ECUACIÓN FUNDAMENTAL DE TRACCIÓN PRE-INVERSIONAL (SEIA 2.0)</span>
+            $$\sigma_{\text{proj}} = \frac{D_0 + \Delta D}{\left[ (E_0 + \Delta E) \cdot S_0 \cdot K_0 \right]^{1/3} \cdot \Phi_{\text{crit}} \cdot (1 + \kappa)}$$
+          </div>
+
+          Rige el principio de inconmensurabilidad de Liebig ($\Delta E < 0 \not\implies \Delta K > 0$): la destrucción de un acuífero jamás puede compensarse con dinero ni obras civiles. Se declara <strong>inadmisible de plano</strong> todo proyecto cuyo impacto induzca una tensión superior al límite elástico ($\sigma_{\text{proj}} > 0.85$).
+
+          <!-- Figura 7: Ensayo de Tracción Territorial Pre-Inversión -->
+          <div style="text-align: center; margin: 1.5rem 0; background: var(--bg-surface); padding: 1.25rem; border-radius: 0.75rem; border: 1px solid var(--border-soft);">
+            <img src="./docs/figures/fig7_audit_traction_stress_test.png" alt="Figura 7: Auditoría de Ensayo de Tracción Territorial" style="max-width: 100%; height: auto; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.1);" onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='/hombros/docs/figures/fig7_audit_traction_stress_test.png';}">
+            <p style="font-size: 0.85rem; color: #cbd5e1; margin-top: 0.85rem; font-family: var(--font-sans); text-align: left;">
+              <strong>Figura 7:</strong> <em>Auditoría de Ensayo de Tracción Territorial Pre-Inversión ($\sigma_0 \to \sigma_{\text{proj}}$): Simulación de carga extractiva incremental y dictamen vinculante de solvencia metabólica. Ilustra cómo territorios en fluencia cruzan a deformación plástica irreversible mientras cuencas en fractura entran en moratoria total.</em>
+            </p>
+          </div>
+        </li>
         <li><strong>Eslabón III (Rating Biofísico y Salvaguarda Ex-Ante No Negociable):</strong> Calificación de solvencia estructural (AAA a D). Si $\sigma_0 \ge 1.00$ o rige el corte de Liebig ($H_i < 0.25$), el proyecto queda <strong>vetado ex-ante por ley</strong>. Se prohíben taxativamente las mesas de diálogo voluntario o compensaciones de Responsabilidad Social Empresarial (RSE); la única vía legal es una restitución biofísica simétrica previa comprobable.</li>
         <li><strong>Eslabón IV (ROI Biofísico e Inacción · Escenario Modelado):</strong> Comparación fiscal del costo de inacción frente a la inversión sintrópica preventiva (Keyline, cortafuegos y recarga APR). La modelación macrofiscal visibiliza una <strong>transferencia regresiva neta</strong>: el $88.2\%$ de la emergencia hídrica (camiones aljibe) es financiado con erario público (FNDR/SENAPRED/FCM) y $0\%$ aporte directo de los monocultivos que agotaron la napa.</li>
       </ol>
@@ -1034,40 +1072,8 @@
       <div style="text-align: center; margin: 2.5rem 0; background: var(--bg-surface); padding: 1.5rem; border-radius: 0.75rem; border: 1px solid var(--border-soft);">
         <img src="./docs/figures/fig3_multimodel_ranking_inversion.png" alt="Figura 3: Inversión de Jerarquías en la Evaluación de Sostenibilidad" style="max-width: 100%; height: auto; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.1);" onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='/hombros/docs/figures/fig3_multimodel_ranking_inversion.png';}">
         <p style="font-size: 0.85rem; color: #cbd5e1; margin-top: 1rem; font-family: var(--font-sans); text-align: left;">
-          <strong>Figura 3:</strong> <em>Inversión de Jerarquías en la Evaluación de Sostenibilidad (Slopegraph): Comparación entre IDH (PNUD), Huella Ecológica (GFN) y Tensión Sistémica HOMBROS ($\sigma$). Demuestra cómo Chanco escala al puesto #1 y Copenhague cae al puesto #5.</em>
+          <strong>Figura 3:</strong> <em>Inversión de Jerarquías en la Evaluación de Sostenibilidad (Slopegraph): Comparación entre IDH (PNUD), Huella Ecológica (GFN) y Tensión Sistémica HOMBROS ($\sigma$). Demuestra cómo Chanco escala al puesto #1 y Copenhague cae al puesto #5 al penalizarse la importación de Alcance 3.</em>
         </p>
-      </div>
-
-      <!-- Grid de Figuras 4 y 5 -->
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 1.5rem; margin: 2.5rem 0;">
-        <div style="background: var(--bg-surface); padding: 1.25rem; border-radius: 0.75rem; border: 1px solid var(--border-soft); text-align: center;">
-          <img src="./docs/figures/fig4_sobol_sensitivity_montecarlo.png" alt="Figura 4: Sensibilidad de Sobol" style="max-width: 100%; height: auto; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.1);" onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='/hombros/docs/figures/fig4_sobol_sensitivity_montecarlo.png';}">
-          <p style="font-size: 0.8rem; color: #cbd5e1; margin-top: 0.75rem; font-family: var(--font-sans); text-align: left;">
-            <strong>Figura 4:</strong> <em>Análisis de Sensibilidad de Sobol (Monte Carlo $N=5,000$): El Hombro Ambiental/Ecosistémico ($E$) domina la varianza total de resiliencia territorial.</em>
-          </p>
-        </div>
-        <div style="background: var(--bg-surface); padding: 1.25rem; border-radius: 0.75rem; border: 1px solid var(--border-soft); text-align: center;">
-          <img src="./docs/figures/fig5_honeycomb_network_damping.png" alt="Figura 5: Amortiguación Red Panal" style="max-width: 100%; height: auto; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.1);" onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='/hombros/docs/figures/fig5_honeycomb_network_damping.png';}">
-          <p style="font-size: 0.8rem; color: #cbd5e1; margin-top: 0.75rem; font-family: var(--font-sans); text-align: left;">
-            <strong>Figura 5:</strong> <em>Amortiguación Tensora en Red Panal: Reducción del $38.4\%$ en la varianza de tensión bajo choque climático y erradicación del colapso de fractura.</em>
-          </p>
-        </div>
-      </div>
-
-      <!-- Grid de Figuras 6 y 7 (Normalización y Auditoría de Tracción) -->
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 1.5rem; margin: 2.5rem 0;">
-        <div style="background: var(--bg-surface); padding: 1.25rem; border-radius: 0.75rem; border: 1px solid var(--border-soft); text-align: center;">
-          <img src="./docs/figures/fig6_normalization_transfer_functions.png" alt="Figura 6: Funciones de Normalización Canónica" style="max-width: 100%; height: auto; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.1);" onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='/hombros/docs/figures/fig6_normalization_transfer_functions.png';}">
-          <p style="font-size: 0.8rem; color: #cbd5e1; margin-top: 0.75rem; font-family: var(--font-sans); text-align: left;">
-            <strong>Figura 6:</strong> <em>Funciones de Transferencia y Normalización Canónica ($X_{\text{raw}} \to [0, 1]$) mediante Postes de Meta (Lineal Directa, Logarítmica Hídrica de Falkenmark y Lineal Inversa) con umbral crítico de Liebig en $H_i = 0.25$.</em>
-          </p>
-        </div>
-        <div style="background: var(--bg-surface); padding: 1.25rem; border-radius: 0.75rem; border: 1px solid var(--border-soft); text-align: center;">
-          <img src="./docs/figures/fig7_audit_traction_stress_test.png" alt="Figura 7: Auditoría de Ensayo de Tracción Territorial" style="max-width: 100%; height: auto; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.1);" onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='/hombros/docs/figures/fig7_audit_traction_stress_test.png';}">
-          <p style="font-size: 0.8rem; color: #cbd5e1; margin-top: 0.75rem; font-family: var(--font-sans); text-align: left;">
-            <strong>Figura 7:</strong> <em>Auditoría de Ensayo de Tracción Territorial Pre-Inversión ($\sigma_0 \to \sigma_{\text{proj}}$) y Dictamen Vinculante de Solvencia Metabólica (SEIA 2.0).</em>
-          </p>
-        </div>
       </div>
 
       <h3 class="subsection-title">4.1. Discusión de Hallazgos Empíricos</h3>
@@ -1080,6 +1086,19 @@
       <p>
         <strong>3. La Resiliencia Regenerativa de Chanco:</strong> Chanco representa el único nodo en régimen elástico pleno ($\sigma = 0.651$), sustentado en agricultura familiar campesina, manejo hidrológico keyline y redes cooperativas de ayuda mutua con un ratio de externalización de solo el $33.3\%$.
       </p>
+
+      <h3 class="subsection-title">4.2. Análisis Global de Sensibilidad de Sobol y Validación de Incertidumbre</h3>
+      <p>
+        Para descartar que los rankings obtenidos dependan de supuestos paramétricos arbitrarios o de fluctuaciones interanuales, se ejecutó una simulación estocástica de Monte Carlo ($N = 5.000$ iteraciones) mediante muestreo de Hipercubo Latino sobre el espacio total $[E, S, K, D_1, D_2, D_3]$:
+      </p>
+
+      <!-- Figura 4: Sensibilidad Global de Sobol -->
+      <div style="text-align: center; margin: 2.5rem 0; background: var(--bg-surface); padding: 1.5rem; border-radius: 0.75rem; border: 1px solid var(--border-soft);">
+        <img src="./docs/figures/fig4_sobol_sensitivity_montecarlo.png" alt="Figura 4: Sensibilidad de Sobol" style="max-width: 100%; height: auto; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.1);" onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='/hombros/docs/figures/fig4_sobol_sensitivity_montecarlo.png';}">
+        <p style="font-size: 0.85rem; color: #cbd5e1; margin-top: 1rem; font-family: var(--font-sans); text-align: left;">
+          <strong>Figura 4:</strong> <em>Análisis Global de Sensibilidad de Sobol (Monte Carlo $N=5,000$): Índices de sensibilidad de primer orden ($S_i$) que confirman que el Hombro Ambiental / Ecosistémico ($E$) domina la varianza total de resiliencia territorial con un $43.8\%$ de peso explicativo, superando a la densidad demográfica pura.</em>
+        </p>
+      </div>
     </section>
 
     <!-- SECTION 5 -->
