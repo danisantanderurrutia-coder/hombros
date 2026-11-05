@@ -71,16 +71,18 @@ const STATUS_STYLE = {
 };
 
 export default function AgriTwinBasinVecinalConsole({
-  effectiveVariables,
+  effectiveVariables = { e1: 0.5, e2: 0.5, e3: 0.5, e4: 0.5, s1: 0.5, s2: 0.5, s3: 0.5, s4: 0.5, k1: 0.5, k2: 0.5, k3: 0.5, k4: 0.5 },
   onVariableChange,
   onVariablesChange,
-  kappa,
+  kappa = 0.32,
   onKappaChange,
   onLoadAgriTwinPreset,
   pacts: externalPacts,
   onPactsChange,
   onLiveChange,
-  onImportJson
+  onImportJson,
+  cuencaId,
+  onTelemetryUpdate
 }) {
   const [activeLens, setActiveLens] = useState('both'); // 'both' | 'basin' | 'vecinal'
   const [activeBand, setActiveBand] = useState('NDRE');
@@ -112,7 +114,7 @@ export default function AgriTwinBasinVecinalConsole({
   const applyVars = useCallback(
     (changes) => {
       if (onVariablesChange) onVariablesChange(changes);
-      else Object.entries(changes).forEach(([k, v]) => onVariableChange(k, v));
+      else if (onVariableChange) Object.entries(changes).forEach(([k, v]) => onVariableChange(k, v));
     },
     [onVariableChange, onVariablesChange]
   );
@@ -124,6 +126,7 @@ export default function AgriTwinBasinVecinalConsole({
       saveAgriTwinUrl(agriUrl.trim());
       setConn({ state: 'ok', live: data, error: null });
       if (onLiveChange) onLiveChange(data);
+      if (onTelemetryUpdate) onTelemetryUpdate(data);
     } catch (err) {
       setConn({ state: 'error', live: null, error: err.message });
       if (onLiveChange) onLiveChange(null);
@@ -141,11 +144,11 @@ export default function AgriTwinBasinVecinalConsole({
     const eff = PACT_EFFECTS[key];
 
     setPactsState((p) => ({ ...p, [key]: turningOn }));
-    onKappaChange(parseFloat(clamp(kappa + sign * eff.kappa, 0.05, 0.75).toFixed(2)));
+    if (onKappaChange) onKappaChange(parseFloat(clamp((kappa ?? 0.32) + sign * eff.kappa, 0.05, 0.75).toFixed(2)));
 
     const changes = {};
     Object.entries(eff.vars).forEach(([k, delta]) => {
-      changes[k] = parseFloat(clamp(effectiveVariables[k] + sign * delta, 0.02, 1).toFixed(2));
+      changes[k] = parseFloat(clamp(((effectiveVariables && effectiveVariables[k]) ?? 0.5) + sign * delta, 0.02, 1).toFixed(2));
     });
     applyVars(changes);
   };
@@ -154,9 +157,9 @@ export default function AgriTwinBasinVecinalConsole({
     // Guardamos el estado previo la primera vez que se aplica un shock, para restaurarlo exacto.
     if (basinShock === 'normal' && shock !== 'normal') {
       shockSnapshot.current = {
-        e1: effectiveVariables.e1,
-        e2: effectiveVariables.e2,
-        e4: effectiveVariables.e4
+        e1: effectiveVariables?.e1 ?? 0.5,
+        e2: effectiveVariables?.e2 ?? 0.5,
+        e4: effectiveVariables?.e4 ?? 0.5
       };
     }
     setBasinShock(shock);
@@ -200,7 +203,7 @@ export default function AgriTwinBasinVecinalConsole({
   });
   const selectedApr = aprs.find((a) => a.key === selectedHex);
 
-  const e = effectiveVariables;
+  const e = effectiveVariables || { e1: 0.5, e2: 0.5, e3: 0.5, e4: 0.5, s1: 0.5, s2: 0.5, s3: 0.5, s4: 0.5, k1: 0.5, k2: 0.5, k3: 0.5, k4: 0.5 };
 
   return (
     <div className="bg-[#101A1E] border border-emerald-500/30 rounded-2xl p-5 shadow-2xl text-slate-100 font-sans mb-8 relative overflow-hidden">
@@ -379,7 +382,7 @@ export default function AgriTwinBasinVecinalConsole({
               <div className="grid grid-cols-2 gap-2 mt-2 pt-2 border-t border-cyan-500/20 text-xs font-mono">
                 <div className="bg-[#0A1417] p-1.5 rounded border border-cyan-500/20">
                   <span className="text-slate-300">Agua (E₂):</span>{' '}
-                  <span className="text-cyan-300 font-bold">{e.e2.toFixed(2)}</span>
+                  <span className="text-cyan-300 font-bold">{(e?.e2 ?? 0.5).toFixed(2)}</span>
                   {live?.reservoir.volumeHm3 != null && (
                     <span className="text-slate-400"> · {live.reservoir.volumeHm3.toFixed(1)} hm³</span>
                   )}

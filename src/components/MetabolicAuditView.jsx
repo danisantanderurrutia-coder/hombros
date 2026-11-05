@@ -688,7 +688,7 @@ export default function MetabolicAuditView({ initialCustomMode }) {
             <div className="hidden md:flex items-center gap-1.5">
               <span className="text-slate-400 text-[11px]">Rating:</span>
               <span className={`font-bold ${tractionAudit.solvencyColor}`}>
-                {tractionAudit.solvencyRating.split('·')[0]}
+                {tractionAudit.solvencyRating?.split('·')[0] || ''}
               </span>
             </div>
 
@@ -954,7 +954,7 @@ export default function MetabolicAuditView({ initialCustomMode }) {
                     σ₀ = {baselineState.sigma.toFixed(3)}
                   </strong>
                   <span className="text-[10px] text-slate-300">
-                    {baselineState.regime?.name.split(' ')[0]}
+                    {baselineState.sigma < 0.70 ? 'Elástico' : baselineState.sigma <= 1.00 ? 'Fluencia' : baselineState.sigma <= 1.20 ? 'Plástico' : 'Fractura'}
                   </span>
                 </div>
 
@@ -1004,6 +1004,20 @@ export default function MetabolicAuditView({ initialCustomMode }) {
             {/* SECCIÓN 2: CONSOLA GEMELO DIGITAL AGRITWIN (CUENCA LONGAVÍ - BULLILEO) */}
             <AgriTwinBasinVecinalConsole 
               cuencaId={selectedCuencaDgaId}
+              effectiveVariables={effectiveVariables}
+              onVariableChange={(k, v) => applyNormalizedChanges({ [k]: v })}
+              onVariablesChange={(batch) => applyNormalizedChanges(batch)}
+              kappa={baselineState.kappa}
+              onKappaChange={(kVal) => setRawOverrides(prev => ({ ...prev, kappa: kVal }))}
+              onLoadAgriTwinPreset={() => handleActivateCustomTerritory(true)}
+              pacts={activePacts}
+              onPactsChange={setActivePacts}
+              onLiveChange={setAgritwinLive}
+              onImportJson={(custom) => {
+                if (custom && custom.variables) {
+                  setRawOverrides(custom.variables);
+                }
+              }}
               onTelemetryUpdate={(data) => setAgritwinLive(data)}
             />
 
@@ -1517,7 +1531,7 @@ export default function MetabolicAuditView({ initialCustomMode }) {
 
                               <div className="flex items-center justify-between text-[10px] text-slate-300">
                                 <span>Hipótesis Cruda: <strong className="text-amber-300">{currentRaw} {spec.unit}</strong></span>
-                                <span className="text-slate-400">{spec.dataTier.split(' ')[0]} {spec.dataTier.split(' ')[1]}</span>
+                                <span className="text-slate-400">{spec.dataTier?.split(' ')[0] || ''} {spec.dataTier?.split(' ')[1] || ''}</span>
                               </div>
 
                               <input
