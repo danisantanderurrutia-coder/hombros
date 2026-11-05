@@ -750,12 +750,29 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
             </div>
 
             {/* Abstract */}
-            <div className="mt-4 p-4 rounded-2xl bg-white/90 border border-[#D4C9B8]/70 shadow-xs">
-              <span className="text-[10px] font-mono uppercase font-extrabold text-[#487075] tracking-wider block mb-1">
+            <div className="mt-4 p-5 rounded-2xl bg-white/95 border border-[#D4C9B8]/80 shadow-xs space-y-3">
+              <span className="text-[10px] font-mono uppercase font-extrabold text-[#487075] tracking-wider block">
                 Resumen Ejecutivo / Abstract
               </span>
-              <p className="text-xs sm:text-sm text-black leading-relaxed font-sans font-medium">
-                <LatexText text="Los estándares de contabilidad socio-ambiental dominantes (IDH, Economía de la Dona, Límites Planetarios y Huella Ecológica) presentan sesgos críticos de compensabilidad aditiva, ceguera ante el desplazamiento metabólico de Alcance 3 hacia el Sur Global y ausencia de una física de fatiga territorial. En este trabajo presentamos la formalización canónica del modelo **Hombros**, integrando la mecánica de medios continuos con la termodinámica ecológica abierta. Definimos la capacidad portante no-compensatoria \(H = (S \cdot E \cdot K)^{1/3}\) con quiebre asintótico ante fallos de pilares individuales (\(H_i < 0.25\)), la tensión sistémica \(\sigma = D / H\) y el régimen de deformación viscoelástica (elástico, fluencia, plástico y fractura). Validamos el modelo empíricamente en ocho arquetipos territoriales (Chanco, Aconcagua, Quintero-Puchuncaví en Chile; Copenhague, Barcelona, Bilbao, Ámsterdam y Berlín en Europa) y demostramos que las metrópolis post-industriales con reducidas emisiones territoriales directas externalizan entre un \(54\%\) y un \(76.5\%\) de su carga entrópica en forma de bienes intensivos importados." />
+              <p className="text-xs sm:text-sm text-slate-800 leading-relaxed font-sans font-medium">
+                <LatexText text="Los marcos métricos dominantes de sostenibilidad —el Índice de Desarrollo Humano (IDH), la Economía de la Dona y los Límites Planetarios— presentan al menos 3 dificultades metodológicas estructurales:" />
+              </p>
+              <ul className="text-xs sm:text-sm text-slate-800 space-y-2 pl-4 list-disc marker:text-[#376E6F]">
+                <li>
+                  <strong>Sustituibilidad o compensabilidad aditiva:</strong> asumen implícitamente la compensación matemática entre dimensiones biofísicas e institucionales, asumiendo que el capital monetario puede reparar la pérdida de funciones ecológicas no sustituibles.
+                </li>
+                <li>
+                  <strong>Carencia de interpretación física-matemática sólida:</strong> carecen de una interpretación física-matemática sólida, que por ejemplo interprete al sistema económico como un sistema complejo que responde a variables que pueden ser similares a la tensión, la deformación o la histéresis, fundamentales para anticipar puntos de inflexión (<em>tipping points</em>) y pérdidas de resiliencia.
+                </li>
+                <li>
+                  <strong>Ceguera de Alcance 3 y fronteras arbitrarias:</strong> evalúan la huella ecológica bajo fronteras territoriales estrechas y ciegas a la externalización de emisiones y extracción biofísica de Alcance 3 (<em>Scope 3</em> upstream), encubriendo el intercambio ecológico desigual entre el Norte y el Sur Global.
+                </li>
+              </ul>
+              <p className="text-xs sm:text-sm text-slate-800 leading-relaxed font-sans font-medium pt-1">
+                <LatexText text="En este trabajo se formula el **Modelo HOMBROS**, un marco matemático derivado de la mecánica de medios continuos y la termodinámica del no-equilibrio para caracterizar el territorio como un medio viscoelástico metabolizante. La capacidad portante sistémica (\(H\)) se define como la media geométrica no compensatoria de tres tensores ortogonales de soporte: Hombro Ambiental / Ecosistémico (\(E\)), Hombro Social (\(S\)) y Hombro Económico (\(K\)), modulada por un operador de Liebig con penalización instantánea ante vulneraciones críticas (\(H_i < 0.25\))." />
+              </p>
+              <p className="text-xs sm:text-sm text-slate-800 leading-relaxed font-sans font-medium">
+                <LatexText text="La tensión sistémica uniaxial (\(\sigma = D / H\)) define cuatro regímenes reológicos: elástico reversible (\(\sigma < 0.85\)), límite de fluencia (<em>yield stress</em>, \(0.85 \le \sigma < 1.00\)), deformación plástica irreversible (\(1.00 \le \sigma < 1.25\)) y fractura socio-ecológica catastrófica (\(\sigma \ge 1.25\)). Validamos el modelo empíricamente en ocho arquetipos territoriales (Chanco, Aconcagua, Quintero-Puchuncaví en Chile; Copenhague, Barcelona, Bilbao, Ámsterdam y Berlín en Europa) y demostramos que las metrópolis post-industriales con reducidas emisiones territoriales directas externalizan entre un \(54\%\) y un \(76.5\%\) de su carga entrópica en forma de bienes intensivos importados." />
               </p>
             </div>
           </div>

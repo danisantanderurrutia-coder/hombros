@@ -17,6 +17,19 @@
 
 ---
 
+## Resumen Ejecutivo / Abstract
+
+Los marcos métricos dominantes de sostenibilidad —el Índice de Desarrollo Humano (IDH), la Economía de la Dona y los Límites Planetarios— presentan al menos 3 dificultades metodológicas estructurales:
+* **Sustituibilidad o compensabilidad aditiva:** asumen implícitamente la compensación matemática entre dimensiones biofísicas e institucionales, asumiendo que el capital monetario puede reparar la pérdida de funciones ecológicas no sustituibles.
+* **Carencia de interpretación física-matemática sólida:** carecen de una interpretación física-matemática sólida, que por ejemplo interprete al sistema económico como un sistema complejo que responde a variables que pueden ser similares a la tensión, la deformación o la histéresis, fundamentales para anticipar puntos de inflexión (*tipping points*) y pérdidas de resiliencia.
+* **Ceguera de Alcance 3 y fronteras arbitrarias:** evalúan la huella ecológica bajo fronteras territoriales estrechas y ciegas a la externalización de emisiones y extracción biofísica de Alcance 3 (*Scope 3* upstream), encubriendo el intercambio ecológico desigual entre el Norte y el Sur Global.
+
+En este trabajo se formula el **Modelo HOMBROS**, un marco matemático derivado de la mecánica de medios continuos y la termodinámica del no-equilibrio para caracterizar el territorio como un medio viscoelástico metabolizante. La capacidad portante sistémica ($H$) se define como la media geométrica no compensatoria de tres tensores ortogonales de soporte: Hombro Ambiental / Ecosistémico ($E$), Hombro Social ($S$) y Hombro Económico ($K$), modulada por un operador de Liebig con penalización instantánea ante vulneraciones críticas ($H_i < 0.25$).
+
+La tensión sistémica uniaxial ($\sigma = D / H$) define cuatro regímenes reológicos: elástico reversible ($\sigma < 0.85$), límite de fluencia (*yield stress*, $0.85 \le \sigma < 1.00$), deformación plástica irreversible ($1.00 \le \sigma < 1.25$) y fractura socio-ecológica catastrófica ($\sigma \ge 1.25$). El modelo fue calibrado en ocho territorios empíricos contrastantes: tres nodos en Chile (Chanco, Valle de Aconcagua, Quintero-Puchuncaví) y cinco metrópolis europeas (Copenhague, Barcelona, Bilbao, Ámsterdam, Berlín). Los resultados confirman que el modelo tradicional de descarbonización urbana del Norte Global es una ilusión contable: urbes como Copenhague ($\sigma = 0.987$) y Ámsterdam ($\sigma = 1.083$) exhiben ratios de desplazamiento entrópico de Alcance 3 del $76.5\%$ y $72.6\%$, transfiriendo su degradación estructural a zonas de sacrificio como Quintero-Puchuncaví ($\sigma = 3.361$, fractura total). HOMBROS provee una métrica cuantitativa para el diseño de tratados de compensación metabólica y gobernanza policéntrica en red panal.
+
+---
+
 ## Índice de Variables, Parámetros y Constantes Matemáticas
 
 | Símbolo | Nombre Canónico | Definición Matemática / Física | Rango & Unidades | Anclaje Teórico |
