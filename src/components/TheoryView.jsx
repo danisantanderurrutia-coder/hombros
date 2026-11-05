@@ -565,7 +565,7 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
     {
       standard: '2. Economía de la Dona (Raworth)',
       premise: 'Visualización circular con techo ecológico y piso social cualitativo de gran valor ético.',
-      gap: 'Brecha de Calibración en Sistemas Complejos: No posee del todo un aparato de medición y calibración que comprenda las dinámicas internas de un sistema complejo (tensión, deformación, histéresis ante tipping points).',
+      gap: 'Brecha de Calibración en Sistemas Complejos: No posee del todo un aparato de medición y calibración que comprenda las dinámicas internas de un sistema complejo (tensión, deformaciones o fatigas que representen el estrés de un sistema productivo bajo cargas extractivistas o hiperproducción).',
       solution: 'Mecánica de Medios Continuos & Complejidad: σ = D/H, deformación (ε), fluencia (yield) y velocidad sintrópica (Γ) para la toma de decisiones.'
     },
     {
