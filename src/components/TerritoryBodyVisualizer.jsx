@@ -9,15 +9,81 @@ import { InlineMath, BlockMath } from './KaTeXMath';
 import { getAssetUrl } from '../utils/assets';
 
 export default function TerritoryBodyVisualizer({ santanderState, territory }) {
-  // Modo de visualización: 'volumetric' (Capas Isométricas 3D) | 'stress_continuum' (Medio Continuo) | 'state_manifold' (Variedad de Estados) | 'dissipative' (Estructura Disipativa)
-  const [activeMode, setActiveMode] = useState('volumetric');
-  const [selectedLayerId, setSelectedLayerId] = useState('soil');
+  // Modo de visualización: 'mirror' (Espejo Mujer ⇄ Cuenca) | 'volumetric' (Capas Isométricas 3D) | 'stress_continuum' (Medio Continuo) | 'state_manifold' (Variedad de Estados) | 'dissipative' (Estructura Disipativa)
+  const [activeMode, setActiveMode] = useState('mirror');
+  const [selectedLayerId, setSelectedLayerId] = useState('shoulders_cities');
   
   // Controles dinámicos para el simulador de cuerpo
   const [appliedStress, setAppliedStress] = useState(santanderState?.sigma || 0.72);
   const [extractivismLoad, setExtractivismLoad] = useState(50); // 0 a 100
   const [governancePact, setGovernancePact] = useState(true);
   const [activeMetabolicPulse, setActiveMetabolicPulse] = useState(true);
+
+  // Puntos de Acople en Espejo Anatómico (Mujer ⇄ Cuenca)
+  const MIRROR_HOTSPOTS = [
+    {
+      id: 'shoulders_cities',
+      name: '1. Hombros & Músculos ⇄ Ciudades Policéntricas & Red Vial',
+      humanPart: 'Cintura Escapular (Hombros, Trapecio, Deltoides) y Fascia Muscular',
+      basinPart: 'Ciudades de Cuenca (Parral, Cauquenes, Chanco) y Red Conectiva Vial/Puentes',
+      humanDesc: 'Los hombros y la musculatura esquelética reciben y distribuyen la tracción mecánica. Soportan las cargas vitales de trabajo y cuidado sin desgarro ni fractura mientras rige el régimen elástico.',
+      basinDesc: 'La cuenca no es mononodal: integra una red policéntrica de ciudades (un centro de valle como Parral, núcleos de secano-costa como Cauquenes y Chanco, y caseríos rurales). Las carreteras y puentes actúan como fascia y tendones que sostienen la movilidad metabólica.',
+      hombroVar: 'Sección Portante H = (E · S · K)^{1/3} · Capacidad de Carga',
+      color: '#f59e0b',
+      humanCoords: 'top-[22%] left-[50%] -translate-x-1/2',
+      basinCoords: 'top-[48%] left-[45%]'
+    },
+    {
+      id: 'lungs_atmosphere',
+      name: '2. Pulmones & Árbol Bronquial ⇄ Atmósfera, Brisas & Canopia',
+      humanPart: 'Pulmones Translúcidos, Tráquea y Alvéolos con Intercambio Gaseoso',
+      basinPart: 'Envoltura Atmosférica, Brisas Marinas/Orográficas y Bosque Nativo',
+      humanDesc: 'Los pulmones inhalan oxígeno y disipan calor metabólico y CO₂ a través de una superficie alveolar ramificada de 70 m².',
+      basinDesc: 'La masa de aire de la cuenca, regulada por las masas boscosas nativas y las brisas de la cordillera a la costa, limpia micropartículas PM2.5 y disipa la saturación térmica del valle.',
+      hombroVar: 'E_3 (Calidad del Aire / Dispersión PM2.5) + E_2 (Canopia Nativa)',
+      color: '#38bdf8',
+      humanCoords: 'top-[30%] left-[50%] -translate-x-1/2',
+      basinCoords: 'top-[25%] left-[30%]'
+    },
+    {
+      id: 'heart_rivers',
+      name: '3. Corazón & Sistema Vascular ⇄ Red de Ríos, Embalse & Acuíferos',
+      humanPart: 'Corazón Pulsátil y Vasos Sanguíneos (Arterias Carmesí y Venas Cian)',
+      basinPart: 'Nieve Cordillerana, Río Longaví, Embalse Bullileo y Napas Subterráneas',
+      humanDesc: 'La bomba cardíaca impulsa 5 litros de sangre por minuto a través de miles de kilómetros de capilares, llevando agua, electrolitos y nutrientes a cada célula viva.',
+      basinDesc: 'El caudal continuo del río y la recarga de los acuíferos profundos alimentan a los 5 Comités de Agua Potable Rural (APR). Si se sobreotorgan derechos de agua (DAA), el sistema sufre una hemorragia por desecación.',
+      hombroVar: 'E_1 (Estrés Hídrico de Cuenca / Falkenmark > 2.500 m³)',
+      color: '#ef4444',
+      humanCoords: 'top-[36%] left-[52%] -translate-x-1/2',
+      basinCoords: 'top-[42%] left-[60%]'
+    },
+    {
+      id: 'digestive_soil',
+      name: '4. Sistema Digestivo & Microbiota ⇄ Suelo Vivo, Materia Orgánica & Keyline',
+      humanPart: 'Aparato Digestivo, Hígado y Microbioma Simbiótico Intestinal',
+      basinPart: 'Suelo Vivo Arado en Curvas de Nivel (Keyline), Humus y Micorrizas',
+      humanDesc: 'El intestino digiere la biomasa exterior transformándola en energía bio-disponible gracias a trillones de bacterias simbióticas.',
+      basinDesc: 'El suelo vivo es el estómago de la cuenca: transforma la roca mineral y los rastrojos en humus fértil que retiene hasta 8 veces su peso en agua (capacidad de campo), evitando la erosión por arrastre.',
+      hombroVar: 'E_4 (Salud Edáfica / Retención Hídrica en Perfil)',
+      color: '#10b981',
+      humanCoords: 'top-[48%] left-[50%] -translate-x-1/2',
+      basinCoords: 'top-[60%] left-[38%]'
+    },
+    {
+      id: 'nervous_care',
+      name: '5. Sistema Nervioso & Vínculos de Apego ⇄ Redes APR & Gobernanza Comunitaria',
+      humanPart: 'Médula Espinal, Sistema Neurovegetativo y Vínculos de Afecto/Cuidado',
+      basinPart: 'Comités APR, Juntas Vecinales, Economía del Cuidado y Gobernanza Ostrom',
+      humanDesc: 'El sistema nervioso regula la homeostasis interna y transmite señales de dolor o alerta ante lesiones, modulando el gasto de energía mediante empatía y apego.',
+      basinDesc: 'La autogestión comunitaria del agua (APRs) y la economía campesina del cuidado ($S_1$) son el cerebro y corazón social de la cuenca, aportando el factor de amortiguación institucional $\\kappa$ que previene el colapso.',
+      hombroVar: 'S_1 (Tiempo de Cuidado) + S_4 (Tejido APR) + \\kappa (Gobernanza Ostrom)',
+      color: '#d946ef',
+      humanCoords: 'top-[42%] left-[50%] -translate-x-1/2',
+      basinCoords: 'top-[50%] left-[52%]'
+    }
+  ];
+
+  const activeHotspot = MIRROR_HOTSPOTS.find(h => h.id === selectedLayerId) || MIRROR_HOTSPOTS[0];
 
   // Cálculo del régimen mecánico según el estrés aplicado
   const currentRegime = appliedStress < 0.85
@@ -133,59 +199,248 @@ export default function TerritoryBodyVisualizer({ santanderState, territory }) {
         </div>
 
         {/* Selector de Modos de Corporeidad */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 mt-6 pt-5 border-t border-[#D4C9B8]/70 relative z-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5 mt-6 pt-5 border-t border-[#D4C9B8]/70 relative z-10">
+          <button
+            onClick={() => setActiveMode('mirror')}
+            className={`flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm ${
+              activeMode === 'mirror'
+                ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black shadow-md border border-amber-300 ring-2 ring-amber-400/40'
+                : 'bg-white/80 text-slate-800 hover:bg-white border border-[#D4C9B8]'
+            }`}
+          >
+            <Eye className="w-4 h-4 text-amber-500" />
+            <span>★ Espejo Mujer ⇄ Cuenca</span>
+          </button>
+
           <button
             onClick={() => setActiveMode('volumetric')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm ${
+            className={`flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm ${
               activeMode === 'volumetric'
                 ? 'bg-[#376E6F] text-white border border-[#254b4c] shadow-md'
                 : 'bg-white/80 text-slate-800 hover:bg-white border border-[#D4C9B8]'
             }`}
           >
             <Layers className="w-4 h-4 text-emerald-400" />
-            <span>1. Estratos del Cuerpo (3D)</span>
+            <span>2. Estratos del Cuerpo (3D)</span>
           </button>
 
           <button
             onClick={() => setActiveMode('stress_continuum')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm ${
+            className={`flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm ${
               activeMode === 'stress_continuum'
                 ? 'bg-[#D83F87] text-white border border-[#9b1d56] shadow-md'
                 : 'bg-white/80 text-slate-800 hover:bg-white border border-[#D4C9B8]'
             }`}
           >
             <Activity className="w-4 h-4 text-pink-300" />
-            <span>2. Medio Continuo (Deformación)</span>
+            <span>3. Medio Continuo</span>
           </button>
 
           <button
             onClick={() => setActiveMode('state_manifold')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm ${
+            className={`flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm ${
               activeMode === 'state_manifold'
                 ? 'bg-[#8D69A6] text-white border border-[#583971] shadow-md'
                 : 'bg-white/80 text-slate-800 hover:bg-white border border-[#D4C9B8]'
             }`}
           >
             <Compass className="w-4 h-4 text-purple-300" />
-            <span>3. Variedad de Estados (Manifold)</span>
+            <span>4. Variedad de Estados</span>
           </button>
 
           <button
             onClick={() => setActiveMode('dissipative')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm ${
+            className={`flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm ${
               activeMode === 'dissipative'
                 ? 'bg-[#C86D51] text-white border border-[#8f3a1f] shadow-md'
                 : 'bg-white/80 text-slate-800 hover:bg-white border border-[#D4C9B8]'
             }`}
           >
             <Sparkles className="w-4 h-4 text-amber-300" />
-            <span>4. Estructura Disipativa (Metabolismo)</span>
+            <span>5. Estructura Disipativa</span>
           </button>
         </div>
       </div>
 
       {/* =========================================================================
-          MODO 1: VISUALIZADOR ISOMÉTRICO VOLUMÉTRICO (LOS 5 ESTRATOS ANATÓMICOS)
+          MODO 1: VISOR BIO-DIGITAL EN ESPEJO (MUJER ⇄ CUENCA TERRITORIAL)
+          ========================================================================= */}
+      {activeMode === 'mirror' && (
+        <div className="space-y-6">
+          {/* Header de la Lámina en Espejo */}
+          <div className="card-slate rounded-3xl p-6 sm:p-7 shadow-xl border border-amber-400/50 space-y-4">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-white/10">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950">
+                    Lámina Bio-Digital Da Vinci
+                  </span>
+                  <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-white/10 text-emerald-300 border border-emerald-400/30">
+                    Isomorfismo Anatómico
+                  </span>
+                </div>
+                <h3 className="text-lg sm:text-xl font-serif font-extrabold text-white">
+                  Anatomía Comparada: El Cuerpo de la Mujer y la Corporeidad del Territorio
+                </h3>
+              </div>
+              <div className="text-xs font-mono text-amber-300 bg-amber-500/10 px-3 py-1.5 rounded-xl border border-amber-500/30">
+                Punto Activo: <span className="font-bold text-white">{activeHotspot.name.split('·')[0]}</span>
+              </div>
+            </div>
+
+            <p className="text-xs sm:text-sm text-slate-300 font-sans leading-relaxed">
+              El modelo HOMBROS demuestra que un territorio <strong className="text-white">no es una superficie bidimensional para la extracción de rentas</strong>, sino un organismo vivo equivalente al cuerpo humano: posee <strong className="text-amber-300">hombros y músculos</strong> que cargan el peso (ciudades policéntricas e infraestructuras viales), <strong className="text-cyan-300">sangre circulatoria</strong> (ríos y acuíferos), <strong className="text-emerald-300">pulmones y piel</strong> (atmósfera y canopia vegetal) y <strong className="text-purple-300">órganos digestivos</strong> (el suelo vivo Keyline).
+            </p>
+
+            {/* Selector de Puntos de Acople en Espejo */}
+            <div className="flex flex-wrap gap-2 pt-2">
+              {MIRROR_HOTSPOTS.map((hotspot) => {
+                const isSelected = selectedLayerId === hotspot.id;
+                return (
+                  <button
+                    key={hotspot.id}
+                    onClick={() => setSelectedLayerId(hotspot.id)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1.5 border ${
+                      isSelected
+                        ? 'bg-amber-400 text-slate-950 border-amber-300 shadow-md ring-2 ring-amber-400/40'
+                        : 'bg-white/5 hover:bg-white/10 text-slate-300 border-white/10'
+                    }`}
+                  >
+                    <span 
+                      className="w-2 h-2 rounded-full inline-block shrink-0" 
+                      style={{ backgroundColor: hotspot.color }}
+                    />
+                    <span>{hotspot.name.split('·')[0]}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* DUAL CANVAS: DOS IMÁGENES EN SPLIT-SCREEN CON OVERLAYS VIVOS */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+            
+            {/* LADO IZQUIERDO: CUERPO HUMANO (MUJER / HOMBROS Y MÚSCULOS) */}
+            <div className="card-slate rounded-3xl p-5 shadow-2xl border border-white/10 flex flex-col justify-between space-y-4 relative overflow-hidden group">
+              <div className="flex items-center justify-between pb-2 border-b border-white/10">
+                <span className="text-xs font-mono font-bold text-amber-400 uppercase tracking-wider flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping inline-block" />
+                  I. Cuerpo Humano (Mujer · Hombros & Músculos)
+                </span>
+                <span className="text-[10px] font-mono text-slate-400">Rostro en penumbra · Foco biomecánico</span>
+              </div>
+
+              {/* Contenedor de la Imagen con Hotspot Dinámico */}
+              <div className="relative rounded-2xl overflow-hidden bg-[#070b12] border border-white/10 min-h-[440px] flex items-center justify-center">
+                <img
+                  src={getAssetUrl('art/anatomia_cuerpo_humano_mujer.jpg')}
+                  alt="Anatomía Humana de la Mujer (Hombros, Músculos y Órganos)"
+                  className="w-full h-auto max-h-[520px] object-contain mx-auto transition-transform duration-500 group-hover:scale-[1.02]"
+                />
+
+                {/* Hotspot Luminoso Sincronizado */}
+                <div 
+                  className={`absolute ${activeHotspot.humanCoords} pointer-events-none transition-all duration-500`}
+                >
+                  <div 
+                    className="w-16 h-16 rounded-full border-2 animate-pulse flex items-center justify-center shadow-lg"
+                    style={{ borderColor: activeHotspot.color, backgroundColor: `${activeHotspot.color}25` }}
+                  >
+                    <span className="w-3 h-3 rounded-full shadow-md" style={{ backgroundColor: activeHotspot.color }} />
+                  </div>
+                </div>
+
+                {/* Badge flotante inferior */}
+                <div className="absolute bottom-3 left-3 right-3 bg-black/80 backdrop-blur-md p-2.5 rounded-xl border border-white/10 text-xs font-mono text-slate-200 flex items-center justify-between">
+                  <span className="text-amber-300 font-bold truncate">{activeHotspot.humanPart}</span>
+                  <span className="text-[10px] text-slate-400 uppercase">Cuerpo Físico</span>
+                </div>
+              </div>
+
+              <p className="text-xs text-slate-300 font-sans leading-relaxed">
+                <strong>Biomecánica del Cuidado:</strong> {activeHotspot.humanDesc}
+              </p>
+            </div>
+
+            {/* LADO DERECHO: CUERPO TERRITORIAL (CUENCA / CIUDADES E INFRAESTRUCTURA) */}
+            <div className="card-slate rounded-3xl p-5 shadow-2xl border border-white/10 flex flex-col justify-between space-y-4 relative overflow-hidden group">
+              <div className="flex items-center justify-between pb-2 border-b border-white/10">
+                <span className="text-xs font-mono font-bold text-teal-400 uppercase tracking-wider flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-teal-400 animate-ping inline-block" />
+                  II. Cuerpo Territorial (Cuenca · Ciudades & Vías)
+                </span>
+                <span className="text-[10px] font-mono text-slate-400">Parral · Cauquenes · Chanco · Keyline</span>
+              </div>
+
+              {/* Contenedor de la Imagen con Hotspot Dinámico */}
+              <div className="relative rounded-2xl overflow-hidden bg-[#070b12] border border-white/10 min-h-[440px] flex items-center justify-center">
+                <img
+                  src={getAssetUrl('art/anatomia_cuerpo_territorial_cuenca.jpg')}
+                  alt="Anatomía Territorial de la Cuenca (Ciudades, Ríos, Infraestructuras y Acuífero)"
+                  className="w-full h-auto max-h-[520px] object-contain mx-auto transition-transform duration-500 group-hover:scale-[1.02]"
+                />
+
+                {/* Hotspot Luminoso Sincronizado */}
+                <div 
+                  className={`absolute ${activeHotspot.basinCoords} pointer-events-none transition-all duration-500`}
+                >
+                  <div 
+                    className="w-16 h-16 rounded-full border-2 animate-pulse flex items-center justify-center shadow-lg"
+                    style={{ borderColor: activeHotspot.color, backgroundColor: `${activeHotspot.color}25` }}
+                  >
+                    <span className="w-3 h-3 rounded-full shadow-md" style={{ backgroundColor: activeHotspot.color }} />
+                  </div>
+                </div>
+
+                {/* Badge flotante inferior */}
+                <div className="absolute bottom-3 left-3 right-3 bg-black/80 backdrop-blur-md p-2.5 rounded-xl border border-white/10 text-xs font-mono text-slate-200 flex items-center justify-between">
+                  <span className="text-teal-300 font-bold truncate">{activeHotspot.basinPart}</span>
+                  <span className="text-[10px] text-slate-400 uppercase">Cuenca Viva</span>
+                </div>
+              </div>
+
+              <p className="text-xs text-slate-300 font-sans leading-relaxed">
+                <strong>Biofísica Territorial:</strong> {activeHotspot.basinDesc}
+              </p>
+            </div>
+          </div>
+
+          {/* FICHA TÉCNICA DE EQUIVALENCIA Y LEY DE TRACCIÓN */}
+          <div className="p-6 rounded-3xl bg-gradient-to-br from-[#131b26] via-[#1a2736] to-[#0f1721] border border-amber-400/40 shadow-xl space-y-3 text-white">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-white/10 text-xs font-mono">
+              <span className="font-bold text-amber-300 uppercase tracking-wider">
+                Equivalencia Bio-Matemática HOMBROS:
+              </span>
+              <span className="text-emerald-300 font-bold">
+                {activeHotspot.hombroVar}
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-sans text-slate-300">
+              <div className="p-3.5 rounded-xl bg-black/30 border border-white/10 space-y-1">
+                <span className="font-mono text-amber-400 font-bold block text-[11px]">
+                  En el Cuerpo de la Mujer:
+                </span>
+                <p className="leading-relaxed">
+                  Si se amputa un músculo o se deseca una arteria, el cuerpo no puede compensar el daño inyectando dinero o construyendo una prótesis monetaria. La integridad es no-lineal y orgánica.
+                </p>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-black/30 border border-white/10 space-y-1">
+                <span className="font-mono text-teal-400 font-bold block text-[11px]">
+                  En la Cuenca y sus Ciudades:
+                </span>
+                <p className="leading-relaxed">
+                  Si un monocultivo seca el acuífero de Parral o contamina la costa de Chanco, pagar indemnizaciones de RSE no repone el agua viva. Rige el <strong>Principio de No-Sustituibilidad de Liebig</strong>.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* =========================================================================
+          MODO 2: VISUALIZADOR ISOMÉTRICO VOLUMÉTRICO (LOS 5 ESTRATOS ANATÓMICOS)
           ========================================================================= */}
       {activeMode === 'volumetric' && (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
