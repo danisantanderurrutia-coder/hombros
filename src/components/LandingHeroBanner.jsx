@@ -77,9 +77,14 @@ export default function LandingHeroBanner({ onNavigate }) {
           El texto se sitúa alto para dejar el planeta cósmico 100% libre y visible
           ======================================================== */}
       <div className="relative z-10 pt-10 sm:pt-14 md:pt-16 pb-4 sm:pb-6 px-4 sm:px-6 md:px-8 text-center max-w-4xl mx-auto space-y-3 sm:space-y-4">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-black/60 text-emerald-300 border border-emerald-400/40 shadow-lg backdrop-blur-md">
-          <Sparkles className="w-3.5 h-3.5 text-emerald-300 animate-pulse" />
-          <span>SISTEMA METABÓLICO TERRITORIAL · LEY DE LIEBIG & CAUCHY</span>
+        <div className="flex flex-wrap items-center justify-center gap-2">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-black/60 text-emerald-300 border border-emerald-400/40 shadow-lg backdrop-blur-md">
+            <Sparkles className="w-3.5 h-3.5 text-emerald-300 animate-pulse" />
+            <span>SISTEMA METABÓLICO TERRITORIAL · LEY DE LIEBIG & CAUCHY</span>
+          </div>
+          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider bg-emerald-500/20 text-emerald-200 border border-emerald-400/30 backdrop-blur-md">
+            <span>Tablero de Navegación & Decisión</span>
+          </div>
         </div>
 
         <h1 className="text-3xl sm:text-5xl md:text-6xl font-serif font-extrabold tracking-tight text-white leading-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">

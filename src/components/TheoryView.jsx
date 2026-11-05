@@ -6,7 +6,7 @@ import {
   Layers, AlertTriangle, CheckCircle2, TrendingUp, ShieldAlert,
   GraduationCap, Sparkles, Terminal, Image, FolderTree, Search,
   Maximize2, ChevronRight, Play, Eye, FileCode, CheckCircle,
-  Presentation, MonitorPlay, ZoomIn
+  Presentation, MonitorPlay, ZoomIn, Boxes, Activity, Navigation, ShieldCheck
 } from 'lucide-react';
 import HombrosDeGigantes from './HombrosDeGigantes';
 import { getAssetUrl } from '../utils/assets';
@@ -564,9 +564,9 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
     },
     {
       standard: '2. Economía de la Dona (Raworth)',
-      premise: 'Visualización circular con techo ecológico y piso social cualitativo.',
-      gap: 'Brecha Métrica Dinámica: No ofrece leyes de tensión, elasticidad o histéresis irreversible de fractura.',
-      solution: 'Mecánica de Medios Continuos: σ = D/H, deformación (ε), fluencia (yield) y velocidad sintrópica (Γ).'
+      premise: 'Visualización circular con techo ecológico y piso social cualitativo de gran valor ético.',
+      gap: 'Brecha de Calibración en Sistemas Complejos: No posee del todo un aparato de medición y calibración que comprenda las dinámicas internas de un sistema complejo (tensión, deformación, histéresis ante tipping points).',
+      solution: 'Mecánica de Medios Continuos & Complejidad: σ = D/H, deformación (ε), fluencia (yield) y velocidad sintrópica (Γ) para la toma de decisiones.'
     },
     {
       standard: '3. Límites Planetarios (Stockholm)',
@@ -826,12 +826,194 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
             </div>
           </div>
 
-          {/* 2. Formulación Matemática de Medios Continuos */}
+          {/* 2. De la Metáfora Mecánica a la Corporeidad del Sistema Complejo */}
+          <div className="card-teal rounded-3xl p-6 sm:p-8 shadow-xl border border-[#376E6F]/40 space-y-6">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-[#7DB2B2]/40">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2.5 rounded-2xl bg-[#376E6F] text-white shadow-sm">
+                  <Boxes className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#376E6F]">
+                    Epistemología del Territorio como Cuerpo Indivisible
+                  </span>
+                  <h3 className="font-serif font-extrabold text-xl text-black">
+                    2. De la Metáfora Mecánica a la Corporeidad del Sistema Complejo: Por qué el territorio necesita variables físicas para la toma de decisiones
+                  </h3>
+                </div>
+              </div>
+              <span className="px-3 py-1 rounded-full text-[10px] font-mono font-bold bg-[#E2F4F2] text-[#376E6F] border border-[#7DB2B2] shrink-0 self-start md:self-auto">
+                Sistemas Dinámicos & Decisión
+              </span>
+            </div>
+
+            <p className="text-xs sm:text-sm text-slate-800 leading-relaxed font-sans font-medium max-w-4xl">
+              La economía tradicional y los estándares de sostenibilidad cometen el error de tratar al territorio como un "plano contable cartesiano": una canasta abstracta de recursos transables sin volumen, sin límites físicos y sin memoria material. Para superar esta ceguera, el modelo <strong>Hombros</strong> formaliza el territorio como un <strong>cuerpo físico indivisible y metabólicamente activo</strong>, cuyas múltiples interacciones generan propiedades emergentes modelables mediante tres conceptos fundamentales de la ciencia de frontera:
+            </p>
+
+            {/* Grid 3 Pilares de Corporeidad */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+              {/* Pilar 1: Medio Continuo */}
+              <div className="p-5 rounded-2xl bg-white/95 border border-[#7DB2B2]/50 shadow-sm flex flex-col justify-between space-y-3">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
+                      Pilar 1 · Reología
+                    </span>
+                    <span className="text-[10px] font-mono text-slate-500">Mecánica de Sólidos</span>
+                  </div>
+                  <h4 className="text-sm font-serif font-bold text-black">
+                    Cuerpo Deformable o Medio Continuo Socio-Metabólico
+                  </h4>
+                  <p className="text-xs text-slate-700 leading-relaxed font-sans">
+                    El territorio no es un agregado de propiedades prediales aisladas; tiene volumen físico, espesor ecológico, inercia y memoria histórica. Responde a las presiones externas mediante <strong>tensión (<InlineMath math="\sigma" />)</strong> y <strong>deformación (<InlineMath math="\varepsilon" />)</strong>, acumulando fatiga estructural y transitando de la elasticidad reversible al daño plástico permanente (histéresis).
+                  </p>
+                </div>
+
+                <div className="pt-2 border-t border-slate-200">
+                  <div className="flex items-center justify-between text-[11px] font-mono font-bold text-[#376E6F] mb-1.5">
+                    <span>Figura 1 · Tensión vs Deformación</span>
+                    <a href={getAssetUrl('docs/figures/fig1_stress_strain_hysteresis.png')} target="_blank" rel="noopener noreferrer" className="hover:text-black">
+                      <Maximize2 className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+                  <div className="bg-[#0c0714] p-1.5 rounded-xl overflow-hidden text-center">
+                    <img 
+                      src={getAssetUrl('docs/figures/fig1_stress_strain_hysteresis.png')} 
+                      alt="Figura 1: Tensión vs Deformación"
+                      className="max-h-[140px] mx-auto object-contain"
+                    />
+                  </div>
+                  <span className="text-[10px] text-slate-500 font-mono block mt-1">
+                    Evidencia la histéresis plástica y la pérdida irreversible de volumen biofísico.
+                  </span>
+                </div>
+              </div>
+
+              {/* Pilar 2: Variedad Diferencial */}
+              <div className="p-5 rounded-2xl bg-white/95 border border-[#7DB2B2]/50 shadow-sm flex flex-col justify-between space-y-3">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-indigo-100 text-indigo-800 border border-indigo-300">
+                      Pilar 2 · Geometría
+                    </span>
+                    <span className="text-[10px] font-mono text-slate-500">Sistemas Dinámicos</span>
+                  </div>
+                  <h4 className="text-sm font-serif font-bold text-black">
+                    Variedad Diferencial o Espacio de Estados Multidimensional
+                  </h4>
+                  <p className="text-xs text-slate-700 leading-relaxed font-sans">
+                    El acoplamiento entre los Hombros <InlineMath math="(E, S, K)" /> y las Presiones <InlineMath math="(D)" /> no forma un cuerpo algebraico simple (no son sumas transables), sino una <strong>variedad o espacio de fases</strong> continuo. La Ley de Liebig actúa como una pared asintótica de frontera: si un soporte basal colapsa (<InlineMath math="H_i < 0.25" />), el sistema cae a un atractor catastrófico, impidiendo toda compensación monetaria.
+                  </p>
+                </div>
+
+                <div className="pt-2 border-t border-slate-200">
+                  <div className="flex items-center justify-between text-[11px] font-mono font-bold text-[#376E6F] mb-1.5">
+                    <span>Figura 6 · Funciones Canónicas & Liebig</span>
+                    <a href={getAssetUrl('docs/figures/fig6_normalization_transfer_functions.png')} target="_blank" rel="noopener noreferrer" className="hover:text-black">
+                      <Maximize2 className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+                  <div className="bg-[#0c0714] p-1.5 rounded-xl overflow-hidden text-center">
+                    <img 
+                      src={getAssetUrl('docs/figures/fig6_normalization_transfer_functions.png')} 
+                      alt="Figura 6: Normalización Canónica y Fronteras de Liebig"
+                      className="max-h-[140px] mx-auto object-contain"
+                    />
+                  </div>
+                  <span className="text-[10px] text-slate-500 font-mono block mt-1">
+                    Define la topología del espacio admisible y el corte asintótico de insolvencia.
+                  </span>
+                </div>
+              </div>
+
+              {/* Pilar 3: Estructura Disipativa */}
+              <div className="p-5 rounded-2xl bg-white/95 border border-[#7DB2B2]/50 shadow-sm flex flex-col justify-between space-y-3">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-amber-100 text-amber-800 border border-amber-300">
+                      Pilar 3 · Termodinámica
+                    </span>
+                    <span className="text-[10px] font-mono text-slate-500">Prigogine & Ostrom</span>
+                  </div>
+                  <h4 className="text-sm font-serif font-bold text-black">
+                    Estructura Disipativa Auto-organizada en Red Panal
+                  </h4>
+                  <p className="text-xs text-slate-700 leading-relaxed font-sans">
+                    Un territorio es un sistema metabólicamente abierto que preserva su orden interno (sintropía <InlineMath math="\Gamma > 0" />) disipando calor y dispersión material. Cuando los comités locales (como los APRs) se articulan en una <strong>Red Panal mutualista (<InlineMath math="\kappa = 0.38" />)</strong>, los picos de estrés hídrico son absorbidos colectivamente, garantizando la autopoiesis del soporte común.
+                  </p>
+                </div>
+
+                <div className="pt-2 border-t border-slate-200">
+                  <div className="flex items-center justify-between text-[11px] font-mono font-bold text-[#376E6F] mb-1.5">
+                    <span>Figura 5 & 10 · Red Panal APR</span>
+                    <a href={getAssetUrl('docs/figures/fig10_honeycomb_aprs_network.png')} target="_blank" rel="noopener noreferrer" className="hover:text-black">
+                      <Maximize2 className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+                  <div className="bg-[#0c0714] p-1.5 rounded-xl overflow-hidden text-center">
+                    <img 
+                      src={getAssetUrl('docs/figures/fig10_honeycomb_aprs_network.png')} 
+                      alt="Figura 10: Red Panal APR y Amortiguación Mutualista"
+                      className="max-h-[140px] mx-auto object-contain"
+                    />
+                  </div>
+                  <span className="text-[10px] text-slate-500 font-mono block mt-1">
+                    Prueba la amortiguación del estrés de sequía de <InlineMath math="\sigma = 0.89 \to 0.58" /> en Longaví.
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Panel Clarificación Epistémica del Scope */}
+            <div className="p-5 rounded-2xl bg-gradient-to-r from-[#122227] via-[#1A2E33] to-[#122227] text-white border border-[#7DB2B2]/40 shadow-lg space-y-3">
+              <div className="flex items-center gap-2">
+                <Navigation className="w-4 h-4 text-emerald-400" />
+                <h4 className="text-sm font-serif font-bold text-white tracking-wide">
+                  Las Tres Certezas sobre el Scope del Modelo y la Orientación de la Acción
+                </h4>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-sans">
+                <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 space-y-1.5">
+                  <div className="flex items-center gap-2 text-emerald-300 font-bold font-mono text-[11px]">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    <span>1. No al Reduccionismo Ciego</span>
+                  </div>
+                  <p className="text-slate-300 leading-relaxed">
+                    No pretendemos reducir una comunidad viva a una barra de acero inerte. Empleamos el formalismo físico-matemático como el lenguaje más riguroso para capturar la no-linealidad, la saturación y la fatiga estructural en sistemas complejos adaptativos.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 space-y-1.5">
+                  <div className="flex items-center gap-2 text-cyan-300 font-bold font-mono text-[11px]">
+                    <Activity className="w-3.5 h-3.5" />
+                    <span>2. Del Diagnóstico a la Decisión</span>
+                  </div>
+                  <p className="text-slate-300 leading-relaxed">
+                    Superamos la autopsia forense pasiva que se limita a lamentar el colapso. HOMBROS dota a asambleas, alcaldías y comités de un tablero de navegación para evaluar ex-ante qué proyectos son admisibles y qué recetas sintrópicas devuelven el equilibrio elástico.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 space-y-1.5">
+                  <div className="flex items-center gap-2 text-amber-300 font-bold font-mono text-[11px]">
+                    <ShieldCheck className="w-3.5 h-3.5" />
+                    <span>3. Auto-sustento Físico Real</span>
+                  </div>
+                  <p className="text-slate-300 leading-relaxed">
+                    Desmitificamos la sustentabilidad discursiva. El auto-sustento significa la capacidad material autónoma de una cuenca de reproducir sus condiciones de vida sin canibalizar su suelo ni sobrevivir precarizada por subsidios regresivos de camiones aljibe.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 3. Formulación Matemática de Medios Continuos */}
           <div className="card-indigo rounded-3xl p-6 sm:p-8 shadow-xl border border-[#927660]/30">
             <div className="flex items-center gap-2 mb-2">
               <Cpu className="w-5 h-5 text-[#927660]" />
               <h3 className="font-serif font-extrabold text-xl text-black">
-                2. Formulación Matemática y Leyes Mecánicas
+                3. Formulación Matemática y Leyes Mecánicas
               </h3>
             </div>
             <p className="text-xs sm:text-sm text-black font-medium mb-5 max-w-4xl">
@@ -929,7 +1111,7 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
             <div className="flex items-center gap-2 mb-2">
               <Layers className="w-5 h-5 text-[#C86D51]" />
               <h3 className="font-serif font-extrabold text-xl text-black">
-                3. Resultados Empíricos & Benchmark Multi-sitio (N=8)
+                4. Resultados Empíricos & Benchmark Multi-sitio (N=8)
               </h3>
             </div>
             <p className="text-xs sm:text-sm text-black font-medium mb-4 max-w-4xl leading-relaxed">
