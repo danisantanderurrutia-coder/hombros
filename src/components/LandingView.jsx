@@ -7,18 +7,19 @@ import {
 } from 'lucide-react';
 import LandingHeroBanner from './LandingHeroBanner';
 import KitAuditaTuCuencaBanner from './KitAuditaTuCuencaBanner';
+import ThinkTankIdentitySection from './ThinkTankIdentitySection';
 
 export default function LandingView({ onNavigate, onNavigateCustomAudit }) {
   const modules = [
     {
       id: 'articles',
       number: '01',
-      title: 'Artículos & Policy (SEIA + OLCA)',
-      tag: 'THINK TANK & ECOLOGÍA POLÍTICA',
-      desc: 'Propuesta legislativa de Reforma Estructural al SEIA (Cláusula Pre-Inversional) y los 4 Policy Briefs adaptados de los ensayos publicados en el OLCA.',
+      title: 'Instrumentos, Normativa & Policy',
+      tag: 'THINK TANK & GOBERNANZA TERRITORIAL',
+      desc: 'Propuestas de modernización regulatoria (Planes Reguladores, SEIA, ordenanzas de protección) y Policy Briefs de soberanía biofísica.',
       icon: BookOpen,
       accent: 'from-[#28475A] to-[#1E293B]',
-      btnText: 'Leer Policy Briefs',
+      btnText: 'Leer Propuestas & Policy',
     },
     {
       id: 'core',
@@ -81,6 +82,12 @@ export default function LandingView({ onNavigate, onNavigateCustomAudit }) {
     >
       {/* 1. HERO BANNER MONUMENTAL (ATLAS DORADO + CERRO + CONTROLES E, S, K) */}
       <LandingHeroBanner onNavigate={onNavigate} />
+
+      {/* 1.5 IDENTIDAD INSTITUCIONAL: THINK TANK & INCUBADORA TERRITORIAL */}
+      <ThinkTankIdentitySection 
+        onNavigate={onNavigate} 
+        onNavigateCustomAudit={onNavigateCustomAudit} 
+      />
 
       {/* 2. MANIFIESTO FILOSÓFICO: DE SÍSIFO A ATLAS */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-8 sm:p-10 rounded-3xl bio-hud-panel">

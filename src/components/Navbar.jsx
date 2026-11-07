@@ -1,5 +1,5 @@
 import React from 'react';
-import { Activity, Globe, Layers, Database, BookOpen, GitCompare, Sparkles, ShieldCheck, FileText } from 'lucide-react';
+import { Activity, Globe, Layers, Database, BookOpen, GitCompare, Sparkles, ShieldCheck, FileText, Download } from 'lucide-react';
 import { getAssetUrl } from '../utils/assets';
 
 export default function Navbar({ activeTab, setActiveTab, onNavigateCustomAudit }) {
@@ -36,11 +36,11 @@ export default function Navbar({ activeTab, setActiveTab, onNavigateCustomAudit 
                   HOMBROS
                 </span>
                 <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full uppercase tracking-wider font-bold bg-[#1B4332]/15 text-[#1B4332] border border-[#1B4332]/40">
-                  Think Tank & Lab
+                  Think Tank & Incubadora
                 </span>
               </div>
               <p className="text-[11px] hidden sm:block text-[#64748B] font-mono font-medium">
-                Laboratorio de Hipótesis Biofísicas & Gobernanza Sintrópica
+                Ciencia de Medios Continuos, Seguridad Vecinal & Cuidado Comunitario
               </p>
             </div>
           </div>
@@ -89,6 +89,21 @@ export default function Navbar({ activeTab, setActiveTab, onNavigateCustomAudit 
               );
             })}
           </nav>
+
+          {/* Dossier PDF Download (Desktop) */}
+          <div className="hidden xl:flex items-center">
+            <a
+              href={getAssetUrl('docs/HOMBROS_Presentacion_Oficial.pdf')}
+              download="HOMBROS_Presentacion_Oficial.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-serif font-bold text-[#28475A] bg-[#EDE8DC] hover:bg-[#D4C9B8] border border-[#D4C9B8] shadow-xs transition-all group"
+              title="Descargar Dossier / Presentación Oficial en PDF"
+            >
+              <Download className="w-3.5 h-3.5 text-[#487075] group-hover:-translate-y-0.5 transition-transform" />
+              <span>Dossier PDF</span>
+            </a>
+          </div>
 
         </div>
 
