@@ -6,8 +6,9 @@ import {
   Mountain, Compass, CheckCircle2, ChevronRight, HelpCircle
 } from 'lucide-react';
 import NewLandingHero from './NewLandingHero';
+import VisualToolsShowcase from './VisualToolsShowcase';
 import KitAuditaTuCuencaBanner from './KitAuditaTuCuencaBanner';
-import ThinkTankTeaserPortal from './ThinkTankTeaserPortal';
+import FilosofiaHombrosClosingBanner from './FilosofiaHombrosClosingBanner';
 
 export default function LandingView({ onNavigate, onNavigateCustomAudit }) {
   const modules = [
@@ -18,17 +19,15 @@ export default function LandingView({ onNavigate, onNavigateCustomAudit }) {
       tag: 'THINK TANK & GOBERNANZA TERRITORIAL',
       desc: 'Propuestas de modernización regulatoria (Planes Reguladores, SEIA, ordenanzas de protección) y Policy Briefs de soberanía biofísica.',
       icon: BookOpen,
-      accent: 'from-[#28475A] to-[#1E293B]',
       btnText: 'Leer Propuestas & Policy',
     },
     {
       id: 'core',
       number: '02',
       title: 'CORE: El Motor del Modelo',
-      tag: 'LEYES BIOFÍSICAS & MECÁNICA CONTINUA',
+      tag: 'LEYES BIOFÍSICAS & CAPACIDAD PORTANTE',
       desc: 'El corazón matemático del modelo HOMBROS: Capacidad Portante (H), Tensión Sistémica (σ = D/H), Tasa Sintrópica (Γ), Prospectiva y Organismo Integrado.',
       icon: Activity,
-      accent: 'from-[#487075] to-[#28475A]',
       btnText: 'Abrir CORE',
     },
     {
@@ -38,7 +37,6 @@ export default function LandingView({ onNavigate, onNavigateCustomAudit }) {
       tag: 'OBSERVATORIO SITUADO DE CUENCAS',
       desc: 'Cartografía orbital, Semáforo Biofísico en 25 ciudades (Chile Central y Europa), Contraste de Modelos, Deuda Scope 3 y Red Panal.',
       icon: Globe,
-      accent: 'from-[#376E6F] to-[#28475A]',
       btnText: 'Ver Atlas Territorial',
     },
     {
@@ -48,7 +46,6 @@ export default function LandingView({ onNavigate, onNavigateCustomAudit }) {
       tag: 'HIPÓTESIS PRE-INVERSIÓN & TRACCIÓN',
       desc: 'Evalúa tu propio territorio o conecta la telemetría de AgriTwin, somete proyectos al Ensayo de Tracción y calcula el ROI Sintrópico frente al gasto paliativo.',
       icon: Shield,
-      accent: 'from-[#C86D51] to-[#927660]',
       btnText: 'Auditar Cuenca',
     },
     {
@@ -58,7 +55,6 @@ export default function LandingView({ onNavigate, onNavigateCustomAudit }) {
       tag: 'SOBRE HOMBROS DE GIGANTES',
       desc: 'Genealogía conceptual: bioeconomía de Georgescu-Roegen, cibernética de Stafford Beer, buen vivir y ecología política latinoamericana.',
       icon: BookOpen,
-      accent: 'from-[#D4A373] to-[#927660]',
       btnText: 'Leer Manifiesto',
     },
     {
@@ -68,7 +64,6 @@ export default function LandingView({ onNavigate, onNavigateCustomAudit }) {
       tag: 'PROYECCIONES ESTOCÁSTICAS',
       desc: 'Pon a prueba cualquier territorio ante megasequías, colapsos de cadenas de suministro y transición agroecológica sintrópica.',
       icon: Layers,
-      accent: 'from-[#927660] to-[#487075]',
       btnText: 'Simular Futuros',
     },
   ];
@@ -80,94 +75,16 @@ export default function LandingView({ onNavigate, onNavigateCustomAudit }) {
       transition={{ duration: 0.4 }}
       className="space-y-12"
     >
-      {/* 1. HERO INSTITUCIONAL PRINCIPAL (TESIS CENTRAL, MÉTRICAS & PUERTAS DE ENTRADA) */}
+      {/* 1. HERO INSTITUCIONAL PRINCIPAL */}
       <NewLandingHero 
         onNavigate={onNavigate} 
         onNavigateCustomAudit={onNavigateCustomAudit} 
       />
 
-      {/* 2. PORTAL DESTACADO: THINK TANK & INCUBADORA TERRITORIAL */}
-      <ThinkTankTeaserPortal onNavigate={onNavigate} />
+      {/* 2. ACCESOS DIRECTOS A LAS HERRAMIENTAS VISUALES MÁS POTENTES (CARTOGRAFÍA & TRÍPODE) */}
+      <VisualToolsShowcase onNavigate={onNavigate} />
 
-      {/* 2. MANIFIESTO FILOSÓFICO: DE SÍSIFO A ATLAS */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-8 sm:p-10 rounded-3xl bio-hud-panel">
-        <div className="lg:col-span-7 space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-[#EDE8DC] text-[#487075] border border-[#D4C9B8]">
-            <Mountain className="w-3.5 h-3.5 text-[#487075]" />
-            PARADIGMA BIOFÍSICO TERRITORIAL
-          </div>
-
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold text-slate-900 tracking-tight leading-snug">
-            ¿Por qué Sísifo empuja la roca mientras Atlas sostiene el mundo?
-          </h2>
-
-          <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-sans">
-            El modelo económico convencional concibe el desarrollo como una piedra rodante: extracción acelerada, consumo entrópico y reconstrucción perpetua tras el desastre. Es la condena de Sísifo.
-          </p>
-
-          <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-sans">
-            <strong>HOMBROS</strong> propone trascender la condena: si el territorio cultiva sus tres hombros basales —regenerando la cuenca (<strong className="text-[#487075]">E</strong>), tejiendo comunidad solidaria (<strong className="text-[#C86D51]">S</strong>) y fortaleciendo el hombro económico o capital regenerativo (<strong className="text-[#D4A373]">K</strong>)— la roca deja de ser una carga trágica y se transforma en una esfera celestial que asciende hacia la autonomía biosférica.
-          </p>
-
-          <div className="pt-2 flex flex-wrap items-center gap-4">
-            <button
-              onClick={() => onNavigate('theory')}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-serif font-bold text-white bg-gradient-to-r from-[#487075] to-[#28475A] shadow-md hover:brightness-110 transition-all"
-            >
-              Conocer la Genealogía Teórica
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-            <button
-              onClick={() => onNavigate('core')}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-mono font-bold text-slate-700 bg-white hover:bg-slate-50 border border-[#D4C9B8] shadow-sm transition-all"
-            >
-              Ver Ecuaciones en CORE
-              <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-            </button>
-          </div>
-        </div>
-
-        {/* Mini Gráfica o Quote Card Ilustrada */}
-        <div className="lg:col-span-5 p-6 rounded-2xl bg-gradient-to-br from-[#FAF7F0] to-[#EDE8DC] border border-[#D4C9B8] shadow-inner space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#487075] text-white flex items-center justify-center font-serif font-bold text-lg shadow-sm">
-              H
-            </div>
-            <div>
-              <h3 className="font-serif font-bold text-slate-900 text-sm">
-                Regla de Oro de Liebig
-              </h3>
-              <p className="text-[11px] font-mono text-slate-500">
-                Media Geométrica No Compensatoria
-              </p>
-            </div>
-          </div>
-
-          <div className="p-4 rounded-xl bg-white/80 border border-[#D4C9B8]/80 text-xs font-mono text-slate-700 space-y-2">
-            <div className="flex justify-between">
-              <span>Hombro Ecológico (E):</span>
-              <strong className="text-[#487075]">Agua, suelo y fotosíntesis</strong>
-            </div>
-            <div className="flex justify-between">
-              <span>Hombro Social (S):</span>
-              <strong className="text-[#C86D51]">Cuidados y cohesión cívica</strong>
-            </div>
-            <div className="flex justify-between">
-              <span>Hombro Económico o Capital (K):</span>
-              <strong className="text-[#927660]">Soberanía material y capital regenerativo</strong>
-            </div>
-            <div className="pt-2 border-t border-slate-200 text-center font-bold text-slate-900">
-              H = (E · S · K)<sup>1/3</sup>
-            </div>
-          </div>
-
-          <p className="text-[11px] text-slate-500 italic text-center">
-            "Si un solo hombro cae a cero, la capacidad portante total del territorio colapsa. El capital financiero no puede sustituir a la cuenca hídrica."
-          </p>
-        </div>
-      </div>
-
-      {/* 2.5 BANNER DESTACADO: KIT AUDITA TU PROPIA CUENCA */}
+      {/* 3. BANNER DESTACADO: KIT AUDITA TU PROPIA CUENCA */}
       <KitAuditaTuCuencaBanner
         isCustomActive={false}
         onActivateCustom={(useAgriTwin) => {
@@ -179,7 +96,7 @@ export default function LandingView({ onNavigate, onNavigateCustomAudit }) {
         }}
       />
 
-      {/* 3. CATÁLOGO DE MÓDULOS DEL ECOSISTEMA HOMBROS */}
+      {/* 4. CATÁLOGO DE MÓDULOS DEL ECOSISTEMA HOMBROS */}
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
           <div>
@@ -237,6 +154,9 @@ export default function LandingView({ onNavigate, onNavigateCustomAudit }) {
           })}
         </div>
       </div>
+
+      {/* 5. CIERRE CON EL BANNER DE LA MUJER SUBIENDO LAS ESCALERAS (FILOSOFÍA DE LOS HOMBROS) */}
+      <FilosofiaHombrosClosingBanner />
     </motion.div>
   );
 }

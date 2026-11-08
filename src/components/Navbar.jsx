@@ -41,7 +41,7 @@ export default function Navbar({ activeTab, setActiveTab, onNavigateCustomAudit 
                 </span>
               </div>
               <p className="text-[11px] hidden sm:block text-[#64748B] font-mono font-medium">
-                Ciencia de Medios Continuos, Seguridad Vecinal & Cuidado Comunitario
+                Think Tank e Incubadora de Proyectos
               </p>
             </div>
           </div>

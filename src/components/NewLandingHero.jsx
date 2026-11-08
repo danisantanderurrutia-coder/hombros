@@ -43,7 +43,7 @@ export default function NewLandingHero({ onNavigate, onNavigateCustomAudit }) {
       id: 'core',
       title: 'Motor Matemático CORE',
       tag: 'LEYES FÍSICAS & REOLOGÍA',
-      desc: 'Mecánica de medios continuos: Capacidad Portante de Liebig (H), Tensión Sistémica (σ = D/H) y Tasa Sintrópica (Γ).',
+      desc: 'Leyes biofísicas no compensatorias: Capacidad Portante de Liebig (H), Tensión Sistémica (σ = D/H) y Tasa Sintrópica (Γ).',
       icon: Activity,
       color: 'from-[#28475A] to-[#1E293B]',
       accentBorder: 'hover:border-[#28475A]',

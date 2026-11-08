@@ -96,8 +96,8 @@ export default function HoneycombNetwork({ territories, globalModifiers }) {
       {/* Header Banner */}
       <div className="bg-white/95 backdrop-blur-md rounded-3xl overflow-hidden shadow-md relative border border-[#D4C9B8]">
         <div className="h-1.5 w-full bg-gradient-to-r from-[#1B4332] via-[#28475A] to-[#C86D51]" />
-        <div className="grid grid-cols-1 md:grid-cols-12 relative z-10">
-          <div className="md:col-span-8 p-6 sm:p-8 flex flex-col justify-center space-y-3">
+        <div className="p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+          <div className="space-y-3 max-w-2xl">
             <div className="flex items-center gap-2.5">
               <div className="p-2.5 rounded-2xl bg-[#487075]/10 border border-[#487075]/30 text-[#487075] shadow-xs">
                 <Hexagon className="w-6 h-6 text-[#487075]" />
@@ -112,25 +112,20 @@ export default function HoneycombNetwork({ territories, globalModifiers }) {
               El Panal <span className="text-[#C86D51] font-mono text-xl">· Intercambio Sintrópico Territorial</span>
             </h2>
 
-            <p className="text-xs sm:text-sm leading-relaxed text-slate-700 max-w-xl">
+            <p className="text-xs sm:text-sm leading-relaxed text-slate-700">
               Coordinación biofísica descentralizada entre células territoriales. 
               <strong className="text-[#C86D51] font-semibold"> Regla de oro:</strong> Ningún territorio puede exportar flujos que comprometan la base de sus propios hombros de sustento. El comercio se restringe estrictamente al excedente regenerativo.
             </p>
           </div>
 
-          <div className="md:col-span-4 relative min-h-[180px] md:min-h-full overflow-hidden bg-slate-900 border-t md:border-t-0 md:border-l border-[#D4C9B8]">
-            <img 
-              src={getAssetUrl('art/solarpunk_alley.jpg')} 
-              alt="Mercado Bio-Digital"
-              className="absolute inset-0 w-full h-full object-cover object-center filter saturate-90 brightness-75 hover:scale-105 transition-transform duration-700 opacity-60"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent pointer-events-none" />
-            <div className="absolute bottom-3 inset-x-3 bg-black/70 backdrop-blur-md px-3 py-2 rounded-xl border border-white/15 text-white text-[10px] font-mono flex items-center justify-between">
-              <span className="flex items-center gap-1.5 text-slate-300">
-                <Activity className="w-3.5 h-3.5 text-[#7DB2B2] animate-pulse" />
-                Validación Termodinámica
-              </span>
-              <span className="text-[#7DB2B2] font-bold">P2P ACTIVO</span>
+          <div className="bg-[#FAF7F0] border border-[#D4C9B8] px-4 py-3 rounded-2xl text-slate-800 text-xs font-mono shrink-0 space-y-1.5 shadow-2xs">
+            <div className="flex items-center gap-2 text-slate-600">
+              <Activity className="w-4 h-4 text-[#487075] animate-pulse" />
+              <span>Validación Termodinámica</span>
+            </div>
+            <div className="flex items-center justify-between gap-4">
+              <span className="text-slate-500 text-[11px]">Estado:</span>
+              <span className="text-[#1B4332] font-bold">P2P ACTIVO</span>
             </div>
           </div>
         </div>
