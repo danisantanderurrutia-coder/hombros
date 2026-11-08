@@ -10,6 +10,7 @@ import DataSourcesView from './components/DataSourcesView';
 import TheoryView from './components/TheoryView';
 import MetabolicAuditView from './components/MetabolicAuditView';
 import ArticlesPolicyView from './components/ArticlesPolicyView';
+import ThinkTankView from './components/ThinkTankView';
 import SolarpunkAtlasCanvas from './components/SolarpunkAtlasCanvas';
 import { INITIAL_TERRITORIES } from './models/territories';
 import { evaluateTerritoryState } from './models/mechanics';
@@ -17,6 +18,7 @@ import { ThemeProvider, useTheme } from './context/ThemeContext';
 
 const TAB_SLUGS = {
   landing: 'inicio',
+  think_tank: 'think-tank',
   articles: 'articulos',
   core: 'nucleo',
   world_map: 'atlas',
@@ -31,6 +33,10 @@ const SLUG_TO_TAB = {
   '': 'landing',
   'inicio': 'landing',
   'landing': 'landing',
+  'think-tank': 'think_tank',
+  'think_tank': 'think_tank',
+  'institucional': 'think_tank',
+  'quienes-somos': 'think_tank',
   'articulos': 'articles',
   'articles': 'articles',
   'nucleo': 'core',
@@ -171,6 +177,13 @@ function AppContent() {
 
           {activeTab === 'landing' && (
             <LandingView 
+              onNavigate={handleSelectTab} 
+              onNavigateCustomAudit={handleNavigateCustomAudit}
+            />
+          )}
+
+          {activeTab === 'think_tank' && (
+            <ThinkTankView 
               onNavigate={handleSelectTab} 
               onNavigateCustomAudit={handleNavigateCustomAudit}
             />

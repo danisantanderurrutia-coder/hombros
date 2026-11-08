@@ -1,8 +1,16 @@
 import React from 'react';
-import { Activity, Globe, GitCompare, Layers, Database, BookOpen, Compass, Sparkles } from 'lucide-react';
+import { Activity, Globe, GitCompare, Layers, Database, BookOpen, Compass, Sparkles, Landmark } from 'lucide-react';
 import { getAssetUrl } from '../utils/assets';
 
 const TAB_METADATA = {
+  think_tank: {
+    tag: 'THINK TANK & INCUBADORA TERRITORIAL · SUR GLOBAL',
+    title: 'HOMBROS · Centro de Soberanía Biofísica, Cuidado Comunitario & Ecotecnologías',
+    subtitle: 'Convergencia transdisciplinar entre geofísica de cuencas, psicología comunitaria en conflictos socioambientales y sociología de la seguridad vecinal. De la autopsia extractiva al autogobierno y la regeneración de la vida.',
+    image: getAssetUrl('art/solarpunk_bridges.jpg'),
+    icon: Landmark,
+    accent: '#10B981',
+  },
   core: {
     tag: 'MOTOR MATEMÁTICO & REOLÓGICO DEL MODELO HOMBROS',
     title: 'CORE · El Corazón Constitutivo del Modelo Territorial',

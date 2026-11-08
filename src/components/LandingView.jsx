@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import LandingHeroBanner from './LandingHeroBanner';
 import KitAuditaTuCuencaBanner from './KitAuditaTuCuencaBanner';
-import ThinkTankIdentitySection from './ThinkTankIdentitySection';
+import ThinkTankTeaserPortal from './ThinkTankTeaserPortal';
 
 export default function LandingView({ onNavigate, onNavigateCustomAudit }) {
   const modules = [
@@ -83,11 +83,8 @@ export default function LandingView({ onNavigate, onNavigateCustomAudit }) {
       {/* 1. HERO BANNER MONUMENTAL (ATLAS DORADO + CERRO + CONTROLES E, S, K) */}
       <LandingHeroBanner onNavigate={onNavigate} />
 
-      {/* 1.5 IDENTIDAD INSTITUCIONAL: THINK TANK & INCUBADORA TERRITORIAL */}
-      <ThinkTankIdentitySection 
-        onNavigate={onNavigate} 
-        onNavigateCustomAudit={onNavigateCustomAudit} 
-      />
+      {/* 1.5 PORTAL DESTACADO: THINK TANK & INCUBADORA TERRITORIAL */}
+      <ThinkTankTeaserPortal onNavigate={onNavigate} />
 
       {/* 2. MANIFIESTO FILOSÓFICO: DE SÍSIFO A ATLAS */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-8 sm:p-10 rounded-3xl bio-hud-panel">

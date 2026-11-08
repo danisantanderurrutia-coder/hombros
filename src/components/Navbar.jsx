@@ -1,9 +1,10 @@
 import React from 'react';
-import { Activity, Globe, Layers, Database, BookOpen, GitCompare, Sparkles, ShieldCheck, FileText, Download } from 'lucide-react';
+import { Activity, Globe, Layers, Database, BookOpen, GitCompare, Sparkles, ShieldCheck, FileText, Download, Landmark } from 'lucide-react';
 import { getAssetUrl } from '../utils/assets';
 
 export default function Navbar({ activeTab, setActiveTab, onNavigateCustomAudit }) {
   const navItems = [
+    { id: 'think_tank', label: 'Think Tank', icon: Landmark },
     { id: 'articles', label: 'Artículos & Policy', icon: FileText },
     { id: 'core', label: 'CORE', icon: Activity },
     { id: 'world_map', label: 'Atlas Territorial', icon: Globe },
