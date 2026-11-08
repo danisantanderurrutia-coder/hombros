@@ -18,7 +18,7 @@ export default function PhysicalTrafficLight({
   const isBlackLit = trafficLight === 'black'; // Extreme fracture / strobe mode
 
   return (
-    <div className="rounded-3xl p-6 card-slate border border-white/10 shadow-2xl flex flex-col items-center justify-between relative overflow-hidden">
+    <div className="rounded-3xl p-6 bg-white/95 border border-[#D4C9B8] shadow-md flex flex-col items-center justify-between relative overflow-hidden text-slate-900">
       {/* Background ambient glow matching the active light */}
       <div className={`absolute inset-0 pointer-events-none transition-all duration-700 opacity-20 ${
         isBlackLit ? 'bg-purple-950 animate-pulse' :
@@ -28,14 +28,14 @@ export default function PhysicalTrafficLight({
       }`} />
 
       {/* Header */}
-      <div className="w-full flex items-center justify-between pb-3 border-b border-white/10 relative z-10">
+      <div className="w-full flex items-center justify-between pb-3 border-b border-[#D4C9B8] relative z-10">
         <div className="flex items-center gap-2">
-          <Activity className="w-4 h-4 text-cyan-400" />
-          <h3 className="font-serif font-bold text-white text-sm">
+          <Activity className="w-4 h-4 text-[#487075]" />
+          <h3 className="font-serif font-bold text-slate-900 text-sm">
             Semáforo Biofísico de Gobernanza
           </h3>
         </div>
-        <span className="text-[10px] font-mono px-2 py-0.5 rounded-full border bg-black/40 border-white/15 text-slate-300">
+        <span className="text-[10px] font-mono px-2 py-0.5 rounded-full border bg-[#FAF7F0] border-[#D4C9B8] text-slate-700 font-bold">
           LÁMINA 21
         </span>
       </div>

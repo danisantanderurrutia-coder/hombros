@@ -182,7 +182,7 @@ export default function MetabolicAuditView({ initialCustomMode }) {
       label: 'Ensayo de Tracción SEIA 2.0', 
       tag: 'Carga Pre-Inversión', 
       icon: Scale,
-      color: 'from-[#8D69A6] to-[#44318D]' 
+      color: 'from-[#28475A] to-[#1A2E33]' 
     },
     { 
       id: 'step3_rating', 
@@ -198,7 +198,7 @@ export default function MetabolicAuditView({ initialCustomMode }) {
       label: 'ROI Biofísico vs. Inacción', 
       tag: 'Gasto Sísifo vs. Sintropía', 
       icon: Coins,
-      color: 'from-[#DA7B93] to-[#D83F87]' 
+      color: 'from-[#C86D51] to-[#A85138]' 
     }
   ];
 
@@ -634,9 +634,9 @@ export default function MetabolicAuditView({ initialCustomMode }) {
   };
 
   const varGroups = [
-    { shoulder: 'S', title: 'Hombro Social (S)', keys: ['s1', 's2', 's3', 's4'], color: 'border-[#DA7B93]/40 bg-[#301b24]/60' },
-    { shoulder: 'E', title: 'Hombro Ambiental (E)', keys: ['e1', 'e2', 'e3', 'e4'], color: 'border-[#376E6F]/50 bg-[#173132]/60' },
-    { shoulder: 'K', title: 'Hombro Económico (K)', keys: ['k1', 'k2', 'k3', 'k4'], color: 'border-[#8D69A6]/50 bg-[#261c46]/60' },
+    { shoulder: 'S', title: 'Hombro Social (S)', keys: ['s1', 's2', 's3', 's4'], color: 'border-[#C86D51]/30 bg-[#FAF7F0]' },
+    { shoulder: 'E', title: 'Hombro Ambiental (E)', keys: ['e1', 'e2', 'e3', 'e4'], color: 'border-[#487075]/30 bg-[#FAF7F0]' },
+    { shoulder: 'K', title: 'Hombro Económico (K)', keys: ['k1', 'k2', 'k3', 'k4'], color: 'border-[#927660]/30 bg-[#FAF7F0]' },
   ];
 
   return (
@@ -729,8 +729,9 @@ export default function MetabolicAuditView({ initialCustomMode }) {
       {/* =================================================================== */}
       {/* HEADER EJECUTIVO DEL SISTEMA DE AUDITORÍA & LABORATORIO DE HIPÓTESIS*/}
       {/* =================================================================== */}
-      <div className="card-magenta rounded-3xl p-6 sm:p-8 shadow-2xl border border-[#D83F87]/35 relative overflow-hidden">
-        <div className="absolute -top-20 -right-20 w-96 h-96 bg-[#D83F87]/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="bg-white/95 backdrop-blur-md rounded-3xl p-6 sm:p-8 shadow-md border border-[#D4C9B8] relative overflow-hidden text-slate-900">
+        <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-[#1B4332] via-[#487075] to-[#C86D51]" />
+        <div className="absolute -top-20 -right-20 w-96 h-96 bg-[#7DB2B2]/15 rounded-full blur-3xl pointer-events-none" />
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
           <div>
             <div className="flex flex-wrap items-center gap-2 mb-2">
@@ -801,7 +802,7 @@ export default function MetabolicAuditView({ initialCustomMode }) {
           </div>
 
           <div className="text-xs font-mono text-slate-800 bg-white/70 px-3 py-1.5 rounded-xl border border-[#D4C9B8]">
-            Fase de auditoría: <span className="font-bold text-[#8D69A6]">{auditSubtabs.find(s => s.id === activeSubtab)?.label}</span>
+            Fase de auditoría: <span className="font-bold text-[#28475A]">{auditSubtabs.find(s => s.id === activeSubtab)?.label}</span>
           </div>
         </div>
       </div>
@@ -809,7 +810,7 @@ export default function MetabolicAuditView({ initialCustomMode }) {
       {/* =========================================================================
           BARRA DE NAVEGACIÓN EN SUBPESTAÑAS DE AUDITORÍA (ESTILO CORE DASHBOARD)
           ========================================================================= */}
-      <div className="bg-[#180e25]/90 border border-white/10 p-1.5 rounded-2xl shadow-xl backdrop-blur-md sticky top-20 z-30">
+      <div className="bg-[#FAF7F0]/95 border border-[#D4C9B8] p-1.5 rounded-2xl shadow-md backdrop-blur-md sticky top-20 z-30 text-slate-800">
         <div className="grid grid-cols-2 lg:grid-cols-5 gap-1.5">
           {auditSubtabs.map(tab => {
             const Icon = tab.icon;
@@ -822,23 +823,23 @@ export default function MetabolicAuditView({ initialCustomMode }) {
                 className={`flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl transition-all text-left relative overflow-hidden group ${
                   isActive
                     ? isSpecial
-                      ? 'bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-slate-950 shadow-lg border border-amber-300 ring-2 ring-amber-400/50 font-bold'
-                      : 'bg-gradient-to-r from-[#D83F87] via-[#8D69A6] to-[#376E6F] text-white shadow-lg border border-white/30 font-bold'
+                      ? 'bg-gradient-to-r from-amber-600 via-orange-600 to-amber-700 text-white shadow-md border border-amber-300 font-bold'
+                      : 'bg-gradient-to-r from-[#1B4332] via-[#28475A] to-[#376E6F] text-white shadow-md border border-white/20 font-bold'
                     : isSpecial
-                    ? 'text-amber-300 hover:text-white bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 font-medium'
-                    : 'text-slate-300 hover:text-white hover:bg-white/5 border border-transparent'
+                    ? 'text-amber-800 hover:text-amber-950 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 font-medium'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/80 border border-transparent'
                 }`}
               >
                 <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 text-xs font-mono font-bold ${
                   isActive 
-                    ? isSpecial ? 'bg-black/20 text-slate-950 font-black' : 'bg-black/30 text-white' 
-                    : isSpecial ? 'bg-amber-500/20 text-amber-300' : 'bg-white/5 text-[#DA7B93] group-hover:bg-white/10'
+                    ? 'bg-white/20 text-white' 
+                    : isSpecial ? 'bg-amber-500/20 text-amber-800' : 'bg-[#EDE8DC] text-[#487075] group-hover:bg-white'
                 }`}>
                   <Icon className="w-3.5 h-3.5" />
                 </div>
                 <div className="truncate">
                   <div className={`text-[10px] font-mono uppercase tracking-wider leading-none ${
-                    isActive && isSpecial ? 'text-slate-900 font-extrabold' : 'opacity-80'
+                    isActive ? (isSpecial ? 'text-amber-100 font-bold' : 'text-slate-200') : 'text-slate-500'
                   }`}>
                     {tab.tag}
                   </div>
@@ -1541,7 +1542,7 @@ export default function MetabolicAuditView({ initialCustomMode }) {
                                 step={(Math.abs(spec.goalposts.syntropicOpt - spec.goalposts.collapseMin) / 100) || 0.01}
                                 value={currentRaw}
                                 onChange={(e) => setRawOverrides(prev => ({ ...prev, [k]: parseFloat(e.target.value) }))}
-                                className="w-full accent-[#D83F87] cursor-pointer h-1.5"
+                                className="w-full accent-[#C86D51] cursor-pointer h-1.5"
                               />
 
                               <div className="flex justify-between text-[9px] text-slate-400 pt-0.5">
@@ -1588,7 +1589,7 @@ export default function MetabolicAuditView({ initialCustomMode }) {
                   setActiveSubtab('step2_traction');
                   window.scrollTo({ top: 120, behavior: 'smooth' });
                 }}
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#8D69A6] to-[#44318D] text-white font-serif font-bold text-sm shadow-xl hover:brightness-110 transition-all border border-white/20"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#1B4332] via-[#28475A] to-[#376E6F] text-white font-serif font-bold text-sm shadow-md hover:brightness-110 transition-all border border-white/20"
               >
                 <span>Avanzar al Eslabón II: Ensayo de Tracción SEIA 2.0</span>
                 <ArrowRight className="w-4 h-4" />
@@ -1609,17 +1610,17 @@ export default function MetabolicAuditView({ initialCustomMode }) {
             transition={{ duration: 0.25 }}
             className="space-y-6"
           >
-            <div className="card-indigo rounded-3xl p-6 sm:p-8 shadow-2xl border border-[#8D69A6]/40 space-y-6">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-white/15">
+            <div className="card-indigo rounded-3xl p-6 sm:p-8 shadow-md border border-[#D4C9B8] space-y-6">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#D4C9B8]">
                 <div>
-                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-black/40 text-amber-300 border border-amber-500/30">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#28475A] text-white">
                     Eslabón Metodológico II · Ensayo de Carga Virtual Uniaxial (Cauchy + Hooke + Cláusula Pre-Inversional)
                   </span>
-                  <h2 className="text-xl sm:text-2xl font-serif font-extrabold text-white mt-1.5 flex items-center gap-2">
-                    <Scale className="w-6 h-6 text-amber-300" />
+                  <h2 className="text-xl sm:text-2xl font-serif font-extrabold text-slate-900 mt-1.5 flex items-center gap-2">
+                    <Scale className="w-6 h-6 text-[#28475A]" />
                     2. Ensayo de Tracción Territorial Pre-Inversión (Simulador de Reforma al SEIA)
                   </h2>
-                  <p className="text-xs text-slate-200 mt-1 max-w-3xl leading-relaxed">
+                  <p className="text-xs text-slate-700 mt-1 max-w-3xl leading-relaxed">
                     Aplica nuestra propuesta de <strong>Cláusula de Salvaguarda Pre-Inversional</strong> sobre <strong>{territory.name}</strong>: antes de autorizar un proyecto extractivo, energético o inmobiliario, sometemos la hipótesis de capacidad portante (<InlineMath math="H" />) a la tracción incremental del proyecto (<InlineMath math="\Delta D, \Delta E" />).
                   </p>
                 </div>
@@ -1627,7 +1628,7 @@ export default function MetabolicAuditView({ initialCustomMode }) {
 
           {/* Selector de Arquetipo de Proyecto a Auditar */}
           <div className="space-y-2">
-            <span className="text-xs font-mono uppercase text-amber-300 font-bold block">
+            <span className="text-xs font-mono uppercase text-[#28475A] font-bold block">
               Selecciona el Proyecto / Intervención a Someter a Auditoría SEIA 2.0 en {territory.name}:
             </span>
             <div className="grid grid-cols-1 md:grid-cols-5 gap-2.5">
@@ -1639,8 +1640,8 @@ export default function MetabolicAuditView({ initialCustomMode }) {
                     onClick={() => handleSelectArchetype(arch.id)}
                     className={`p-3 rounded-2xl border text-left transition-all flex flex-col justify-between ${
                       isSelected
-                        ? 'bg-[#D83F87]/30 border-white ring-2 ring-white shadow-xl'
-                        : 'bg-black/35 border-white/10 hover:bg-black/55 text-slate-300'
+                        ? 'bg-[#28475A]/20 border-[#28475A] ring-2 ring-[#28475A] shadow-md text-slate-900'
+                        : 'bg-white/80 border-[#D4C9B8] hover:bg-white text-slate-700'
                     }`}
                   >
                     <div>
@@ -1822,7 +1823,7 @@ export default function MetabolicAuditView({ initialCustomMode }) {
               />
             </div>
             <div className="lg:col-span-5 space-y-2.5 text-xs text-slate-200 p-2">
-              <span className="px-2.5 py-1 rounded-md bg-[#D83F87] text-white font-mono text-[10px] font-bold uppercase">
+              <span className="px-2.5 py-1 rounded-md bg-[#C86D51] text-white font-mono text-[10px] font-bold uppercase">
                 Figura 7 Canónica · Pipeline R v4.5.2
               </span>
               <h4 className="font-serif font-bold text-base text-white">
@@ -1989,7 +1990,7 @@ export default function MetabolicAuditView({ initialCustomMode }) {
               setActiveSubtab('step4_roi');
               window.scrollTo({ top: 120, behavior: 'smooth' });
             }}
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#DA7B93] to-[#D83F87] text-white font-serif font-bold text-sm shadow-xl hover:brightness-110 transition-all border border-white/20"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#1B4332] via-[#28475A] to-[#376E6F] text-white font-serif font-bold text-sm shadow-md hover:brightness-110 transition-all border border-white/20"
           >
             <span>Avanzar al Eslabón IV: ROI Biofísico vs. Inacción</span>
             <ArrowRight className="w-4 h-4" />

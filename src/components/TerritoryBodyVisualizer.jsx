@@ -160,8 +160,9 @@ export default function TerritoryBodyVisualizer({ santanderState, territory }) {
       {/* =========================================================================
           HERO BANNER: EL TERRITORIO NO ES UN PLANO CARTESIANO, ES UN CUERPO VIVO
           ========================================================================= */}
-      <div className="card-magenta rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden border border-[#D83F87]/25">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-emerald-500/10 via-teal-500/10 to-[#D83F87]/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="bg-white/95 backdrop-blur-md rounded-3xl p-6 sm:p-8 shadow-md relative overflow-hidden border border-[#D4C9B8] text-slate-900">
+        <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-[#1B4332] via-[#487075] to-[#C86D51]" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-emerald-500/10 via-teal-500/10 to-[#C86D51]/10 rounded-full blur-3xl pointer-events-none" />
         
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative z-10">
           <div className="flex items-start sm:items-center gap-4">
@@ -228,11 +229,11 @@ export default function TerritoryBodyVisualizer({ santanderState, territory }) {
             onClick={() => setActiveMode('stress_continuum')}
             className={`flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm ${
               activeMode === 'stress_continuum'
-                ? 'bg-[#D83F87] text-white border border-[#9b1d56] shadow-md'
+                ? 'bg-[#C86D51] text-white border border-[#927660] shadow-md'
                 : 'bg-white/80 text-slate-800 hover:bg-white border border-[#D4C9B8]'
             }`}
           >
-            <Activity className="w-4 h-4 text-pink-300" />
+            <Activity className="w-4 h-4 text-white" />
             <span>3. Medio Continuo</span>
           </button>
 
@@ -240,11 +241,11 @@ export default function TerritoryBodyVisualizer({ santanderState, territory }) {
             onClick={() => setActiveMode('state_manifold')}
             className={`flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm ${
               activeMode === 'state_manifold'
-                ? 'bg-[#8D69A6] text-white border border-[#583971] shadow-md'
+                ? 'bg-[#28475A] text-white border border-[#1A2E33] shadow-md'
                 : 'bg-white/80 text-slate-800 hover:bg-white border border-[#D4C9B8]'
             }`}
           >
-            <Compass className="w-4 h-4 text-purple-300" />
+            <Compass className="w-4 h-4 text-white" />
             <span>4. Variedad de Estados</span>
           </button>
 

@@ -150,9 +150,9 @@ export default function OrganismVisualAvatar({ santanderState, activePreset }) {
           </div>
 
           {/* Hombro Económico o Capital */}
-          <div className="p-4 rounded-2xl bg-black/40 border border-[#8D69A6]/40 hover:border-[#8D69A6] transition-all group">
+          <div className="p-4 rounded-2xl bg-black/40 border border-[#927660]/40 hover:border-[#927660] transition-all group">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-serif font-bold text-cyan-300 flex items-center gap-1.5">
+              <span className="text-xs font-serif font-bold text-[#D4A373] flex items-center gap-1.5">
                 <BrainCircuit className="w-4 h-4" />
                 Hombro Económico o Capital (K)
               </span>
@@ -162,7 +162,7 @@ export default function OrganismVisualAvatar({ santanderState, activePreset }) {
             </div>
             <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
               <div 
-                className="h-full bg-gradient-to-r from-[#8D69A6] to-cyan-400 rounded-full"
+                className="h-full bg-gradient-to-r from-[#927660] to-[#D4A373] rounded-full"
                 style={{ width: `${K * 100}%` }}
               />
             </div>

@@ -16,15 +16,47 @@ export default function ThinkTankView({ onNavigate, onNavigateCustomAudit }) {
   const [activeFaq, setActiveFaq] = useState(null);
   const [isFilosofiaOpen, setIsFilosofiaOpen] = useState(false);
   
-  // Fondo fijo institucional: Pizarra Ejecutiva & Gabinete (Chatham House / RAND)
-  const selectedTheme = 'pizarra';
+  // Fondo institucional unificado con Auditoría Biofísica: Travertino, Celadón & Azul Pizarra
+  const selectedTheme = 'biofisica';
 
   const themes = {
+    biofisica: {
+      id: 'biofisica',
+      name: 'Auditoría Biofísica & Travertino',
+      sub: 'Estilo Institucional Auditoría Biofísica (Travertino Cálido, Celadón, Terracota, Pizarra y Lino)',
+      wrapper: 'text-slate-800',
+      gridPattern: 'radial-gradient(circle at 50% 50%, rgba(72, 112, 117, 0.08) 1px, transparent 1px)',
+      gridSize: '24px 24px',
+      heroBg: 'bg-white/95 backdrop-blur-md border-[#D4C9B8] shadow-md text-slate-900',
+      heroAccentLine: 'bg-gradient-to-r from-[#1B4332] via-[#487075] to-[#C86D51]',
+      heroBadge: 'bg-[#EDE8DC] text-slate-800 border-[#D4C9B8]',
+      heroBadgeSecondary: 'bg-[#1B4332]/10 text-[#1B4332] border-[#1B4332]/30',
+      heroTitle: 'text-slate-900',
+      heroTitleGradient: 'text-transparent bg-clip-text bg-gradient-to-r from-[#1B4332] via-[#28475A] to-[#C86D51]',
+      heroDesc: 'text-slate-700',
+      btnPrimary: 'bg-[#28475A] hover:bg-[#1E293B] text-white shadow-sm border border-[#1E293B]',
+      btnSecondary: 'bg-white hover:bg-[#EDE8DC] text-slate-800 border-[#D4C9B8] shadow-xs',
+      btnAccent: 'bg-[#487075] hover:bg-[#376E6F] text-white shadow-sm border border-[#376E6F]',
+      misionCard: 'bg-[#FAF7F0] border-[#D4C9B8] text-slate-900 border-t-4 border-t-[#376E6F] shadow-sm',
+      misionBadge: 'bg-[#376E6F]/10 text-[#376E6F] border-[#376E6F]/30',
+      misionQuote: 'bg-white border-[#376E6F]/30 text-slate-700',
+      visionCard: 'bg-[#FAF7F0] border-[#D4C9B8] text-slate-900 border-t-4 border-t-[#C86D51] shadow-sm',
+      visionBadge: 'bg-[#C86D51]/10 text-[#C86D51] border-[#C86D51]/30',
+      visionQuote: 'bg-white border-[#C86D51]/30 text-slate-700',
+      pillarCard: 'bg-white/95 border-[#D4C9B8] hover:border-[#487075] text-slate-800 shadow-xs hover:shadow-md transition-all',
+      axisCard: 'bg-white/95 border-[#D4C9B8] hover:border-[#487075] text-slate-800 shadow-xs hover:shadow-md transition-all',
+      pinchContainer: 'bg-[#FAF7F0] border-[#D4C9B8] text-slate-900',
+      pinchCard: 'bg-white border-[#D4C9B8] shadow-xs text-slate-800',
+      incubatorCard: 'bg-white/95 border-[#D4C9B8] hover:border-[#487075] shadow-xs text-slate-800',
+      dossierCard: 'bg-gradient-to-br from-[#122227] via-[#1A2E33] to-[#0E171B] border-[#7DB2B2]/60 text-white shadow-xl',
+      faqCard: 'bg-white border-[#D4C9B8] text-slate-800',
+      iconBox: 'bg-[#EDE8DC] text-[#28475A]'
+    },
     alabastro: {
       id: 'alabastro',
       name: 'Opción 1: Blanco Alabastro & Cartografía',
       sub: 'Estilo Stockholm Resilience Centre / Oxford Martin School (Limpio, Geodésico, Multilateral)',
-      wrapper: 'bg-[#F8FAF9] text-slate-800',
+      wrapper: 'text-slate-800',
       gridPattern: 'radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.04) 1px, transparent 1px)',
       gridSize: '24px 24px',
       heroBg: 'bg-white border-slate-200/90 shadow-sm text-slate-900',
@@ -51,70 +83,6 @@ export default function ThinkTankView({ onNavigate, onNavigateCustomAudit }) {
       dossierCard: 'bg-[#1E293B] border-slate-700 text-white shadow-md',
       faqCard: 'bg-white border-slate-200 text-slate-800',
       iconBox: 'bg-slate-100 text-[#1E293B]'
-    },
-    lino: {
-      id: 'lino',
-      name: 'Opción 2: Lino Editorial & Archivo de Estado',
-      sub: 'Estilo Financial Times / CEPAL / Memoria Histórica (Papel Prensa noble, Calidez, Derecho Territorial)',
-      wrapper: 'bg-[#F4EFEA] text-stone-800',
-      gridPattern: 'linear-gradient(to bottom, rgba(146, 118, 96, 0.07) 1px, transparent 1px)',
-      gridSize: '100% 28px',
-      heroBg: 'bg-[#FAF7F2] border-[#DCD5CB] shadow-xs text-stone-900',
-      heroAccentLine: 'bg-gradient-to-r from-[#78350F] via-[#991B1B] to-[#78350F]',
-      heroBadge: 'bg-[#EFE9DF] text-stone-700 border-[#D5CDBD]',
-      heroBadgeSecondary: 'bg-[#991B1B]/10 text-[#991B1B] border-[#991B1B]/20',
-      heroTitle: 'text-stone-900',
-      heroTitleGradient: 'text-transparent bg-clip-text bg-gradient-to-r from-[#78350F] via-[#991B1B] to-[#5C2809]',
-      heroDesc: 'text-stone-600',
-      btnPrimary: 'bg-[#78350F] hover:bg-[#5C2809] text-amber-50 shadow-xs border border-[#78350F]',
-      btnSecondary: 'bg-[#FAF7F2] hover:bg-[#EDE6DC] text-stone-800 border-[#DCD5CB]',
-      btnAccent: 'bg-[#991B1B] hover:bg-[#7F1D1D] text-white shadow-xs border border-[#991B1B]',
-      misionCard: 'bg-[#FCFAF7] border-[#DCD5CB] text-stone-900 border-l-4 border-l-[#78350F] shadow-xs',
-      misionBadge: 'bg-[#78350F]/10 text-[#78350F] border-[#78350F]/20',
-      misionQuote: 'bg-[#F4EFEA] border-[#78350F]/30 text-stone-700',
-      visionCard: 'bg-[#FCFAF7] border-[#DCD5CB] text-stone-900 border-l-4 border-l-[#991B1B] shadow-xs',
-      visionBadge: 'bg-[#991B1B]/10 text-[#991B1B] border-[#991B1B]/20',
-      visionQuote: 'bg-[#F4EFEA] border-[#991B1B]/30 text-stone-700',
-      pillarCard: 'bg-[#FCFAF7] border-[#DCD5CB] hover:border-stone-400 text-stone-800 shadow-xs',
-      axisCard: 'bg-[#FCFAF7] border-[#DCD5CB] hover:border-stone-400 text-stone-800 shadow-xs',
-      pinchContainer: 'bg-[#EAE4DC] border-[#DCD5CB] text-stone-900',
-      pinchCard: 'bg-[#FCFAF7] border-[#DCD5CB] shadow-xs text-stone-800',
-      incubatorCard: 'bg-[#FCFAF7] border-[#DCD5CB] hover:border-stone-400 shadow-xs text-stone-800',
-      dossierCard: 'bg-[#2E1F18] border-[#533A2D] text-[#FDFBF7] shadow-md',
-      faqCard: 'bg-[#FCFAF7] border-[#DCD5CB] text-stone-800',
-      iconBox: 'bg-[#EFE9DF] text-[#78350F]'
-    },
-    pizarra: {
-      id: 'pizarra',
-      name: 'Opción 3: Pizarra Ejecutiva & Gabinete',
-      sub: 'Estilo Chatham House Executive / RAND (Antracita mate, Sin neones gamer, Autoridad de Estado Mayor)',
-      wrapper: 'bg-[#0B1120] text-slate-200',
-      gridPattern: 'linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px)',
-      gridSize: '36px 36px',
-      heroBg: 'bg-[#111C30] border-slate-700/80 shadow-lg text-slate-100',
-      heroAccentLine: 'bg-gradient-to-r from-[#D4AF37] via-[#38BDF8] to-[#10B981]',
-      heroBadge: 'bg-slate-800 text-slate-300 border-slate-700',
-      heroBadgeSecondary: 'bg-[#D4AF37]/15 text-[#D4AF37] border-[#D4AF37]/30',
-      heroTitle: 'text-slate-50',
-      heroTitleGradient: 'text-transparent bg-clip-text bg-gradient-to-r from-slate-100 via-amber-200 to-slate-300',
-      heroDesc: 'text-slate-300',
-      btnPrimary: 'bg-[#D4AF37] hover:bg-[#C29D2D] text-slate-950 font-bold shadow-sm',
-      btnSecondary: 'bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700',
-      btnAccent: 'bg-emerald-700 hover:bg-emerald-600 text-white shadow-sm border border-emerald-600',
-      misionCard: 'bg-[#132238] border-slate-700 text-slate-100 border-l-4 border-l-[#10B981] shadow-sm',
-      misionBadge: 'bg-emerald-950/80 text-emerald-300 border-emerald-700',
-      misionQuote: 'bg-[#0B1424] border-emerald-500/40 text-slate-200',
-      visionCard: 'bg-[#132238] border-slate-700 text-slate-100 border-l-4 border-l-[#D4AF37] shadow-sm',
-      visionBadge: 'bg-amber-950/80 text-amber-300 border-amber-700',
-      visionQuote: 'bg-[#0B1424] border-amber-500/40 text-slate-200',
-      pillarCard: 'bg-[#111C30] border-slate-800 hover:border-slate-600 text-slate-200 shadow-sm',
-      axisCard: 'bg-[#111C30] border-slate-800 hover:border-slate-600 text-slate-200 shadow-sm',
-      pinchContainer: 'bg-[#0F172A] border-slate-800 text-slate-100',
-      pinchCard: 'bg-[#142034] border-slate-700 shadow-sm text-slate-200',
-      incubatorCard: 'bg-[#111C30] border-slate-800 hover:border-slate-600 shadow-sm text-slate-200',
-      dossierCard: 'bg-[#0A0F1D] border-slate-700 text-white shadow-md',
-      faqCard: 'bg-[#111C30] border-slate-800 text-slate-200',
-      iconBox: 'bg-slate-800 text-amber-300'
     }
   };
 
@@ -338,9 +306,9 @@ export default function ThinkTankView({ onNavigate, onNavigateCustomAudit }) {
 
               <button
                 onClick={() => setIsFilosofiaOpen(true)}
-                className="inline-flex items-center gap-2 px-4 py-3 rounded-xl text-xs sm:text-sm font-serif font-bold bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-400/40 transition-all shadow-xs"
+                className="inline-flex items-center gap-2 px-4 py-3 rounded-xl text-xs sm:text-sm font-serif font-bold bg-[#D4A373]/20 hover:bg-[#D4A373]/30 text-[#78350F] border border-[#D4A373]/50 transition-all shadow-xs"
               >
-                <Mountain className="w-4 h-4 text-amber-300" />
+                <Mountain className="w-4 h-4 text-[#78350F]" />
                 <span>Filosofía de los Hombros</span>
               </button>
             </div>

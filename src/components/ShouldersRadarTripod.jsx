@@ -97,30 +97,30 @@ export default function ShouldersRadarTripod({ S, E, K, H, hasCriticalShoulder, 
   }, [activeDragging, handlePointerMove, handlePointerUp]);
 
   return (
-    <div className="rounded-3xl p-6 card-slate border border-white/10 shadow-2xl relative overflow-hidden flex flex-col justify-between">
+    <div className="rounded-3xl p-6 bg-white/95 border border-[#D4C9B8] shadow-md relative overflow-hidden flex flex-col justify-between text-slate-900">
       {/* Background ambient lighting */}
       <div className={`absolute inset-0 pointer-events-none transition-all duration-700 opacity-20 ${
-        hasCriticalShoulder ? 'bg-rose-950/60' : 'bg-gradient-to-b from-[#D83F87]/15 via-transparent to-[#376E6F]/15'
+        hasCriticalShoulder ? 'bg-rose-950/60' : 'bg-gradient-to-b from-[#C86D51]/10 via-transparent to-[#487075]/10'
       }`} />
 
       {/* Header with Call to Action */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/10 relative z-10">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#D4C9B8] relative z-10">
         <div>
           <div className="flex items-center gap-2">
-            <ShieldCheck className="w-5 h-5 text-[#DA7B93]" />
-            <h3 className="font-serif font-bold text-white text-base">
+            <ShieldCheck className="w-5 h-5 text-[#C86D51]" />
+            <h3 className="font-serif font-bold text-slate-900 text-base">
               Trípode de Capacidad Portante (Interactivo)
             </h3>
           </div>
-          <p className="text-xs text-slate-300 mt-0.5 flex items-center gap-1.5">
-            <Move className="w-3.5 h-3.5 text-[#DA7B93]" />
-            <strong className="text-white">Arrastra los 3 vértices</strong> para modelar el soporte biofísico directamente
+          <p className="text-xs text-slate-600 mt-0.5 flex items-center gap-1.5">
+            <Move className="w-3.5 h-3.5 text-[#C86D51]" />
+            <strong className="text-slate-800">Arrastra los 3 vértices</strong> para modelar el soporte biofísico directamente
           </p>
         </div>
 
-        <div className="flex items-center gap-2 text-xs font-mono px-3.5 py-1.5 rounded-2xl bg-black/50 border border-white/10 shadow-inner">
-          <span className="text-slate-400">Domo H:</span>
-          <strong className={`text-base ${hasCriticalShoulder ? 'text-rose-400 animate-pulse' : 'text-emerald-400'}`}>
+        <div className="flex items-center gap-2 text-xs font-mono px-3.5 py-1.5 rounded-2xl bg-[#FAF7F0] border border-[#D4C9B8] shadow-2xs">
+          <span className="text-slate-600">Domo H:</span>
+          <strong className={`text-base ${hasCriticalShoulder ? 'text-rose-600 animate-pulse' : 'text-[#1B4332]'}`}>
             {H.toFixed(3)}
           </strong>
         </div>
@@ -137,9 +137,9 @@ export default function ShouldersRadarTripod({ S, E, K, H, hasCriticalShoulder, 
           <defs>
             {/* Ambient Radial Gradient for the membrane */}
             <radialGradient id="largeTripodMeshGradient" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor={hasCriticalShoulder ? '#f43f5e' : '#34d399'} stopOpacity="0.75" />
-              <stop offset="55%" stopColor={hasCriticalShoulder ? '#9f1239' : '#8D69A6'} stopOpacity="0.5" />
-              <stop offset="100%" stopColor={hasCriticalShoulder ? '#4c0519' : '#376E6F'} stopOpacity="0.25" />
+              <stop offset="0%" stopColor={hasCriticalShoulder ? '#f43f5e' : '#7DB2B2'} stopOpacity="0.75" />
+              <stop offset="55%" stopColor={hasCriticalShoulder ? '#9f1239' : '#927660'} stopOpacity="0.5" />
+              <stop offset="100%" stopColor={hasCriticalShoulder ? '#4c0519' : '#487075'} stopOpacity="0.25" />
             </radialGradient>
 
             <filter id="largeTripodGlow" x="-30%" y="-30%" width="160%" height="160%">
@@ -149,62 +149,62 @@ export default function ShouldersRadarTripod({ S, E, K, H, hasCriticalShoulder, 
 
             {/* Pulsing Aura for Draggable Handles */}
             <filter id="handleShadow" x="-50%" y="-50%" width="200%" height="200%">
-              <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#ffffff" floodOpacity="0.6" />
+              <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#000000" floodOpacity="0.2" />
             </filter>
           </defs>
 
           {/* Background Structural Spokes */}
-          <line x1={cx} y1={cy} x2={cx + maxR * uS.x} y2={cy + maxR * uS.y} stroke="rgba(218,123,147,0.35)" strokeWidth="2" strokeDasharray="4 4" />
-          <line x1={cx} y1={cy} x2={cx + maxR * uE.x} y2={cy + maxR * uE.y} stroke="rgba(55,110,111,0.35)" strokeWidth="2" strokeDasharray="4 4" />
-          <line x1={cx} y1={cy} x2={cx + maxR * uK.x} y2={cy + maxR * uK.y} stroke="rgba(141,105,166,0.35)" strokeWidth="2" strokeDasharray="4 4" />
+          <line x1={cx} y1={cy} x2={cx + maxR * uS.x} y2={cy + maxR * uS.y} stroke="rgba(200,109,81,0.35)" strokeWidth="2" strokeDasharray="4 4" />
+          <line x1={cx} y1={cy} x2={cx + maxR * uE.x} y2={cy + maxR * uE.y} stroke="rgba(72,112,117,0.35)" strokeWidth="2" strokeDasharray="4 4" />
+          <line x1={cx} y1={cy} x2={cx + maxR * uK.x} y2={cy + maxR * uK.y} stroke="rgba(146,118,96,0.35)" strokeWidth="2" strokeDasharray="4 4" />
 
           {/* Concentric Guide Triangles */}
-          <polygon points={getRingPoints(1.0)} fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
-          <polygon points={getRingPoints(0.75)} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
-          <polygon points={getRingPoints(0.50)} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
+          <polygon points={getRingPoints(1.0)} fill="none" stroke="rgba(40,71,90,0.18)" strokeWidth="1.5" />
+          <polygon points={getRingPoints(0.75)} fill="none" stroke="rgba(40,71,90,0.10)" strokeWidth="1" />
+          <polygon points={getRingPoints(0.50)} fill="none" stroke="rgba(40,71,90,0.10)" strokeWidth="1" />
           
           {/* Critical Threshold 0.25 (Liebig Collapse Line) */}
           <polygon 
             points={getRingPoints(0.25)} 
             fill="none" 
-            stroke="rgba(244,63,94,0.5)" 
+            stroke="rgba(244,63,94,0.6)" 
             strokeWidth="2" 
             strokeDasharray="5 4" 
           />
-          <text x={cx + 10} y={cy - maxR * 0.25 - 6} className="text-[10px] font-mono fill-rose-400 font-bold tracking-wider">
+          <text x={cx + 10} y={cy - maxR * 0.25 - 6} className="text-[10px] font-mono fill-rose-600 font-bold tracking-wider">
             UMBRAL DE COLAPSO LIEBIG (0.25)
           </text>
 
           {/* Axis Scale Markers */}
-          <text x={cx + 6} y={cy - maxR + 12} className="text-[9px] font-mono fill-slate-500">1.0</text>
-          <text x={cx + 6} y={cy - maxR * 0.5 + 4} className="text-[9px] font-mono fill-slate-500">0.5</text>
+          <text x={cx + 6} y={cy - maxR + 12} className="text-[9px] font-mono fill-slate-500 font-bold">1.0</text>
+          <text x={cx + 6} y={cy - maxR * 0.5 + 4} className="text-[9px] font-mono fill-slate-500 font-bold">0.5</text>
 
           {/* DYNAMIC MEMBRANE / POLYGON */}
           <polygon
             points={`${ptS.x},${ptS.y} ${ptE.x},${ptE.y} ${ptK.x},${ptK.y}`}
             fill="url(#largeTripodMeshGradient)"
-            stroke={hasCriticalShoulder ? '#f43f5e' : '#DA7B93'}
+            stroke={hasCriticalShoulder ? '#f43f5e' : '#487075'}
             strokeWidth="3.5"
             strokeLinejoin="round"
             filter="url(#largeTripodGlow)"
           />
 
           {/* Internal Connective Struts */}
-          <line x1={cx} y1={cy} x2={ptS.x} y2={ptS.y} stroke={S < 0.25 ? '#f43f5e' : '#DA7B93'} strokeWidth="2" />
-          <line x1={cx} y1={cy} x2={ptE.x} y2={ptE.y} stroke={E < 0.25 ? '#f43f5e' : '#376E6F'} strokeWidth="2" />
-          <line x1={cx} y1={cy} x2={ptK.x} y2={ptK.y} stroke={K < 0.25 ? '#f43f5e' : '#8D69A6'} strokeWidth="2" />
+          <line x1={cx} y1={cy} x2={ptS.x} y2={ptS.y} stroke={S < 0.25 ? '#f43f5e' : '#C86D51'} strokeWidth="2" />
+          <line x1={cx} y1={cy} x2={ptE.x} y2={ptE.y} stroke={E < 0.25 ? '#f43f5e' : '#487075'} strokeWidth="2" />
+          <line x1={cx} y1={cy} x2={ptK.x} y2={ptK.y} stroke={K < 0.25 ? '#f43f5e' : '#927660'} strokeWidth="2" />
 
           {/* CENTRAL CAPABILITY DOME (H = (S·E·K)^(1/3)) */}
           <circle
             cx={cx}
             cy={cy}
             r={domeRadius}
-            fill={hasCriticalShoulder ? 'rgba(244,63,94,0.3)' : 'rgba(52,211,153,0.3)'}
-            stroke={hasCriticalShoulder ? '#f43f5e' : '#34d399'}
+            fill={hasCriticalShoulder ? 'rgba(244,63,94,0.3)' : 'rgba(72,112,117,0.3)'}
+            stroke={hasCriticalShoulder ? '#f43f5e' : '#487075'}
             strokeWidth="2.5"
             className="animate-pulse"
           />
-          <circle cx={cx} cy={cy} r="6" fill="#ffffff" filter="url(#largeTripodGlow)" />
+          <circle cx={cx} cy={cy} r="6" fill="#28475A" />
           <text x={cx} y={cy + 4} textAnchor="middle" className="text-[11px] font-mono font-bold fill-white pointer-events-none drop-shadow">
             H
           </text>
@@ -224,7 +224,7 @@ export default function ShouldersRadarTripod({ S, E, K, H, hasCriticalShoulder, 
               cx={ptS.x}
               cy={ptS.y}
               r={activeDragging === 'S' ? 18 : 13}
-              fill="rgba(218,123,147,0.35)"
+              fill="rgba(200,109,81,0.35)"
               className="animate-pulse"
             />
             {/* Core Handle Knob */}
@@ -232,7 +232,7 @@ export default function ShouldersRadarTripod({ S, E, K, H, hasCriticalShoulder, 
               cx={ptS.x}
               cy={ptS.y}
               r={S < 0.25 ? 10 : 8}
-              fill={S < 0.25 ? '#f43f5e' : '#DA7B93'}
+              fill={S < 0.25 ? '#f43f5e' : '#C86D51'}
               stroke="#ffffff"
               strokeWidth="3"
               filter="url(#handleShadow)"
@@ -243,7 +243,7 @@ export default function ShouldersRadarTripod({ S, E, K, H, hasCriticalShoulder, 
             x={cx}
             y={cy - maxR - 22}
             textAnchor="middle"
-            className="text-[13px] font-serif font-bold fill-[#DA7B93] drop-shadow"
+            className="text-[13px] font-serif font-bold fill-[#C86D51]"
           >
             Hombro Social (S): {S.toFixed(2)}
           </text>
@@ -260,14 +260,14 @@ export default function ShouldersRadarTripod({ S, E, K, H, hasCriticalShoulder, 
               cx={ptE.x}
               cy={ptE.y}
               r={activeDragging === 'E' ? 18 : 13}
-              fill="rgba(55,110,111,0.35)"
+              fill="rgba(72,112,117,0.35)"
               className="animate-pulse"
             />
             <circle
               cx={ptE.x}
               cy={ptE.y}
               r={E < 0.25 ? 10 : 8}
-              fill={E < 0.25 ? '#f43f5e' : '#376E6F'}
+              fill={E < 0.25 ? '#f43f5e' : '#487075'}
               stroke="#ffffff"
               strokeWidth="3"
               filter="url(#handleShadow)"
@@ -278,7 +278,7 @@ export default function ShouldersRadarTripod({ S, E, K, H, hasCriticalShoulder, 
             x={cx + maxR + 14}
             y={cy + maxR * 0.5 + 24}
             textAnchor="start"
-            className="text-[13px] font-serif font-bold fill-[#376E6F] drop-shadow"
+            className="text-[13px] font-serif font-bold fill-[#487075]"
           >
             Ambiental (E): {E.toFixed(2)}
           </text>
@@ -295,14 +295,14 @@ export default function ShouldersRadarTripod({ S, E, K, H, hasCriticalShoulder, 
               cx={ptK.x}
               cy={ptK.y}
               r={activeDragging === 'K' ? 18 : 13}
-              fill="rgba(141,105,166,0.35)"
+              fill="rgba(146,118,96,0.35)"
               className="animate-pulse"
             />
             <circle
               cx={ptK.x}
               cy={ptK.y}
               r={K < 0.25 ? 10 : 8}
-              fill={K < 0.25 ? '#f43f5e' : '#8D69A6'}
+              fill={K < 0.25 ? '#f43f5e' : '#927660'}
               stroke="#ffffff"
               strokeWidth="3"
               filter="url(#handleShadow)"
@@ -313,7 +313,7 @@ export default function ShouldersRadarTripod({ S, E, K, H, hasCriticalShoulder, 
             x={cx - maxR - 14}
             y={cy + maxR * 0.5 + 24}
             textAnchor="end"
-            className="text-[13px] font-serif font-bold fill-[#8D69A6] drop-shadow"
+            className="text-[13px] font-serif font-bold fill-[#927660]"
           >
             Económico (K): {K.toFixed(2)}
           </text>
@@ -324,7 +324,7 @@ export default function ShouldersRadarTripod({ S, E, K, H, hasCriticalShoulder, 
       <div className={`p-3 rounded-2xl text-center text-xs font-mono transition-all relative z-10 ${
         hasCriticalShoulder 
           ? 'bg-rose-950/80 border border-rose-500/60 text-rose-200 animate-pulse' 
-          : 'bg-black/40 border border-white/10 text-slate-300'
+          : 'bg-[#FAF7F0] border border-[#D4C9B8] text-slate-700'
       }`}>
         {hasCriticalShoulder ? (
           <span>🚨 <strong>COLAPSO POR LEY DE LIEBIG:</strong> {criticalDetails.join(' y ')}. El territorio no puede mantenerse en pie.</span>

@@ -10,8 +10,7 @@ export default function StressStrainCurve({ state, territory, onStressChange }) 
   const yieldStress = materialProperties?.yieldStress || 0.85;
   const fractureStress = materialProperties?.fractureStress || 1.25;
 
-  const { isFcinq } = useTheme();
-  const themePrimary = isFcinq ? '#D83F87' : '#DA7B93';
+  const themePrimary = '#487075';
 
   // SVG Geometry Dimensions with generous margins (No clipping!)
   const width = 640;
@@ -116,19 +115,19 @@ export default function StressStrainCurve({ state, territory, onStressChange }) 
   }, [isDragging, handlePointerMove, handlePointerUp]);
 
   return (
-    <div className="rounded-3xl p-6 sm:p-7 card-slate border border-white/10 shadow-2xl relative overflow-hidden space-y-4">
+    <div className="rounded-3xl p-6 sm:p-7 bg-white/95 border border-[#D4C9B8] shadow-md relative overflow-hidden space-y-4 text-slate-900">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/10">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#D4C9B8]">
         <div>
           <div className="flex items-center gap-2">
-            <TrendingUp className="w-5 h-5 text-purple-400" />
-            <h3 className="text-xl font-bold font-serif text-white tracking-wide">
+            <TrendingUp className="w-5 h-5 text-[#28475A]" />
+            <h3 className="text-xl font-bold font-serif text-slate-900 tracking-wide">
               Curva Reológica: Esfuerzo (σ) vs Deformación (ε)
             </h3>
           </div>
-          <p className="text-xs text-slate-300 mt-0.5 flex items-center gap-1.5">
-            <Move className="w-3.5 h-3.5 text-purple-300" />
-            <strong className="text-white">Haz clic o arrastra sobre la curva</strong> para probar directamente diferentes niveles de tensión
+          <p className="text-xs text-slate-600 mt-0.5 flex items-center gap-1.5">
+            <Move className="w-3.5 h-3.5 text-[#487075]" />
+            <strong className="text-slate-800">Haz clic o arrastra sobre la curva</strong> para probar directamente diferentes niveles de tensión
           </p>
         </div>
 
@@ -143,7 +142,7 @@ export default function StressStrainCurve({ state, territory, onStressChange }) 
 
       {/* SVG Canvas with Perfect Bounds & Layout */}
       <div 
-        className="relative w-full overflow-hidden rounded-2xl border border-white/10 bg-black/70 p-2 shadow-inner select-none cursor-pointer"
+        className="relative w-full overflow-hidden rounded-2xl border border-[#D4C9B8] bg-slate-950 p-2 shadow-inner select-none cursor-pointer"
         onPointerDown={handlePointerDown}
       >
         <svg

@@ -37,8 +37,8 @@ export default function ThreeShouldersBreakdown({ santanderState, territory }) {
       val: S,
       icon: Users,
       cardClass: 'card-rose',
-      textColor: 'text-[#DA7B93]',
-      badgeBg: 'bg-[#301b24] text-[#DA7B93] border-[#DA7B93]/40',
+      textColor: 'text-[#C86D51]',
+      badgeBg: 'bg-[#C86D51]/10 text-[#C86D51] border-[#C86D51]/30',
       description: 'Cohesión comunitaria, redes de cuidados, trabajo rural digno y ausencia de violencia estructural.',
       variables: [
         { key: 's1', name: 'Cohesión Social y Cuidados (S₁)', val: currentVars.s1, desc: 'Confianza comunitaria + tejido de cuidados y Comités APR', source: 'Comunidad / CASEN Redes' },
@@ -53,8 +53,8 @@ export default function ThreeShouldersBreakdown({ santanderState, territory }) {
       val: E,
       icon: Trees,
       cardClass: 'card-teal',
-      textColor: 'text-[#376E6F]',
-      badgeBg: 'bg-[#173132] text-[#376E6F] border-[#376E6F]/40',
+      textColor: 'text-[#487075]',
+      badgeBg: 'bg-[#487075]/10 text-[#487075] border-[#487075]/30',
       description: 'Integridad ecosistémica, disponibilidad hídrica por cuenca, suelo vivo y resiliencia climática.',
       variables: [
         { key: 'e1', name: 'Integridad Ecosistémica (E₁)', val: currentVars.e1, desc: 'Cobertura de bosque nativo / superficie de cuenca', source: 'CONAF / Sentinel-2' },
@@ -68,9 +68,9 @@ export default function ThreeShouldersBreakdown({ santanderState, territory }) {
       name: 'Hombro Económico (K)',
       val: K,
       icon: Coins,
-      cardClass: 'card-indigo',
-      textColor: 'text-[#8D69A6]',
-      badgeBg: 'bg-[#261c46] text-[#8D69A6] border-[#44318D]/50',
+      cardClass: 'card-slate',
+      textColor: 'text-[#927660]',
+      badgeBg: 'bg-[#927660]/10 text-[#927660] border-[#927660]/30',
       description: 'Diversificación productiva, autonomía de ingreso, distribución justa y equilibrio regenerativo.',
       variables: [
         { key: 'k1', name: 'Diversificación Productiva (K₁)', val: currentVars.k1, desc: 'Inverso del Índice Herfindahl-Hirschman sectorial (IHH)', source: 'SII / Rubros' },
@@ -82,37 +82,37 @@ export default function ThreeShouldersBreakdown({ santanderState, territory }) {
   ];
 
   return (
-    <div className="rounded-3xl p-6 sm:p-8 transition-all duration-300 shadow-2xl card-magenta space-y-6">
+    <div className="rounded-3xl p-6 sm:p-8 transition-all duration-300 shadow-md bg-white/95 border border-[#D4C9B8] space-y-6 text-slate-900">
       {/* Header with Geometric Mean Formula & Hypothesis Framing */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-white/10">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-[#D4C9B8]">
         <div>
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full border bg-[#2A1B3D] border-[#D83F87]/40 text-[#D83F87] shadow-sm">
+            <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full border bg-[#EDE8DC] border-[#D4C9B8] text-slate-800 shadow-2xs">
               Nivel 1, 2 & 3: Hipótesis Paramétricas, Hombros y Media Geométrica
             </span>
-            <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full border bg-emerald-950/80 border-emerald-500/40 text-emerald-300 shadow-sm">
+            <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full border bg-emerald-500/15 border-emerald-500/30 text-emerald-800 shadow-2xs">
               Fase Pre-Fondo · Validación Empírica & Acople AgriTwin
             </span>
           </div>
-          <h3 className="text-xl sm:text-2xl font-bold font-serif tracking-tight mt-2 text-white flex items-center gap-2.5">
-            <Layers className="w-5 h-5 text-[#D83F87]" />
+          <h3 className="text-xl sm:text-2xl font-bold font-serif tracking-tight mt-2 text-slate-900 flex items-center gap-2.5">
+            <Layers className="w-5 h-5 text-[#C86D51]" />
             Hipótesis de Capacidad Portante: H = (S · E · K)<sup>1/3</sup> · Φ<sub>crit</sub>
           </h3>
-          <p className="text-xs text-slate-300 mt-1 max-w-2xl leading-relaxed">
+          <p className="text-xs text-slate-600 mt-1 max-w-2xl leading-relaxed">
             <strong>Estatus Epistemológico (Hipótesis de Trabajo):</strong> Los puntajes de los Tres Hombros operan como <em>hipótesis paramétricas falsables</em> formuladas con registros abiertos (Tier 1/2) para nuestra postulación a fondos de investigación. Su implementación financiada desplegará validación empírica <strong>Tier 3</strong> en terreno (sondeos hidrogeofísicos SEV, Eddy Covariance y telemetría satelital <strong>AgriTwin</strong> Sentinel-2 STAC/COG).
           </p>
         </div>
 
         {/* Global H Indicator */}
-        <div className="p-4 rounded-2xl border border-white/10 bg-[#160b24]/90 shadow-xl shrink-0 font-mono text-center min-w-[190px]">
-          <span className="block text-[10px] text-[#A4B3B6] uppercase tracking-wider font-bold">Capacidad Efectiva H</span>
-          <span className="text-3xl font-serif font-black text-white">{H.toFixed(3)}</span>
+        <div className="p-4 rounded-2xl border border-[#D4C9B8] bg-[#FAF7F0] shadow-sm shrink-0 font-mono text-center min-w-[190px]">
+          <span className="block text-[10px] text-slate-500 uppercase tracking-wider font-bold">Capacidad Efectiva H</span>
+          <span className="text-3xl font-serif font-black text-slate-900">{H.toFixed(3)}</span>
           {hasCriticalShoulder && H_base && (
-            <span className="block text-[10px] text-rose-400 font-mono">
+            <span className="block text-[10px] text-rose-600 font-mono">
               H<sub>base</sub>={H_base.toFixed(2)} × Φ<sub>crit</sub>={phiCrit?.toFixed(2)}
             </span>
           )}
-          <span className="block text-[10px] text-[#DA7B93] mt-0.5 font-bold">
+          <span className="block text-[10px] text-[#C86D51] mt-0.5 font-bold">
             {hasCriticalShoulder ? '⚠️ PENALIZACIÓN LIEBIG ACTIVA' : '✓ EQUILIBRIO BIOFÍSICO'}
           </span>
         </div>
@@ -135,14 +135,14 @@ export default function ThreeShouldersBreakdown({ santanderState, territory }) {
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2.5">
-                    <div className="p-2 rounded-xl bg-[#140b20]/80 border border-white/10">
+                    <div className="p-2 rounded-xl bg-white border border-[#D4C9B8] shadow-2xs">
                       <Icon className={`w-5 h-5 ${sh.textColor}`} />
                     </div>
                     <div>
-                      <h4 className="font-serif font-bold text-sm text-white">
+                      <h4 className="font-serif font-bold text-sm text-slate-900">
                         {sh.name}
                       </h4>
-                      <span className="text-[10px] text-slate-400 font-mono">
+                      <span className="text-[10px] text-slate-500 font-mono">
                         Índice Normalizado [0 - 1]
                       </span>
                     </div>
@@ -153,16 +153,16 @@ export default function ThreeShouldersBreakdown({ santanderState, territory }) {
                   </span>
                 </div>
 
-                <p className="text-xs text-slate-300 leading-relaxed mb-4 font-sans">
+                <p className="text-xs text-slate-600 leading-relaxed mb-4 font-sans">
                   {sh.description}
                 </p>
 
                 {/* Progress bar */}
                 <div className="space-y-1 mb-4">
-                  <div className="h-2 w-full rounded-full bg-black/40 overflow-hidden p-0.5 border border-white/10">
+                  <div className="h-2 w-full rounded-full bg-slate-200 overflow-hidden p-0.5 border border-[#D4C9B8]">
                     <div 
                       className={`h-full rounded-full transition-all duration-500 ${
-                        isCritical ? 'bg-rose-500' : 'bg-gradient-to-r from-white/40 to-white'
+                        isCritical ? 'bg-rose-500' : 'bg-gradient-to-r from-[#487075] to-[#28475A]'
                       }`}
                       style={{ width: `${Math.round(sh.val * 100)}%` }}
                     />
@@ -171,7 +171,7 @@ export default function ThreeShouldersBreakdown({ santanderState, territory }) {
 
                 {/* Collapsible details for the 4 internal variables with Raw-to-Score inspection */}
                 {isExpanded && (
-                  <div className="space-y-2 pt-3 border-t border-white/10 text-xs">
+                  <div className="space-y-2 pt-3 border-t border-[#D4C9B8] text-xs">
                     {sh.variables.map(v => {
                       const spec = NORMALIZATION_GOALPOSTS[v.key];
                       const equivRaw = denormalizeScoreToRaw(v.key, v.val);
@@ -183,19 +183,19 @@ export default function ThreeShouldersBreakdown({ santanderState, territory }) {
                           onClick={() => handleSelectNormVar(v.key, v.val)}
                           className={`p-2.5 rounded-xl border font-mono cursor-pointer transition-all ${
                             isVarSelected 
-                              ? 'bg-white/15 border-white/50 shadow-md' 
-                              : 'bg-black/30 border-white/10 hover:bg-black/50'
+                              ? 'bg-white border-[#487075] shadow-xs' 
+                              : 'bg-white/70 border-[#D4C9B8] hover:bg-white text-slate-800'
                           }`}
                         >
                           <div className="flex justify-between items-center text-[11px] mb-0.5">
-                            <span className="font-bold text-white">{v.name}</span>
-                            <span className="font-bold text-emerald-300">{v.val?.toFixed(2)}</span>
+                            <span className="font-bold text-slate-900">{v.name}</span>
+                            <span className="font-bold text-[#1B4332]">{v.val?.toFixed(2)}</span>
                           </div>
-                          <div className="flex items-center justify-between text-[10px] text-amber-200/90 mb-1">
+                          <div className="flex items-center justify-between text-[10px] text-[#78350F] mb-1">
                             <span>Dato Crudo: <strong>{equivRaw} {spec?.unit}</strong></span>
-                            <span className="underline text-[9px] text-slate-300">Auditar fórmula</span>
+                            <span className="underline text-[9px] text-slate-500">Auditar fórmula</span>
                           </div>
-                          <p className="text-[10px] text-slate-400 font-sans leading-tight">
+                          <p className="text-[10px] text-slate-500 font-sans leading-tight">
                             {v.desc}
                           </p>
                         </div>
@@ -207,7 +207,7 @@ export default function ThreeShouldersBreakdown({ santanderState, territory }) {
 
               <button
                 onClick={() => toggleShoulder(sh.id)}
-                className="mt-4 pt-2.5 border-t border-white/10 text-[11px] font-mono text-slate-300 hover:text-white flex items-center justify-between w-full transition-colors"
+                className="mt-4 pt-2.5 border-t border-[#D4C9B8] text-[11px] font-mono text-slate-600 hover:text-slate-900 flex items-center justify-between w-full transition-colors"
               >
                 <span>{isExpanded ? 'Ocultar Variables & Datos Crudos' : 'Ver Variables & Datos Crudos'}</span>
                 {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
@@ -220,24 +220,24 @@ export default function ThreeShouldersBreakdown({ santanderState, territory }) {
       {/* ===================================================================== */}
       {/* PUENTE METODOLÓGICO: MOTOR DE NORMALIZACIÓN (DEL DATO CRUDO AL 0 - 1) */}
       {/* ===================================================================== */}
-      <div className="pt-4 border-t border-white/15">
+      <div className="pt-4 border-t border-[#D4C9B8]">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
           <div className="flex items-center gap-2">
-            <Calculator className="w-4 h-4 text-[#DA7B93]" />
-            <h4 className="text-sm sm:text-base font-serif font-bold text-white">
+            <Calculator className="w-4 h-4 text-[#C86D51]" />
+            <h4 className="text-sm sm:text-base font-serif font-bold text-slate-900">
               Puente Metodológico: Función de Normalización (Dato Físico Crudo → Índice [0, 1])
             </h4>
           </div>
           <button
             onClick={() => setShowNormLab(!showNormLab)}
-            className="text-xs font-mono px-3 py-1 rounded-xl bg-black/40 hover:bg-black/60 text-slate-200 border border-white/15 self-start sm:self-auto"
+            className="text-xs font-mono px-3 py-1 rounded-xl bg-white hover:bg-[#EDE8DC] text-slate-700 border border-[#D4C9B8] self-start sm:self-auto shadow-2xs"
           >
             {showNormLab ? 'Ocultar Inspector de Postes de Meta' : 'Abrir Inspector de Postes de Meta'}
           </button>
         </div>
 
         {showNormLab && (
-          <div className="p-5 rounded-2xl bg-black/45 border border-white/15 space-y-4">
+          <div className="p-5 rounded-2xl bg-[#FAF7F0] border border-[#D4C9B8] space-y-4">
             {/* Variable Selector Pills */}
             <div className="flex flex-wrap gap-1.5">
               {Object.values(NORMALIZATION_GOALPOSTS).filter(g => g.shoulder !== 'D').map(g => (
@@ -246,8 +246,8 @@ export default function ThreeShouldersBreakdown({ santanderState, territory }) {
                   onClick={() => handleSelectNormVar(g.id, currentVars[g.id] ?? 0.5)}
                   className={`px-2.5 py-1 rounded-lg text-[11px] font-mono font-bold transition-all border ${
                     selectedNormVar === g.id
-                      ? 'bg-[#D83F87] text-white border-white/40 shadow-md'
-                      : 'bg-black/40 text-slate-300 border-white/10 hover:bg-white/10'
+                      ? 'bg-[#28475A] text-white border-[#1E293B] shadow-xs'
+                      : 'bg-white text-slate-700 border-[#D4C9B8] hover:bg-[#EDE8DC]'
                   }`}
                 >
                   {g.code} · {g.name.split(' ')[0]}
@@ -260,54 +260,54 @@ export default function ThreeShouldersBreakdown({ santanderState, territory }) {
               <div className="lg:col-span-7 space-y-3 text-xs">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div>
-                    <span className="text-[10px] font-mono uppercase text-[#DA7B93] font-bold block">
+                    <span className="text-[10px] font-mono uppercase text-[#C86D51] font-bold block">
                       {activeSpec.shoulderName} · {activeSpec.dataTier}
                     </span>
-                    <h5 className="text-base font-serif font-bold text-white">
+                    <h5 className="text-base font-serif font-bold text-slate-900">
                       {activeSpec.code}: {activeSpec.name}
                     </h5>
                   </div>
-                  <span className="px-2.5 py-1 rounded-full text-[10px] font-mono bg-white/10 text-slate-200 border border-white/15">
+                  <span className="px-2.5 py-1 rounded-full text-[10px] font-mono bg-white text-slate-700 border border-[#D4C9B8]">
                     Polaridad: {activeSpec.polarity === 'INVERSE_LINEAR' ? 'Inversa (Menos es Mejor)' : activeSpec.polarity === 'LOG_BOUNDED' ? 'Logarítmica (Falkenmark)' : 'Directa (Más es Mejor)'}
                   </span>
                 </div>
 
-                <p className="text-slate-300 font-sans leading-relaxed">
-                  <strong>Variable Cruda Observable:</strong> {activeSpec.rawMetricName} (<code className="text-amber-300">{activeSpec.unit}</code>). {activeSpec.rationale}
+                <p className="text-slate-600 font-sans leading-relaxed">
+                  <strong>Variable Cruda Observable:</strong> {activeSpec.rawMetricName} (<code className="text-[#78350F]">{activeSpec.unit}</code>). {activeSpec.rationale}
                 </p>
 
                 {/* 3 Goalposts Bar */}
                 <div className="grid grid-cols-3 gap-2.5 pt-1 font-mono">
-                  <div className="p-2.5 rounded-xl bg-rose-950/50 border border-rose-500/30">
-                    <span className="text-[9px] uppercase text-rose-300 block">Colapso (Score = 0.00)</span>
-                    <strong className="text-sm text-white">{activeSpec.goalposts.collapseMin} {activeSpec.unit}</strong>
+                  <div className="p-2.5 rounded-xl bg-rose-50 border border-rose-300">
+                    <span className="text-[9px] uppercase text-rose-800 font-bold block">Colapso (Score = 0.00)</span>
+                    <strong className="text-sm text-rose-900">{activeSpec.goalposts.collapseMin} {activeSpec.unit}</strong>
                   </div>
-                  <div className="p-2.5 rounded-xl bg-amber-950/50 border border-amber-500/30">
-                    <span className="text-[9px] uppercase text-amber-300 block">Umbral Liebig (0.25)</span>
-                    <strong className="text-sm text-white">{activeSpec.goalposts.liebigCrit} {activeSpec.unit}</strong>
+                  <div className="p-2.5 rounded-xl bg-amber-50 border border-amber-300">
+                    <span className="text-[9px] uppercase text-amber-800 font-bold block">Umbral Liebig (0.25)</span>
+                    <strong className="text-sm text-amber-900">{activeSpec.goalposts.liebigCrit} {activeSpec.unit}</strong>
                   </div>
-                  <div className="p-2.5 rounded-xl bg-emerald-950/50 border border-emerald-500/30">
-                    <span className="text-[9px] uppercase text-emerald-300 block">Óptimo Sintrópico (1.00)</span>
-                    <strong className="text-sm text-white">{activeSpec.goalposts.syntropicOpt} {activeSpec.unit}</strong>
+                  <div className="p-2.5 rounded-xl bg-emerald-50 border border-emerald-300">
+                    <span className="text-[9px] uppercase text-emerald-800 font-bold block">Óptimo Sintrópico (1.00)</span>
+                    <strong className="text-sm text-emerald-900">{activeSpec.goalposts.syntropicOpt} {activeSpec.unit}</strong>
                   </div>
                 </div>
               </div>
 
               {/* Right: Live Converter Calculator */}
-              <div className="lg:col-span-5 p-4 rounded-2xl bg-[#160b24] border border-white/15 space-y-3">
-                <div className="flex items-center justify-between border-b border-white/10 pb-2">
-                  <span className="text-[10px] font-mono uppercase text-slate-300 font-bold">
+              <div className="lg:col-span-5 p-4 rounded-2xl bg-white border border-[#D4C9B8] space-y-3 shadow-sm">
+                <div className="flex items-center justify-between border-b border-[#D4C9B8] pb-2">
+                  <span className="text-[10px] font-mono uppercase text-slate-700 font-bold">
                     Simulador de Normalización en Vivo
                   </span>
-                  <span className="text-[10px] font-mono text-emerald-400">
+                  <span className="text-[10px] font-mono text-[#1B4332] font-bold">
                     <InlineMath math={activeSpec.formulaLatex} />
                   </span>
                 </div>
 
                 <div>
                   <div className="flex justify-between text-xs font-mono mb-1.5">
-                    <span className="text-slate-300">Ingresa Dato Crudo (X<sub>raw</sub>):</span>
-                    <span className="text-amber-300 font-bold">{customRawInput} {activeSpec.unit}</span>
+                    <span className="text-slate-600">Ingresa Dato Crudo (X<sub>raw</sub>):</span>
+                    <span className="text-[#78350F] font-bold">{customRawInput} {activeSpec.unit}</span>
                   </div>
                   <input
                     type="range"
@@ -316,24 +316,24 @@ export default function ThreeShouldersBreakdown({ santanderState, territory }) {
                     step={(Math.abs(activeSpec.goalposts.syntropicOpt - activeSpec.goalposts.collapseMin) / 100) || 0.01}
                     value={customRawInput}
                     onChange={(e) => setCustomRawInput(parseFloat(e.target.value))}
-                    className="w-full accent-[#D83F87] cursor-pointer"
+                    className="w-full accent-[#28475A] cursor-pointer"
                   />
                 </div>
 
-                <div className="flex items-center justify-between p-3 rounded-xl bg-black/50 border border-white/10 font-mono">
+                <div className="flex items-center justify-between p-3 rounded-xl bg-[#FAF7F0] border border-[#D4C9B8] font-mono">
                   <div>
-                    <span className="text-[10px] uppercase text-slate-400 block">Índice Normalizado {activeSpec.code}</span>
-                    <span className="text-xs text-slate-300">
+                    <span className="text-[10px] uppercase text-slate-500 font-bold block">Índice Normalizado {activeSpec.code}</span>
+                    <span className="text-xs text-slate-600">
                       {computedLiveScore < 0.25 ? '🔴 Activa Penalización Liebig (<0.25)' : computedLiveScore < 0.60 ? '🟡 Zona de Transición' : '🟢 Soporte Sintrópico Robusto'}
                     </span>
                   </div>
-                  <span className={`text-2xl font-bold ${computedLiveScore < 0.25 ? 'text-rose-400' : 'text-emerald-400'}`}>
+                  <span className={`text-2xl font-bold ${computedLiveScore < 0.25 ? 'text-rose-600' : 'text-emerald-700'}`}>
                     {computedLiveScore.toFixed(3)}
                   </span>
                 </div>
 
-                <div className="text-[10px] font-mono text-slate-400 flex items-center gap-1.5">
-                  <Database className="w-3.5 h-3.5 text-[#DA7B93] shrink-0" />
+                <div className="text-[10px] font-mono text-slate-500 flex items-center gap-1.5">
+                  <Database className="w-3.5 h-3.5 text-[#C86D51] shrink-0" />
                   <span className="truncate">Fuentes: {activeSpec.officialSources.join(' · ')}</span>
                 </div>
               </div>

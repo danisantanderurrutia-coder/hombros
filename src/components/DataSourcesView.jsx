@@ -258,33 +258,33 @@ export default function DataSourcesView() {
     >
       
       {/* Header Banner */}
-      <div className="card-magenta rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-[#D83F87]/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative z-10">
+      <div className="bg-white/95 backdrop-blur-md rounded-3xl p-6 sm:p-8 shadow-md relative overflow-hidden border border-[#D4C9B8] text-slate-900">
+        <div className="h-1.5 w-full absolute top-0 left-0 bg-gradient-to-r from-[#1B4332] via-[#28475A] to-[#C86D51]" />
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative z-10 pt-1">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider mb-3 border bg-[#2A1B3D] text-[#D83F87] border-[#D83F87]/40">
-              <Database className="w-3.5 h-3.5 text-[#D83F87]" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider mb-3 border bg-[#487075]/10 text-[#487075] border-[#487075]/30">
+              <Database className="w-3.5 h-3.5 text-[#487075]" />
               Ecosistema Oficial de Datos Públicos & APIs
             </div>
-            <h1 className="text-2xl sm:text-3xl font-serif font-bold text-white tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 tracking-tight">
               Observabilidad Territorial & Calibración Empírica
             </h1>
-            <p className="mt-2 text-xs sm:text-sm max-w-3xl leading-relaxed text-slate-200">
-              El modelo HOMBROS no formula hipótesis abstractas: <strong className="text-[#DA7B93]">cada una de las 12 variables observables (S, E, K)</strong>, 
-              las presiones extractivas (D) y las emisiones Scope 1, 2 y 3 se calibran contra <strong className="text-white">registros públicos abiertos, 
+            <p className="mt-2 text-xs sm:text-sm max-w-3xl leading-relaxed text-slate-700">
+              El modelo HOMBROS no formula hipótesis abstractas: <strong className="text-[#C86D51]">cada una de las 12 variables observables (S, E, K)</strong>, 
+              las presiones extractivas (D) y las emisiones Scope 1, 2 y 3 se calibran contra <strong className="text-slate-900 font-semibold">registros públicos abiertos, 
               APIs gubernamentales en tiempo real y teledetección satelital continua</strong>.
             </p>
           </div>
 
-          <div className="p-4 rounded-2xl border bg-black/40 border-white/10 text-slate-200 shadow-xl shrink-0 font-mono text-xs">
-            <span className="block text-[10px] text-[#A4B3B6] uppercase tracking-wider font-bold">Total Fuentes Integradas</span>
-            <span className="text-2xl font-serif font-bold text-white">{sources.length} Portales Oficiales</span>
-            <span className="block text-[10px] text-[#DA7B93] mt-0.5">Chile · Europa · Satélites Copernicus</span>
+          <div className="p-4 rounded-2xl border bg-[#FAF7F0] border-[#D4C9B8] text-slate-800 shadow-xs shrink-0 font-mono text-xs">
+            <span className="block text-[10px] text-slate-500 uppercase tracking-wider font-bold">Total Fuentes Integradas</span>
+            <span className="text-2xl font-serif font-bold text-[#1B4332]">{sources.length} Portales Oficiales</span>
+            <span className="block text-[10px] text-[#C86D51] mt-0.5 font-medium">Chile · Europa · Satélites Copernicus</span>
           </div>
         </div>
 
         {/* Filters and Search Bar */}
-        <div className="mt-6 pt-5 border-t border-white/10 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+        <div className="mt-6 pt-5 border-t border-[#D4C9B8]/70 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
           
           {/* Region Tabs */}
           <div className="flex flex-wrap items-center gap-1.5">
@@ -299,8 +299,8 @@ export default function DataSourcesView() {
                 onClick={() => setSelectedCategory(tab.id)}
                 className={`px-3 py-1.5 text-xs rounded-xl font-mono font-medium transition-all ${
                   selectedCategory === tab.id
-                    ? 'bg-[#376E6F] text-white font-bold border border-white/30 shadow-md'
-                    : 'bg-black/30 text-slate-300 hover:bg-black/50 border border-white/10'
+                    ? 'bg-[#487075] text-white font-bold border border-[#376E6F] shadow-xs'
+                    : 'bg-[#FAF7F0] text-slate-700 hover:bg-white border border-[#D4C9B8]'
                 }`}
               >
                 {tab.label}
@@ -316,7 +316,7 @@ export default function DataSourcesView() {
               placeholder="Buscar variable, fuente o API..."
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-4 py-1.5 text-xs rounded-xl border border-white/20 bg-black/40 text-slate-100 placeholder:text-slate-400 focus:outline-none focus:border-[#D83F87] font-mono"
+              className="w-full pl-9 pr-4 py-1.5 text-xs rounded-xl border border-[#D4C9B8] bg-white text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#487075] font-mono shadow-2xs"
             />
           </div>
 
@@ -340,7 +340,7 @@ export default function DataSourcesView() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {filteredSources.map((source, index) => {
               const isSelected = source.id === selectedSourceId;
-              const sourceCardThemes = ['card-rose', 'card-teal', 'card-indigo', 'card-slate', 'card-plum', 'card-magenta'];
+              const sourceCardThemes = ['card-rose', 'card-teal', 'card-indigo', 'card-slate', 'card-plum', 'card-rose'];
               const cardClass = sourceCardThemes[index % sourceCardThemes.length];
 
               return (

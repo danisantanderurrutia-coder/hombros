@@ -111,16 +111,16 @@ export default function MechanicalBalance({ santanderState }) {
           <defs>
             {/* Beam Metallic Finish */}
             <linearGradient id="beamMetalGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#376E6F" />
+              <stop offset="0%" stopColor="#487075" />
               <stop offset="50%" stopColor="#A4B3B6" />
-              <stop offset="100%" stopColor="#D83F87" />
+              <stop offset="100%" stopColor="#C86D51" />
             </linearGradient>
 
             {/* Brass Pedestal Gradient */}
             <linearGradient id="brassPedestalGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#DA7B93" />
-              <stop offset="50%" stopColor="#8D69A6" />
-              <stop offset="100%" stopColor="#221434" />
+              <stop offset="0%" stopColor="#927660" />
+              <stop offset="50%" stopColor="#78350F" />
+              <stop offset="100%" stopColor="#28475A" />
             </linearGradient>
 
             {/* Pan Soft Glow */}
@@ -149,7 +149,7 @@ export default function MechanicalBalance({ santanderState }) {
           />
 
           {/* Central Fulcrum Jewel Bearing */}
-          <circle cx="310" cy="95" r="9" fill="#140b20" stroke="#DA7B93" strokeWidth="2.5" />
+          <circle cx="310" cy="95" r="9" fill="#140b20" stroke="#927660" strokeWidth="2.5" />
           <circle cx="310" cy="95" r="4" fill="#ffffff" filter="url(#softGlow)" />
 
           {/* =================================================================
@@ -168,10 +168,10 @@ export default function MechanicalBalance({ santanderState }) {
             />
 
             {/* Left Suspension Hook */}
-            <circle cx="120" cy="97" r="4" fill="#376E6F" stroke="#ffffff" strokeWidth="1.5" />
+            <circle cx="120" cy="97" r="4" fill="#487075" stroke="#ffffff" strokeWidth="1.5" />
             
             {/* Right Suspension Hook */}
-            <circle cx="500" cy="97" r="4" fill="#D83F87" stroke="#ffffff" strokeWidth="1.5" />
+            <circle cx="500" cy="97" r="4" fill="#C86D51" stroke="#ffffff" strokeWidth="1.5" />
 
             {/* -------------------------------------------------------------
                 LEFT SUSPENDED PAN (Hombros / Capacidad H)
@@ -218,14 +218,14 @@ export default function MechanicalBalance({ santanderState }) {
                 RIGHT SUSPENDED PAN (Carga / Presión D)
                 ------------------------------------------------------------- */}
             {/* Right Strings */}
-            <line x1="500" y1="97" x2="465" y2="148" stroke="rgba(216,63,135,0.6)" strokeWidth="1.5" />
-            <line x1="500" y1="97" x2="535" y2="148" stroke="rgba(216,63,135,0.6)" strokeWidth="1.5" />
+            <line x1="500" y1="97" x2="465" y2="148" stroke="rgba(200,109,81,0.6)" strokeWidth="1.5" />
+            <line x1="500" y1="97" x2="535" y2="148" stroke="rgba(200,109,81,0.6)" strokeWidth="1.5" />
 
             {/* Right Pan Saucer */}
             <path
               d="M 460 148 Q 500 162 540 148 Z"
-              fill="rgba(216,63,135,0.4)"
-              stroke="#D83F87"
+              fill="rgba(200,109,81,0.3)"
+              stroke="#C86D51"
               strokeWidth="2"
               filter="url(#softGlow)"
             />

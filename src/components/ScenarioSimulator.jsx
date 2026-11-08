@@ -57,22 +57,22 @@ export default function ScenarioSimulator({ territory }) {
       transition={{ duration: 0.3 }}
       className="space-y-6"
     >
-      <div className="card-indigo rounded-3xl p-6 shadow-2xl relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-72 h-72 bg-[#44318D]/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="rounded-3xl p-6 bg-white/95 border border-[#D4C9B8] shadow-md relative overflow-hidden text-slate-900">
+        <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-[#1B4332] via-[#28475A] to-[#C86D51]" />
         <div className="flex items-center gap-3.5 relative z-10">
-          <div className="p-3 rounded-2xl bg-[#2A1B3D] border border-white/15 text-[#8D69A6] shadow-inner">
+          <div className="p-3 rounded-2xl bg-[#FAF7F0] border border-[#D4C9B8] text-[#28475A] shadow-2xs">
             <Layers className="w-6 h-6" />
           </div>
           <div>
-            <div className="text-[11px] font-mono text-[#8D69A6] uppercase tracking-widest font-semibold flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D83F87] animate-pulse" />
+            <div className="text-[11px] font-mono text-[#28475A] uppercase tracking-widest font-semibold flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C86D51] animate-pulse" />
               Prospectiva Sistémica · Dinámica No Lineal
             </div>
-            <h2 className="text-xl md:text-2xl font-serif font-bold text-white tracking-tight">
+            <h2 className="text-xl md:text-2xl font-serif font-bold text-slate-900 tracking-tight">
               Simulador Prospectivo a 36 Meses: Transición vs Inercia
             </h2>
-            <p className="text-xs mt-0.5 text-slate-300">
-              Proyección computacional para <strong className="text-[#DA7B93]">{territory.name}</strong>: trayectoria inercial extractiva (Business as Usual) versus trayectoria de estabilización de Hombros.
+            <p className="text-xs mt-0.5 text-slate-600">
+              Proyección computacional para <strong className="text-[#C86D51]">{territory.name}</strong>: trayectoria inercial extractiva (Business as Usual) versus trayectoria de estabilización de Hombros.
             </p>
           </div>
         </div>
@@ -80,18 +80,18 @@ export default function ScenarioSimulator({ territory }) {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Controls */}
-        <div className="lg:col-span-4 card-rose rounded-3xl p-6 space-y-4 shadow-2xl">
-          <h3 className="text-xs uppercase tracking-wider font-mono font-bold text-[#DA7B93] flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#DA7B93]" />
+        <div className="lg:col-span-4 card-rose rounded-3xl p-6 space-y-4 shadow-md">
+          <h3 className="text-xs uppercase tracking-wider font-mono font-bold text-[#C86D51] flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#C86D51]" />
             Parámetros del Escenario
           </h3>
 
-          <div className="space-y-2 p-4 rounded-2xl border bg-black/40 border-white/10">
+          <div className="space-y-2 p-4 rounded-2xl border bg-white/80 border-[#D4C9B8]">
             <div className="flex justify-between items-center text-xs">
-              <span className="font-mono text-slate-300">
+              <span className="font-mono text-slate-600">
                 Presión Extractiva (BAU)
               </span>
-              <span className="font-mono font-bold text-rose-400">
+              <span className="font-mono font-bold text-rose-600">
                 +{extractiveGrowthRate}% anual
               </span>
             </div>
@@ -104,17 +104,17 @@ export default function ScenarioSimulator({ territory }) {
               onChange={(e) => setExtractiveGrowthRate(parseFloat(e.target.value))}
               className="w-full accent-rose-500 cursor-pointer"
             />
-            <p className="text-[10px] text-slate-400 font-sans leading-relaxed">
+            <p className="text-[10px] text-slate-500 font-sans leading-relaxed">
               Crecimiento de la demanda exógena sin consideración de la capacidad portante biofísica.
             </p>
           </div>
 
-          <div className="space-y-2 p-4 rounded-2xl border bg-black/40 border-white/10">
+          <div className="space-y-2 p-4 rounded-2xl border bg-white/80 border-[#D4C9B8]">
             <div className="flex justify-between items-center text-xs">
-              <span className="font-mono text-slate-300">
+              <span className="font-mono text-slate-600">
                 Inversión Sintrópica (Hombros)
               </span>
-              <span className="font-mono font-bold text-[#DA7B93]">
+              <span className="font-mono font-bold text-[#C86D51]">
                 +{careInvestmentRate}% anual
               </span>
             </div>
@@ -125,33 +125,33 @@ export default function ScenarioSimulator({ territory }) {
               step="0.5"
               value={careInvestmentRate}
               onChange={(e) => setCareInvestmentRate(parseFloat(e.target.value))}
-              className="w-full accent-[#DA7B93] cursor-pointer"
+              className="w-full accent-[#C86D51] cursor-pointer"
             />
-            <p className="text-[10px] text-slate-400 font-sans leading-relaxed">
+            <p className="text-[10px] text-slate-500 font-sans leading-relaxed">
               Flujos canalizados a regeneración ecosistémica, soberanía de cuencas y economías de cuidados.
             </p>
           </div>
 
-          <div className="p-4 rounded-2xl border text-xs space-y-2 card-plum border-rose-500/30 text-rose-200">
-            <div className="flex items-center gap-2 font-mono font-semibold text-[11px] text-rose-300">
-              <AlertTriangle className="w-3.5 h-3.5 text-rose-400" />
+          <div className="p-4 rounded-2xl border text-xs space-y-2 bg-[#FAF7F0] border-rose-300 text-rose-900">
+            <div className="flex items-center gap-2 font-mono font-semibold text-[11px] text-rose-700">
+              <AlertTriangle className="w-3.5 h-3.5 text-rose-600" />
               Punto de Fluencia Crítico
             </div>
-            <p className="text-[11px] leading-relaxed text-slate-300">
-              En la curva extractiva inercial, el territorio cruza el límite de fluencia elástica (σ_yield) en el <strong className="text-rose-300 font-mono">mes 18</strong>, entrando en degradación plástica irreversible de acuíferos y tejido comunal.
+            <p className="text-[11px] leading-relaxed text-slate-700">
+              En la curva extractiva inercial, el territorio cruza el límite de fluencia elástica (σ_yield) en el <strong className="text-rose-700 font-mono">mes 18</strong>, entrando en degradación plástica irreversible de acuíferos y tejido comunal.
             </p>
           </div>
         </div>
 
         {/* Projection Chart */}
-        <div className="lg:col-span-8 card-teal rounded-3xl p-6 shadow-2xl flex flex-col justify-between">
+        <div className="lg:col-span-8 card-teal rounded-3xl p-6 shadow-md flex flex-col justify-between">
           <div>
             <div className="flex justify-between items-center mb-3">
               <h3 className="text-xs uppercase tracking-wider font-mono font-bold text-[#376E6F]">
                 Evolución de la Tensión Sistémica (σ = D / H)
               </h3>
               <div className="flex items-center gap-4 text-xs font-mono">
-                <span className="flex items-center gap-1.5 text-rose-400 font-bold">
+                <span className="flex items-center gap-1.5 text-rose-600 font-bold">
                   <span className="w-3 h-0.5 bg-rose-500 shadow-[0_0_6px_rgba(244,63,94,0.8)] inline-block" />
                   Inercia BAU
                 </span>
@@ -162,7 +162,7 @@ export default function ScenarioSimulator({ territory }) {
               </div>
             </div>
 
-            <div className="w-full overflow-hidden rounded-2xl border p-3 bg-black/60 border-white/10 shadow-inner">
+            <div className="w-full overflow-hidden rounded-2xl border p-3 bg-slate-950 border-[#D4C9B8] shadow-inner">
               <svg viewBox={`0 0 ${svgW} ${svgH}`} className="w-full h-auto select-none">
                 {/* Grid */}
                 <line x1={padL} y1={svgH - padB} x2={svgW - padR} y2={svgH - padB} stroke="rgba(255,255,255,0.15)" strokeWidth="1" />

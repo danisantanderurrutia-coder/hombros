@@ -200,17 +200,17 @@
   box-shadow: 0 14px 34px -6px rgba(40, 71, 90, 0.20);
 }
 
-/* 5. Cerise Solar (Presiones & Telemetría LNM) */
+/* 5. Terracota & Travertino Suave (Presiones & Telemetría LNM) */
 .card-magenta {
-  background: linear-gradient(145deg, #FAF2F5 0%, #F3E5EB 100%);
+  background: linear-gradient(145deg, #FAF7F0 0%, #EDE8DC 100%);
   backdrop-filter: blur(14px);
-  border: 1px solid rgba(216, 63, 135, 0.30);
-  box-shadow: 0 10px 28px -6px rgba(216, 63, 135, 0.10);
+  border: 1px solid rgba(200, 109, 81, 0.32);
+  box-shadow: 0 10px 28px -6px rgba(200, 109, 81, 0.08);
   color: #1E293B;
 }
 .card-magenta:hover {
-  border-color: #D83F87;
-  box-shadow: 0 14px 34px -6px rgba(216, 63, 135, 0.20);
+  border-color: #C86D51;
+  box-shadow: 0 14px 34px -6px rgba(200, 109, 81, 0.16);
 }
 
 /* 6. Madera Tostada & Humus (Intensidad Extractiva) */

@@ -309,13 +309,13 @@ dir.create(DIR_FIGURES, showWarnings = FALSE, recursive = TRUE)
 dir.create(DIR_PUBLIC_DOCS, showWarnings = FALSE, recursive = TRUE)
 dir.create(DIR_PUBLIC_FIGURES, showWarnings = FALSE, recursive = TRUE)
 
-# Paleta de colores canónica HOMBROS (FCINQ / Cosmic Bio-digital)
+# Paleta de colores canónica HOMBROS (Auditoría Biofísica / Travertino & Trípode)
 PALETTE_HOMBROS <- c(
-  "Chile"       = "#D83F87",
+  "Chile"       = "#C86D51",
   "Dinamarca"   = "#376E6F",
   "España"      = "#DA7B93",
-  "Países Bajos"= "#8D69A6",
-  "Alemania"    = "#2F4454"
+  "Países Bajos"= "#927660",
+  "Alemania"    = "#28475A"
 )
 
 theme_hombros <- function(base_size = 11) {
@@ -533,7 +533,7 @@ Nicholas Georgescu-Roegen demostró que todo proceso productivo degrada irrevoca
     {
       title: '3. Mecánica de Medios Continuos: Tensión (σ) vs Deformación (ε)',
       icon: Cpu,
-      color: 'text-[#8D69A6]',
+      color: 'text-[#927660]',
       cardClass: 'card-indigo',
       badge: 'Física de Materiales aplicada al Territorio',
       content: `En lugar de medir el daño ambiental como un flujo de precios o pérdida de capital financiero, Hombros adopta las leyes de resistencia de materiales:
@@ -545,8 +545,8 @@ Nicholas Georgescu-Roegen demostró que todo proceso productivo degrada irrevoca
     {
       title: '4. Corrección Epistemológica: Del "Hogar" al Metabolismo Territorial',
       icon: GitFork,
-      color: 'text-[#D83F87]',
-      cardClass: 'card-magenta',
+      color: 'text-[#C86D51]',
+      cardClass: 'card-rose',
       badge: 'Salto de Escala · Resiliencia Colectiva',
       content: `Una de las revisiones clave del proyecto fue abandonar el concepto reduccionista de "vulnerabilidad a nivel de hogares". Medir vulnerabilidad individual o familiar fragmenta la escala del problema, atrapándolo en la burocracia de las encuestas de pobreza asistencialista y focalizada.
 
@@ -602,9 +602,9 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
       className="space-y-8 max-w-6xl mx-auto"
     >
       {/* Top Header Banner with Action Buttons */}
-      <div className="card-magenta rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden border border-[#D83F87]/25">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#D83F87]/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative z-10">
+      <div className="bg-white/95 backdrop-blur-md rounded-3xl p-6 sm:p-8 shadow-md relative overflow-hidden border border-[#D4C9B8] text-slate-900">
+        <div className="h-1.5 w-full absolute top-0 left-0 bg-gradient-to-r from-[#1B4332] via-[#28475A] to-[#C86D51]" />
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative z-10 pt-1">
           <div className="flex items-start sm:items-center gap-4">
             <div className="p-3.5 rounded-2xl bg-[#C86D51] text-white shadow-md shrink-0">
               <BookOpen className="w-8 h-8 text-white" />
@@ -720,11 +720,11 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
             onClick={() => setActiveTab('episteme')}
             className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm ${
               activeTab === 'episteme'
-                ? 'bg-[#D83F87] text-white border border-[#A0285D] shadow-md shadow-[#D83F87]/30'
-                : 'bg-[#D83F87]/20 text-slate-800 hover:bg-[#D83F87]/30 border border-[#D83F87]/50'
+                ? 'bg-[#78350F] text-white border border-[#451A03] shadow-md shadow-[#78350F]/30'
+                : 'bg-[#D4A373]/20 text-slate-800 hover:bg-[#D4A373]/30 border border-[#D4A373]/50'
             }`}
           >
-            <GraduationCap className={`w-4 h-4 ${activeTab === 'episteme' ? 'text-white' : 'text-[#D83F87]'}`} />
+            <GraduationCap className={`w-4 h-4 ${activeTab === 'episteme' ? 'text-white' : 'text-[#78350F]'}`} />
             <span>Hombros de Gigantes</span>
           </button>
         </div>
@@ -1360,7 +1360,7 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
               {/* Figura 5 */}
               <div className="p-5 rounded-2xl bg-white border border-[#D4C9B8] shadow-sm">
                 <div className="flex items-center justify-between pb-2 mb-3 border-b border-slate-200">
-                  <span className="text-xs font-mono font-bold text-[#D83F87]">Figura 5 · Amortiguación Tensora en Red Panal Policéntrica</span>
+                  <span className="text-xs font-mono font-bold text-[#C86D51]">Figura 5 · Amortiguación Tensora en Red Panal Policéntrica</span>
                   <a href={getAssetUrl('docs/figures/fig5_honeycomb_network_damping.png')} target="_blank" rel="noopener noreferrer">
                     <Maximize2 className="w-4 h-4 text-slate-500 hover:text-black" />
                   </a>
@@ -1739,13 +1739,13 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                         onClick={() => setSelectedScriptId(script.id)}
                         className={`p-2.5 rounded-xl cursor-pointer transition-all border ${
                           selectedScriptId === script.id
-                            ? 'bg-[#D83F87]/20 border-[#D83F87] text-white shadow-md'
+                            ? 'bg-[#487075]/25 border-[#487075] text-white shadow-md'
                             : 'bg-black/30 border-white/5 text-slate-300 hover:bg-black/50 hover:text-white'
                         }`}
                       >
                         <div className="flex items-center justify-between gap-1 mb-1">
                           <div className="flex items-center gap-1.5 truncate">
-                            <FileCode className={`w-3.5 h-3.5 ${selectedScriptId === script.id ? 'text-[#DA7B93]' : 'text-slate-400'}`} />
+                            <FileCode className={`w-3.5 h-3.5 ${selectedScriptId === script.id ? 'text-[#7DB2B2]' : 'text-slate-400'}`} />
                             <span className="text-xs font-mono font-bold truncate">{script.title}</span>
                           </div>
                           <span className={`text-[9px] font-mono px-1.5 py-0.2 rounded border ${script.badgeColor}`}>
@@ -1774,7 +1774,7 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                       <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
                       <span>{activeScript.category}</span>
                       <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
-                      <span className="text-[#DA7B93] font-bold">{activeScript.title}</span>
+                      <span className="text-[#7DB2B2] font-bold">{activeScript.title}</span>
                     </div>
 
                     <div className="flex items-center gap-2 text-[10px] text-slate-400 shrink-0">
@@ -1812,9 +1812,9 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
         <div className="space-y-8">
           <HombrosDeGigantes />
 
-          <div className="card-slate rounded-3xl p-6 sm:p-8 shadow-xl border border-[#D83F87]/30">
+          <div className="card-slate rounded-3xl p-6 sm:p-8 shadow-md border border-[#D4C9B8]">
             <div className="mb-6">
-              <span className="text-[10px] font-mono uppercase font-bold text-[#D83F87] tracking-widest block">
+              <span className="text-[10px] font-mono uppercase font-bold text-[#C86D51] tracking-widest block">
                 Arquitectura Epistemológica
               </span>
               <h2 className="text-xl font-serif font-extrabold text-black mt-0.5">

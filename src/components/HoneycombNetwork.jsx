@@ -94,31 +94,31 @@ export default function HoneycombNetwork({ territories, globalModifiers }) {
       className="space-y-6"
     >
       {/* Header Banner */}
-      <div className="card-magenta rounded-3xl overflow-hidden shadow-2xl relative">
-        <div className="absolute -top-24 -right-24 w-80 h-80 bg-[#D83F87]/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="bg-white/95 backdrop-blur-md rounded-3xl overflow-hidden shadow-md relative border border-[#D4C9B8]">
+        <div className="h-1.5 w-full bg-gradient-to-r from-[#1B4332] via-[#28475A] to-[#C86D51]" />
         <div className="grid grid-cols-1 md:grid-cols-12 relative z-10">
           <div className="md:col-span-8 p-6 sm:p-8 flex flex-col justify-center space-y-3">
             <div className="flex items-center gap-2.5">
-              <div className="p-2.5 rounded-2xl bg-[#2A1B3D] border border-[#D83F87]/40 text-[#D83F87] shadow-inner">
-                <Hexagon className="w-6 h-6 text-[#D83F87]" />
+              <div className="p-2.5 rounded-2xl bg-[#487075]/10 border border-[#487075]/30 text-[#487075] shadow-xs">
+                <Hexagon className="w-6 h-6 text-[#487075]" />
               </div>
-              <span className="text-[11px] font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full border bg-[#2A1B3D] text-[#D83F87] border-[#D83F87]/40 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#D83F87] animate-ping" />
+              <span className="text-[11px] font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full border bg-[#487075]/10 text-[#487075] border-[#487075]/30 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#487075] animate-ping" />
                 Red Federada P2P Metabólica
               </span>
             </div>
             
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold tracking-tight text-white flex items-center gap-3">
-              El Panal <span className="text-[#DA7B93] font-mono text-xl">· Intercambio Sintrópico Territorial</span>
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold tracking-tight text-slate-900 flex items-center gap-3">
+              El Panal <span className="text-[#C86D51] font-mono text-xl">· Intercambio Sintrópico Territorial</span>
             </h2>
 
-            <p className="text-xs sm:text-sm leading-relaxed text-slate-200 max-w-xl">
+            <p className="text-xs sm:text-sm leading-relaxed text-slate-700 max-w-xl">
               Coordinación biofísica descentralizada entre células territoriales. 
-              <strong className="text-[#DA7B93] font-medium"> Regla de oro:</strong> Ningún territorio puede exportar flujos que comprometan la base de sus propios hombros de sustento. El comercio se restringe estrictamente al excedente regenerativo.
+              <strong className="text-[#C86D51] font-semibold"> Regla de oro:</strong> Ningún territorio puede exportar flujos que comprometan la base de sus propios hombros de sustento. El comercio se restringe estrictamente al excedente regenerativo.
             </p>
           </div>
 
-          <div className="md:col-span-4 relative min-h-[180px] md:min-h-full overflow-hidden bg-black/40 border-t md:border-t-0 md:border-l border-white/10">
+          <div className="md:col-span-4 relative min-h-[180px] md:min-h-full overflow-hidden bg-slate-900 border-t md:border-t-0 md:border-l border-[#D4C9B8]">
             <img 
               src={getAssetUrl('art/solarpunk_alley.jpg')} 
               alt="Mercado Bio-Digital"
@@ -127,23 +127,23 @@ export default function HoneycombNetwork({ territories, globalModifiers }) {
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent pointer-events-none" />
             <div className="absolute bottom-3 inset-x-3 bg-black/70 backdrop-blur-md px-3 py-2 rounded-xl border border-white/15 text-white text-[10px] font-mono flex items-center justify-between">
               <span className="flex items-center gap-1.5 text-slate-300">
-                <Activity className="w-3.5 h-3.5 text-[#DA7B93] animate-pulse" />
+                <Activity className="w-3.5 h-3.5 text-[#7DB2B2] animate-pulse" />
                 Validación Termodinámica
               </span>
-              <span className="text-[#D83F87] font-bold">P2P ACTIVO</span>
+              <span className="text-[#7DB2B2] font-bold">P2P ACTIVO</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Network Topology Visualizer */}
-      <div className="card-slate rounded-3xl p-6 shadow-2xl">
+      <div className="card-slate rounded-3xl p-6 shadow-md border border-[#D4C9B8]">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xs uppercase tracking-wider font-mono font-bold flex items-center gap-2 text-[#A4B3B6]">
-            <span className="w-2.5 h-2.5 rounded-full inline-block bg-[#D83F87] shadow-[0_0_8px_#D83F87] animate-pulse" />
+          <h3 className="text-xs uppercase tracking-wider font-mono font-bold flex items-center gap-2 text-slate-700">
+            <span className="w-2.5 h-2.5 rounded-full inline-block bg-[#487075] shadow-[0_0_8px_#487075] animate-pulse" />
             Topología de Celdas Activas en el Panal
           </h3>
-          <span className="text-[11px] font-mono text-slate-400">
+          <span className="text-[11px] font-mono text-slate-500">
             {territories.length} Celdas Telemonitoreadas
           </span>
         </div>
@@ -231,47 +231,47 @@ export default function HoneycombNetwork({ territories, globalModifiers }) {
 
       {/* Trade Console */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <div className="lg:col-span-7 card-magenta rounded-3xl p-6 space-y-4 shadow-2xl">
+        <div className="lg:col-span-7 bg-white/95 backdrop-blur-md rounded-3xl p-6 space-y-4 shadow-md border border-[#D4C9B8]">
           <div className="flex items-center gap-2">
-            <ArrowLeftRight className="w-4 h-4 text-[#D83F87]" />
-            <h3 className="text-xs uppercase tracking-wider font-mono font-bold text-[#D83F87]">
+            <ArrowLeftRight className="w-4 h-4 text-[#28475A]" />
+            <h3 className="text-xs uppercase tracking-wider font-mono font-bold text-[#28475A]">
               Consola de Intercambio Biofísico
             </h3>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 p-4 rounded-2xl border bg-black/40 border-white/10">
+          <div className="grid grid-cols-2 gap-3 p-4 rounded-2xl border bg-[#FAF7F0] border-[#D4C9B8]">
             <div>
-              <span className="text-[10px] text-slate-400 uppercase font-mono block">Emisor (Origen)</span>
-              <strong className="text-sm font-semibold font-serif text-[#DA7B93]">
+              <span className="text-[10px] text-slate-500 uppercase font-mono block">Emisor (Origen)</span>
+              <strong className="text-sm font-semibold font-serif text-[#C86D51]">
                 {originTerritory.name}
               </strong>
-              <div className="text-[11px] font-mono mt-0.5 text-slate-400">
-                Estado: <span className="capitalize text-slate-200">{originState.regime}</span> (σ = {originState.sigma})
+              <div className="text-[11px] font-mono mt-0.5 text-slate-600">
+                Estado: <span className="capitalize text-slate-800">{originState.regime}</span> (σ = {originState.sigma})
               </div>
             </div>
             <div>
-              <span className="text-[10px] text-slate-400 uppercase font-mono block">Receptor (Destino)</span>
-              <strong className="text-sm font-semibold font-serif text-[#376E6F]">
+              <span className="text-[10px] text-slate-500 uppercase font-mono block">Receptor (Destino)</span>
+              <strong className="text-sm font-semibold font-serif text-[#487075]">
                 {destinationTerritory.name}
               </strong>
-              <div className="text-[11px] font-mono mt-0.5 text-slate-400">
-                Estado: <span className="capitalize text-slate-200">{destinationState.regime}</span> (σ = {destinationState.sigma})
+              <div className="text-[11px] font-mono mt-0.5 text-slate-600">
+                Estado: <span className="capitalize text-slate-800">{destinationState.regime}</span> (σ = {destinationState.sigma})
               </div>
             </div>
           </div>
 
           {/* Good selector */}
           <div className="space-y-1.5">
-            <label className="text-xs font-mono font-medium block text-slate-200">
+            <label className="text-xs font-mono font-medium block text-slate-700">
               Bien o Excedente Sintrópico a Transferir
             </label>
             <select
               value={selectedGoodId || (activeGood ? activeGood.id : '')}
               onChange={(e) => setSelectedGoodId(e.target.value)}
-              className="w-full rounded-xl px-3.5 py-2.5 text-xs focus:outline-none border bg-black/50 border-white/15 text-slate-100 font-mono shadow-inner focus:border-[#D83F87]"
+              className="w-full rounded-xl px-3.5 py-2.5 text-xs focus:outline-none border bg-white border-[#D4C9B8] text-slate-800 font-mono shadow-xs focus:border-[#487075]"
             >
               {availableGoods.map(g => (
-                <option key={g.id} value={g.id} className="bg-[#2A1B3D] text-slate-100">
+                <option key={g.id} value={g.id} className="bg-white text-slate-800">
                   {g.name} ({g.category}) · Base: {g.baseSurplus} {g.unit}
                 </option>
               ))}
@@ -279,10 +279,10 @@ export default function HoneycombNetwork({ territories, globalModifiers }) {
           </div>
 
           {/* Quantity */}
-          <div className="space-y-2 p-4 rounded-2xl border bg-black/40 border-white/10">
+          <div className="space-y-2 p-4 rounded-2xl border bg-[#FAF7F0] border-[#D4C9B8]">
             <div className="flex justify-between items-center text-xs">
-              <span className="font-mono text-slate-300">Volumen del Intercambio</span>
-              <span className="font-mono font-bold text-[#D83F87]">
+              <span className="font-mono text-slate-700">Volumen del Intercambio</span>
+              <span className="font-mono font-bold text-[#28475A]">
                 {quantity} {activeGood?.unit || 'unidades'}
               </span>
             </div>
@@ -293,14 +293,14 @@ export default function HoneycombNetwork({ territories, globalModifiers }) {
               step="5"
               value={quantity}
               onChange={(e) => setQuantity(parseInt(e.target.value))}
-              className="w-full cursor-pointer accent-[#D83F87]"
+              className="w-full cursor-pointer accent-[#28475A]"
             />
           </div>
 
           {/* Button */}
           <button
             onClick={handleExecuteTrade}
-            className="w-full font-serif font-bold py-3.5 px-4 rounded-xl shadow-lg flex items-center justify-center gap-2 text-sm transition-all duration-200 bg-gradient-to-r from-[#D83F87] via-[#8D69A6] to-[#376E6F] hover:opacity-95 text-white shadow-black/50"
+            className="w-full font-serif font-bold py-3.5 px-4 rounded-xl shadow-md flex items-center justify-center gap-2 text-sm transition-all duration-200 bg-gradient-to-r from-[#1B4332] via-[#28475A] to-[#376E6F] hover:brightness-110 text-white"
           >
             <ShieldCheck className="w-4 h-4 text-white" />
             Evaluar con el Guardián Biofísico & Ejecutar

@@ -320,7 +320,7 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
       label: 'Capacidad Portante (H)', 
       tag: 'Trípode & Hombros', 
       icon: ShieldCheck,
-      color: 'from-[#DA7B93] to-[#D83F87]' 
+      color: 'from-[#C86D51] to-[#A85138]' 
     },
     { 
       id: 'cuerpo', 
@@ -337,7 +337,7 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
       label: 'Tensión Sistémica (σ)', 
       tag: 'Reología & Cargas', 
       icon: Scale,
-      color: 'from-[#8D69A6] to-[#44318D]' 
+      color: 'from-[#28475A] to-[#1A2E33]' 
     },
     { 
       id: 'sintropia', 
@@ -353,7 +353,7 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
       label: 'Simulador Prospectivo', 
       tag: 'Dinámica a 36 Meses', 
       icon: TrendingUp,
-      color: 'from-[#44318D] to-[#8D69A6]' 
+      color: 'from-[#927660] to-[#78350F]' 
     },
     { 
       id: 'organismo', 
@@ -361,7 +361,7 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
       label: 'Organismo Integrado', 
       tag: 'Vista Holística', 
       icon: Cpu,
-      color: 'from-fuchsia-500 to-teal-500' 
+      color: 'from-[#487075] to-[#28475A]' 
     },
   ];
 
@@ -376,8 +376,9 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
       {/* =========================================================================
           CABECERA HERO DE CORE & HUD DE SIGNOS VITALES PERSISTENTE
           ========================================================================= */}
-      <div className="rounded-3xl p-6 sm:p-8 card-magenta relative overflow-hidden shadow-2xl border border-[#D4C9B8]">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-[#D83F87]/10 via-[#487075]/10 to-transparent pointer-events-none rounded-bl-full" />
+      <div className="rounded-3xl p-6 sm:p-8 bg-white/95 backdrop-blur-md relative overflow-hidden shadow-md border border-[#D4C9B8] text-slate-900">
+        <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-[#1B4332] via-[#487075] to-[#C86D51]" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-[#7DB2B2]/15 via-[#C86D51]/10 to-transparent pointer-events-none rounded-bl-full" />
         
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative z-10">
           <div className="max-w-4xl">
@@ -397,19 +398,19 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
             {/* Resumen breve de lo que incluye el CORE */}
             <div className="mt-3 flex flex-wrap items-center gap-2 text-[11px] font-mono">
               <span className="font-bold text-slate-900 uppercase mr-1">Incluye:</span>
-              <span className="px-2.5 py-1 rounded-lg bg-white/85 border border-[#D4C9B8] text-slate-800 font-semibold">
+              <span className="px-2.5 py-1 rounded-lg bg-white border border-[#D4C9B8] text-slate-800 font-semibold shadow-2xs">
                 1. Capacidad Portante (H) & Trípode de Liebig
               </span>
-              <span className="px-2.5 py-1 rounded-lg bg-white/85 border border-[#D4C9B8] text-slate-800 font-semibold">
+              <span className="px-2.5 py-1 rounded-lg bg-white border border-[#D4C9B8] text-slate-800 font-semibold shadow-2xs">
                 2. Tensión Sistémica (σ = D/H) & Fluencia
               </span>
-              <span className="px-2.5 py-1 rounded-lg bg-white/85 border border-[#D4C9B8] text-slate-800 font-semibold">
+              <span className="px-2.5 py-1 rounded-lg bg-white border border-[#D4C9B8] text-slate-800 font-semibold shadow-2xs">
                 3. Tasa Sintrópica (Γ)
               </span>
-              <span className="px-2.5 py-1 rounded-lg bg-white/85 border border-[#D4C9B8] text-slate-800 font-semibold">
+              <span className="px-2.5 py-1 rounded-lg bg-white border border-[#D4C9B8] text-slate-800 font-semibold shadow-2xs">
                 4. Simulador Prospectivo (36 meses)
               </span>
-              <span className="px-2.5 py-1 rounded-lg bg-white/85 border border-[#D4C9B8] text-slate-800 font-semibold">
+              <span className="px-2.5 py-1 rounded-lg bg-white border border-[#D4C9B8] text-slate-800 font-semibold shadow-2xs">
                 5. Organismo Integrado
               </span>
             </div>
@@ -427,23 +428,23 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
         </div>
 
         {/* HUD TELEMETRÍA EN TIEMPO REAL: SIGNOS VITALES */}
-        <div className="mt-5 pt-4 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3">
+        <div className="mt-5 pt-4 border-t border-[#D4C9B8] grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3">
           
           {/* Signo 1: Estado / Régimen */}
-          <div className="col-span-2 sm:col-span-4 lg:col-span-1 p-2.5 rounded-xl bg-black/40 border border-white/10 flex flex-col justify-center">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400">Régimen Vital</span>
+          <div className="col-span-2 sm:col-span-4 lg:col-span-1 p-2.5 rounded-xl bg-[#FAF7F0] border border-[#D4C9B8] flex flex-col justify-center">
+            <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 font-bold">Régimen Vital</span>
             <div className="flex items-center gap-1.5 mt-0.5">
               <span className={`w-2.5 h-2.5 rounded-full animate-pulse ${
                 santanderState.hasCriticalShoulder ? 'bg-rose-500 shadow-[0_0_8px_#f43f5e]' :
-                santanderState.sigma < 0.85 ? 'bg-emerald-400 shadow-[0_0_8px_#34d399]' :
-                santanderState.sigma <= 1.00 ? 'bg-amber-400 shadow-[0_0_8px_#fbbf24]' :
+                santanderState.sigma < 0.85 ? 'bg-emerald-500 shadow-[0_0_8px_#10B981]' :
+                santanderState.sigma <= 1.00 ? 'bg-amber-500 shadow-[0_0_8px_#F59E0B]' :
                 'bg-rose-500 shadow-[0_0_8px_#f43f5e]'
               }`} />
               <strong className={`font-mono text-xs font-bold ${
-                santanderState.hasCriticalShoulder ? 'text-rose-300' :
-                santanderState.sigma < 0.85 ? 'text-emerald-300' :
-                santanderState.sigma <= 1.00 ? 'text-amber-300' :
-                'text-rose-400'
+                santanderState.hasCriticalShoulder ? 'text-rose-700' :
+                santanderState.sigma < 0.85 ? 'text-emerald-700' :
+                santanderState.sigma <= 1.00 ? 'text-amber-700' :
+                'text-rose-700'
               }`}>
                 {santanderState.hasCriticalShoulder ? 'CRÍTICO' :
                  santanderState.sigma < 0.85 ? 'SINTRÓPICO' :
@@ -453,53 +454,53 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
           </div>
 
           {/* Signo 2: Capacidad Portante H */}
-          <div className="p-2.5 rounded-xl bg-black/40 border border-white/10">
-            <div className="flex items-center justify-between text-[10px] font-mono text-slate-400">
-              <span>H (Capacidad)</span>
-              <span className="text-[#DA7B93] font-bold">√(S·E·K)</span>
+          <div className="p-2.5 rounded-xl bg-[#FAF7F0] border border-[#D4C9B8]">
+            <div className="flex items-center justify-between text-[10px] font-mono text-slate-500">
+              <span className="font-semibold">H (Capacidad)</span>
+              <span className="text-[#C86D51] font-bold">∛(S·E·K)</span>
             </div>
-            <div className="text-xl font-mono font-bold text-white mt-0.5">
+            <div className="text-xl font-mono font-bold text-slate-900 mt-0.5">
               {santanderState.H.toFixed(3)}
             </div>
           </div>
 
           {/* Signo 3: Tensión Sistémica σ */}
-          <div className="p-2.5 rounded-xl bg-black/40 border border-white/10">
-            <div className="flex items-center justify-between text-[10px] font-mono text-slate-400">
-              <span>σ (Tensión)</span>
-              <span className="text-purple-300 font-bold">D / H</span>
+          <div className="p-2.5 rounded-xl bg-[#FAF7F0] border border-[#D4C9B8]">
+            <div className="flex items-center justify-between text-[10px] font-mono text-slate-500">
+              <span className="font-semibold">σ (Tensión)</span>
+              <span className="text-[#28475A] font-bold">D / H</span>
             </div>
             <div className={`text-xl font-mono font-bold mt-0.5 ${
-              santanderState.sigma < 0.85 ? 'text-emerald-300' :
-              santanderState.sigma <= 1.00 ? 'text-amber-300' : 'text-rose-400'
+              santanderState.sigma < 0.85 ? 'text-emerald-700' :
+              santanderState.sigma <= 1.00 ? 'text-amber-700' : 'text-rose-700'
             }`}>
               {santanderState.sigma.toFixed(3)}
             </div>
           </div>
 
           {/* Signo 4: Factor de Seguridad */}
-          <div className="p-2.5 rounded-xl bg-black/40 border border-white/10">
-            <div className="flex items-center justify-between text-[10px] font-mono text-slate-400">
-              <span>Factor Seg. (FS)</span>
-              <span className="text-teal-300 font-bold">H / D</span>
+          <div className="p-2.5 rounded-xl bg-[#FAF7F0] border border-[#D4C9B8]">
+            <div className="flex items-center justify-between text-[10px] font-mono text-slate-500">
+              <span className="font-semibold">Factor Seg. (FS)</span>
+              <span className="text-[#487075] font-bold">H / D</span>
             </div>
             <div className={`text-xl font-mono font-bold mt-0.5 ${
-              safetyFactor >= 1.2 ? 'text-emerald-300' :
-              safetyFactor >= 1.0 ? 'text-amber-300' : 'text-rose-400'
+              safetyFactor >= 1.2 ? 'text-emerald-700' :
+              safetyFactor >= 1.0 ? 'text-amber-700' : 'text-rose-700'
             }`}>
               {safetyFactor.toFixed(2)}x
             </div>
           </div>
 
           {/* Signo 5: Tasa Sintrópica Γ */}
-          <div className="p-2.5 rounded-xl bg-black/40 border border-white/10">
-            <div className="flex items-center justify-between text-[10px] font-mono text-slate-400">
-              <span>Γ (Sintropía)</span>
-              <span className="text-cyan-300 font-bold">ΔH/(H·Δt)</span>
+          <div className="p-2.5 rounded-xl bg-[#FAF7F0] border border-[#D4C9B8]">
+            <div className="flex items-center justify-between text-[10px] font-mono text-slate-500">
+              <span className="font-semibold">Γ (Sintropía)</span>
+              <span className="text-[#1B4332] font-bold">ΔH/(H·Δt)</span>
             </div>
             <div className={`text-xl font-mono font-bold mt-0.5 ${
-              santanderState.gamma > 0 ? 'text-emerald-300' :
-              santanderState.gamma === 0 ? 'text-slate-300' : 'text-rose-400'
+              santanderState.gamma > 0 ? 'text-emerald-700' :
+              santanderState.gamma === 0 ? 'text-slate-600' : 'text-rose-700'
             }`}>
               {santanderState.gamma > 0 ? `+${santanderState.gamma.toFixed(3)}` : santanderState.gamma.toFixed(3)}
             </div>
@@ -508,9 +509,9 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
         </div>
 
         {/* SELECTOR RÁPIDO DE MÓDULOS ARQUETÍPICOS */}
-        <div className="mt-4 pt-3 border-t border-white/10 flex flex-wrap items-center gap-2">
-          <span className="text-[11px] font-mono text-slate-400 flex items-center gap-1 mr-1">
-            <Cpu className="w-3.5 h-3.5 text-[#DA7B93]" />
+        <div className="mt-4 pt-3 border-t border-[#D4C9B8] flex flex-wrap items-center gap-2">
+          <span className="text-[11px] font-mono text-slate-600 font-semibold flex items-center gap-1 mr-1">
+            <Cpu className="w-3.5 h-3.5 text-[#C86D51]" />
             Cargar Arquetipo:
           </span>
           {PROTOTYPICAL_PRESETS.map(preset => {
@@ -521,8 +522,8 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
                 onClick={() => handleSelectPreset(preset.id)}
                 className={`text-xs px-3 py-1.5 rounded-xl border transition-all duration-150 flex items-center gap-1.5 ${
                   isSelected
-                    ? 'bg-gradient-to-r from-[#D83F87] to-[#376E6F] text-white font-serif font-bold border-white/40 shadow-md ring-1 ring-[#D83F87]/50'
-                    : 'bg-[#180e25]/90 text-slate-300 hover:text-white hover:bg-[#2A1B3D] border-white/10 text-[11px]'
+                    ? 'bg-[#28475A] text-white font-serif font-bold border-[#1E293B] shadow-md ring-1 ring-[#28475A]/50'
+                    : 'bg-white hover:bg-[#EDE8DC] text-slate-700 border-[#D4C9B8] text-[11px]'
                 }`}
               >
                 <span>{preset.name}</span>
@@ -535,7 +536,7 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
       {/* =========================================================================
           BARRA DE NAVEGACIÓN PROGRESIVA EN SUBPESTAÑAS DEL NÚCLEO
           ========================================================================= */}
-      <div className="bg-[#180e25]/90 border border-white/10 p-1.5 rounded-2xl shadow-xl backdrop-blur-md sticky top-20 z-40">
+      <div className="bg-[#FAF7F0]/95 border border-[#D4C9B8] p-1.5 rounded-2xl shadow-md backdrop-blur-md sticky top-20 z-40 text-slate-800">
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5">
           {subtabs.map(tab => {
             const Icon = tab.icon;
@@ -546,17 +547,19 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
                 onClick={() => setActiveSubtab(tab.id)}
                 className={`flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl transition-all text-left relative overflow-hidden group ${
                   isActive
-                    ? 'bg-gradient-to-r from-[#D83F87] via-[#8D69A6] to-[#376E6F] text-white shadow-lg border border-white/30 font-bold'
-                    : 'text-slate-300 hover:text-white hover:bg-white/5 border border-transparent'
+                    ? 'bg-gradient-to-r from-[#1B4332] via-[#28475A] to-[#376E6F] text-white shadow-md border border-white/20 font-bold'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/80 border border-transparent'
                 }`}
               >
                 <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 text-xs font-mono font-bold ${
-                  isActive ? 'bg-black/30 text-white' : 'bg-white/5 text-[#DA7B93] group-hover:bg-white/10'
+                  isActive ? 'bg-white/20 text-white' : 'bg-[#EDE8DC] text-[#487075] group-hover:bg-white'
                 }`}>
                   <Icon className="w-3.5 h-3.5" />
                 </div>
                 <div className="truncate">
-                  <div className="text-[10px] font-mono uppercase tracking-wider opacity-80 leading-none">
+                  <div className={`text-[10px] font-mono uppercase tracking-wider leading-none ${
+                    isActive ? 'text-slate-200' : 'text-slate-500'
+                  }`}>
                     {tab.tag}
                   </div>
                   <div className="text-xs font-serif font-semibold truncate leading-tight mt-0.5">
@@ -594,24 +597,24 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3 border-b border-white/10">
                   <div>
                     <div className="flex items-center gap-2">
-                      <Sliders className="w-5 h-5 text-[#DA7B93]" />
-                      <h2 className="text-lg font-serif font-bold text-white tracking-wide">
+                      <Sliders className="w-5 h-5 text-[#C86D51]" />
+                      <h2 className="text-lg font-serif font-bold text-slate-900 tracking-wide">
                         Palancas de Calibración de Hombros
                       </h2>
                     </div>
-                    <p className="text-xs text-slate-400 mt-0.5 font-mono">
+                    <p className="text-xs text-slate-500 mt-0.5 font-mono">
                       Mueve las barras y observa cómo se deforma el trípode al instante
                     </p>
                   </div>
 
                   {/* Mode Switcher */}
-                  <div className="flex items-center gap-1.5 p-1 rounded-xl bg-black/40 border border-white/10 text-xs font-mono">
+                  <div className="flex items-center gap-1.5 p-1 rounded-xl bg-[#FAF7F0] border border-[#D4C9B8] text-xs font-mono">
                     <button
                       onClick={() => setManipulationMode('essential')}
                       className={`px-3 py-1.5 rounded-lg transition-all font-bold ${
                         manipulationMode === 'essential'
                           ? 'bg-[#376E6F] text-white shadow-sm'
-                          : 'text-slate-400 hover:text-white'
+                          : 'text-slate-600 hover:text-slate-900'
                       }`}
                     >
                       3 Hombros
@@ -620,8 +623,8 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
                       onClick={() => setManipulationMode('advanced')}
                       className={`px-3 py-1.5 rounded-lg transition-all font-bold ${
                         manipulationMode === 'advanced'
-                          ? 'bg-[#D83F87] text-white shadow-sm'
-                          : 'text-slate-400 hover:text-white'
+                          ? 'bg-[#28475A] text-white shadow-sm'
+                          : 'text-slate-600 hover:text-slate-900'
                       }`}
                     >
                       12 Variables
@@ -737,15 +740,15 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
                     </div>
 
                     {/* Hombro Económico (K) con sus 4 Componentes */}
-                    <div className={`p-4 rounded-2xl card-indigo space-y-3 shadow-md transition-all ${
+                    <div className={`p-4 rounded-2xl card-slate space-y-3 shadow-md transition-all ${
                       santanderState.K < 0.25 ? 'ring-2 ring-rose-500 bg-rose-950/70' : ''
                     }`}>
                       <div className="flex justify-between items-center text-xs">
-                        <span className="font-bold font-serif text-[#8D69A6] flex items-center gap-2">
-                          <Coins className="w-4 h-4 text-[#8D69A6]" />
+                        <span className="font-bold font-serif text-[#927660] flex items-center gap-2">
+                          <Coins className="w-4 h-4 text-[#927660]" />
                           Hombro Económico (K)
                         </span>
-                        <span className={`font-mono font-bold text-base ${santanderState.K < 0.25 ? 'text-rose-400 animate-pulse' : 'text-white'}`}>
+                        <span className={`font-mono font-bold text-base ${santanderState.K < 0.25 ? 'text-rose-500 animate-pulse' : 'text-slate-900'}`}>
                           {santanderState.K.toFixed(2)} {santanderState.K < 0.25 && '⚠️ CRÍTICO'}
                         </span>
                       </div>
@@ -756,23 +759,23 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
                         step="0.01"
                         value={santanderState.K}
                         onChange={e => handleShoulderChange('K', e.target.value)}
-                        className="w-full accent-[#8D69A6] cursor-pointer h-2 bg-black/40 rounded-lg"
+                        className="w-full accent-[#927660] cursor-pointer h-2 bg-slate-200 rounded-lg"
                       />
-                      <p className="text-[11px] text-slate-300">
+                      <p className="text-[11px] text-slate-600">
                         Diversificación productiva, autonomía comunal, equidad distributiva y balance biótico.
                       </p>
                       {/* 4 Sub-componentes del Hombro Económico */}
-                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-white/10">
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-[#D4C9B8]">
                         {[
                           { key: 'k1', code: 'K₁', label: 'Diversific.' },
                           { key: 'k2', code: 'K₂', label: 'Autonomía' },
                           { key: 'k3', code: 'K₃', label: 'Equidad Gini' },
                           { key: 'k4', code: 'K₄', label: 'Bal. Biótico' }
                         ].map(item => (
-                          <div key={item.key} className="p-2 rounded-xl bg-black/35 border border-white/10 space-y-1">
+                          <div key={item.key} className="p-2 rounded-xl bg-white/80 border border-[#D4C9B8] space-y-1">
                             <div className="flex items-center justify-between text-[10px] font-mono">
-                              <span className="text-purple-300 font-bold">{item.code} {item.label}</span>
-                              <strong className="text-white">{(customVariables[item.key] ?? 0.5).toFixed(2)}</strong>
+                              <span className="text-[#927660] font-bold">{item.code} {item.label}</span>
+                              <strong className="text-slate-900">{(customVariables[item.key] ?? 0.5).toFixed(2)}</strong>
                             </div>
                             <input
                               type="range"
@@ -781,7 +784,7 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
                               step="0.02"
                               value={customVariables[item.key] || 0.5}
                               onChange={e => handleVariableChange(item.key, e.target.value)}
-                              className="w-full accent-[#8D69A6] cursor-pointer h-1 bg-black/50 rounded"
+                              className="w-full accent-[#927660] cursor-pointer h-1 bg-slate-200 rounded"
                             />
                           </div>
                         ))}
@@ -840,15 +843,15 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
                     </div>
 
                     {/* Económico */}
-                    <div className="space-y-2 p-3 rounded-2xl card-indigo shadow-md text-xs">
-                      <span className="block font-mono font-bold uppercase tracking-wider text-[#8D69A6] text-[10px]">
+                    <div className="space-y-2 p-3 rounded-2xl bg-[#FAF7F0] border border-[#D4C9B8] shadow-2xs text-xs">
+                      <span className="block font-mono font-bold uppercase tracking-wider text-[#927660] text-[10px]">
                         Hombro Económico (K₁-K₄)
                       </span>
                       {['k1', 'k2', 'k3', 'k4'].map(k => (
                         <div key={k} className="space-y-0.5">
                           <div className="flex justify-between text-[10px]">
-                            <span className="text-slate-300 truncate">{VARIABLE_METADATA[k].name}</span>
-                            <strong className="font-mono text-white">{customVariables[k]?.toFixed(2)}</strong>
+                            <span className="text-slate-600 truncate">{VARIABLE_METADATA[k].name}</span>
+                            <strong className="font-mono text-slate-900">{customVariables[k]?.toFixed(2)}</strong>
                           </div>
                           <input
                             type="range"
@@ -857,7 +860,7 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
                             step="0.02"
                             value={customVariables[k] || 0.5}
                             onChange={e => handleVariableChange(k, e.target.value)}
-                            className="w-full accent-[#8D69A6] cursor-pointer h-1.5 bg-black/40 rounded"
+                            className="w-full accent-[#927660] cursor-pointer h-1.5 bg-slate-200 rounded"
                           />
                         </div>
                       ))}
@@ -1023,10 +1026,10 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
                 </div>
 
                 {/* D3 */}
-                <div className="p-3.5 rounded-2xl card-magenta space-y-1.5 shadow-md">
+                <div className="p-3.5 rounded-2xl bg-white/95 border border-[#D4C9B8] space-y-1.5 shadow-md">
                   <div className="flex justify-between">
-                    <span className="text-slate-300">D₃: Dependencia</span>
-                    <strong className="text-[#D83F87] font-bold">{customPressures.d3.toFixed(2)}x</strong>
+                    <span className="text-slate-700 font-semibold">D₃: Dependencia</span>
+                    <strong className="text-[#C86D51] font-bold">{customPressures.d3.toFixed(2)}x</strong>
                   </div>
                   <input
                     type="range"
@@ -1035,9 +1038,9 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
                     step="0.05"
                     value={customPressures.d3}
                     onChange={e => handlePressureChange('d3', e.target.value)}
-                    className="w-full accent-[#D83F87] cursor-pointer h-1.5 bg-black/40 rounded"
+                    className="w-full accent-[#C86D51] cursor-pointer h-1.5 bg-slate-200 rounded"
                   />
-                  <span className="text-[10px] text-slate-400 block truncate">Fuga exógena de plusvalía</span>
+                  <span className="text-[10px] text-slate-500 block truncate">Fuga exógena de plusvalía</span>
                 </div>
 
                 {/* Direct Control of H (Capability) */}
@@ -1170,10 +1173,10 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
                 </div>
 
                 {/* Presión Extractiva Exógena */}
-                <div className="p-3.5 rounded-2xl card-magenta space-y-1.5 shadow-md sm:col-span-2 lg:col-span-1">
+                <div className="p-3.5 rounded-2xl bg-[#FAF7F0] border border-[#D4C9B8] space-y-1.5 shadow-2xs sm:col-span-2 lg:col-span-1 text-slate-800">
                   <div className="flex justify-between">
-                    <span className="text-slate-300">Intensidad de Cosecha Neta:</span>
-                    <strong className="text-[#DA7B93] font-bold">
+                    <span className="text-slate-600">Intensidad de Cosecha Neta:</span>
+                    <strong className="text-[#C86D51] font-bold">
                       {(customPressures.d1).toFixed(2)}x
                     </strong>
                   </div>
@@ -1184,9 +1187,9 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
                     step="0.05"
                     value={customPressures.d1}
                     onChange={e => handlePressureChange('d1', e.target.value)}
-                    className="w-full accent-[#DA7B93] cursor-pointer h-1.5 bg-black/40 rounded"
+                    className="w-full accent-[#C86D51] cursor-pointer h-1.5 bg-slate-200 rounded"
                   />
-                  <span className="text-[10px] text-slate-400 block truncate">Tasa de vaciado de reservas</span>
+                  <span className="text-[10px] text-slate-500 block truncate">Tasa de vaciado de reservas</span>
                 </div>
 
               </div>
@@ -1385,41 +1388,41 @@ export default function CoreDashboard({ initialSubtab = 'hombros' }) {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs font-mono">
                 {/* 1. Hombros Base */}
-                <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1.5">
-                  <span className="text-[10px] text-slate-400 uppercase block">Capa 1: Los 3 Hombros</span>
-                  <div className="space-y-1 text-slate-200">
-                    <div className="flex justify-between"><span>Social (S):</span> <b className="text-[#DA7B93]">{santanderState.S.toFixed(2)}</b></div>
-                    <div className="flex justify-between"><span>Ambiental (E):</span> <b className="text-[#376E6F]">{santanderState.E.toFixed(2)}</b></div>
-                    <div className="flex justify-between"><span>Económico (K):</span> <b className="text-[#8D69A6]">{santanderState.K.toFixed(2)}</b></div>
+                <div className="p-4 rounded-2xl bg-[#FAF7F0] border border-[#D4C9B8] space-y-1.5 shadow-2xs">
+                  <span className="text-[10px] text-slate-500 uppercase block font-bold">Capa 1: Los 3 Hombros</span>
+                  <div className="space-y-1 text-slate-700">
+                    <div className="flex justify-between"><span>Social (S):</span> <b className="text-[#C86D51] font-bold">{santanderState.S.toFixed(2)}</b></div>
+                    <div className="flex justify-between"><span>Ambiental (E):</span> <b className="text-[#487075] font-bold">{santanderState.E.toFixed(2)}</b></div>
+                    <div className="flex justify-between"><span>Económico (K):</span> <b className="text-[#927660] font-bold">{santanderState.K.toFixed(2)}</b></div>
                   </div>
                 </div>
 
                 {/* 2. Capacidad e Índice */}
-                <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1.5">
-                  <span className="text-[10px] text-slate-400 uppercase block">Capa 2: Capacidad & Carga</span>
-                  <div className="space-y-1 text-slate-200">
-                    <div className="flex justify-between"><span>Capacidad Portante (H):</span> <b className="text-emerald-400">{santanderState.H.toFixed(3)}</b></div>
-                    <div className="flex justify-between"><span>Presión Externa (D):</span> <b className="text-rose-400">{santanderState.D.toFixed(3)}</b></div>
-                    <div className="flex justify-between"><span>Margen de Reserva (H-D):</span> <b className={santanderState.H - santanderState.D >= 0 ? 'text-emerald-400' : 'text-rose-400'}>{(santanderState.H - santanderState.D).toFixed(2)}</b></div>
+                <div className="p-4 rounded-2xl bg-[#FAF7F0] border border-[#D4C9B8] space-y-1.5 shadow-2xs">
+                  <span className="text-[10px] text-slate-500 uppercase block font-bold">Capa 2: Capacidad & Carga</span>
+                  <div className="space-y-1 text-slate-700">
+                    <div className="flex justify-between"><span>Capacidad Portante (H):</span> <b className="text-emerald-700 font-bold">{santanderState.H.toFixed(3)}</b></div>
+                    <div className="flex justify-between"><span>Presión Externa (D):</span> <b className="text-rose-700 font-bold">{santanderState.D.toFixed(3)}</b></div>
+                    <div className="flex justify-between"><span>Margen de Reserva (H-D):</span> <b className={santanderState.H - santanderState.D >= 0 ? 'text-emerald-700 font-bold' : 'text-rose-700 font-bold'}>{(santanderState.H - santanderState.D).toFixed(2)}</b></div>
                   </div>
                 </div>
 
                 {/* 3. Tensión y Reología */}
-                <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1.5">
-                  <span className="text-[10px] text-slate-400 uppercase block">Capa 3: Tensión & Seguridad</span>
-                  <div className="space-y-1 text-slate-200">
-                    <div className="flex justify-between"><span>Tensión Cauchy (σ):</span> <b className="text-purple-300">{santanderState.sigma.toFixed(3)}</b></div>
-                    <div className="flex justify-between"><span>Factor Seguridad (FS):</span> <b className="text-teal-300">{safetyFactor.toFixed(2)}x</b></div>
-                    <div className="flex justify-between"><span>Régimen Elástico:</span> <b className="text-white">{coupledMechanicsState.regime.toUpperCase()}</b></div>
+                <div className="p-4 rounded-2xl bg-[#FAF7F0] border border-[#D4C9B8] space-y-1.5 shadow-2xs">
+                  <span className="text-[10px] text-slate-500 uppercase block font-bold">Capa 3: Tensión & Seguridad</span>
+                  <div className="space-y-1 text-slate-700">
+                    <div className="flex justify-between"><span>Tensión Cauchy (σ):</span> <b className="text-[#28475A] font-bold">{santanderState.sigma.toFixed(3)}</b></div>
+                    <div className="flex justify-between"><span>Factor Seguridad (FS):</span> <b className="text-[#487075] font-bold">{safetyFactor.toFixed(2)}x</b></div>
+                    <div className="flex justify-between"><span>Régimen Elástico:</span> <b className="text-slate-900 font-bold">{coupledMechanicsState.regime.toUpperCase()}</b></div>
                   </div>
                 </div>
 
                 {/* 4. Ciclaje Sintrópico */}
-                <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1.5">
-                  <span className="text-[10px] text-slate-400 uppercase block">Capa 4: Ciclaje Sintrópico</span>
-                  <div className="space-y-1 text-slate-200">
-                    <div className="flex justify-between"><span>Velocidad (Γ):</span> <b className={santanderState.gamma >= 0 ? 'text-emerald-400' : 'text-rose-400'}>{santanderState.gamma.toFixed(3)}/año</b></div>
-                    <div className="flex justify-between"><span>Estado Negentrópico:</span> <b className="text-cyan-300">{santanderState.gammaStatus}</b></div>
+                <div className="p-4 rounded-2xl bg-[#FAF7F0] border border-[#D4C9B8] space-y-1.5 shadow-2xs">
+                  <span className="text-[10px] text-slate-500 uppercase block font-bold">Capa 4: Ciclaje Sintrópico</span>
+                  <div className="space-y-1 text-slate-700">
+                    <div className="flex justify-between"><span>Velocidad (Γ):</span> <b className={santanderState.gamma >= 0 ? 'text-emerald-700 font-bold' : 'text-rose-700 font-bold'}>{santanderState.gamma.toFixed(3)}/año</b></div>
+                    <div className="flex justify-between"><span>Estado Negentrópico:</span> <b className="text-[#1B4332] font-bold">{santanderState.gammaStatus}</b></div>
                     <div className="flex justify-between"><span>Código Acción:</span> <b className="text-white">{santanderState.actionCode}</b></div>
                   </div>
                 </div>

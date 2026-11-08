@@ -89,18 +89,18 @@ export default function HombrosDeGigantes() {
             'card-rose',
             'card-teal',
             'card-indigo',
-            'card-magenta',
             'card-slate',
+            'card-rose',
             'card-plum',
             'card-teal',
             'card-indigo',
-            'card-magenta'
+            'card-slate'
           ];
           const badgeColors = [
             'bg-[#C86D51] text-white',
             'bg-[#487075] text-white',
             'bg-[#28475A] text-white',
-            'bg-[#D83F87] text-white',
+            'bg-[#78350F] text-white',
             'bg-[#927660] text-white',
             'bg-[#624F44] text-white',
             'bg-[#487075] text-white',

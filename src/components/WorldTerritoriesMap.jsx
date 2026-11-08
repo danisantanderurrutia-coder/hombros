@@ -118,7 +118,7 @@ export default function WorldTerritoriesMap({
       label: 'Contraste de Modelos',
       tag: 'Benchmarking & Casos',
       icon: GitCompare,
-      color: 'from-[#DA7B93] to-[#D83F87]'
+      color: 'from-[#C86D51] to-[#A85138]'
     },
     {
       id: 'emissions',
@@ -126,7 +126,7 @@ export default function WorldTerritoriesMap({
       label: 'Desplazamiento Scope 3',
       tag: 'Metabolismo & Deuda',
       icon: Factory,
-      color: 'from-[#8D69A6] to-[#44318D]'
+      color: 'from-[#28475A] to-[#1A2E33]'
     },
     {
       id: 'panal',
@@ -301,8 +301,8 @@ export default function WorldTerritoriesMap({
       const isCritical = tState.hasCriticalShoulder || tState.sigma > 1.2;
       const isSafe = tState.sigma < 0.75;
 
-      const safeColor = isFcinq ? '#D83F87' : '#DA7B93';
-      const warningColor = isFcinq ? '#8D69A6' : '#376E6F';
+      const safeColor = '#487075';
+      const warningColor = '#C86D51';
       const haloColor = isCritical ? '#f43f5e' : isSafe ? safeColor : warningColor;
       const pulseAnimation = isCritical ? 'animate-ping' : isSelected ? 'animate-pulse' : '';
 
@@ -377,7 +377,7 @@ export default function WorldTerritoriesMap({
 
     if (!showMetabolicFlows) return;
 
-    const arcColor = isFcinq ? '#D83F87' : '#DA7B93';
+    const arcColor = '#C86D51';
 
     METABOLIC_TRADE_ARCS.forEach(arc => {
       const p1 = arc.from;
@@ -459,7 +459,7 @@ export default function WorldTerritoriesMap({
       {/* =========================================================================
           BARRA DE NAVEGACIÓN EN SUBPESTAÑAS DEL ATLAS TERRITORIAL (ESTILO NÚCLEO)
           ========================================================================= */}
-      <div className="bg-[#180e25]/95 border border-white/10 p-2 rounded-2xl shadow-xl backdrop-blur-md sticky top-20 z-40">
+      <div className="bg-[#FAF7F0]/95 border border-[#D4C9B8] p-2 rounded-2xl shadow-md backdrop-blur-md sticky top-20 z-40 text-slate-800">
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
           {atlasSubtabs.map(tab => {
             const Icon = tab.icon;
@@ -470,17 +470,19 @@ export default function WorldTerritoriesMap({
                 onClick={() => setActiveSubTab(tab.id)}
                 className={`flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl transition-all text-left relative overflow-hidden group ${
                   isActive
-                    ? 'bg-gradient-to-r from-[#D83F87] via-[#8D69A6] to-[#376E6F] text-white shadow-lg border border-white/30 font-bold'
-                    : 'text-slate-300 hover:text-white hover:bg-white/5 border border-transparent'
+                    ? 'bg-gradient-to-r from-[#1B4332] via-[#28475A] to-[#376E6F] text-white shadow-md border border-white/20 font-bold'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/80 border border-transparent'
                 }`}
               >
                 <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 text-xs font-mono font-bold ${
-                  isActive ? 'bg-black/30 text-white' : 'bg-white/5 text-[#DA7B93] group-hover:bg-white/10'
+                  isActive ? 'bg-white/20 text-white' : 'bg-[#EDE8DC] text-[#487075] group-hover:bg-white'
                 }`}>
                   <Icon className="w-3.5 h-3.5" />
                 </div>
                 <div className="truncate">
-                  <div className="text-[10px] font-mono uppercase tracking-wider opacity-80 leading-none">
+                  <div className={`text-[10px] font-mono uppercase tracking-wider leading-none ${
+                    isActive ? 'text-slate-200' : 'text-slate-500'
+                  }`}>
                     {tab.tag}
                   </div>
                   <div className="text-xs font-serif font-semibold truncate leading-tight mt-0.5">

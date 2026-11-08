@@ -9,9 +9,25 @@ import { getAssetUrl } from '../utils/assets';
 
 export default function ThinkTankTeaserPortal({ onNavigate }) {
   const presentationPdfUrl = getAssetUrl('docs/HOMBROS_Presentacion_Oficial.pdf');
-  const portalTheme = 'pizarra';
+  const portalTheme = 'biofisica';
 
   const themes = {
+    biofisica: {
+      id: 'biofisica',
+      name: 'Auditoría Biofísica & Travertino',
+      container: 'bg-white/95 backdrop-blur-md border-[#D4C9B8] shadow-md text-slate-900',
+      accentLine: 'bg-gradient-to-r from-[#1B4332] via-[#487075] to-[#C86D51]',
+      badgeMain: 'bg-[#EDE8DC] text-slate-800 border-[#D4C9B8]',
+      badgeSub: 'bg-[#1B4332]/10 text-[#1B4332] border-[#1B4332]/30',
+      title: 'text-slate-900',
+      desc: 'text-slate-700',
+      cardMission: 'bg-[#FAF7F0] border-[#D4C9B8] hover:border-[#487075] text-slate-800',
+      cardVision: 'bg-[#FAF7F0] border-[#D4C9B8] hover:border-[#C86D51] text-slate-800',
+      cardTeam: 'bg-[#FAF7F0] border-[#D4C9B8] text-slate-800',
+      btnPrimary: 'bg-[#28475A] hover:bg-[#1E293B] text-white shadow-sm border border-[#1E293B]',
+      btnSecondary: 'bg-white hover:bg-[#EDE8DC] text-slate-800 border-[#D4C9B8]',
+      iconBox: 'bg-[#EDE8DC] text-[#28475A]'
+    },
     alabastro: {
       id: 'alabastro',
       name: '1. Blanco Alabastro & Cartografía',
@@ -27,38 +43,6 @@ export default function ThinkTankTeaserPortal({ onNavigate }) {
       btnPrimary: 'bg-[#1E293B] hover:bg-[#0F172A] text-white shadow-sm border border-slate-900',
       btnSecondary: 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200',
       iconBox: 'bg-[#1B4332]/10 text-[#1B4332]'
-    },
-    lino: {
-      id: 'lino',
-      name: '2. Lino Editorial & Archivo',
-      container: 'bg-[#FAF7F2] border-[#DCD5CB] shadow-xs text-stone-900',
-      accentLine: 'bg-gradient-to-r from-[#78350F] via-[#991B1B] to-[#78350F]',
-      badgeMain: 'bg-[#EFE9DF] text-stone-700 border-[#D5CDBD]',
-      badgeSub: 'bg-[#991B1B]/10 text-[#991B1B] border-[#991B1B]/20',
-      title: 'text-stone-900',
-      desc: 'text-stone-600',
-      cardMission: 'bg-[#FCFAF7] border-[#DCD5CB] hover:border-stone-400 text-stone-900',
-      cardVision: 'bg-[#FCFAF7] border-[#DCD5CB] hover:border-stone-400 text-stone-900',
-      cardTeam: 'bg-[#FCFAF7] border-[#DCD5CB] text-stone-900',
-      btnPrimary: 'bg-[#78350F] hover:bg-[#5C2809] text-amber-50 shadow-xs border border-[#78350F]',
-      btnSecondary: 'bg-[#FAF7F2] hover:bg-[#EDE6DC] text-stone-800 border-[#DCD5CB]',
-      iconBox: 'bg-[#78350F]/15 text-[#78350F]'
-    },
-    pizarra: {
-      id: 'pizarra',
-      name: '3. Pizarra Ejecutiva & Gabinete',
-      container: 'bg-[#111C30] border-slate-700/80 shadow-md text-slate-100',
-      accentLine: 'bg-gradient-to-r from-[#D4AF37] via-[#38BDF8] to-[#10B981]',
-      badgeMain: 'bg-slate-800 text-slate-300 border-slate-700',
-      badgeSub: 'bg-[#D4AF37]/15 text-[#D4AF37] border-[#D4AF37]/30',
-      title: 'text-slate-50',
-      desc: 'text-slate-300',
-      cardMission: 'bg-[#15233A] border-slate-700 hover:border-slate-500 text-slate-200',
-      cardVision: 'bg-[#15233A] border-slate-700 hover:border-slate-500 text-slate-200',
-      cardTeam: 'bg-[#15233A] border-slate-700 text-slate-200',
-      btnPrimary: 'bg-[#D4AF37] hover:bg-[#C29D2D] text-slate-950 font-bold shadow-sm',
-      btnSecondary: 'bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700',
-      iconBox: 'bg-amber-950/80 text-amber-300'
     }
   };
 
