@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   BookOpen, Compass, Flame, Cpu, GitFork, Scale, 
@@ -6,14 +6,68 @@ import {
   Layers, AlertTriangle, CheckCircle2, TrendingUp, ShieldAlert,
   GraduationCap, Sparkles, Terminal, Image, FolderTree, Search,
   Maximize2, ChevronRight, Play, Eye, FileCode, CheckCircle,
-  Presentation, MonitorPlay, ZoomIn, Boxes, Activity, Navigation, ShieldCheck
+  Presentation, MonitorPlay, ZoomIn, Boxes, Activity, Navigation, ShieldCheck,
+  ArrowLeft, ArrowRight, ArrowUpRight
 } from 'lucide-react';
 import HombrosDeGigantes from './HombrosDeGigantes';
 import { getAssetUrl } from '../utils/assets';
 import { InlineMath, BlockMath, LatexText } from './KaTeXMath';
 
 export default function TheoryView() {
-  const [activeTab, setActiveTab] = useState('paper'); // 'paper' | 'presentation' | 'figures' | 'scripts_hub' | 'episteme'
+  const [activeTab, setActiveTab] = useState(() => {
+    const hash = typeof window !== 'undefined' ? window.location.hash : '';
+    if (hash.includes('#abstract') ||
+        hash.includes('#corporeidad') ||
+        hash.includes('#gaps') ||
+        hash.includes('#formulacion') ||
+        hash.includes('#benchmark') ||
+        hash.includes('#lector') ||
+        hash.includes('#reader') ||
+        hash.includes('#paper1') ||
+        hash.includes('#paper2') ||
+        hash.includes('#kit-cuenca')) {
+      return 'reader';
+    }
+    if (hash.includes('#figuras') || hash.includes('#galeria-figuras')) {
+      return 'figures';
+    }
+    return 'library';
+  });
+
+  const [activePaper, setActivePaper] = useState(() => {
+    const hash = typeof window !== 'undefined' ? window.location.hash : '';
+    if (hash.includes('audita') || hash.includes('paper2') || hash.includes('longavi') || hash.includes('kit')) {
+      return 'paper2';
+    }
+    return 'paper1';
+  });
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash;
+      if (hash.includes('#abstract') ||
+          hash.includes('#corporeidad') ||
+          hash.includes('#gaps') ||
+          hash.includes('#formulacion') ||
+          hash.includes('#benchmark') ||
+          hash.includes('#lector') ||
+          hash.includes('#reader') ||
+          hash.includes('#paper1') ||
+          hash.includes('#paper2') ||
+          hash.includes('#kit-cuenca')) {
+        setActiveTab('reader');
+      } else if (hash.includes('#figuras') || hash.includes('#galeria-figuras')) {
+        setActiveTab('figures');
+      }
+      if (hash.includes('audita') || hash.includes('paper2') || hash.includes('longavi') || hash.includes('kit')) {
+        setActivePaper('paper2');
+      } else if (hash.includes('paper1') || hash.includes('corporeidad') || hash.includes('gaps')) {
+        setActivePaper('paper1');
+      }
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
   const [copiedCode, setCopiedCode] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedScriptId, setSelectedScriptId] = useState('pipeline_runner');
@@ -606,20 +660,20 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
         <div className="h-1.5 w-full absolute top-0 left-0 bg-gradient-to-r from-[#1B4332] via-[#28475A] to-[#C86D51]" />
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative z-10 pt-1">
           <div className="flex items-start sm:items-center gap-4">
-            <div className="p-3.5 rounded-2xl bg-[#C86D51] text-white shadow-md shrink-0">
+            <div className="p-3.5 rounded-2xl bg-[#1B4332] text-white shadow-md shrink-0">
               <BookOpen className="w-8 h-8 text-white" />
             </div>
             <div>
               <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#C86D51] text-white shadow-xs">
-                  Marco Epistémico & Paper Canónico
+                <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#1B4332] text-white shadow-xs">
+                  Biblioteca Epistémica & Papers Canónicos
                 </span>
                 <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#487075] text-white shadow-xs">
                   TRL 5 • DOI: 10.5281/zenodo.hombros.2026
                 </span>
               </div>
               <h1 className="text-2xl sm:text-3xl font-serif font-extrabold tracking-tight text-black">
-                Marco Epistémico, Paper Metodológico & Pipeline en R
+                Marco Epistémico, Publicaciones & Pipeline en R
               </h1>
               <p className="text-xs sm:text-sm mt-1 text-black font-medium max-w-3xl leading-relaxed">
                 Desarrollo Sostenido sobre Autosustento Sintrópico. La convergencia entre 
@@ -655,23 +709,38 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
               className="flex-1 lg:flex-initial inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white text-xs font-bold shadow-md hover:shadow-lg transition-all group"
             >
               <ExternalLink className="w-4 h-4 text-amber-200 group-hover:scale-110 transition-transform" />
-              <span>Paper Práctico #2 (Audita tu Cuenca)</span>
+              <span>Paper Práctico #2 (Kit Cuenca)</span>
             </a>
           </div>
         </div>
 
-        {/* Sub-tab Navigation (5 Pestañas Canónicas Activas) */}
+        {/* Sub-tab Navigation (6 Pestañas Canónicas: Biblioteca como Portada) */}
         <div className="flex flex-wrap gap-2.5 mt-6 pt-5 border-t border-[#D4C9B8]/70 relative z-10">
           <button
-            onClick={() => setActiveTab('paper')}
+            onClick={() => setActiveTab('library')}
             className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm ${
-              activeTab === 'paper'
+              activeTab === 'library'
+                ? 'bg-[#1B4332] text-white border border-[#143326] shadow-md shadow-[#1B4332]/30'
+                : 'bg-[#1B4332]/10 text-slate-800 hover:bg-[#1B4332]/20 border border-[#1B4332]/30'
+            }`}
+          >
+            <BookOpen className={`w-4 h-4 ${activeTab === 'library' ? 'text-white' : 'text-[#1B4332]'}`} />
+            <span>Biblioteca & Papers</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('reader')}
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm ${
+              activeTab === 'reader'
                 ? 'bg-[#487075] text-white border border-[#376E6F] shadow-md shadow-[#487075]/30'
                 : 'bg-[#7DB2B2]/20 text-slate-800 hover:bg-[#7DB2B2]/35 border border-[#7DB2B2]/50'
             }`}
           >
-            <FileText className={`w-4 h-4 ${activeTab === 'paper' ? 'text-white' : 'text-[#487075]'}`} />
-            <span>Paper Canónico (IMRAD & Figuras)</span>
+            <FileText className={`w-4 h-4 ${activeTab === 'reader' ? 'text-white' : 'text-[#487075]'}`} />
+            <span>Lector Editorial</span>
+            <span className="px-1.5 py-0.5 rounded-full text-[9px] font-mono bg-white/30 text-white font-bold">
+              {activePaper === 'paper1' ? 'Paper #1' : 'Paper #2'}
+            </span>
           </button>
 
           <button
@@ -697,7 +766,7 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
             <Image className={`w-4 h-4 ${activeTab === 'figures' ? 'text-white' : 'text-[#927660]'}`} />
             <span>Galería de Figuras Canónicas</span>
             <span className="px-1.5 py-0.5 rounded-full text-[9px] font-mono bg-white/40 text-slate-900 font-bold">
-              7
+              10
             </span>
           </button>
 
@@ -731,696 +800,1235 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
       </div>
 
       {/* ==================================================================== */}
-      {/* TAB 1: PAPER CIENTÍFICO CANÓNICO COMPLETO (IMRAD CON FIGURAS DENTRO) */}
+      {/* TAB 0: BIBLIOTECA EPISTÉMICA & PAPERS (PORTADA HUB TRANQUILA Y LIMPIA) */}
       {/* ==================================================================== */}
-      {activeTab === 'paper' && (
+      {activeTab === 'library' && (
         <div className="space-y-8">
-          {/* Metadata Card */}
-          <div className="card-slate rounded-3xl p-6 sm:p-7 shadow-xl border border-[#927660]/30">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#D4C9B8] text-xs">
-              <div>
-                <span className="text-[10px] font-mono uppercase font-bold text-[#927660] tracking-widest block">
-                  Compendio Científico Metodológico Canónico
-                </span>
-                <h2 className="text-lg sm:text-xl font-serif font-extrabold text-black mt-0.5">
-                  Hombros: Un Modelo de Mecánica de Medios Continuos y Metabolismo Socio-Ecológico para Cuantificar la Capacidad Portante, Tensión Sistémica y Desplazamiento Entrópico Territorial
-                </h2>
-                <p className="text-xs text-black mt-1 font-medium">
-                  <strong className="font-bold">Autor:</strong> Daniel Santander Urrutia (Geofísico & Permacultor) • Proyecto Hombros • Noviembre 2026
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-2 text-[10px] font-mono shrink-0">
-                <span className="px-2.5 py-1 rounded-lg bg-[#E2F4F2] text-[#376E6F] font-bold border border-[#7DB2B2]">
-                  Validación Multi-sitio: N=8
-                </span>
-                <span className="px-2.5 py-1 rounded-lg bg-[#FAF7F0] text-[#927660] font-bold border border-[#DDD5C5]">
-                  Clasif. UNESCO: 5312 / 3311
-                </span>
-              </div>
+          {/* Subheader descriptivo */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-2">
+            <div>
+              <h2 className="text-xl sm:text-2xl font-serif font-black text-slate-900">
+                Publicaciones Canónicas Fundacionales
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-600 mt-0.5">
+                Acceso a los dos artículos fundacionales revisados por pares y herramientas científicas del proyecto.
+              </p>
             </div>
-
-            {/* Quick Navigation Jump Bar */}
-            <div className="flex flex-wrap items-center gap-2 p-3 mt-4 rounded-2xl bg-[#EDE8DC]/80 border border-[#D4C9B8] text-xs font-mono">
-              <span className="font-bold text-slate-800 mr-1 flex items-center gap-1.5">
-                <Compass className="w-3.5 h-3.5 text-[#376E6F]" />
-                Navegación de Secciones:
-              </span>
-              <a href="#/teoria#abstract" className="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-800 border border-[#D4C9B8] transition-all">
-                Resumen
-              </a>
-              <a href="#/teoria#gaps-estandares" className="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-800 border border-[#D4C9B8] transition-all">
-                §1. Gaps
-              </a>
-              <a href="#/teoria#corporeidad-compleja" className="px-3 py-1 rounded-lg bg-[#376E6F] text-white font-bold hover:bg-[#2b595a] shadow-xs transition-all">
-                §2. Corporeidad Territorial
-              </a>
-              <a href="#/teoria#formulacion-mecanica" className="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-800 border border-[#D4C9B8] transition-all">
-                §3. Leyes Mecánicas
-              </a>
-              <a href="#/teoria#benchmark-empirico" className="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-800 border border-[#D4C9B8] transition-all">
-                §4. Benchmark N=8
-              </a>
-              <button 
-                onClick={() => setActiveTab('figures')} 
-                className="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-800 border border-[#D4C9B8] transition-all flex items-center gap-1"
-              >
-                <Image className="w-3 h-3 text-[#927660]" />
-                <span>Figuras (10)</span>
-              </button>
+            <div className="flex items-center gap-2 text-xs font-mono text-slate-600">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span>2 Papers Publicados • Acceso Abierto</span>
             </div>
+          </div>
 
-            {/* TARJETA COMPLEMENTARIA PAPER PRÁCTICO N° 2: KIT AUDITA TU PROPIA CUENCA */}
-            <div className="mt-5 p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-[#101722] via-[#162230] to-[#0c131a] border border-amber-400/50 shadow-lg text-white">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-white/10">
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-[10px] font-mono uppercase font-bold text-amber-400 tracking-wider px-2.5 py-0.5 rounded-full bg-amber-400/15 border border-amber-400/30">
-                      ★ Paper Práctico N° 2 · Soberanía Técnica & SEIA 2.0
+          {/* GRANDES TARJETAS DE PUBLICACIONES */}
+          <div className="grid grid-cols-1 gap-6">
+            {/* PUBLICACIÓN CANÓNICA N° 1: PAPER METODOLÓGICO IMRAD */}
+            <div className="bg-white/95 rounded-3xl p-6 sm:p-8 shadow-xl border border-[#927660]/40 relative overflow-hidden group hover:border-[#376E6F] transition-all">
+              <div className="h-2 w-full absolute top-0 left-0 bg-gradient-to-r from-[#1B4332] via-[#376E6F] to-[#7DB2B2]" />
+              
+              <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 pb-4 border-b border-[#D4C9B8]">
+                <div className="space-y-1.5 max-w-3xl">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#376E6F] text-white">
+                      Paper Canónico #1 · Metodológico
                     </span>
-                    <span className="text-[10px] font-mono text-emerald-300 font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/30">
-                      Manual Comunal Abierto
+                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-[#E2F4F2] text-[#376E6F] border border-[#7DB2B2]">
+                      TRL 5 · Validación N=8
+                    </span>
+                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-300">
+                      DOI: 10.5281/zenodo.hombros.2026
                     </span>
                   </div>
-                  <h3 className="text-base sm:text-lg font-serif font-extrabold text-white">
-                    Kit Audita tu Propia Cuenca: Protocolo de Auditoría Biofísica Comunitaria, Gemelo Digital y Ensayo de Tracción Territorial (SEIA 2.0)
+                  <h3 className="text-xl sm:text-2xl font-serif font-black text-slate-900 group-hover:text-[#376E6F] transition-colors leading-snug">
+                    Hombros: Un Modelo de Mecánica de Medios Continuos y Metabolismo Socio-Ecológico para Cuantificar la Capacidad Portante, Tensión Sistémica y Desplazamiento Entrópico Territorial
                   </h3>
-                  <p className="text-xs text-slate-300 mt-0.5">
-                    <strong>Autor:</strong> Daniel Santander Urrutia • Aplicación en Cuenca del Río Longaví - Bullileo (Maule Sur) acoplada al Gemelo Digital AgriTwin
+                  <p className="text-xs text-slate-600 font-sans">
+                    <strong>Autor:</strong> Daniel Santander Urrutia (Geofísico & Permacultor) • Proyecto Hombros • Noviembre 2026 • Clasif. UNESCO: 5312 / 3311
                   </p>
                 </div>
-                <div className="flex flex-wrap gap-2 text-[10px] font-mono shrink-0">
-                  <span className="px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-200 font-bold border border-amber-400/40">
-                    Sentinel-2 STAC/COG
+
+                <div className="shrink-0 flex md:flex-col gap-2 items-end">
+                  <span className="px-3 py-1 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-300 font-mono text-xs font-bold">
+                    IMRAD Completo
                   </span>
-                  <span className="px-2.5 py-1 rounded-lg bg-teal-500/20 text-teal-200 font-bold border border-teal-400/40">
-                    5 Comités APR
+                  <span className="px-3 py-1 rounded-xl bg-slate-50 text-slate-700 border border-slate-300 font-mono text-[11px]">
+                    7 Figuras Canónicas
                   </span>
                 </div>
               </div>
 
-              <p className="text-xs sm:text-sm text-slate-300 mt-3 font-sans leading-relaxed">
-                Manual metodológico y guía práctica para que municipios rurales, comités de Agua Potable Rural (APR) y asambleas ciudadanas superen la asimetría técnica frente a los Estudios de Impacto Ambiental corporativos, evaluando la capacidad portante (<InlineMath math="H = (E \cdot S \cdot K)^{1/3}" />) y emitiendo dictámenes pre-inversionales vinculantes.
+              {/* Abstract preview */}
+              <p className="text-xs sm:text-sm text-slate-700 mt-4 leading-relaxed font-sans">
+                Formula un marco matemático estricto que modela el territorio como un medio viscoelástico metabolizante. La capacidad portante no-compensatoria (<InlineMath math="H = (E \cdot S \cdot K)^{1/3} \cdot \Phi_{\text{crit}}" />) y la ley de tensión sistémica (<InlineMath math="\sigma = D / H" />) permiten diagnosticar los cuatro regímenes reológicos (elástico, fluencia, plástico o fractura) e identificar el colonialismo metabólico de Alcance 3 en ocho territorios de Chile y Europa.
               </p>
 
-              {/* Botones de Acción del Paper 2 */}
-              <div className="flex flex-wrap items-center justify-between gap-3 mt-4 pt-3 border-t border-white/10 text-xs font-mono">
+              {/* 3 Pilares Resumidos */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 my-5">
+                <div className="p-3.5 rounded-2xl bg-[#F7F5F0] border border-[#E5DFD3] space-y-1">
+                  <span className="text-[10px] font-mono font-bold uppercase text-[#376E6F] block">
+                    1. Reología Territorial
+                  </span>
+                  <p className="text-xs font-medium text-slate-800">
+                    Leyes constitutivas <InlineMath math="\sigma = D / H" /> con histéresis plástica y límite de fluencia en <InlineMath math="\sigma = 0.85" />.
+                  </p>
+                </div>
+                <div className="p-3.5 rounded-2xl bg-[#F7F5F0] border border-[#E5DFD3] space-y-1">
+                  <span className="text-[10px] font-mono font-bold uppercase text-[#376E6F] block">
+                    2. Benchmark Multi-Sitio
+                  </span>
+                  <p className="text-xs font-medium text-slate-800">
+                    Calibración empírica N=8: Chanco (AAA), Quintero (Fractura), Copenhague, Barcelona, Bilbao, Ámsterdam, Berlín.
+                  </p>
+                </div>
+                <div className="p-3.5 rounded-2xl bg-[#F7F5F0] border border-[#E5DFD3] space-y-1">
+                  <span className="text-[10px] font-mono font-bold uppercase text-[#376E6F] block">
+                    3. Scope 3 Upstream
+                  </span>
+                  <p className="text-xs font-medium text-slate-800">
+                    Desmonta el falso desacoplamiento: metrópolis europeas externalizan entre 54% y 76.5% de su huella metabólica.
+                  </p>
+                </div>
+              </div>
+
+              {/* Barra de Acciones */}
+              <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-[#D4C9B8]">
                 <div className="flex flex-wrap items-center gap-2">
+                  <button
+                    onClick={() => {
+                      setActivePaper('paper1');
+                      setActiveTab('reader');
+                    }}
+                    className="px-4 py-2.5 rounded-xl bg-[#376E6F] hover:bg-[#2b5859] text-white text-xs font-bold shadow-md hover:shadow-lg transition-all flex items-center gap-2"
+                  >
+                    <BookOpen className="w-4 h-4 text-white" />
+                    <span>Leer Paper en Lector Editorial</span>
+                  </button>
+
+                  <a
+                    href={getAssetUrl('paper.html')}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-900 border border-slate-300 text-xs font-bold transition-all flex items-center gap-1.5"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5 text-slate-600" />
+                    <span>Abrir Web Autónoma (paper.html)</span>
+                  </a>
+
+                  <a
+                    href={getAssetUrl('docs/PAPER_CIENTIFICO_HOMBROS_METODOLOGIA_Y_GAPS.md')}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3.5 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 text-xs font-medium transition-all flex items-center gap-1.5"
+                  >
+                    <Download className="w-3.5 h-3.5 text-slate-500" />
+                    <span>Markdown (.md)</span>
+                  </a>
+                </div>
+
+                <span className="text-[11px] font-mono text-slate-500">
+                  Preprint Metodológico Oficial · 2026
+                </span>
+              </div>
+            </div>
+
+            {/* PUBLICACIÓN CANÓNICA N° 2: PAPER PRÁCTICO & KIT AUDITA TU CUENCA SEIA 2.0 */}
+            <div className="bg-white/95 rounded-3xl p-6 sm:p-8 shadow-xl border border-amber-400/60 relative overflow-hidden group hover:border-amber-500 transition-all">
+              <div className="h-2 w-full absolute top-0 left-0 bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-400" />
+              
+              <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 pb-4 border-b border-[#D4C9B8]">
+                <div className="space-y-1.5 max-w-3xl">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-gradient-to-r from-amber-600 to-amber-700 text-white shadow-xs">
+                      ★ Paper Práctico #2 · Soberanía Técnica
+                    </span>
+                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-900 border border-amber-300">
+                      Manual Comunal Abierto
+                    </span>
+                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-teal-50 text-teal-800 border border-teal-300">
+                      Cuenca Río Longaví · 5 Comités APR
+                    </span>
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-serif font-black text-slate-900 group-hover:text-amber-800 transition-colors leading-snug">
+                    Kit Audita tu Propia Cuenca: Protocolo de Auditoría Biofísica Comunitaria, Gemelo Digital y Ensayo de Tracción Territorial (SEIA 2.0)
+                  </h3>
+                  <p className="text-xs text-slate-600 font-sans">
+                    <strong>Autor:</strong> Daniel Santander Urrutia • Aplicación en Cuenca del Río Longaví - Bullileo acoplada al Gemelo Digital AgriTwin • Noviembre 2026
+                  </p>
+                </div>
+
+                <div className="shrink-0 flex md:flex-col gap-2 items-end">
+                  <span className="px-3 py-1 rounded-xl bg-amber-50 text-amber-900 border border-amber-300 font-mono text-xs font-bold">
+                    SEIA 2.0 Vinculante
+                  </span>
+                  <span className="px-3 py-1 rounded-xl bg-slate-50 text-slate-700 border border-slate-300 font-mono text-[11px]">
+                    3 Figuras Prácticas (Fig 8-10)
+                  </span>
+                </div>
+              </div>
+
+              {/* Abstract preview */}
+              <p className="text-xs sm:text-sm text-slate-700 mt-4 leading-relaxed font-sans">
+                Manual metodológico y guía práctica para que municipios rurales, comités de Agua Potable Rural (APR) y asambleas ciudadanas superen la asimetría técnica frente a los Estudios de Impacto Ambiental corporativos. Permite evaluar la solvencia basal de la cuenca, ejecutar ensayos de tracción pre-inversionales vinculantes ex-ante y calcular el retorno macrofiscal (+654.7% ROI) de la restauración sintrópica frente a la sangría recurrente en camiones aljibe.
+              </p>
+
+              {/* 3 Pilares Prácticos */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 my-5">
+                <div className="p-3.5 rounded-2xl bg-amber-50/50 border border-amber-200 space-y-1">
+                  <span className="text-[10px] font-mono font-bold uppercase text-amber-800 block">
+                    1. Ensayo de Tracción Pre-Inversión
+                  </span>
+                  <p className="text-xs font-medium text-slate-800">
+                    Salvaguarda ex-ante: dictamina admisibilidad elástica (AAA) o moratoria total por fractura (D) antes del ingreso al SEIA.
+                  </p>
+                </div>
+                <div className="p-3.5 rounded-2xl bg-amber-50/50 border border-amber-200 space-y-1">
+                  <span className="text-[10px] font-mono font-bold uppercase text-amber-800 block">
+                    2. Red Panal APR (κ = 0.38)
+                  </span>
+                  <p className="text-xs font-medium text-slate-800">
+                    Alivio hídrico mutualista entre 5 comités APR de Longaví, reduciendo el estrés crítico de <InlineMath math="\sigma = 0.89" /> a <InlineMath math="0.58" />.
+                  </p>
+                </div>
+                <div className="p-3.5 rounded-2xl bg-amber-50/50 border border-amber-200 space-y-1">
+                  <span className="text-[10px] font-mono font-bold uppercase text-amber-800 block">
+                    3. Macroeconomía del Costo de Inacción
+                  </span>
+                  <p className="text-xs font-medium text-slate-800">
+                    El 88.2% del gasto en emergencia hídrica es pagado por el erario público; la inversión sintrópica se amortiza en 2.8 años.
+                  </p>
+                </div>
+              </div>
+
+              {/* Barra de Acciones */}
+              <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-[#D4C9B8]">
+                <div className="flex flex-wrap items-center gap-2">
+                  <button
+                    onClick={() => {
+                      setActivePaper('paper2');
+                      setActiveTab('reader');
+                    }}
+                    className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white text-xs font-bold shadow-md hover:shadow-lg transition-all flex items-center gap-2"
+                  >
+                    <BookOpen className="w-4 h-4 text-white" />
+                    <span>Leer Paper Práctico en Lector Editorial</span>
+                  </button>
+
                   <a
                     href={getAssetUrl('audita-tu-cuenca.html')}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold shadow-md hover:shadow-lg transition-all flex items-center gap-1.5"
+                    className="px-4 py-2.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-950 border border-amber-300 text-xs font-bold transition-all flex items-center gap-1.5"
                   >
-                    <ExternalLink className="w-3.5 h-3.5" />
-                    <span>Leer Paper Práctico (HTML)</span>
+                    <ExternalLink className="w-3.5 h-3.5 text-amber-800" />
+                    <span>Abrir Web Autónoma (audita-tu-cuenca.html)</span>
                   </a>
+
+                  <a
+                    href="#/auditoria-cuenca"
+                    className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
+                  >
+                    <Sparkles className="w-3.5 h-3.5 text-emerald-200" />
+                    <span>Abrir en Consola de Auditoría</span>
+                  </a>
+
                   <a
                     href={getAssetUrl('docs/PAPER_PRACTICO_AUDITA_TU_CUENCA.md')}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-slate-200 border border-white/20 transition-all flex items-center gap-1.5"
+                    className="px-3.5 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 text-xs font-medium transition-all flex items-center gap-1.5"
                   >
-                    <FileText className="w-3.5 h-3.5 text-amber-300" />
-                    <span>Descargar Markdown (.md)</span>
-                  </a>
-                  <a
-                    href="https://raw.githubusercontent.com/danielsantander/Hombros/main/scripts/R/07_kit_audita_tu_cuenca.R"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-slate-200 border border-white/20 transition-all flex items-center gap-1.5"
-                  >
-                    <Terminal className="w-3.5 h-3.5 text-teal-300" />
-                    <span>Script R Reproducible</span>
+                    <Download className="w-3.5 h-3.5 text-slate-500" />
+                    <span>Markdown (.md)</span>
                   </a>
                 </div>
 
-                <a
-                  href="#/auditoria-cuenca"
-                  className="px-3.5 py-2 rounded-xl bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-200 border border-emerald-400/40 font-bold transition-all flex items-center gap-1.5"
-                >
-                  <Sparkles className="w-3.5 h-3.5 text-emerald-300" />
-                  <span>Abrir en Consola de Auditoría →</span>
-                </a>
-              </div>
-            </div>
-
-            {/* Abstract */}
-            <div id="abstract" className="mt-4 p-5 rounded-2xl bg-white/95 border border-[#D4C9B8]/80 shadow-xs space-y-3 scroll-mt-24">
-              <span className="text-[10px] font-mono uppercase font-extrabold text-[#487075] tracking-wider block">
-                Resumen Ejecutivo / Abstract
-              </span>
-              <p className="text-xs sm:text-sm text-slate-800 leading-relaxed font-sans font-medium">
-                <LatexText text="Los marcos métricos dominantes de sostenibilidad —el Índice de Desarrollo Humano (IDH), la Economía de la Dona y los Límites Planetarios— presentan al menos 3 dificultades metodológicas estructurales:" />
-              </p>
-              <ul className="text-xs sm:text-sm text-slate-800 space-y-2 pl-4 list-disc marker:text-[#376E6F]">
-                <li>
-                  <strong>Sustituibilidad o compensabilidad aditiva:</strong> asumen implícitamente la compensación matemática entre dimensiones biofísicas e institucionales, asumiendo que el capital monetario puede reparar la pérdida de funciones ecológicas no sustituibles.
-                </li>
-                <li>
-                  <strong>Carencia de interpretación física-matemática sólida:</strong> carecen de una interpretación física-matemática sólida, que por ejemplo interprete al sistema económico como un sistema complejo que responde a variables que pueden ser similares a la tensión, la deformación o la histéresis, fundamentales para anticipar puntos de inflexión (<em>tipping points</em>) y pérdidas de resiliencia.
-                </li>
-                <li>
-                  <strong>Ceguera de Alcance 3 y fronteras arbitrarias:</strong> evalúan la huella ecológica bajo fronteras territoriales estrechas y ciegas a la externalización de emisiones y extracción biofísica de Alcance 3 (<em>Scope 3</em> upstream), encubriendo el intercambio ecológico desigual entre el Norte y el Sur Global.
-                </li>
-              </ul>
-              <p className="text-xs sm:text-sm text-slate-800 leading-relaxed font-sans font-medium pt-1">
-                <LatexText text="En este trabajo se formula el **Modelo HOMBROS**, un marco matemático derivado de la mecánica de medios continuos y la termodinámica del no-equilibrio para caracterizar el territorio como un medio viscoelástico metabolizante. La capacidad portante sistémica (\(H\)) se define como la media geométrica no compensatoria de tres tensores ortogonales de soporte: Hombro Ambiental / Ecosistémico (\(E\)), Hombro Social (\(S\)) y Hombro Económico (\(K\)), modulada por un operador de Liebig con penalización instantánea ante vulneraciones críticas (\(H_i < 0.25\))." />
-              </p>
-              <p className="text-xs sm:text-sm text-slate-800 leading-relaxed font-sans font-medium">
-                <LatexText text="La tensión sistémica uniaxial (\(\sigma = D / H\)) define cuatro regímenes reológicos: elástico reversible (\(\sigma < 0.85\)), límite de fluencia (<em>yield stress</em>, \(0.85 \le \sigma < 1.00\)), deformación plástica irreversible (\(1.00 \le \sigma < 1.25\)) y fractura socio-ecológica catastrófica (\(\sigma \ge 1.25\)). Validamos el modelo empíricamente en ocho arquetipos territoriales (Chanco, Aconcagua, Quintero-Puchuncaví en Chile; Copenhague, Barcelona, Bilbao, Ámsterdam y Berlín en Europa) y demostramos que las metrópolis post-industriales con reducidas emisiones territoriales directas externalizan entre un \(54\%\) y un \(76.5\%\) de su carga entrópica en forma de bienes intensivos importados." />
-              </p>
-            </div>
-          </div>
-
-          {/* 1. Matriz de Gaps Epistémicos */}
-          <div id="gaps-estandares" className="card-teal rounded-3xl p-6 sm:p-8 shadow-xl border border-[#7DB2B2]/40 scroll-mt-24">
-            <div className="flex items-center gap-2 mb-2">
-              <Scale className="w-5 h-5 text-[#376E6F]" />
-              <h3 className="font-serif font-extrabold text-xl text-black">
-                1. Análisis Crítico: Matriz de Gaps en Estándares Vigentes
-              </h3>
-            </div>
-            <p className="text-xs sm:text-sm text-black font-medium mb-5 max-w-4xl leading-relaxed">
-              La literatura contemporánea de sostenibilidad presenta vacíos metodológicos recurrentes que impiden a las comunidades y gobiernos subnacionales evaluar su vulnerabilidad biofísica real:
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {gapsData.map((gap, idx) => (
-                <div key={idx} className="p-4 rounded-2xl bg-white/95 border border-[#D4C9B8]/80 flex flex-col justify-between hover:border-[#487075] transition-all shadow-sm">
-                  <div>
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#376E6F] block mb-1">
-                      {gap.standard}
-                    </span>
-                    <div className="text-xs text-black font-sans mb-2.5">
-                      <strong className="text-black font-extrabold uppercase text-[10px] tracking-wide block mb-1">
-                        Supuesto Base:
-                      </strong>
-                      <span className="text-black font-normal"><LatexText text={gap.premise} /></span>
-                    </div>
-                    <div className="p-3.5 rounded-xl bg-[#FEECE8] border border-[#F4A79D] mb-3.5 text-black text-xs font-sans leading-relaxed shadow-xs">
-                      <div className="flex items-center gap-1.5 mb-1">
-                        <AlertTriangle className="w-3.5 h-3.5 text-[#C86D51] shrink-0" />
-                        <strong className="text-[#C86D51] font-bold text-[11px] uppercase tracking-wide">
-                          Brecha Crítica:
-                        </strong>
-                      </div>
-                      <span className="text-black font-medium"><LatexText text={gap.gap} /></span>
-                    </div>
-                  </div>
-                  <div className="p-3.5 rounded-xl bg-[#E2F4F2] border border-[#7DB2B2] text-black text-xs font-sans leading-relaxed shadow-xs">
-                    <div className="flex items-center gap-1.5 mb-1">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-[#376E6F] shrink-0" />
-                      <strong className="text-[#376E6F] font-bold text-[11px] uppercase tracking-wide">
-                        Solución Hombros:
-                      </strong>
-                    </div>
-                    <span className="text-black font-medium"><LatexText text={gap.solution} /></span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* 2. De la Metáfora Mecánica a la Corporeidad del Sistema Complejo */}
-          <div id="corporeidad-compleja" className="card-teal rounded-3xl p-6 sm:p-8 shadow-xl border border-[#376E6F]/40 space-y-6 scroll-mt-24">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-[#7DB2B2]/40">
-              <div className="flex items-center gap-2.5">
-                <div className="p-2.5 rounded-2xl bg-[#376E6F] text-white shadow-sm">
-                  <Boxes className="w-5 h-5 text-white" />
-                </div>
-                <div>
-                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#376E6F]">
-                    Epistemología del Territorio como Cuerpo Indivisible
-                  </span>
-                  <h3 className="font-serif font-extrabold text-xl text-black">
-                    2. De la Metáfora Mecánica a la Corporeidad del Sistema Complejo: Por qué el territorio necesita variables físicas para la toma de decisiones
-                  </h3>
-                </div>
-              </div>
-              <span className="px-3 py-1 rounded-full text-[10px] font-mono font-bold bg-[#E2F4F2] text-[#376E6F] border border-[#7DB2B2] shrink-0 self-start md:self-auto">
-                Sistemas Dinámicos & Decisión
-              </span>
-            </div>
-
-            <p className="text-xs sm:text-sm text-slate-800 leading-relaxed font-sans font-medium max-w-4xl">
-              La economía tradicional y los estándares de sostenibilidad cometen el error de tratar al territorio como un "plano contable cartesiano": una canasta abstracta de recursos transables sin volumen, sin límites físicos y sin memoria material. Para superar esta ceguera, el modelo <strong>Hombros</strong> formaliza el territorio como un <strong>cuerpo físico indivisible y metabólicamente activo</strong>, cuyas múltiples interacciones generan propiedades emergentes modelables mediante tres conceptos fundamentales de la ciencia de frontera:
-            </p>
-
-            {/* Grid 3 Pilares de Corporeidad */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-              {/* Pilar 1: Medio Continuo */}
-              <div className="p-5 rounded-2xl bg-white/95 border border-[#7DB2B2]/50 shadow-sm flex flex-col justify-between space-y-3">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
-                      Pilar 1 · Reología
-                    </span>
-                    <span className="text-[10px] font-mono text-slate-500">Mecánica de Sólidos</span>
-                  </div>
-                  <h4 className="text-sm font-serif font-bold text-black">
-                    Cuerpo Deformable o Medio Continuo Socio-Metabólico
-                  </h4>
-                  <p className="text-xs text-slate-700 leading-relaxed font-sans">
-                    El territorio no es un agregado de propiedades prediales aisladas; tiene volumen físico, espesor ecológico, inercia y memoria histórica. Responde a las presiones externas mediante <strong>tensión (<InlineMath math="\sigma" />)</strong> y <strong>deformación (<InlineMath math="\varepsilon" />)</strong>, acumulando fatiga estructural y transitando de la elasticidad reversible al daño plástico permanente (histéresis).
-                  </p>
-                </div>
-
-                <div className="pt-2 border-t border-slate-200">
-                  <div className="flex items-center justify-between text-[11px] font-mono font-bold text-[#376E6F] mb-1.5">
-                    <span>Figura 1 · Tensión vs Deformación</span>
-                    <a href={getAssetUrl('docs/figures/fig1_stress_strain_hysteresis.png')} target="_blank" rel="noopener noreferrer" className="hover:text-black">
-                      <Maximize2 className="w-3.5 h-3.5" />
-                    </a>
-                  </div>
-                  <div className="bg-[#0c0714] p-1.5 rounded-xl overflow-hidden text-center">
-                    <img 
-                      src={getAssetUrl('docs/figures/fig1_stress_strain_hysteresis.png')} 
-                      alt="Figura 1: Tensión vs Deformación"
-                      className="max-h-[140px] mx-auto object-contain"
-                    />
-                  </div>
-                  <span className="text-[10px] text-slate-500 font-mono block mt-1">
-                    Evidencia la histéresis plástica y la pérdida irreversible de volumen biofísico.
-                  </span>
-                </div>
-              </div>
-
-              {/* Pilar 2: Variedad Diferencial */}
-              <div className="p-5 rounded-2xl bg-white/95 border border-[#7DB2B2]/50 shadow-sm flex flex-col justify-between space-y-3">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-indigo-100 text-indigo-800 border border-indigo-300">
-                      Pilar 2 · Geometría
-                    </span>
-                    <span className="text-[10px] font-mono text-slate-500">Sistemas Dinámicos</span>
-                  </div>
-                  <h4 className="text-sm font-serif font-bold text-black">
-                    Variedad Diferencial o Espacio de Estados Multidimensional
-                  </h4>
-                  <p className="text-xs text-slate-700 leading-relaxed font-sans">
-                    El acoplamiento entre los Hombros <InlineMath math="(E, S, K)" /> y las Presiones <InlineMath math="(D)" /> no forma un cuerpo algebraico simple (no son sumas transables), sino una <strong>variedad o espacio de fases</strong> continuo. La Ley de Liebig actúa como una pared asintótica de frontera: si un soporte basal colapsa (<InlineMath math="H_i < 0.25" />), el sistema cae a un atractor catastrófico, impidiendo toda compensación monetaria.
-                  </p>
-                </div>
-
-                <div className="pt-2 border-t border-slate-200">
-                  <div className="flex items-center justify-between text-[11px] font-mono font-bold text-[#376E6F] mb-1.5">
-                    <span>Figura 6 · Funciones Canónicas & Liebig</span>
-                    <a href={getAssetUrl('docs/figures/fig6_normalization_transfer_functions.png')} target="_blank" rel="noopener noreferrer" className="hover:text-black">
-                      <Maximize2 className="w-3.5 h-3.5" />
-                    </a>
-                  </div>
-                  <div className="bg-[#0c0714] p-1.5 rounded-xl overflow-hidden text-center">
-                    <img 
-                      src={getAssetUrl('docs/figures/fig6_normalization_transfer_functions.png')} 
-                      alt="Figura 6: Normalización Canónica y Fronteras de Liebig"
-                      className="max-h-[140px] mx-auto object-contain"
-                    />
-                  </div>
-                  <span className="text-[10px] text-slate-500 font-mono block mt-1">
-                    Define la topología del espacio admisible y el corte asintótico de insolvencia.
-                  </span>
-                </div>
-              </div>
-
-              {/* Pilar 3: Estructura Disipativa */}
-              <div className="p-5 rounded-2xl bg-white/95 border border-[#7DB2B2]/50 shadow-sm flex flex-col justify-between space-y-3">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-amber-100 text-amber-800 border border-amber-300">
-                      Pilar 3 · Termodinámica
-                    </span>
-                    <span className="text-[10px] font-mono text-slate-500">Prigogine & Ostrom</span>
-                  </div>
-                  <h4 className="text-sm font-serif font-bold text-black">
-                    Estructura Disipativa Auto-organizada en Red Panal
-                  </h4>
-                  <p className="text-xs text-slate-700 leading-relaxed font-sans">
-                    Un territorio es un sistema metabólicamente abierto que preserva su orden interno (sintropía <InlineMath math="\Gamma > 0" />) disipando calor y dispersión material. Cuando los comités locales (como los APRs) se articulan en una <strong>Red Panal mutualista (<InlineMath math="\kappa = 0.38" />)</strong>, los picos de estrés hídrico son absorbidos colectivamente, garantizando la autopoiesis del soporte común.
-                  </p>
-                </div>
-
-                <div className="pt-2 border-t border-slate-200">
-                  <div className="flex items-center justify-between text-[11px] font-mono font-bold text-[#376E6F] mb-1.5">
-                    <span>Figura 5 & 10 · Red Panal APR</span>
-                    <a href={getAssetUrl('docs/figures/fig10_honeycomb_aprs_network.png')} target="_blank" rel="noopener noreferrer" className="hover:text-black">
-                      <Maximize2 className="w-3.5 h-3.5" />
-                    </a>
-                  </div>
-                  <div className="bg-[#0c0714] p-1.5 rounded-xl overflow-hidden text-center">
-                    <img 
-                      src={getAssetUrl('docs/figures/fig10_honeycomb_aprs_network.png')} 
-                      alt="Figura 10: Red Panal APR y Amortiguación Mutualista"
-                      className="max-h-[140px] mx-auto object-contain"
-                    />
-                  </div>
-                  <span className="text-[10px] text-slate-500 font-mono block mt-1">
-                    Prueba la amortiguación del estrés de sequía de <InlineMath math="\sigma = 0.89 \to 0.58" /> en Longaví.
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Panel Clarificación Epistémica del Scope */}
-            <div className="p-5 rounded-2xl bg-gradient-to-r from-[#122227] via-[#1A2E33] to-[#122227] text-white border border-[#7DB2B2]/40 shadow-lg space-y-3">
-              <div className="flex items-center gap-2">
-                <Navigation className="w-4 h-4 text-emerald-400" />
-                <h4 className="text-sm font-serif font-bold text-white tracking-wide">
-                  Las Tres Certezas sobre el Scope del Modelo y la Orientación de la Acción
-                </h4>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-sans">
-                <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 space-y-1.5">
-                  <div className="flex items-center gap-2 text-emerald-300 font-bold font-mono text-[11px]">
-                    <CheckCircle2 className="w-3.5 h-3.5" />
-                    <span>1. No al Reduccionismo Ciego</span>
-                  </div>
-                  <p className="text-slate-300 leading-relaxed">
-                    No pretendemos reducir una comunidad viva a una barra de acero inerte. Empleamos el formalismo físico-matemático como el lenguaje más riguroso para capturar la no-linealidad, la saturación y la fatiga estructural en sistemas complejos adaptativos.
-                  </p>
-                </div>
-
-                <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 space-y-1.5">
-                  <div className="flex items-center gap-2 text-cyan-300 font-bold font-mono text-[11px]">
-                    <Activity className="w-3.5 h-3.5" />
-                    <span>2. Del Diagnóstico a la Decisión</span>
-                  </div>
-                  <p className="text-slate-300 leading-relaxed">
-                    Superamos la autopsia forense pasiva que se limita a lamentar el colapso. HOMBROS dota a asambleas, alcaldías y comités de un tablero de navegación para evaluar ex-ante qué proyectos son admisibles y qué recetas sintrópicas devuelven el equilibrio elástico.
-                  </p>
-                </div>
-
-                <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 space-y-1.5">
-                  <div className="flex items-center gap-2 text-amber-300 font-bold font-mono text-[11px]">
-                    <ShieldCheck className="w-3.5 h-3.5" />
-                    <span>3. Auto-sustento Físico Real</span>
-                  </div>
-                  <p className="text-slate-300 leading-relaxed">
-                    Desmitificamos la sustentabilidad discursiva. El auto-sustento significa la capacidad material autónoma de una cuenca de reproducir sus condiciones de vida sin canibalizar su suelo ni sobrevivir precarizada por subsidios regresivos de camiones aljibe.
-                  </p>
-                </div>
+                <span className="text-[11px] font-mono text-amber-800 font-bold">
+                  Guía Práctica Comunal · SEIA 2.0
+                </span>
               </div>
             </div>
           </div>
 
-          {/* 3. Formulación Matemática de Medios Continuos */}
-          <div id="formulacion-mecanica" className="card-indigo rounded-3xl p-6 sm:p-8 shadow-xl border border-[#927660]/30 scroll-mt-24">
-            <div className="flex items-center gap-2 mb-2">
-              <Cpu className="w-5 h-5 text-[#927660]" />
-              <h3 className="font-serif font-extrabold text-xl text-black">
-                3. Formulación Matemática y Leyes Mecánicas
-              </h3>
-            </div>
-            <p className="text-xs sm:text-sm text-black font-medium mb-5 max-w-4xl">
-              Hombros abandona las métricas abstractas y modela el territorio con leyes físicas verificables de resistencia de materiales:
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-              <div className="p-5 rounded-2xl bg-white/95 border border-[#7DB2B2]/30 shadow-sm flex flex-col justify-between">
+          {/* GRID DE 4 RECURSOS CIENTÍFICOS COMPLEMENTARIOS */}
+          <div className="pt-4">
+            <h3 className="text-base sm:text-lg font-serif font-black text-slate-900 mb-4 px-1">
+              Recursos Computacionales, Datos y Genealogía Teórica
+            </h3>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {/* Tarjeta 1: Presentación PDF */}
+              <div 
+                onClick={() => setActiveTab('presentation')}
+                className="p-5 rounded-2xl bg-white/95 border border-[#D4C9B8] hover:border-[#C86D51] shadow-sm hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between"
+              >
                 <div>
-                  <span className="px-3 py-1 rounded-lg bg-[#487075] text-white text-[10px] font-bold uppercase tracking-wider inline-block mb-3 shadow-xs">
-                    Ecuación 1 · Capacidad Portante
-                  </span>
-                  <div className="text-base font-extrabold text-black my-2 py-2.5 px-3 rounded-xl bg-[#E2F4F2] border border-[#7DB2B2]/60 text-center shadow-xs">
-                    <BlockMath math="H = (S \cdot E \cdot K)^{1/3} \cdot \prod \mathbb{I}(H_i \ge 0.25)" />
+                  <div className="w-10 h-10 rounded-xl bg-[#C86D51]/15 text-[#C86D51] flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+                    <MonitorPlay className="w-5 h-5 text-[#C86D51]" />
                   </div>
-                </div>
-                <div className="text-xs text-black font-sans mt-3 leading-relaxed">
-                  <LatexText text="Media geométrica no compensatoria. Si \(\min(S, E, K) < 0.25\), el territorio experimenta falla estructural inmediata. Ningún superávit de capital social o técnico puede sustituir un suelo o acuífero muerto." />
-                </div>
-              </div>
-
-              <div className="p-5 rounded-2xl bg-white/95 border border-[#C86D51]/30 shadow-sm flex flex-col justify-between">
-                <div>
-                  <span className="px-3 py-1 rounded-lg bg-[#C86D51] text-white text-[10px] font-bold uppercase tracking-wider inline-block mb-3 shadow-xs">
-                    Ecuación 2 · Tensión Sistémica
-                  </span>
-                  <div className="text-base font-extrabold text-black my-2 py-2.5 px-3 rounded-xl bg-[#FEECE8] border border-[#F4A79D]/60 text-center shadow-xs">
-                    <BlockMath math="\sigma = \frac{D}{H} = \frac{\sum_{j=1}^3 D_j / 3}{H}" />
-                  </div>
-                </div>
-                <div className="text-xs text-black font-sans mt-3 leading-relaxed">
-                  <LatexText text="Cociente uniaxial de esfuerzo sobre sección resistente. Define cuatro regímenes mecánicos: elástico (\(\sigma < 0.85\)), límite de fluencia (\(0.85 \le \sigma < 1.00\)), plástico irreversible (\(1.00 \le \sigma < 1.25\)) y fractura catastrófica (\(\sigma \ge 1.25\))." />
-                </div>
-              </div>
-
-              <div className="p-5 rounded-2xl bg-white/95 border border-[#927660]/30 shadow-sm flex flex-col justify-between">
-                <div>
-                  <span className="px-3 py-1 rounded-lg bg-[#927660] text-white text-[10px] font-bold uppercase tracking-wider inline-block mb-3 shadow-xs">
-                    Ecuación 3 · Velocidad Sintrópica
-                  </span>
-                  <div className="text-base font-extrabold text-black my-2 py-2.5 px-3 rounded-xl bg-[#FAF7F0] border border-[#DDD5C5]/60 text-center shadow-xs">
-                    <BlockMath math="\Gamma(t) = \frac{1}{H} \frac{dH}{dt}" />
-                  </div>
-                </div>
-                <div className="text-xs text-black font-sans mt-3 leading-relaxed">
-                  <LatexText text="Tasa temporal de acumulación o disipación neguentrópica en el tiempo. \(\Gamma > +0.02\,\text{año}^{-1}\) indica acumulación sintrópica regenerativa; \(\Gamma < -0.03\,\text{año}^{-1}\) denota senescencia disipativa acelerada." />
-                </div>
-              </div>
-            </div>
-
-            {/* FIGURA 1 EMBEBIDA DENTRO DEL PAPER */}
-            <div className="mt-8 p-5 rounded-2xl bg-white/95 border border-[#927660]/30 shadow-md">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-3 pb-2 border-b border-[#D4C9B8]">
-                <div className="flex items-center gap-2">
-                  <span className="px-2.5 py-1 rounded-md bg-[#376E6F] text-white text-xs font-mono font-bold">
-                    Figura 1 Canónica
-                  </span>
-                  <h4 className="font-serif font-bold text-black text-sm sm:text-base">
-                    Ley Constitutiva Socio-Ecológica Tensión-Deformación (σ vs. ε)
+                  <h4 className="font-serif font-bold text-slate-900 text-sm group-hover:text-[#C86D51] transition-colors">
+                    Presentación Oficial (PDF)
                   </h4>
+                  <p className="text-xs text-slate-600 mt-1 font-sans leading-relaxed">
+                    Diapositivas canónicas de síntesis ejecutiva a 300 DPI listas para exposición o descarga (2.4 MB).
+                  </p>
                 </div>
-                <a
-                  href={getAssetUrl('docs/figures/fig1_stress_strain_hysteresis.png')}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs text-[#376E6F] font-bold hover:underline"
-                >
-                  <Maximize2 className="w-3.5 h-3.5" />
-                  <span>Ver en alta resolución</span>
-                </a>
+                <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-[#C86D51]">
+                  <span>Ver Diapositivas</span>
+                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </div>
               </div>
 
-              <div className="rounded-xl overflow-hidden bg-[#0c0714] p-3 text-center my-3 border border-slate-300">
-                <img 
-                  src={getAssetUrl('docs/figures/fig1_stress_strain_hysteresis.png')} 
-                  alt="Figura 1: Ley Constitutiva Tensión-Deformación"
-                  className="w-full max-h-[420px] object-contain mx-auto rounded-lg"
-                  onError={(e) => {
-                    if (!e.target.dataset.tried) {
-                      e.target.dataset.tried = '1';
-                      e.target.src = '/hombros/docs/figures/fig1_stress_strain_hysteresis.png';
-                    }
-                  }}
-                />
+              {/* Tarjeta 2: Galería de Figuras */}
+              <div 
+                onClick={() => setActiveTab('figures')}
+                className="p-5 rounded-2xl bg-white/95 border border-[#D4C9B8] hover:border-[#927660] shadow-sm hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between"
+              >
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-[#927660]/15 text-[#927660] flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+                    <Image className="w-5 h-5 text-[#927660]" />
+                  </div>
+                  <h4 className="font-serif font-bold text-slate-900 text-sm group-hover:text-[#927660] transition-colors">
+                    Galería de 10 Figuras
+                  </h4>
+                  <p className="text-xs text-slate-600 mt-1 font-sans leading-relaxed">
+                    Colección comentada de las 7 figuras del Paper 1 y 3 figuras del Paper 2 en alta resolución.
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-[#927660]">
+                  <span>Explorar Galería</span>
+                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </div>
               </div>
 
-              <p className="text-xs text-black font-sans leading-relaxed mt-2 italic bg-[#FAF7F0] p-3 rounded-xl border border-[#DDD5C5]">
-                <strong>Epígrafe:</strong> Demostración de los cuatro regímenes viscoelásticos del territorio y ciclo de histéresis plástica cerrada. Al superar el límite de fluencia (σ ≥ 0.85), el daño por sobreextracción hídrica y compactación edáfica se vuelve permanente e irreversible sin subsidios energéticos externos masivos.
-              </p>
-            </div>
-          </div>
-
-          {/* 4. Benchmark Empírico Multi-sitio (N=8) */}
-          <div id="benchmark-empirico" className="card-slate rounded-3xl p-6 sm:p-8 shadow-xl border border-[#927660]/30 scroll-mt-24">
-            <div className="flex items-center gap-2 mb-2">
-              <Layers className="w-5 h-5 text-[#C86D51]" />
-              <h3 className="font-serif font-extrabold text-xl text-black">
-                4. Resultados Empíricos & Benchmark Multi-sitio (N=8)
-              </h3>
-            </div>
-            <p className="text-xs sm:text-sm text-black font-medium mb-4 max-w-4xl leading-relaxed">
-              Ejecución del pipeline canónico de R (<code className="text-[#376E6F] font-mono font-bold">scripts/pipeline_runner.R</code>) sobre una muestra balanceada de 3 territorios en Chile (Sur Global) y 5 metrópolis europeas (Norte Global):
-            </p>
-
-            {/* Tabla Canónica de Calibración */}
-            <div className="overflow-x-auto rounded-2xl border border-[#D4C9B8] bg-white shadow-sm mb-6">
-              <table className="w-full text-xs text-left text-black font-sans">
-                <thead className="bg-[#FAF7F0] border-b border-[#D4C9B8] text-[11px] font-mono uppercase text-slate-800">
-                  <tr>
-                    <th className="p-3">Territorio</th>
-                    <th className="p-3">País</th>
-                    <th className="p-3 text-center">Social (S)</th>
-                    <th className="p-3 text-center">Ambiental (E)</th>
-                    <th className="p-3 text-center">Económico (K)</th>
-                    <th className="p-3 text-center">Capacidad (H)</th>
-                    <th className="p-3 text-center">Presión (D)</th>
-                    <th className="p-3 text-center">Tensión (σ)</th>
-                    <th className="p-3">Régimen Mecánico</th>
-                    <th className="p-3 text-right">Alc. 1+2</th>
-                    <th className="p-3 text-right">Alc. 3 Up</th>
-                    <th className="p-3 text-right">Ratio Ext (%)</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-200">
-                  {benchmarkTable.map((t) => (
-                    <tr key={t.id} className="hover:bg-slate-50 transition-colors">
-                      <td className="p-3 font-bold">{t.name}</td>
-                      <td className="p-3 text-slate-700">{t.country}</td>
-                      <td className="p-3 text-center font-mono">{t.S}</td>
-                      <td className="p-3 text-center font-mono">{t.E}</td>
-                      <td className="p-3 text-center font-mono">{t.K}</td>
-                      <td className="p-3 text-center font-mono font-bold">{t.H}</td>
-                      <td className="p-3 text-center font-mono">{t.D}</td>
-                      <td className="p-3 text-center font-mono font-bold">{t.sigma}</td>
-                      <td className="p-3">
-                        <span className={`px-2 py-0.5 rounded-full text-[10px] border ${t.tagClass}`}>
-                          {t.regime}
-                        </span>
-                      </td>
-                      <td className="p-3 text-right font-mono">{t.scope12}</td>
-                      <td className="p-3 text-right font-mono">{t.scope3}</td>
-                      <td className="p-3 text-right font-mono font-extrabold">{t.extRatio}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            {/* FIGURAS SECUENCIALES DEL BENCHMARK (UNA POR UNA, ANCHO COMPLETO) */}
-            <div className="space-y-6 my-6">
-              {/* Figura 2 */}
-              <div className="p-5 rounded-2xl bg-white border border-[#D4C9B8] shadow-sm">
-                <div className="flex items-center justify-between pb-2 mb-3 border-b border-slate-200">
-                  <span className="text-xs font-mono font-bold text-[#C86D51]">Figura 2 · Bi-plot Scope 3 y Desplazamiento Entrópico</span>
-                  <a href={getAssetUrl('docs/figures/fig2_scope3_displacement_biplot.png')} target="_blank" rel="noopener noreferrer">
-                    <Maximize2 className="w-4 h-4 text-slate-500 hover:text-black" />
-                  </a>
+              {/* Tarjeta 3: Explorador de Scripts en R */}
+              <div 
+                onClick={() => setActiveTab('scripts_hub')}
+                className="p-5 rounded-2xl bg-white/95 border border-[#D4C9B8] hover:border-[#28475A] shadow-sm hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between"
+              >
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-[#28475A]/15 text-[#28475A] flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+                    <Terminal className="w-5 h-5 text-[#28475A]" />
+                  </div>
+                  <h4 className="font-serif font-bold text-slate-900 text-sm group-hover:text-[#28475A] transition-colors">
+                    Explorador de Scripts en R
+                  </h4>
+                  <p className="text-xs text-slate-600 mt-1 font-sans leading-relaxed">
+                    Hub reproducible con el Runner Maestro y los 7 módulos de cómputo en R para auditoría abierta.
+                  </p>
                 </div>
-                <div className="bg-[#0c0714] p-3 rounded-xl mb-3 text-center">
-                  <img 
-                    src={getAssetUrl('docs/figures/fig2_scope3_displacement_biplot.png')} 
-                    alt="Figura 2" 
-                    className="max-h-[380px] w-full object-contain mx-auto" 
-                    onError={(e) => {
-                      if (!e.target.dataset.tried) {
-                        e.target.dataset.tried = '1';
-                        e.target.src = '/hombros/docs/figures/fig2_scope3_displacement_biplot.png';
-                      }
-                    }}
-                  />
+                <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-[#28475A]">
+                  <span>Ver Código en R</span>
+                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </div>
-                <p className="text-xs text-slate-700 font-sans leading-relaxed">
-                  <strong>Figura 2: Externalización Metabólica y Desplazamiento Entrópico (Bi-plot Alcance 1-2 vs. Alcance 3):</strong> <em>Demuestra cómo metrópolis europeas como Copenhague externalizan el 76.5% de su carga metabólica hacia el Sur Global (operando en canibalismo metabólico), mientras enclaves productivos primarios como Quintero-Puchuncaví soportan fractura destructiva crónica (σ = 3.361).</em>
-                </p>
               </div>
 
-              {/* Figura 3 */}
-              <div className="p-5 rounded-2xl bg-white border border-[#D4C9B8] shadow-sm">
-                <div className="flex items-center justify-between pb-2 mb-3 border-b border-slate-200">
-                  <span className="text-xs font-mono font-bold text-[#376E6F]">Figura 3 · Inversión Sistemática de Rankings Multi-Modelo</span>
-                  <a href={getAssetUrl('docs/figures/fig3_multimodel_ranking_inversion.png')} target="_blank" rel="noopener noreferrer">
-                    <Maximize2 className="w-4 h-4 text-slate-500 hover:text-black" />
-                  </a>
+              {/* Tarjeta 4: Hombros de Gigantes */}
+              <div 
+                onClick={() => setActiveTab('episteme')}
+                className="p-5 rounded-2xl bg-white/95 border border-[#D4C9B8] hover:border-[#78350F] shadow-sm hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between"
+              >
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-[#78350F]/15 text-[#78350F] flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+                    <GraduationCap className="w-5 h-5 text-[#78350F]" />
+                  </div>
+                  <h4 className="font-serif font-bold text-slate-900 text-sm group-hover:text-[#78350F] transition-colors">
+                    Hombros de Gigantes
+                  </h4>
+                  <p className="text-xs text-slate-600 mt-1 font-sans leading-relaxed">
+                    Genealogía de autores clave: Georgescu-Roegen, Howard Odum, Elinor Ostrom, Ilya Prigogine, Kropotkin.
+                  </p>
                 </div>
-                <div className="bg-[#0c0714] p-3 rounded-xl mb-3 text-center">
-                  <img 
-                    src={getAssetUrl('docs/figures/fig3_multimodel_ranking_inversion.png')} 
-                    alt="Figura 3" 
-                    className="max-h-[380px] w-full object-contain mx-auto" 
-                    onError={(e) => {
-                      if (!e.target.dataset.tried) {
-                        e.target.dataset.tried = '1';
-                        e.target.src = '/hombros/docs/figures/fig3_multimodel_ranking_inversion.png';
-                      }
-                    }}
-                  />
+                <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-[#78350F]">
+                  <span>Conocer la Base</span>
+                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </div>
-                <p className="text-xs text-slate-700 font-sans leading-relaxed">
-                  <strong>Figura 3: Inversión Sistemática de Jerarquías de Sostenibilidad (Slope Chart):</strong> <em>Al incorporar la no-sustituibilidad de Liebig y el Alcance 3 importado, Chanco asciende al Puesto #1 en solvencia biofísica (AAA), mientras Copenhague cae drásticamente del puesto #1 al #5 por deformación plástica y dependencia metabólica externa asintótica.</em>
-                </p>
-              </div>
-
-              {/* Figura 4 */}
-              <div className="p-5 rounded-2xl bg-white border border-[#D4C9B8] shadow-sm">
-                <div className="flex items-center justify-between pb-2 mb-3 border-b border-slate-200">
-                  <span className="text-xs font-mono font-bold text-[#927660]">Figura 4 · Descomposición de Varianza Global de Sobol (Monte Carlo N=5,000)</span>
-                  <a href={getAssetUrl('docs/figures/fig4_sobol_sensitivity_montecarlo.png')} target="_blank" rel="noopener noreferrer">
-                    <Maximize2 className="w-4 h-4 text-slate-500 hover:text-black" />
-                  </a>
-                </div>
-                <div className="bg-[#0c0714] p-3 rounded-xl mb-3 text-center">
-                  <img 
-                    src={getAssetUrl('docs/figures/fig4_sobol_sensitivity_montecarlo.png')} 
-                    alt="Figura 4" 
-                    className="max-h-[380px] w-full object-contain mx-auto" 
-                    onError={(e) => {
-                      if (!e.target.dataset.tried) {
-                        e.target.dataset.tried = '1';
-                        e.target.src = '/hombros/docs/figures/fig4_sobol_sensitivity_montecarlo.png';
-                      }
-                    }}
-                  />
-                </div>
-                <p className="text-xs text-slate-700 font-sans leading-relaxed">
-                  <strong>Figura 4: Descomposición de Sensibilidad Global de Sobol:</strong> <em>El Hombro Ambiental (E) explica el 43.8% de la varianza total de resiliencia territorial, seguido por el Hombro Social (S, 28.3%) y el factor de gobernanza cooperativa (κ, 12.4%), confirmando la primacía de la base biofísica material.</em>
-                </p>
-              </div>
-
-              {/* Figura 5 */}
-              <div className="p-5 rounded-2xl bg-white border border-[#D4C9B8] shadow-sm">
-                <div className="flex items-center justify-between pb-2 mb-3 border-b border-slate-200">
-                  <span className="text-xs font-mono font-bold text-[#C86D51]">Figura 5 · Amortiguación Tensora en Red Panal Policéntrica</span>
-                  <a href={getAssetUrl('docs/figures/fig5_honeycomb_network_damping.png')} target="_blank" rel="noopener noreferrer">
-                    <Maximize2 className="w-4 h-4 text-slate-500 hover:text-black" />
-                  </a>
-                </div>
-                <div className="bg-[#0c0714] p-3 rounded-xl mb-3 text-center">
-                  <img 
-                    src={getAssetUrl('docs/figures/fig5_honeycomb_network_damping.png')} 
-                    alt="Figura 5" 
-                    className="max-h-[380px] w-full object-contain mx-auto" 
-                  />
-                </div>
-                <p className="text-xs text-slate-700 font-sans leading-relaxed">
-                  <strong>Figura 5: Amortiguación de Picos de Tensión por Acoplamiento Mutualista en Red Panal (Density Violin Plots):</strong> <em>Comparación probabilística entre cuencas aisladas y acopladas en red policéntrica ante choques exógenos de sequía (ΔD = +0.25). La red reduce la varianza de tensión en un 38.4% y elimina el cruce al régimen de fractura catastrófica.</em>
-                </p>
-              </div>
-
-              {/* Figura 6 */}
-              <div className="p-5 rounded-2xl bg-white border border-[#D4C9B8] shadow-sm">
-                <div className="flex items-center justify-between pb-2 mb-3 border-b border-slate-200">
-                  <span className="text-xs font-mono font-bold text-[#376E6F]">Figura 6 · Funciones de Normalización Canónica (Goalpost Scaling)</span>
-                  <a href={getAssetUrl('docs/figures/fig6_normalization_transfer_functions.png')} target="_blank" rel="noopener noreferrer">
-                    <Maximize2 className="w-4 h-4 text-slate-500 hover:text-black" />
-                  </a>
-                </div>
-                <div className="bg-[#0c0714] p-3 rounded-xl mb-3 text-center">
-                  <img 
-                    src={getAssetUrl('docs/figures/fig6_normalization_transfer_functions.png')} 
-                    alt="Figura 6" 
-                    className="max-h-[380px] w-full object-contain mx-auto" 
-                  />
-                </div>
-                <p className="text-xs text-slate-700 font-sans leading-relaxed">
-                  <strong>Figura 6: Funciones de Transferencia Canónica (X_raw → [0, 1]):</strong> <em>Mapeo determinístico de variables físicas heterogéneas (Falkenmark, PM2.5, cobertura nativa, cuidado, salario digno) con delimitación de la franja crítica de micro-fractura de Liebig en H_i &lt; 0.25.</em>
-                </p>
-              </div>
-
-              {/* Figura 7 */}
-              <div className="p-5 rounded-2xl bg-white border border-[#D4C9B8] shadow-sm">
-                <div className="flex items-center justify-between pb-2 mb-3 border-b border-slate-200">
-                  <span className="text-xs font-mono font-bold text-[#C86D51]">Figura 7 · Ensayo de Tracción Territorial Pre-Inversión (SEIA 2.0)</span>
-                  <a href={getAssetUrl('docs/figures/fig7_audit_traction_stress_test.png')} target="_blank" rel="noopener noreferrer">
-                    <Maximize2 className="w-4 h-4 text-slate-500 hover:text-black" />
-                  </a>
-                </div>
-                <div className="bg-[#0c0714] p-3 rounded-xl mb-3 text-center">
-                  <img 
-                    src={getAssetUrl('docs/figures/fig7_audit_traction_stress_test.png')} 
-                    alt="Figura 7" 
-                    className="max-h-[380px] w-full object-contain mx-auto" 
-                  />
-                </div>
-                <p className="text-xs text-slate-700 font-sans leading-relaxed">
-                  <strong>Figura 7: Simulación de Tracción Territorial y Dictamen de Carga Virtual:</strong> <em>Evaluación determinística del desplazamiento σ₀ → σ_proyectado ante proyectos extractivos, dictaminando aprobación elástica, rechazo por deformación plástica o moratoria biofísica legal ex-ante.</em>
-                </p>
               </div>
             </div>
           </div>
         </div>
       )}
 
+      {/* ==================================================================== */}
+      {/* TAB 1: LECTOR EDITORIAL LIMPIO (ESTILO SCHOLARLY PAPER.HTML)         */}
+      {/* ==================================================================== */}
+      {activeTab === 'reader' && (
+        <div className="space-y-6">
+          {/* BARRA SUPERIOR DE CONTROL DEL LECTOR EDITORIAL */}
+          <div className="bg-white/95 backdrop-blur-md rounded-2xl p-4 shadow-md border border-[#D4C9B8] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setActiveTab('library')}
+                className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition-all flex items-center gap-1.5 shrink-0"
+              >
+                <ArrowLeft className="w-4 h-4 text-slate-600" />
+                <span>Volver a Biblioteca</span>
+              </button>
+
+              <div className="h-5 w-px bg-slate-300 hidden sm:block" />
+
+              {/* Selector de Paper Activo */}
+              <div className="flex items-center gap-1.5 p-1 rounded-xl bg-slate-100 border border-slate-300 text-xs font-bold">
+                <button
+                  onClick={() => setActivePaper('paper1')}
+                  className={`px-3 py-1.5 rounded-lg transition-all ${
+                    activePaper === 'paper1'
+                      ? 'bg-[#376E6F] text-white shadow-xs'
+                      : 'text-slate-700 hover:text-black hover:bg-white/60'
+                  }`}
+                >
+                  Paper #1: Metodológico (IMRAD)
+                </button>
+                <button
+                  onClick={() => setActivePaper('paper2')}
+                  className={`px-3 py-1.5 rounded-lg transition-all ${
+                    activePaper === 'paper2'
+                      ? 'bg-amber-600 text-white shadow-xs'
+                      : 'text-slate-700 hover:text-black hover:bg-white/60'
+                  }`}
+                >
+                  Paper #2: Kit Audita tu Cuenca
+                </button>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 justify-end">
+              {activePaper === 'paper1' ? (
+                <a
+                  href={getAssetUrl('paper.html')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3.5 py-1.5 rounded-xl bg-[#487075] hover:bg-[#395b5f] text-white text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs"
+                >
+                  <ExternalLink className="w-3.5 h-3.5 text-white" />
+                  <span>Abrir paper.html (Web)</span>
+                </a>
+              ) : (
+                <a
+                  href={getAssetUrl('audita-tu-cuenca.html')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3.5 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs"
+                >
+                  <ExternalLink className="w-3.5 h-3.5 text-white" />
+                  <span>Abrir audita-tu-cuenca.html (Web)</span>
+                </a>
+              )}
+            </div>
+          </div>
+
+          {/* BARRA DE NAVEGACIÓN RÁPIDA DE SECCIONES (JUMP BAR) */}
+          <div className="flex flex-wrap items-center gap-2 p-3 rounded-2xl bg-[#EDE8DC]/80 border border-[#D4C9B8] text-xs font-mono">
+            <span className="font-bold text-slate-800 mr-1 flex items-center gap-1.5">
+              <Compass className="w-3.5 h-3.5 text-[#376E6F]" />
+              Secciones:
+            </span>
+            {activePaper === 'paper1' ? (
+              <>
+                <a href="#/teoria#abstract" className="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-800 border border-[#D4C9B8] transition-all">
+                  Resumen
+                </a>
+                <a href="#/teoria#gaps-estandares" className="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-800 border border-[#D4C9B8] transition-all">
+                  §1. Gaps
+                </a>
+                <a href="#/teoria#corporeidad-compleja" className="px-3 py-1 rounded-lg bg-[#376E6F] text-white font-bold hover:bg-[#2b595a] shadow-xs transition-all">
+                  §2. Corporeidad Territorial
+                </a>
+                <a href="#/teoria#formulacion-mecanica" className="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-800 border border-[#D4C9B8] transition-all">
+                  §3. Leyes Mecánicas
+                </a>
+                <a href="#/teoria#benchmark-empirico" className="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-800 border border-[#D4C9B8] transition-all">
+                  §4. Benchmark N=8
+                </a>
+                <button 
+                  onClick={() => setActiveTab('figures')} 
+                  className="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-800 border border-[#D4C9B8] transition-all flex items-center gap-1"
+                >
+                  <Image className="w-3 h-3 text-[#927660]" />
+                  <span>Figuras 1-7</span>
+                </button>
+              </>
+            ) : (
+              <>
+                <a href="#/teoria#resumen-kit" className="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-800 border border-[#D4C9B8] transition-all">
+                  Resumen Ejecutivo
+                </a>
+                <a href="#/teoria#asimetria-seia" className="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-800 border border-[#D4C9B8] transition-all">
+                  §1. Asimetría SEIA
+                </a>
+                <a href="#/teoria#variables-kit" className="px-3 py-1 rounded-lg bg-amber-600 text-white font-bold hover:bg-amber-700 shadow-xs transition-all">
+                  §2. Doce Variables Físicas
+                </a>
+                <a href="#/teoria#ensayo-traccion" className="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-800 border border-[#D4C9B8] transition-all">
+                  §3. Ensayo de Tracción
+                </a>
+                <a href="#/teoria#caso-longavi" className="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-800 border border-[#D4C9B8] transition-all">
+                  §4. Cuenca Longaví
+                </a>
+                <a href="#/teoria#macroeconomia-inaction" className="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-800 border border-[#D4C9B8] transition-all">
+                  §5. Costo de Inacción
+                </a>
+                <button 
+                  onClick={() => setActiveTab('figures')} 
+                  className="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-800 border border-[#D4C9B8] transition-all flex items-center gap-1"
+                >
+                  <Image className="w-3 h-3 text-amber-700" />
+                  <span>Figuras 8-10</span>
+                </button>
+              </>
+            )}
+          </div>
+
+          {/* CONTENEDOR DE LECTURA PRINCIPAL TIPO SCHOLARLY PAPER (MAX-W-4XL) */}
+          <div className="max-w-4xl mx-auto bg-white/95 backdrop-blur-md rounded-3xl p-6 sm:p-12 shadow-xl border border-[#D4C9B8] text-slate-900 font-serif leading-relaxed space-y-10">
+            {activePaper === 'paper1' ? (
+              /* ============================================================ */
+              /* CONTENIDO LIMPIO DEL PAPER #1: METODOLÓGICO IMRAD            */
+              /* ============================================================ */
+              <>
+                {/* Header Académico del Paper 1 */}
+                <header className="border-b border-slate-200 pb-8 space-y-4">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-[#376E6F] text-white">
+                      Artículo Científico Canónico
+                    </span>
+                    <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-[#E2F4F2] text-[#376E6F] border border-[#7DB2B2]">
+                      Mecánica de Medios Continuos & Ecología Radical
+                    </span>
+                    <span className="text-xs font-mono text-slate-600">
+                      DOI: 10.5281/zenodo.hombros.2026
+                    </span>
+                  </div>
+
+                  <h1 className="text-2xl sm:text-4xl font-serif font-black tracking-tight text-slate-950 leading-tight">
+                    Hombros: Un Modelo de Mecánica de Medios Continuos y Metabolismo Socio-Ecológico para Cuantificar la Capacidad Portante, Tensión Sistémica y Desplazamiento Entrópico Territorial
+                  </h1>
+
+                  <div className="pt-2 text-sm text-slate-700 font-sans space-y-1 border-t border-slate-100">
+                    <p className="font-bold text-slate-900">
+                      Daniel Sebastián Santander Urrutia
+                    </p>
+                    <p className="text-slate-600 text-xs">
+                      Geofísico & Permacultor • Dirección Técnica, Proyecto HOMBROS • Valparaíso / Maule, Chile
+                    </p>
+                    <p className="text-[11px] font-mono text-slate-500">
+                      Clasificación UNESCO: 5312 (Economía Sectorial) / 3311 (Tecnología e Ingeniería Ambiental) / 2506 (Geofísica)
+                    </p>
+                  </div>
+                </header>
+
+                {/* Resumen / Abstract */}
+                <section id="abstract" className="scroll-mt-24 p-6 sm:p-8 rounded-2xl bg-[#F7F5F0] border border-[#E5DFD3] space-y-4">
+                  <h3 className="font-sans font-black text-xs uppercase tracking-widest text-[#376E6F]">
+                    Resumen Ejecutivo / Abstract
+                  </h3>
+                  <p className="text-sm sm:text-base text-slate-800 leading-relaxed font-sans font-medium">
+                    <LatexText text="Los marcos métricos dominantes de sostenibilidad —el Índice de Desarrollo Humano (IDH), la Economía de la Dona y los Límites Planetarios— presentan al menos tres dificultades metodológicas estructurales: (1) sustituibilidad aditiva arbitraria entre capitales, (2) carencia de una formulación tensorial que capture la no-linealidad de la fatiga territorial y la histéresis, y (3) ceguera frente a las cadenas de suministro de Alcance 3 (*Scope 3* upstream), encubriendo el colonialismo metabólico del Norte Global." />
+                  </p>
+                  <p className="text-sm sm:text-base text-slate-800 leading-relaxed font-sans font-medium">
+                    <LatexText text="En este trabajo se formula el **Modelo HOMBROS**, un marco matemático derivado de la mecánica de medios continuos y la termodinámica del no-equilibrio para caracterizar el territorio como un medio viscoelástico metabolizante. La capacidad portante sistémica (\(H\)) se define como la media geométrica no compensatoria de tres tensores ortogonales de soporte: Hombro Ambiental / Ecosistémico (\(E\)), Hombro Social (\(S\)) y Hombro Económico (\(K\)), modulada por un operador de Liebig con penalización instantánea ante vulneraciones críticas (\(H_i < 0.25\))." />
+                  </p>
+                  <p className="text-sm sm:text-base text-slate-800 leading-relaxed font-sans font-medium">
+                    <LatexText text="La tensión sistémica uniaxial (\(\sigma = D / H\)) define cuatro regímenes reológicos: elástico reversible (\(\sigma < 0.85\)), límite de fluencia (*yield stress*, \(0.85 \le \sigma < 1.00\)), deformación plástica irreversible (\(1.00 \le \sigma < 1.25\)) y fractura socio-ecológica catastrófica (\(\sigma \ge 1.25\)). Validamos el modelo empíricamente en ocho arquetipos territoriales (Chanco, Aconcagua, Quintero-Puchuncaví en Chile; Copenhague, Barcelona, Bilbao, Ámsterdam y Berlín en Europa) y demostramos que las metrópolis post-industriales con reducidas emisiones directas externalizan entre un \(54\%\) y un \(76.5\%\) de su carga entrópica en forma de bienes intensivos importados." />
+                  </p>
+                </section>
+
+                {/* Sección 1: Análisis Crítico de Gaps */}
+                <section id="gaps-estandares" className="scroll-mt-24 space-y-6">
+                  <div className="border-b border-slate-200 pb-2">
+                    <h2 className="text-2xl sm:text-3xl font-serif font-black text-slate-950">
+                      1. Análisis Crítico: Matriz de Gaps en Estándares Vigentes
+                    </h2>
+                    <p className="text-sm text-slate-600 font-sans mt-1">
+                      Vacíos metodológicos que impiden a las comunidades y gobiernos subnacionales evaluar su vulnerabilidad biofísica real.
+                    </p>
+                  </div>
+
+                  <div className="space-y-4 font-sans text-sm">
+                    {gapsData.map((gap, idx) => (
+                      <div key={idx} className="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200 hover:border-[#376E6F] transition-all shadow-xs space-y-2">
+                        <div className="flex items-center justify-between">
+                          <span className="font-mono font-bold text-xs uppercase text-[#376E6F]">
+                            {gap.standard}
+                          </span>
+                        </div>
+                        <div className="text-slate-700 text-xs sm:text-sm">
+                          <strong>Supuesto Base:</strong> <LatexText text={gap.premise} />
+                        </div>
+                        <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-950 text-xs sm:text-sm">
+                          <strong>Brecha Crítica:</strong> <LatexText text={gap.gap} />
+                        </div>
+                        <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-950 text-xs sm:text-sm">
+                          <strong>Solución Hombros:</strong> <LatexText text={gap.solution} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+
+                {/* Sección 2: Corporeidad Territorial */}
+                <section id="corporeidad-compleja" className="scroll-mt-24 space-y-6">
+                  <div className="border-b border-slate-200 pb-2">
+                    <h2 className="text-2xl sm:text-3xl font-serif font-black text-slate-950">
+                      2. De la Metáfora Mecánica a la Corporeidad del Sistema Complejo
+                    </h2>
+                    <p className="text-sm text-slate-600 font-sans mt-1">
+                      Por qué el territorio necesita variables físicas para la toma de decisiones soberanas.
+                    </p>
+                  </div>
+
+                  <p className="text-base sm:text-lg text-slate-800 leading-relaxed">
+                    La economía tradicional y los estándares de sostenibilidad cometen el error de tratar al territorio como un "plano contable cartesiano": una canasta abstracta de recursos transables sin volumen, sin límites físicos y sin memoria material. Para superar esta ceguera, el modelo <strong>Hombros</strong> formaliza el territorio como un <strong>cuerpo físico indivisible y metabólicamente activo</strong>, cuyas múltiples interacciones generan propiedades emergentes modelables mediante tres conceptos fundamentales:
+                  </p>
+
+                  <div className="space-y-6 font-sans">
+                    {/* Pilar 1 */}
+                    <div className="p-6 rounded-2xl bg-[#F7F5F0] border border-[#E5DFD3] space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
+                          Pilar 1 · Reología de Materiales
+                        </span>
+                        <span className="text-xs font-mono text-slate-500">Mecánica de Medios Continuos</span>
+                      </div>
+                      <h4 className="text-base font-serif font-bold text-slate-900">
+                        Cuerpo Deformable o Medio Continuo Socio-Metabólico
+                      </h4>
+                      <p className="text-sm text-slate-700 leading-relaxed">
+                        El territorio no es un agregado de propiedades prediales aisladas; tiene volumen físico, espesor ecológico, inercia y memoria histórica. Responde a las presiones externas mediante <strong>tensión (<InlineMath math="\sigma" />)</strong> y <strong>deformación (<InlineMath math="\varepsilon" />)</strong>, acumulando fatiga estructural y transitando de la elasticidad reversible al daño plástico permanente (histéresis).
+                      </p>
+                    </div>
+
+                    {/* Pilar 2 */}
+                    <div className="p-6 rounded-2xl bg-[#F7F5F0] border border-[#E5DFD3] space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-indigo-100 text-indigo-800 border border-indigo-300">
+                          Pilar 2 · Geometría Diferencial
+                        </span>
+                        <span className="text-xs font-mono text-slate-500">Espacio de Fases Multidimensional</span>
+                      </div>
+                      <h4 className="text-base font-serif font-bold text-slate-900">
+                        Variedad Diferencial o Espacio de Estados Multidimensional
+                      </h4>
+                      <p className="text-sm text-slate-700 leading-relaxed">
+                        El acoplamiento entre los Hombros <InlineMath math="(E, S, K)" /> y las Presiones <InlineMath math="(D)" /> no forma un cuerpo algebraico simple (no son sumas transables), sino una <strong>variedad continua</strong>. La Ley de Liebig actúa como una pared asintótica de frontera: si un soporte basal colapsa (<InlineMath math="H_i < 0.25" />), el sistema cae a un atractor catastrófico, impidiendo toda compensación monetaria.
+                      </p>
+                    </div>
+
+                    {/* Pilar 3 */}
+                    <div className="p-6 rounded-2xl bg-[#F7F5F0] border border-[#E5DFD3] space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-amber-100 text-amber-800 border border-amber-300">
+                          Pilar 3 · Termodinámica del No-Equilibrio
+                        </span>
+                        <span className="text-xs font-mono text-slate-500">Prigogine & Ostrom</span>
+                      </div>
+                      <h4 className="text-base font-serif font-bold text-slate-900">
+                        Estructura Disipativa Auto-organizada en Red Panal
+                      </h4>
+                      <p className="text-sm text-slate-700 leading-relaxed">
+                        Un territorio es un sistema metabólicamente abierto que preserva su orden interno (sintropía <InlineMath math="\Gamma > 0" />) disipando calor y dispersión material. Cuando los comités locales (como los APRs) se articulan en una <strong>Red Panal mutualista (<InlineMath math="\kappa = 0.38" />)</strong>, los picos de estrés hídrico son absorbidos colectivamente, garantizando la autopoiesis del soporte común.
+                      </p>
+                    </div>
+                  </div>
+                </section>
+
+                {/* Sección 3: Formulación Matemática */}
+                <section id="formulacion-mecanica" className="scroll-mt-24 space-y-6">
+                  <div className="border-b border-slate-200 pb-2">
+                    <h2 className="text-2xl sm:text-3xl font-serif font-black text-slate-950">
+                      3. Formulación Matemática y Leyes Mecánicas
+                    </h2>
+                    <p className="text-sm text-slate-600 font-sans mt-1">
+                      Ecuaciones maestras de capacidad portante, tensión sistémica y velocidad sintrópica.
+                    </p>
+                  </div>
+
+                  <div className="space-y-6 font-sans">
+                    {/* Ecuación 1 */}
+                    <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
+                      <span className="px-3 py-1 rounded-lg bg-[#376E6F] text-white text-xs font-mono font-bold inline-block">
+                        Ecuación 1 · Capacidad Portante Efectiva
+                      </span>
+                      <div className="py-4 px-4 rounded-xl bg-slate-50 border border-slate-200 text-center">
+                        <BlockMath math="H = (S \cdot E \cdot K)^{1/3} \cdot \prod \mathbb{I}(H_i \ge 0.25)" />
+                      </div>
+                      <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                        <LatexText text="Media geométrica no compensatoria. Si \(\min(S, E, K) < 0.25\), el territorio experimenta falla estructural inmediata. Ningún superávit de capital social o técnico puede sustituir un suelo o acuífero muerto." />
+                      </p>
+                    </div>
+
+                    {/* Ecuación 2 */}
+                    <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
+                      <span className="px-3 py-1 rounded-lg bg-[#C86D51] text-white text-xs font-mono font-bold inline-block">
+                        Ecuación 2 · Tensión Sistémica Uniaxial
+                      </span>
+                      <div className="py-4 px-4 rounded-xl bg-slate-50 border border-slate-200 text-center">
+                        <BlockMath math="\sigma = \frac{D}{H} = \frac{\sum_{j=1}^3 D_j / 3}{H}" />
+                      </div>
+                      <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                        <LatexText text="Cociente uniaxial de esfuerzo sobre sección resistente. Define cuatro regímenes mecánicos: elástico (\(\sigma < 0.85\)), límite de fluencia (\(0.85 \le \sigma < 1.00\)), plástico irreversible (\(1.00 \le \sigma < 1.25\)) y fractura catastrófica (\(\sigma \ge 1.25\))." />
+                      </p>
+                    </div>
+
+                    {/* Ecuación 3 */}
+                    <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
+                      <span className="px-3 py-1 rounded-lg bg-[#927660] text-white text-xs font-mono font-bold inline-block">
+                        Ecuación 3 · Velocidad Sintrópica
+                      </span>
+                      <div className="py-4 px-4 rounded-xl bg-slate-50 border border-slate-200 text-center">
+                        <BlockMath math="\Gamma(t) = \frac{1}{H} \frac{dH}{dt}" />
+                      </div>
+                      <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                        <LatexText text="Tasa temporal de acumulación o disipación neguentrópica en el tiempo. \(\Gamma > +0.02\,\text{año}^{-1}\) indica acumulación sintrópica regenerativa; \(\Gamma < -0.03\,\text{año}^{-1}\) denota senescencia disipativa acelerada." />
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* FIGURA 1 EMBEBIDA SECUENCIALMENTE */}
+                  <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4 font-sans">
+                    <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+                      <span className="text-xs font-mono font-bold text-[#376E6F]">
+                        Figura 1 Canónica · Ley Constitutiva Tensión-Deformación (σ vs. ε)
+                      </span>
+                      <a href={getAssetUrl('docs/figures/fig1_stress_strain_hysteresis.png')} target="_blank" rel="noopener noreferrer">
+                        <Maximize2 className="w-4 h-4 text-slate-500 hover:text-black" />
+                      </a>
+                    </div>
+                    <div className="bg-[#0c0714] p-4 rounded-xl text-center">
+                      <img 
+                        src={getAssetUrl('docs/figures/fig1_stress_strain_hysteresis.png')} 
+                        alt="Figura 1: Tensión vs Deformación"
+                        className="max-h-[420px] w-full object-contain mx-auto rounded-lg"
+                      />
+                    </div>
+                    <p className="text-xs text-slate-700 leading-relaxed italic bg-slate-50 p-3 rounded-xl border border-slate-200">
+                      <strong>Epígrafe:</strong> Demostración de los cuatro regímenes viscoelásticos del territorio y ciclo de histéresis plástica cerrada. Al superar el límite de fluencia (<InlineMath math="\sigma \ge 0.85" />), el daño por sobreextracción hídrica y compactación edáfica se vuelve permanente e irreversible sin subsidios energéticos externos masivos.
+                    </p>
+                  </div>
+                </section>
+
+                {/* Sección 4: Benchmark Empírico Multi-sitio */}
+                <section id="benchmark-empirico" className="scroll-mt-24 space-y-6">
+                  <div className="border-b border-slate-200 pb-2">
+                    <h2 className="text-2xl sm:text-3xl font-serif font-black text-slate-950">
+                      4. Resultados Empíricos & Benchmark Multi-sitio (N=8)
+                    </h2>
+                    <p className="text-sm text-slate-600 font-sans mt-1">
+                      Calibración empírica y contraste entre 3 territorios en Chile y 5 metrópolis europeas.
+                    </p>
+                  </div>
+
+                  {/* Tabla Canónica de Resultados */}
+                  <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm font-sans text-xs">
+                    <table className="w-full text-left">
+                      <thead className="bg-[#FAF7F0] border-b border-slate-200 text-[11px] font-mono uppercase text-slate-800">
+                        <tr>
+                          <th className="p-3">Territorio</th>
+                          <th className="p-3">País</th>
+                          <th className="p-3 text-center">S</th>
+                          <th className="p-3 text-center">E</th>
+                          <th className="p-3 text-center">K</th>
+                          <th className="p-3 text-center">H</th>
+                          <th className="p-3 text-center">D</th>
+                          <th className="p-3 text-center">σ</th>
+                          <th className="p-3">Régimen Mecánico</th>
+                          <th className="p-3 text-right">Alc. 1+2</th>
+                          <th className="p-3 text-right">Alc. 3 Up</th>
+                          <th className="p-3 text-right">Ratio Ext</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-200">
+                        {benchmarkTable.map((t) => (
+                          <tr key={t.id} className="hover:bg-slate-50 transition-colors">
+                            <td className="p-3 font-bold">{t.name}</td>
+                            <td className="p-3 text-slate-700">{t.country}</td>
+                            <td className="p-3 text-center font-mono">{t.S}</td>
+                            <td className="p-3 text-center font-mono">{t.E}</td>
+                            <td className="p-3 text-center font-mono">{t.K}</td>
+                            <td className="p-3 text-center font-mono font-bold">{t.H}</td>
+                            <td className="p-3 text-center font-mono">{t.D}</td>
+                            <td className="p-3 text-center font-mono font-bold">{t.sigma}</td>
+                            <td className="p-3">
+                              <span className={`px-2 py-0.5 rounded-full text-[10px] border ${t.tagClass}`}>
+                                {t.regime}
+                              </span>
+                            </td>
+                            <td className="p-3 text-right font-mono">{t.scope12}</td>
+                            <td className="p-3 text-right font-mono">{t.scope3}</td>
+                            <td className="p-3 text-right font-mono font-extrabold">{t.extRatio}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* FIGURAS SECUENCIALES 2 A 7 DEL BENCHMARK */}
+                  <div className="space-y-6 font-sans">
+                    {/* Figura 2 */}
+                    <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
+                      <div className="flex items-center justify-between border-b border-slate-200 pb-2">
+                        <span className="text-xs font-mono font-bold text-[#C86D51]">
+                          Figura 2 Canónica · Bi-plot Scope 3 y Desplazamiento Entrópico
+                        </span>
+                        <a href={getAssetUrl('docs/figures/fig2_scope3_displacement_biplot.png')} target="_blank" rel="noopener noreferrer">
+                          <Maximize2 className="w-4 h-4 text-slate-500 hover:text-black" />
+                        </a>
+                      </div>
+                      <div className="bg-[#0c0714] p-3 rounded-xl text-center">
+                        <img 
+                          src={getAssetUrl('docs/figures/fig2_scope3_displacement_biplot.png')} 
+                          alt="Figura 2" 
+                          className="max-h-[380px] w-full object-contain mx-auto" 
+                        />
+                      </div>
+                      <p className="text-xs text-slate-700 leading-relaxed">
+                        <strong>Figura 2: Externalización Metabólica y Desplazamiento Entrópico (Bi-plot Alcance 1-2 vs. Alcance 3):</strong> <em>Demuestra cómo metrópolis europeas como Copenhague externalizan el 76.5% de su carga metabólica hacia el Sur Global (operando en canibalismo metabólico), mientras enclaves productivos primarios como Quintero-Puchuncaví soportan fractura destructiva crónica (σ = 3.361).</em>
+                      </p>
+                    </div>
+
+                    {/* Figura 3 */}
+                    <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
+                      <div className="flex items-center justify-between border-b border-slate-200 pb-2">
+                        <span className="text-xs font-mono font-bold text-[#376E6F]">
+                          Figura 3 Canónica · Inversión Sistemática de Rankings Multi-Modelo
+                        </span>
+                        <a href={getAssetUrl('docs/figures/fig3_multimodel_ranking_inversion.png')} target="_blank" rel="noopener noreferrer">
+                          <Maximize2 className="w-4 h-4 text-slate-500 hover:text-black" />
+                        </a>
+                      </div>
+                      <div className="bg-[#0c0714] p-3 rounded-xl text-center">
+                        <img 
+                          src={getAssetUrl('docs/figures/fig3_multimodel_ranking_inversion.png')} 
+                          alt="Figura 3" 
+                          className="max-h-[380px] w-full object-contain mx-auto" 
+                        />
+                      </div>
+                      <p className="text-xs text-slate-700 leading-relaxed">
+                        <strong>Figura 3: Inversión Sistemática de Jerarquías de Sostenibilidad (Slope Chart):</strong> <em>Al incorporar la no-sustituibilidad de Liebig y el Alcance 3 importado, Chanco asciende al Puesto #1 en solvencia biofísica (AAA), mientras Copenhague cae drásticamente del puesto #1 al #5 por deformación plástica y dependencia metabólica externa asintótica.</em>
+                      </p>
+                    </div>
+
+                    {/* Figura 4 */}
+                    <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
+                      <div className="flex items-center justify-between border-b border-slate-200 pb-2">
+                        <span className="text-xs font-mono font-bold text-[#927660]">
+                          Figura 4 Canónica · Descomposición de Varianza Global de Sobol (Monte Carlo N=5,000)
+                        </span>
+                        <a href={getAssetUrl('docs/figures/fig4_sobol_sensitivity_montecarlo.png')} target="_blank" rel="noopener noreferrer">
+                          <Maximize2 className="w-4 h-4 text-slate-500 hover:text-black" />
+                        </a>
+                      </div>
+                      <div className="bg-[#0c0714] p-3 rounded-xl text-center">
+                        <img 
+                          src={getAssetUrl('docs/figures/fig4_sobol_sensitivity_montecarlo.png')} 
+                          alt="Figura 4" 
+                          className="max-h-[380px] w-full object-contain mx-auto" 
+                        />
+                      </div>
+                      <p className="text-xs text-slate-700 leading-relaxed">
+                        <strong>Figura 4: Descomposición de Sensibilidad Global de Sobol:</strong> <em>El Hombro Ambiental (E) explica el 43.8% de la varianza total de resiliencia territorial, seguido por el Hombro Social (S, 28.3%) y el factor de gobernanza cooperativa (κ, 12.4%), confirmando la primacía de la base biofísica material.</em>
+                      </p>
+                    </div>
+
+                    {/* Figura 5 */}
+                    <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
+                      <div className="flex items-center justify-between border-b border-slate-200 pb-2">
+                        <span className="text-xs font-mono font-bold text-[#C86D51]">
+                          Figura 5 Canónica · Amortiguación Tensora en Red Panal Policéntrica
+                        </span>
+                        <a href={getAssetUrl('docs/figures/fig5_honeycomb_network_damping.png')} target="_blank" rel="noopener noreferrer">
+                          <Maximize2 className="w-4 h-4 text-slate-500 hover:text-black" />
+                        </a>
+                      </div>
+                      <div className="bg-[#0c0714] p-3 rounded-xl text-center">
+                        <img 
+                          src={getAssetUrl('docs/figures/fig5_honeycomb_network_damping.png')} 
+                          alt="Figura 5" 
+                          className="max-h-[380px] w-full object-contain mx-auto" 
+                        />
+                      </div>
+                      <p className="text-xs text-slate-700 leading-relaxed">
+                        <strong>Figura 5: Amortiguación de Picos de Tensión por Acoplamiento Mutualista en Red Panal (Density Violin Plots):</strong> <em>Comparación probabilística entre cuencas aisladas y acopladas en red policéntrica ante choques exógenos de sequía (ΔD = +0.25). La red reduce la varianza de tensión en un 38.4% y elimina el cruce al régimen de fractura catastrófica.</em>
+                      </p>
+                    </div>
+
+                    {/* Figura 6 */}
+                    <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
+                      <div className="flex items-center justify-between border-b border-slate-200 pb-2">
+                        <span className="text-xs font-mono font-bold text-[#376E6F]">
+                          Figura 6 Canónica · Funciones de Normalización Canónica (Goalpost Scaling)
+                        </span>
+                        <a href={getAssetUrl('docs/figures/fig6_normalization_transfer_functions.png')} target="_blank" rel="noopener noreferrer">
+                          <Maximize2 className="w-4 h-4 text-slate-500 hover:text-black" />
+                        </a>
+                      </div>
+                      <div className="bg-[#0c0714] p-3 rounded-xl text-center">
+                        <img 
+                          src={getAssetUrl('docs/figures/fig6_normalization_transfer_functions.png')} 
+                          alt="Figura 6" 
+                          className="max-h-[380px] w-full object-contain mx-auto" 
+                        />
+                      </div>
+                      <p className="text-xs text-slate-700 leading-relaxed">
+                        <strong>Figura 6: Funciones de Transferencia Canónica (X_raw → [0, 1]):</strong> <em>Mapeo determinístico de variables físicas heterogéneas (Falkenmark, PM2.5, cobertura nativa, cuidado, salario digno) con delimitación de la franja crítica de micro-fractura de Liebig en H_i &lt; 0.25.</em>
+                      </p>
+                    </div>
+
+                    {/* Figura 7 */}
+                    <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
+                      <div className="flex items-center justify-between border-b border-slate-200 pb-2">
+                        <span className="text-xs font-mono font-bold text-[#C86D51]">
+                          Figura 7 Canónica · Ensayo de Tracción Territorial Pre-Inversión (SEIA 2.0)
+                        </span>
+                        <a href={getAssetUrl('docs/figures/fig7_audit_traction_stress_test.png')} target="_blank" rel="noopener noreferrer">
+                          <Maximize2 className="w-4 h-4 text-slate-500 hover:text-black" />
+                        </a>
+                      </div>
+                      <div className="bg-[#0c0714] p-3 rounded-xl text-center">
+                        <img 
+                          src={getAssetUrl('docs/figures/fig7_audit_traction_stress_test.png')} 
+                          alt="Figura 7" 
+                          className="max-h-[380px] w-full object-contain mx-auto" 
+                        />
+                      </div>
+                      <p className="text-xs text-slate-700 leading-relaxed">
+                        <strong>Figura 7: Simulación de Tracción Territorial y Dictamen de Carga Virtual:</strong> <em>Evaluación determinística del desplazamiento σ₀ → σ_proyectado ante proyectos extractivos, dictaminando aprobación elástica, rechazo por deformación plástica o moratoria biofísica legal ex-ante.</em>
+                      </p>
+                    </div>
+                  </div>
+                </section>
+              </>
+            ) : (
+              /* ============================================================ */
+              /* CONTENIDO LIMPIO DEL PAPER #2: KIT AUDITA TU PROPIA CUENCA   */
+              /* ============================================================ */
+              <>
+                {/* Header Académico del Paper 2 */}
+                <header className="border-b border-slate-200 pb-8 space-y-4">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-gradient-to-r from-amber-600 to-amber-700 text-white shadow-xs">
+                      ★ Paper Práctico N° 2 · Soberanía Técnica
+                    </span>
+                    <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-amber-50 text-amber-900 border border-amber-300">
+                      Manual Comunal Abierto & SEIA 2.0
+                    </span>
+                    <span className="text-xs font-mono text-slate-600">
+                      Caso Piloto: Cuenca Río Longaví - Bullileo
+                    </span>
+                  </div>
+
+                  <h1 className="text-2xl sm:text-4xl font-serif font-black tracking-tight text-slate-950 leading-tight">
+                    Kit Audita tu Propia Cuenca: Protocolo de Auditoría Biofísica Comunitaria, Gemelo Digital y Ensayo de Tracción Territorial (SEIA 2.0)
+                  </h1>
+
+                  <div className="pt-2 text-sm text-slate-700 font-sans space-y-1 border-t border-slate-100">
+                    <p className="font-bold text-slate-900">
+                      Daniel Sebastián Santander Urrutia
+                    </p>
+                    <p className="text-slate-600 text-xs">
+                      Geofísico & Permacultor • Dirección Técnica, Proyecto HOMBROS • Cuenca del Río Longaví acoplada al Gemelo Digital AgriTwin
+                    </p>
+                    <p className="text-[11px] font-mono text-slate-500">
+                      Script Reproducible: scripts/R/07_kit_audita_tu_cuenca.R • Telemetría Sentinel-2 STAC/COG & Red 5 Comités APR
+                    </p>
+                  </div>
+                </header>
+
+                {/* Resumen Ejecutivo del Paper 2 */}
+                <section id="resumen-kit" className="scroll-mt-24 p-6 sm:p-8 rounded-2xl bg-amber-50/60 border border-amber-200 space-y-4 font-sans">
+                  <h3 className="font-sans font-black text-xs uppercase tracking-widest text-amber-800">
+                    Resumen Ejecutivo / Abstract
+                  </h3>
+                  <p className="text-sm sm:text-base text-slate-800 leading-relaxed font-medium">
+                    El Sistema de Evaluación de Impacto Ambiental (SEIA 1.0, Ley N° 19.300) padece una asimetría estructural de información: los titulares de inversión presentan voluminosos Estudios de Impacto Ambiental (EIA) de miles de páginas elaborados por consultoras privadas, mientras los municipios rurales, los comités de Agua Potable Rural (APR) y las asambleas ciudadanas carecen de instrumentos matemáticos propios para auditar la solvencia biofísica de su cuenca.
+                  </p>
+                  <p className="text-sm sm:text-base text-slate-800 leading-relaxed font-medium">
+                    Este manual presenta el <strong>«Kit Audita tu Propia Cuenca»</strong>, una tecnología social y computacional de código abierto derivada del modelo HOMBROS. El protocolo permite a cualquier territorio evaluar su <strong>capacidad portante no-compensatoria (<InlineMath math="H = (E \cdot S \cdot K)^{1/3}" />)</strong>, medir su nivel de fatiga territorial basal (<InlineMath math="\sigma_0" />) y someter cualquier proyecto de inversión al <strong>Ensayo de Tracción SEIA 2.0</strong> antes de que ingrese al sistema administrativo.
+                  </p>
+                  <p className="text-sm sm:text-base text-slate-800 leading-relaxed font-medium">
+                    Presentamos la aplicación empírica en la Cuenca del Río Longaví - Bullileo acoplada al Gemelo Digital <strong>AgriTwin</strong>, modelando la interacción entre 5 comités APR, la telemetría satelital Sentinel-2 y el impacto de pactos vecinales regenerativos (Keyline, cortafuegos agroforestales y redes solares). Asimismo, el kit incorpora una calculadora macrofiscal del <strong>Costo de Inacción</strong>, evidenciando que el 88.2% del gasto recurrente en emergencia hídrica (camiones aljibe) es financiado por el erario público comunal y regional, subsidiando indirectamente las rentas privadas del agronegocio intensivo.
+                  </p>
+                </section>
+
+                {/* Sección 1: Introducción & Asimetría */}
+                <section id="asimetria-seia" className="scroll-mt-24 space-y-6">
+                  <div className="border-b border-slate-200 pb-2">
+                    <h2 className="text-2xl sm:text-3xl font-serif font-black text-slate-950">
+                      1. De la Ventanilla Corporativa a la Soberanía Técnica Territorial
+                    </h2>
+                    <p className="text-sm text-slate-600 font-sans mt-1">
+                      Superación de la asimetría informativa, la línea base estática y el cohecho de la RSE.
+                    </p>
+                  </div>
+
+                  <p className="text-base sm:text-lg text-slate-800 leading-relaxed">
+                    En los conflictos socioambientales de Chile y América Latina, las comunidades y los municipios rurales se enfrentan sistemáticamente a tres trampas estructurales:
+                  </p>
+
+                  <div className="space-y-4 font-sans text-sm">
+                    <div className="p-4 rounded-2xl bg-white border border-slate-200 space-y-1.5">
+                      <h4 className="font-bold text-slate-900 text-sm">
+                        1. La Sobrecarga Documental Opaca
+                      </h4>
+                      <p className="text-slate-700">
+                        Los titulares de megaproyectos redactan expedientes hiper-técnicos de miles de páginas. Las directivas de APR disponen de plazos perentorios de participación ciudadana (PAC) sin contar con modelos cuantitativos de balance de masa para responder.
+                      </p>
+                    </div>
+
+                    <div className="p-4 rounded-2xl bg-white border border-slate-200 space-y-1.5">
+                      <h4 className="font-bold text-slate-900 text-sm">
+                        2. La Ficción de la Línea Base Estática
+                      </h4>
+                      <p className="text-slate-700">
+                        El SEIA tradicional considera que el estado degradado de una cuenca seca es una condición "natural" de partida. Si un acuífero ya ha perdido el 70% de su recarga por sobreotorgamiento histórico de DAA, el sistema evalúa únicamente la extracción adicional marginal del proyecto nuevo, omitiendo que la cuenca ya se encuentra en deformación plástica irreversible.
+                      </p>
+                    </div>
+
+                    <div className="p-4 rounded-2xl bg-white border border-slate-200 space-y-1.5">
+                      <h4 className="font-bold text-slate-900 text-sm">
+                        3. El Cohecho Institucionalizado de la RSE
+                      </h4>
+                      <p className="text-slate-700">
+                        Ante la carencia de agua y servicios básicos, los titulares ofrecen convenios de Responsabilidad Social Empresarial (RSE), sedes comunitarias, canchas de fútbol o camiones aljibe privados. Se sustituye la función vital del agua y el suelo por transferencias monetarias asimétricas.
+                      </p>
+                    </div>
+                  </div>
+                </section>
+
+                {/* Sección 2: Las 12 Variables Físicas */}
+                <section id="variables-kit" className="scroll-mt-24 space-y-6">
+                  <div className="border-b border-slate-200 pb-2">
+                    <h2 className="text-2xl sm:text-3xl font-serif font-black text-slate-950">
+                      2. Metodología: Las Doce Variables Físicas Normalizadas
+                    </h2>
+                    <p className="text-sm text-slate-600 font-sans mt-1">
+                      Matriz estandarizada de variables observables en el intervalo [0.0, 1.0] para evaluar la solvencia territorial.
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 font-sans text-xs">
+                    {/* Hombro Ambiental */}
+                    <div className="p-5 rounded-2xl bg-emerald-50/50 border border-emerald-200 space-y-2.5">
+                      <span className="font-mono font-bold uppercase text-emerald-800 text-xs block">
+                        Hombro Ambiental (E)
+                      </span>
+                      <ul className="space-y-2 text-slate-700">
+                        <li><strong>E₁ — Cobertura Nativa:</strong> Bosque esclerófilo y matorral de cabecera (Meta: ≥65%).</li>
+                        <li><strong>E₂ — Seguridad Hídrica:</strong> m³/hab·año normalizado por curva de Falkenmark (Liebig: 555 m³).</li>
+                        <li><strong>E₃ — Suelo Vivo & SOM:</strong> % de materia orgánica en primeros 30 cm de suelo (Meta: ≥5.5%).</li>
+                        <li><strong>E₄ — Calidad del Aire:</strong> Concentración media anual PM2.5 (Meta: ≤5 µg/m³).</li>
+                      </ul>
+                    </div>
+
+                    {/* Hombro Social */}
+                    <div className="p-5 rounded-2xl bg-teal-50/50 border border-teal-200 space-y-2.5">
+                      <span className="font-mono font-bold uppercase text-teal-800 text-xs block">
+                        Hombro Social (S)
+                      </span>
+                      <ul className="space-y-2 text-slate-700">
+                        <li><strong>S₁ — Cohesión & Cuidados:</strong> Participación activa en asambleas APR y juntas vecinales (Meta: ≥85%).</li>
+                        <li><strong>S₂ — Capacidad Institucional:</strong> Tasa de fiscalizaciones efectivas DT/SMA sobre faenas rurales.</li>
+                        <li><strong>S₃ — Saberes Campesinos:</strong> Transmisión intergeneracional de manejo agroecológico del agua.</li>
+                        <li><strong>S₄ — Paz Territorial:</strong> Ausencia de criminalización ambiental y tomas ilegales de agua.</li>
+                      </ul>
+                    </div>
+
+                    {/* Hombro Económico */}
+                    <div className="p-5 rounded-2xl bg-amber-50/50 border border-amber-200 space-y-2.5">
+                      <span className="font-mono font-bold uppercase text-amber-800 text-xs block">
+                        Hombro Económico (K)
+                      </span>
+                      <ul className="space-y-2 text-slate-700">
+                        <li><strong>K₁ — Diversificación Productiva:</strong> Inverso del índice IHH comunal frente al monocultivo.</li>
+                        <li><strong>K₂ — Autonomía Fiscal Comunal:</strong> % ingresos locales vs dependencia del Fondo Común Municipal.</li>
+                        <li><strong>K₃ — Justicia Distributiva:</strong> Coeficiente Gini castigado por sobreendeudamiento de subsistencia.</li>
+                        <li><strong>K₄ — Balance Metabólico:</strong> Relación de biomasa regenerada vs toneladas extraídas exportadas.</li>
+                      </ul>
+                    </div>
+                  </div>
+                </section>
+
+                {/* Sección 3: Ensayo de Tracción SEIA 2.0 */}
+                <section id="ensayo-traccion" className="scroll-mt-24 space-y-6">
+                  <div className="border-b border-slate-200 pb-2">
+                    <h2 className="text-2xl sm:text-3xl font-serif font-black text-slate-950">
+                      3. El Ensayo de Tracción Territorial SEIA 2.0
+                    </h2>
+                    <p className="text-sm text-slate-600 font-sans mt-1">
+                      Cálculo determinístico de la tensión proyectada y dictámenes vinculantes ex-ante.
+                    </p>
+                  </div>
+
+                  <div className="p-6 rounded-2xl bg-white border border-slate-200 space-y-4 font-sans text-xs sm:text-sm">
+                    <p className="text-slate-800">
+                      Una vez evaluada la línea base, el kit somete al territorio a un ensayo de carga virtual ante el proyecto de inversión entrante:
+                    </p>
+
+                    <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-center">
+                      <BlockMath math="\sigma_{\text{proj}} = \frac{D_0 + \Delta D_{\text{proyecto}}}{\left[ (E_0 + \Delta E_{\text{proyecto}}) \cdot S_0 \cdot K_0 \right]^{1/3} \cdot \Phi_{\text{crit}} \cdot (1 + \kappa)}" />
+                    </div>
+
+                    {/* Tabla de Dictámenes */}
+                    <div className="overflow-x-auto rounded-xl border border-slate-200 mt-4">
+                      <table className="w-full text-left text-xs font-sans">
+                        <thead className="bg-[#FAF7F0] border-b border-slate-200 font-mono font-bold text-slate-800">
+                          <tr>
+                            <th className="p-3">Tensión Resultante (σ)</th>
+                            <th className="p-3">Rating</th>
+                            <th className="p-3">Régimen</th>
+                            <th className="p-3">Dictamen Jurídico SEIA 2.0</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-200">
+                          <tr>
+                            <td className="p-3 font-mono font-bold text-emerald-800">σ &lt; 0.65</td>
+                            <td className="p-3 font-bold">AAA</td>
+                            <td className="p-3">Elástico Sintrópico</td>
+                            <td className="p-3 font-medium text-emerald-900">ADMISIBLE: El proyecto no compromete la solvencia de la cuenca.</td>
+                          </tr>
+                          <tr>
+                            <td className="p-3 font-mono font-bold text-teal-800">0.65 ≤ σ &lt; 0.85</td>
+                            <td className="p-3 font-bold">AA</td>
+                            <td className="p-3">Elástico Reversible</td>
+                            <td className="p-3 font-medium text-teal-900">ADMISIBLE CON SALVAGUARDA: Monitoreo Sentinel-2 continuo obligatorio.</td>
+                          </tr>
+                          <tr>
+                            <td className="p-3 font-mono font-bold text-amber-800">0.85 ≤ σ &lt; 1.00</td>
+                            <td className="p-3 font-bold">B</td>
+                            <td className="p-3">Límite de Fluencia</td>
+                            <td className="p-3 font-medium text-amber-900">OBSERVADO / REORDENAMIENTO: Agota el margen elástico de la cuenca.</td>
+                          </tr>
+                          <tr>
+                            <td className="p-3 font-mono font-bold text-rose-800">1.00 ≤ σ &lt; 1.25</td>
+                            <td className="p-3 font-bold">C</td>
+                            <td className="p-3">Deformación Plástica</td>
+                            <td className="p-3 font-medium text-rose-900">INADMISIBLE: Provoca daño permanente en acuíferos o suelo vivo.</td>
+                          </tr>
+                          <tr>
+                            <td className="p-3 font-mono font-bold text-red-900">σ ≥ 1.25</td>
+                            <td className="p-3 font-bold">D</td>
+                            <td className="p-3">Fractura Catastrófica</td>
+                            <td className="p-3 font-bold text-red-950">MORATORIA BIOFÍSICA TOTAL: Cuenca en colapso sistémico.</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </section>
+
+                {/* Sección 4: Caso Piloto Cuenca Longaví - Bullileo */}
+                <section id="caso-longavi" className="scroll-mt-24 space-y-6">
+                  <div className="border-b border-slate-200 pb-2">
+                    <h2 className="text-2xl sm:text-3xl font-serif font-black text-slate-950">
+                      4. Aplicación Piloto en Cuenca del Río Longaví - Bullileo
+                    </h2>
+                    <p className="text-sm text-slate-600 font-sans mt-1">
+                      Ensayos de tracción ante 4 arquetipos de inversión y amortiguación en Red Panal de 5 Comités APR.
+                    </p>
+                  </div>
+
+                  {/* FIGURA 8 */}
+                  <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3 font-sans">
+                    <div className="flex items-center justify-between border-b border-slate-200 pb-2">
+                      <span className="text-xs font-mono font-bold text-amber-800">
+                        Figura 8 (Paper 2 · Fig 1) · Ensayo de Tracción SEIA 2.0 en Cuenca Río Longaví
+                      </span>
+                      <a href={getAssetUrl('docs/figures/fig8_longavi_traction_archetypes.png')} target="_blank" rel="noopener noreferrer">
+                        <Maximize2 className="w-4 h-4 text-slate-500 hover:text-black" />
+                      </a>
+                    </div>
+                    <div className="bg-[#0c0714] p-3 rounded-xl text-center">
+                      <img 
+                        src={getAssetUrl('docs/figures/fig8_longavi_traction_archetypes.png')} 
+                        alt="Figura 8: Ensayo de Tracción en Cuenca Longaví" 
+                        className="max-h-[380px] w-full object-contain mx-auto" 
+                      />
+                    </div>
+                    <p className="text-xs text-slate-700 leading-relaxed">
+                      <strong>Figura 8: Desplazamiento tensorial ante 4 proyectos en Longaví:</strong> <em>La expansión frutal (σ = 1.169), megaminería (σ = 2.370) y loteos periurbanos (σ = 1.119) son declarados INADMISIBLES por sobrepasar el límite de fluencia (σ = 0.85); únicamente el parque agro-solar sintrópico con Keyline resulta admisible (σ = 0.541).</em>
+                    </p>
+                  </div>
+
+                  {/* FIGURA 10 */}
+                  <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3 font-sans">
+                    <div className="flex items-center justify-between border-b border-slate-200 pb-2">
+                      <span className="text-xs font-mono font-bold text-emerald-800">
+                        Figura 10 (Paper 2 · Fig 3) · Amortiguación Tensora en Red Panal de 5 Comités APR
+                      </span>
+                      <a href={getAssetUrl('docs/figures/fig10_honeycomb_aprs_network.png')} target="_blank" rel="noopener noreferrer">
+                        <Maximize2 className="w-4 h-4 text-slate-500 hover:text-black" />
+                      </a>
+                    </div>
+                    <div className="bg-[#0c0714] p-3 rounded-xl text-center">
+                      <img 
+                        src={getAssetUrl('docs/figures/fig10_honeycomb_aprs_network.png')} 
+                        alt="Figura 10: Red Panal APR" 
+                        className="max-h-[380px] w-full object-contain mx-auto" 
+                      />
+                    </div>
+                    <p className="text-xs text-slate-700 leading-relaxed">
+                      <strong>Figura 10: Alivio Hídrico Mutualista entre comités APR (Bullileo, Retiro Centro, Copihue, Romeral, Villaseca):</strong> <em>Demuestra cómo el nodo más estresado (Retiro Centro) reduce su tensión crítica desde σ = 0.89 a σ = 0.58 al acoplarse a la Red Panal con un predio ancla agroecológico y pactos de Keyline.</em>
+                    </p>
+                  </div>
+                </section>
+
+                {/* Sección 5: Macroeconomía del Costo de Inacción */}
+                <section id="macroeconomia-inaction" className="scroll-mt-24 space-y-6">
+                  <div className="border-b border-slate-200 pb-2">
+                    <h2 className="text-2xl sm:text-3xl font-serif font-black text-slate-950">
+                      5. Macroeconomía Biofísica del Costo de Inacción & Socialización de Pérdidas
+                    </h2>
+                    <p className="text-sm text-slate-600 font-sans mt-1">
+                      Evidencia cuantitativa de cómo el erario público subsidia al monocultivo mediante camiones aljibe.
+                    </p>
+                  </div>
+
+                  {/* FIGURA 9 */}
+                  <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3 font-sans">
+                    <div className="flex items-center justify-between border-b border-slate-200 pb-2">
+                      <span className="text-xs font-mono font-bold text-cyan-800">
+                        Figura 9 (Paper 2 · Fig 2) · Retorno Biofísico (+654.7% ROI) vs. Costo de Inacción
+                      </span>
+                      <a href={getAssetUrl('docs/figures/fig9_roi_inaction_transfer_regressive.png')} target="_blank" rel="noopener noreferrer">
+                        <Maximize2 className="w-4 h-4 text-slate-500 hover:text-black" />
+                      </a>
+                    </div>
+                    <div className="bg-[#0c0714] p-3 rounded-xl text-center">
+                      <img 
+                        src={getAssetUrl('docs/figures/fig9_roi_inaction_transfer_regressive.png')} 
+                        alt="Figura 9: Costo de Inacción y Retorno de Inversión Sintrópica" 
+                        className="max-h-[380px] w-full object-contain mx-auto" 
+                      />
+                    </div>
+                    <p className="text-xs text-slate-700 leading-relaxed">
+                      <strong>Figura 9: Panel A: Amortización a 10 años; Panel B: Radiografía fiscal de camiones aljibe:</strong> <em>El 88.2% del gasto de emergencia hídrica es pagado por fondos públicos del Estado (FNDR, SENAPRED, Municipalidades) y 0% por el monocultivo exportador. El breakeven de la restauración sintrópica preventiva se alcanza en el año 2.8.</em>
+                    </p>
+                  </div>
+
+                  {/* Botón de llamada a la acción hacia la Consola de Auditoría */}
+                  <div className="p-6 rounded-2xl bg-gradient-to-r from-emerald-800 via-teal-800 to-emerald-900 text-white shadow-lg space-y-3 font-sans">
+                    <div className="flex items-center gap-2">
+                      <Sparkles className="w-5 h-5 text-emerald-300" />
+                      <h4 className="font-serif font-bold text-lg text-white">
+                        Ejecutar Auditoría en Vivo sobre la Cuenca del Río Longaví
+                      </h4>
+                    </div>
+                    <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
+                      La consola interactiva del Kit Audita tu Cuenca permite modificar en tiempo real las 12 variables físicas, evaluar proyectos de inversión entrantes y calcular el dictamen de solvencia pre-inversional vinculante ex-ante.
+                    </p>
+                    <a
+                      href="#/auditoria-cuenca"
+                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-950 font-bold text-xs shadow-md transition-all"
+                    >
+                      <Sparkles className="w-4 h-4 text-emerald-700" />
+                      <span>Ir a la Consola de Auditoría de Cuenca →</span>
+                    </a>
+                  </div>
+                </section>
+              </>
+            )}
+          </div>
+        </div>
+      )}
       {/* ==================================================================== */}
       {/* TAB 2: PRESENTACIÓN OFICIAL (PDF INTERACTIVO EMBEBIDO) */}
       {/* ==================================================================== */}
