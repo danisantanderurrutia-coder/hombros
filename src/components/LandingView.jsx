@@ -5,7 +5,7 @@ import {
   ArrowRight, Sparkles, Shield, Cpu, Flame, Trees, Users, Coins,
   Mountain, Compass, CheckCircle2, ChevronRight, HelpCircle
 } from 'lucide-react';
-import LandingHeroBanner from './LandingHeroBanner';
+import NewLandingHero from './NewLandingHero';
 import KitAuditaTuCuencaBanner from './KitAuditaTuCuencaBanner';
 import ThinkTankTeaserPortal from './ThinkTankTeaserPortal';
 
@@ -80,10 +80,13 @@ export default function LandingView({ onNavigate, onNavigateCustomAudit }) {
       transition={{ duration: 0.4 }}
       className="space-y-12"
     >
-      {/* 1. HERO BANNER MONUMENTAL (ATLAS DORADO + CERRO + CONTROLES E, S, K) */}
-      <LandingHeroBanner onNavigate={onNavigate} />
+      {/* 1. HERO INSTITUCIONAL PRINCIPAL (TESIS CENTRAL, MÉTRICAS & PUERTAS DE ENTRADA) */}
+      <NewLandingHero 
+        onNavigate={onNavigate} 
+        onNavigateCustomAudit={onNavigateCustomAudit} 
+      />
 
-      {/* 1.5 PORTAL DESTACADO: THINK TANK & INCUBADORA TERRITORIAL */}
+      {/* 2. PORTAL DESTACADO: THINK TANK & INCUBADORA TERRITORIAL */}
       <ThinkTankTeaserPortal onNavigate={onNavigate} />
 
       {/* 2. MANIFIESTO FILOSÓFICO: DE SÍSIFO A ATLAS */}

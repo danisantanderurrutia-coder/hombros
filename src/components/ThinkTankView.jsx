@@ -6,13 +6,15 @@ import {
   Users, FileText, Layers, Activity, Microscope, Scale, 
   MountainSnow, Waves, Zap, Flame, Award, Globe, Rocket, 
   Eye, ShieldAlert, Cpu, ExternalLink, ChevronRight, BookOpen,
-  HelpCircle, Check, Palette
+  HelpCircle, Check, Palette, Mountain
 } from 'lucide-react';
 import { getAssetUrl } from '../utils/assets';
+import FilosofiaHombrosModal from './FilosofiaHombrosModal';
 
 export default function ThinkTankView({ onNavigate, onNavigateCustomAudit }) {
   const presentationPdfUrl = getAssetUrl('docs/HOMBROS_Presentacion_Oficial.pdf');
   const [activeFaq, setActiveFaq] = useState(null);
+  const [isFilosofiaOpen, setIsFilosofiaOpen] = useState(false);
   
   // Fondo fijo institucional: Pizarra Ejecutiva & Gabinete (Chatham House / RAND)
   const selectedTheme = 'pizarra';
@@ -333,9 +335,23 @@ export default function ThinkTankView({ onNavigate, onNavigateCustomAudit }) {
                 <ShieldCheck className="w-4 h-4" />
                 <span>Kit Audita tu Cuenca</span>
               </button>
+
+              <button
+                onClick={() => setIsFilosofiaOpen(true)}
+                className="inline-flex items-center gap-2 px-4 py-3 rounded-xl text-xs sm:text-sm font-serif font-bold bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-400/40 transition-all shadow-xs"
+              >
+                <Mountain className="w-4 h-4 text-amber-300" />
+                <span>Filosofía de los Hombros</span>
+              </button>
             </div>
           </div>
         </div>
+
+        {/* Modal interactivo de la Filosofía de los Hombros (Alegoría de Atlas & Escalinata) */}
+        <FilosofiaHombrosModal 
+          isOpen={isFilosofiaOpen} 
+          onClose={() => setIsFilosofiaOpen(false)} 
+        />
 
         {/* ========================================================
             2. MISIÓN Y VISIÓN
