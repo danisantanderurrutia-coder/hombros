@@ -14,11 +14,8 @@ export default function ThinkTankView({ onNavigate, onNavigateCustomAudit }) {
   const presentationPdfUrl = getAssetUrl('docs/HOMBROS_Presentacion_Oficial.pdf');
   const [activeFaq, setActiveFaq] = useState(null);
   
-  // Selector interactivo de los 3 fondos institucionales
-  // 'alabastro': Blanco Alabastro & Cartografía (Stockholm / Oxford)
-  // 'lino': Lino Editorial & Archivo de Estado (Papel Prensa / Tratado)
-  // 'pizarra': Pizarra Ejecutiva & Gabinete Ministerial (Matte Slate / Chatham House)
-  const [selectedTheme, setSelectedTheme] = useState('alabastro');
+  // Fondo fijo institucional: Pizarra Ejecutiva & Gabinete (Chatham House / RAND)
+  const selectedTheme = 'pizarra';
 
   const themes = {
     alabastro: {
@@ -275,48 +272,10 @@ export default function ThinkTankView({ onNavigate, onNavigateCustomAudit }) {
         backgroundSize: current.gridSize
       }}
     >
-      {/* ========================================================
-          SELECTOR INTERACTIVO DE FONDOS INSTITUCIONALES (EN VIVO)
-          ======================================================== */}
-      <div className="sticky top-20 z-40 mb-8 p-3.5 rounded-2xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-300 dark:border-slate-700 shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
-        <div className="flex items-center gap-2.5">
-          <Palette className="w-4 h-4 text-slate-700 dark:text-slate-300" />
-          <div>
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-900 dark:text-slate-100 block">
-              Explorador de Fondos Institucionales:
-            </span>
-            <p className="text-[11px] text-slate-500 dark:text-slate-400 font-sans">
-              Cambia entre los 3 estilos para evaluar cuál transmite mejor la autoridad y presencia que buscas.
-            </p>
-          </div>
-        </div>
-
-        <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
-          {Object.values(themes).map((t) => {
-            const isSelected = selectedTheme === t.id;
-            return (
-              <button
-                key={t.id}
-                onClick={() => setSelectedTheme(t.id)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
-                  isSelected
-                    ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-sm ring-2 ring-slate-400'
-                    : 'bg-slate-100 hover:bg-slate-200 text-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-300'
-                }`}
-              >
-                {isSelected && <Check className="w-3.5 h-3.5" />}
-                <span>{t.id === 'alabastro' ? '1. Blanco Alabastro' : t.id === 'lino' ? '2. Lino Editorial' : '3. Pizarra Ejecutiva'}</span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
       <motion.div
-        key={selectedTheme}
-        initial={{ opacity: 0.85, y: 5 }}
+        initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.25 }}
+        transition={{ duration: 0.3 }}
         className="space-y-14"
       >
         {/* ========================================================

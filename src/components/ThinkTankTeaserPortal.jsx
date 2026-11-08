@@ -9,7 +9,7 @@ import { getAssetUrl } from '../utils/assets';
 
 export default function ThinkTankTeaserPortal({ onNavigate }) {
   const presentationPdfUrl = getAssetUrl('docs/HOMBROS_Presentacion_Oficial.pdf');
-  const [portalTheme, setPortalTheme] = useState('alabastro');
+  const portalTheme = 'pizarra';
 
   const themes = {
     alabastro: {
@@ -68,35 +68,6 @@ export default function ThinkTankTeaserPortal({ onNavigate }) {
     <div className={`relative rounded-3xl overflow-hidden border p-7 sm:p-10 md:p-12 transition-all duration-300 ${cur.container}`}>
       {/* Barra Superior Institucional */}
       <div className={`absolute top-0 inset-x-0 h-1.5 ${cur.accentLine}`} />
-
-      {/* SELECTOR INTERACTIVO EN VIVO DENTRO DEL PORTAL */}
-      <div className="mb-6 p-3 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-2">
-          <Palette className="w-4 h-4 opacity-75" />
-          <span className="text-xs font-mono font-bold uppercase tracking-wider">
-            Fondo Institucional (Prueba las 3 opciones):
-          </span>
-        </div>
-        <div className="flex flex-wrap items-center gap-1.5">
-          {Object.values(themes).map((t) => {
-            const isSel = portalTheme === t.id;
-            return (
-              <button
-                key={t.id}
-                onClick={() => setPortalTheme(t.id)}
-                className={`px-3 py-1 rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-1 ${
-                  isSel
-                    ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-sm'
-                    : 'bg-white/60 hover:bg-white dark:bg-slate-800/60 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300'
-                }`}
-              >
-                {isSel && <Check className="w-3 h-3" />}
-                <span>{t.id === 'alabastro' ? '1. Alabastro' : t.id === 'lino' ? '2. Lino' : '3. Pizarra'}</span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
 
       <div className="relative z-10 space-y-8">
         {/* Cabecera del Portal */}
