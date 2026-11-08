@@ -100,14 +100,14 @@ export default function LandingSatelliteMapPreview({ onNavigate }) {
   }, [onNavigate]);
 
   return (
-    <div className="relative w-full h-[360px] sm:h-[400px] rounded-2xl overflow-hidden border border-[#D4C9B8]/80 bg-slate-950 shadow-inner group">
+    <div className="relative w-full h-[420px] sm:h-[450px] rounded-2xl overflow-hidden border border-[#D4C9B8]/80 bg-slate-950 shadow-inner group">
       {/* Real Interactive Leaflet Satellite Canvas */}
       <div ref={mapContainerRef} className="w-full h-full z-0 cursor-pointer" onClick={() => onNavigate('world_map')} />
 
       {/* Floating Action Banner Above */}
       <div 
         onClick={() => onNavigate('world_map')}
-        className="absolute top-3 inset-x-3 sm:inset-x-6 z-20 cursor-pointer"
+        className="absolute top-2.5 inset-x-2.5 sm:inset-x-4 z-20 cursor-pointer"
       >
         <div className="p-2 sm:p-2.5 rounded-xl bg-slate-950/85 backdrop-blur-md border border-[#487075] text-white shadow-xl flex items-center justify-between hover:bg-slate-900 transition-all">
           <div className="flex items-center gap-2 text-xs font-mono">
@@ -124,7 +124,7 @@ export default function LandingSatelliteMapPreview({ onNavigate }) {
       {/* Bottom Satellite Overlay Pill */}
       <div 
         onClick={() => onNavigate('world_map')}
-        className="absolute bottom-3 inset-x-3 sm:inset-x-4 z-20 flex items-center justify-between p-2.5 rounded-xl bg-slate-950/80 backdrop-blur-md border border-white/15 text-white text-[11px] font-mono cursor-pointer hover:border-emerald-400 transition-colors"
+        className="absolute bottom-2.5 inset-x-2.5 sm:inset-x-4 z-20 flex items-center justify-between p-2.5 rounded-xl bg-slate-950/80 backdrop-blur-md border border-white/15 text-white text-[11px] font-mono cursor-pointer hover:border-emerald-400 transition-colors"
       >
         <div className="flex items-center gap-2">
           <Satellite className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />

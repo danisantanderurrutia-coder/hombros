@@ -37,14 +37,14 @@ export default function VisualToolsShowcase({ onNavigate }) {
       </div>
 
       {/* 2-Column Visual Gateways */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-7 items-stretch">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
         
         {/* CARD 1: Cartografía Satelital & Atlas */}
         <div className="rounded-3xl overflow-hidden border border-[#D4C9B8] bg-white/95 backdrop-blur-md shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
           {/* Top accent line */}
           <div className="h-1.5 w-full bg-gradient-to-r from-[#487075] to-[#28475A]" />
           
-          <div className="p-6 sm:p-7 space-y-4">
+          <div className="p-5 sm:p-6 space-y-3.5">
             <div className="flex items-center justify-between">
               <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-[#487075]/10 text-[#487075] border border-[#487075]/30">
                 <Satellite className="w-3.5 h-3.5 text-[#487075]" />
@@ -63,9 +63,25 @@ export default function VisualToolsShowcase({ onNavigate }) {
               <h3 className="text-xl sm:text-2xl font-serif font-bold text-slate-900">
                 Atlas Territorial & Telemetría Orbital
               </h3>
-              <p className="text-xs text-slate-600 font-sans mt-1">
-                Monitorea en tiempo real 25 cuencas y ciudades en Chile Central y Europa. Visualiza el Semáforo Biofísico, el balance hídrico y las redes metabólicas.
+              <p className="text-xs sm:text-sm text-slate-600 font-sans mt-1 leading-relaxed">
+                Observatorio situado de <strong>25 cuencas y territorios globales</strong> en Chile Central (Maule, Aconcagua, Quintero, Petorca, Valparaíso) y Europa (Bilbao, Copenhague, Berlín, Ámsterdam). Integra <strong>teledetección orbital continua</strong>, Semáforo Biofísico, trazado de flujos metabólicos y balance de sequía.
               </p>
+
+              {/* Informative Feature Badges */}
+              <div className="flex flex-wrap items-center gap-2 pt-2.5 text-[11px] font-mono text-slate-700">
+                <span className="px-2.5 py-1 rounded-lg bg-[#FAF7F0] border border-[#D4C9B8] flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                  <strong>25 Nodos Calibrados</strong>
+                </span>
+                <span className="px-2.5 py-1 rounded-lg bg-[#FAF7F0] border border-[#D4C9B8] flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-sky-500" />
+                  <span>Semáforo Hídrico</span>
+                </span>
+                <span className="px-2.5 py-1 rounded-lg bg-[#FAF7F0] border border-[#D4C9B8] flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-amber-500" />
+                  <span>Deuda Scope 3</span>
+                </span>
+              </div>
             </div>
 
             {/* Live Interactive Leaflet Satellite Preview */}
@@ -75,7 +91,7 @@ export default function VisualToolsShowcase({ onNavigate }) {
           {/* Action Footer */}
           <div 
             onClick={() => onNavigate('world_map')}
-            className="p-4 bg-[#FAF7F0] border-t border-[#D4C9B8]/60 flex items-center justify-between text-xs font-serif font-bold text-[#487075] hover:text-[#28475A] cursor-pointer transition-colors"
+            className="p-3.5 sm:p-4 bg-[#FAF7F0] border-t border-[#D4C9B8]/60 flex items-center justify-between text-xs font-serif font-bold text-[#487075] hover:text-[#28475A] cursor-pointer transition-colors"
           >
             <span className="flex items-center gap-2">
               <span>Abrir Mapa de Cartografía Satelital Completo</span>
@@ -90,7 +106,7 @@ export default function VisualToolsShowcase({ onNavigate }) {
           {/* Top accent line */}
           <div className="h-1.5 w-full bg-gradient-to-r from-[#C86D51] via-[#927660] to-[#1B4332]" />
           
-          <div className="p-6 sm:p-7 space-y-4">
+          <div className="p-5 sm:p-6 space-y-3.5">
             <div className="flex items-center justify-between">
               <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-[#C86D51]/10 text-[#C86D51] border border-[#C86D51]/30">
                 <Activity className="w-3.5 h-3.5 text-[#C86D51]" />
@@ -109,7 +125,7 @@ export default function VisualToolsShowcase({ onNavigate }) {
               <h3 className="text-xl sm:text-2xl font-serif font-bold text-slate-900">
                 Trípode Biofísico: H = (S · E · K)<sup>1/3</sup>
               </h3>
-              <p className="text-xs text-slate-600 font-sans mt-1">
+              <p className="text-xs sm:text-sm text-slate-600 font-sans mt-1 leading-relaxed">
                 La regla no compensatoria de Liebig: arrastra los 3 vértices en la figura para observar cómo la pérdida de un solo pilar arrastra a cero la capacidad portante total.
               </p>
             </div>
@@ -130,7 +146,7 @@ export default function VisualToolsShowcase({ onNavigate }) {
             </div>
 
             {/* Live Interactive ShouldersRadarTripod */}
-            <div className="relative rounded-2xl overflow-hidden border border-[#D4C9B8]/70 bg-[#FAF7F0]/60 p-2 sm:p-3 flex items-center justify-center">
+            <div className="relative rounded-2xl overflow-hidden border border-[#D4C9B8]/70 bg-[#FAF7F0]/60 p-2 sm:p-2.5 flex items-center justify-center">
               <ShouldersRadarTripod
                 S={S}
                 E={E}
@@ -146,7 +162,7 @@ export default function VisualToolsShowcase({ onNavigate }) {
           {/* Action Footer */}
           <div 
             onClick={() => onNavigate('core')}
-            className="p-4 bg-[#FAF7F0] border-t border-[#D4C9B8]/60 flex items-center justify-between text-xs font-serif font-bold text-[#C86D51] hover:text-[#927660] cursor-pointer transition-colors"
+            className="p-3.5 sm:p-4 bg-[#FAF7F0] border-t border-[#D4C9B8]/60 flex items-center justify-between text-xs font-serif font-bold text-[#C86D51] hover:text-[#927660] cursor-pointer transition-colors"
           >
             <span className="flex items-center gap-2">
               <span>Experimentar en el Simulador Completo CORE</span>

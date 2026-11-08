@@ -713,89 +713,145 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
             </a>
           </div>
         </div>
+      </div>
 
-        {/* Sub-tab Navigation (6 Pestañas Canónicas: Biblioteca como Portada) */}
-        <div className="flex flex-wrap gap-2.5 mt-6 pt-5 border-t border-[#D4C9B8]/70 relative z-10">
-          <button
-            onClick={() => setActiveTab('library')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm ${
-              activeTab === 'library'
-                ? 'bg-[#1B4332] text-white border border-[#143326] shadow-md shadow-[#1B4332]/30'
-                : 'bg-[#1B4332]/10 text-slate-800 hover:bg-[#1B4332]/20 border border-[#1B4332]/30'
-            }`}
-          >
-            <BookOpen className={`w-4 h-4 ${activeTab === 'library' ? 'text-white' : 'text-[#1B4332]'}`} />
-            <span>Biblioteca & Papers</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('reader')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm ${
-              activeTab === 'reader'
-                ? 'bg-[#487075] text-white border border-[#376E6F] shadow-md shadow-[#487075]/30'
-                : 'bg-[#7DB2B2]/20 text-slate-800 hover:bg-[#7DB2B2]/35 border border-[#7DB2B2]/50'
-            }`}
-          >
-            <FileText className={`w-4 h-4 ${activeTab === 'reader' ? 'text-white' : 'text-[#487075]'}`} />
-            <span>Lector Editorial</span>
-            <span className="px-1.5 py-0.5 rounded-full text-[9px] font-mono bg-white/30 text-white font-bold">
-              {activePaper === 'paper1' ? 'Paper #1' : 'Paper #2'}
+      {/* ==================================================================== */}
+      {/* NAVEGACIÓN MODULAR EN TARJETAS: ACCESO A RECURSOS EPISTÉMICOS        */}
+      {/* ==================================================================== */}
+      <div className="space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-1">
+          <div>
+            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#1B4332] block">
+              MÓDULOS DEL MARCO EPISTÉMICO
             </span>
-          </button>
+            <h2 className="text-xl sm:text-2xl font-serif font-black text-slate-900">
+              Ejes Epistémicos, Publicaciones & Pipeline
+            </h2>
+          </div>
+          <span className="text-xs font-mono text-slate-600">
+            Selecciona una tarjeta para explorar cada recurso científico
+          </span>
+        </div>
 
-          <button
-            onClick={() => setActiveTab('presentation')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm ${
-              activeTab === 'presentation'
-                ? 'bg-[#C86D51] text-white border border-[#927660] shadow-md shadow-[#C86D51]/30'
-                : 'bg-[#C86D51]/20 text-slate-800 hover:bg-[#C86D51]/30 border border-[#C86D51]/50'
-            }`}
-          >
-            <MonitorPlay className={`w-4 h-4 ${activeTab === 'presentation' ? 'text-white' : 'text-[#C86D51]'}`} />
-            <span>Presentación Oficial (PDF)</span>
-          </button>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {[
+            {
+              id: 'library',
+              title: 'Biblioteca & Papers',
+              tag: 'PORTADA & DESCARGAS',
+              badge: '2 Papers Publicados',
+              desc: 'Colección oficial de los preprints fundacionales: Paper #1 Metodológico IMRAD y Paper #2 Kit Práctico de Cuenca.',
+              icon: BookOpen,
+              color: '#1B4332',
+              accentBg: 'bg-[#1B4332]/10 text-[#1B4332] border-[#1B4332]/30',
+              btnText: 'Ver Publicaciones'
+            },
+            {
+              id: 'reader',
+              title: 'Lector Editorial',
+              tag: 'LECTURA INMERSIVA',
+              badge: activePaper === 'paper1' ? 'Paper #1' : 'Paper #2',
+              desc: 'Lector interactivo con fórmulas matemáticas KaTeX, figuras dinámicas y selector rápido entre artículos.',
+              icon: FileText,
+              color: '#487075',
+              accentBg: 'bg-[#487075]/10 text-[#487075] border-[#487075]/30',
+              btnText: 'Abrir Lector'
+            },
+            {
+              id: 'presentation',
+              title: 'Presentación Oficial (PDF)',
+              tag: 'DOSSIER EJECUTIVO',
+              badge: '2.4 MB · 300 DPI',
+              desc: 'Diapositivas canónicas de síntesis ejecutiva listas para exposición ante comisiones parlamentarias o asambleas.',
+              icon: MonitorPlay,
+              color: '#C86D51',
+              accentBg: 'bg-[#C86D51]/10 text-[#C86D51] border-[#C86D51]/30',
+              btnText: 'Ver Diapositivas'
+            },
+            {
+              id: 'figures',
+              title: 'Galería de Figuras Canónicas',
+              tag: 'EVIDENCIA VISUAL',
+              badge: '10 Figuras Canónicas',
+              desc: 'Colección de gráficos a 300 DPI: curvas de tracción σ-ε, biplots Scope 3, funciones de transferencia y red panal.',
+              icon: Image,
+              color: '#927660',
+              accentBg: 'bg-[#927660]/10 text-[#927660] border-[#927660]/30',
+              btnText: 'Explorar 10 Figuras'
+            },
+            {
+              id: 'scripts_hub',
+              title: 'Explorador de Scripts (Hub)',
+              tag: 'CIENCIA ABIERTA',
+              badge: '7 Módulos en R',
+              desc: 'Hub de código reproducible con el Runner Maestro y los 7 módulos en R para auditoría abierta y tensores.',
+              icon: Terminal,
+              color: '#28475A',
+              accentBg: 'bg-[#28475A]/10 text-[#28475A] border-[#28475A]/30',
+              btnText: 'Ver 7 Scripts en R'
+            },
+            {
+              id: 'episteme',
+              title: 'Hombros de Gigantes',
+              tag: 'GENEALOGÍA TEÓRICA',
+              badge: '4 Ejes de Ruptura',
+              desc: 'Genealogía epistémica: bioeconomía de Georgescu-Roegen, cibernética de Beer, Ostrom y Liebig.',
+              icon: GraduationCap,
+              color: '#78350F',
+              accentBg: 'bg-[#78350F]/10 text-[#78350F] border-[#78350F]/30',
+              btnText: 'Leer Genealogía'
+            }
+          ].map((mod) => {
+            const Icon = mod.icon;
+            const isActive = activeTab === mod.id;
 
-          <button
-            onClick={() => setActiveTab('figures')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm ${
-              activeTab === 'figures'
-                ? 'bg-[#927660] text-white border border-[#624F44] shadow-md shadow-[#927660]/30'
-                : 'bg-[#927660]/20 text-slate-800 hover:bg-[#927660]/30 border border-[#927660]/50'
-            }`}
-          >
-            <Image className={`w-4 h-4 ${activeTab === 'figures' ? 'text-white' : 'text-[#927660]'}`} />
-            <span>Galería de Figuras Canónicas</span>
-            <span className="px-1.5 py-0.5 rounded-full text-[9px] font-mono bg-white/40 text-slate-900 font-bold">
-              10
-            </span>
-          </button>
+            return (
+              <div
+                key={mod.id}
+                onClick={() => {
+                  setActiveTab(mod.id);
+                  window.scrollTo({ top: 380, behavior: 'smooth' });
+                }}
+                className={`p-5 rounded-2xl border transition-all duration-300 cursor-pointer flex flex-col justify-between group shadow-xs hover:shadow-md ${
+                  isActive
+                    ? 'bg-[#FAF7F0] border-[#1B4332] ring-2 ring-[#1B4332]/40 shadow-sm'
+                    : 'bg-white/95 border-[#D4C9B8] hover:border-[#487075]'
+                }`}
+              >
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className={`text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full border uppercase tracking-wider ${mod.accentBg}`}>
+                      {mod.badge}
+                    </span>
+                    <div 
+                      className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all ${
+                        isActive ? 'bg-[#1B4332] text-white shadow-xs' : 'bg-[#EDE8DC] text-slate-700 group-hover:bg-[#487075] group-hover:text-white'
+                      }`}
+                    >
+                      <Icon className="w-4 h-4" />
+                    </div>
+                  </div>
 
-          <button
-            onClick={() => setActiveTab('scripts_hub')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm ${
-              activeTab === 'scripts_hub'
-                ? 'bg-[#28475A] text-white border border-[#1E293B] shadow-md shadow-[#28475A]/30'
-                : 'bg-[#28475A]/20 text-slate-800 hover:bg-[#28475A]/30 border border-[#28475A]/50'
-            }`}
-          >
-            <Terminal className={`w-4 h-4 ${activeTab === 'scripts_hub' ? 'text-white' : 'text-[#28475A]'}`} />
-            <span>Explorador de Scripts (Hub)</span>
-            <span className="px-1.5 py-0.5 rounded-full text-[9px] font-mono bg-white/40 text-slate-900 font-bold">
-              7 Módulos
-            </span>
-          </button>
+                  <div>
+                    <span className="text-[9px] font-mono font-bold uppercase tracking-wider text-slate-500 block mb-0.5">
+                      {mod.tag}
+                    </span>
+                    <h3 className="text-base font-serif font-bold text-slate-900 group-hover:text-[#1B4332] transition-colors">
+                      {mod.title}
+                    </h3>
+                    <p className="text-xs text-slate-600 mt-1 font-sans leading-relaxed">
+                      {mod.desc}
+                    </p>
+                  </div>
+                </div>
 
-          <button
-            onClick={() => setActiveTab('episteme')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm ${
-              activeTab === 'episteme'
-                ? 'bg-[#78350F] text-white border border-[#451A03] shadow-md shadow-[#78350F]/30'
-                : 'bg-[#D4A373]/20 text-slate-800 hover:bg-[#D4A373]/30 border border-[#D4A373]/50'
-            }`}
-          >
-            <GraduationCap className={`w-4 h-4 ${activeTab === 'episteme' ? 'text-white' : 'text-[#78350F]'}`} />
-            <span>Hombros de Gigantes</span>
-          </button>
+                <div className="mt-4 pt-3 border-t border-[#D4C9B8]/50 flex items-center justify-between text-xs font-serif font-bold text-slate-800 group-hover:text-[#1B4332]">
+                  <span>{isActive ? '✓ Visualizando Ahora' : mod.btnText}</span>
+                  <ArrowRight className={`w-3.5 h-3.5 transition-transform ${isActive ? 'translate-x-1 text-[#1B4332]' : 'group-hover:translate-x-1'}`} />
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -1045,103 +1101,6 @@ El modelo Hombros opera a nivel del nodo territorial o cuenca: evalúa la Amenaz
                 <span className="text-[11px] font-mono text-amber-800 font-bold">
                   Guía Práctica Comunal · SEIA 2.0
                 </span>
-              </div>
-            </div>
-          </div>
-
-          {/* GRID DE 4 RECURSOS CIENTÍFICOS COMPLEMENTARIOS */}
-          <div className="pt-4">
-            <h3 className="text-base sm:text-lg font-serif font-black text-slate-900 mb-4 px-1">
-              Recursos Computacionales, Datos y Genealogía Teórica
-            </h3>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {/* Tarjeta 1: Presentación PDF */}
-              <div 
-                onClick={() => setActiveTab('presentation')}
-                className="p-5 rounded-2xl bg-white/95 border border-[#D4C9B8] hover:border-[#C86D51] shadow-sm hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between"
-              >
-                <div>
-                  <div className="w-10 h-10 rounded-xl bg-[#C86D51]/15 text-[#C86D51] flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                    <MonitorPlay className="w-5 h-5 text-[#C86D51]" />
-                  </div>
-                  <h4 className="font-serif font-bold text-slate-900 text-sm group-hover:text-[#C86D51] transition-colors">
-                    Presentación Oficial (PDF)
-                  </h4>
-                  <p className="text-xs text-slate-600 mt-1 font-sans leading-relaxed">
-                    Diapositivas canónicas de síntesis ejecutiva a 300 DPI listas para exposición o descarga (2.4 MB).
-                  </p>
-                </div>
-                <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-[#C86D51]">
-                  <span>Ver Diapositivas</span>
-                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </div>
-
-              {/* Tarjeta 2: Galería de Figuras */}
-              <div 
-                onClick={() => setActiveTab('figures')}
-                className="p-5 rounded-2xl bg-white/95 border border-[#D4C9B8] hover:border-[#927660] shadow-sm hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between"
-              >
-                <div>
-                  <div className="w-10 h-10 rounded-xl bg-[#927660]/15 text-[#927660] flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                    <Image className="w-5 h-5 text-[#927660]" />
-                  </div>
-                  <h4 className="font-serif font-bold text-slate-900 text-sm group-hover:text-[#927660] transition-colors">
-                    Galería de 10 Figuras
-                  </h4>
-                  <p className="text-xs text-slate-600 mt-1 font-sans leading-relaxed">
-                    Colección comentada de las 7 figuras del Paper 1 y 3 figuras del Paper 2 en alta resolución.
-                  </p>
-                </div>
-                <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-[#927660]">
-                  <span>Explorar Galería</span>
-                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </div>
-
-              {/* Tarjeta 3: Explorador de Scripts en R */}
-              <div 
-                onClick={() => setActiveTab('scripts_hub')}
-                className="p-5 rounded-2xl bg-white/95 border border-[#D4C9B8] hover:border-[#28475A] shadow-sm hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between"
-              >
-                <div>
-                  <div className="w-10 h-10 rounded-xl bg-[#28475A]/15 text-[#28475A] flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                    <Terminal className="w-5 h-5 text-[#28475A]" />
-                  </div>
-                  <h4 className="font-serif font-bold text-slate-900 text-sm group-hover:text-[#28475A] transition-colors">
-                    Explorador de Scripts en R
-                  </h4>
-                  <p className="text-xs text-slate-600 mt-1 font-sans leading-relaxed">
-                    Hub reproducible con el Runner Maestro y los 7 módulos de cómputo en R para auditoría abierta.
-                  </p>
-                </div>
-                <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-[#28475A]">
-                  <span>Ver Código en R</span>
-                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </div>
-
-              {/* Tarjeta 4: Hombros de Gigantes */}
-              <div 
-                onClick={() => setActiveTab('episteme')}
-                className="p-5 rounded-2xl bg-white/95 border border-[#D4C9B8] hover:border-[#78350F] shadow-sm hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between"
-              >
-                <div>
-                  <div className="w-10 h-10 rounded-xl bg-[#78350F]/15 text-[#78350F] flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                    <GraduationCap className="w-5 h-5 text-[#78350F]" />
-                  </div>
-                  <h4 className="font-serif font-bold text-slate-900 text-sm group-hover:text-[#78350F] transition-colors">
-                    Hombros de Gigantes
-                  </h4>
-                  <p className="text-xs text-slate-600 mt-1 font-sans leading-relaxed">
-                    Genealogía de autores clave: Georgescu-Roegen, Howard Odum, Elinor Ostrom, Ilya Prigogine, Kropotkin.
-                  </p>
-                </div>
-                <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-[#78350F]">
-                  <span>Conocer la Base</span>
-                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </div>
               </div>
             </div>
           </div>
