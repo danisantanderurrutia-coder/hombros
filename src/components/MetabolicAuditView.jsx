@@ -4,7 +4,7 @@ import {
   ShieldCheck, ShieldAlert, Scale, Calculator, Activity, FileCheck2,
   AlertTriangle, CheckCircle2, Flame, Globe, Sliders, Printer,
   ArrowRight, Database, Layers, TrendingUp, Lock, Unlock, RotateCcw,
-  PlusCircle, Cpu, Download, Coins, Sprout, Sparkles, Radio
+  PlusCircle, Cpu, Download, Coins, Sprout, Sparkles, Radio, FileText
 } from 'lucide-react';
 import { INITIAL_TERRITORIES } from '../models/territories';
 import { calculateHombrosFullState } from '../models/santanderModel';
