@@ -5,10 +5,9 @@ import {
   ArrowRight, Sparkles, Shield, Cpu, Flame, Trees, Users, Coins,
   Mountain, Compass, CheckCircle2, ChevronRight, HelpCircle
 } from 'lucide-react';
-import NewLandingHero from './NewLandingHero';
+import LandingHeroBanner from './LandingHeroBanner';
 import VisualToolsShowcase from './VisualToolsShowcase';
 import KitAuditaTuCuencaBanner from './KitAuditaTuCuencaBanner';
-import FilosofiaHombrosClosingBanner from './FilosofiaHombrosClosingBanner';
 
 export default function LandingView({ onNavigate, onNavigateCustomAudit }) {
   const modules = [
@@ -43,19 +42,19 @@ export default function LandingView({ onNavigate, onNavigateCustomAudit }) {
       id: 'audit',
       number: '04',
       title: 'Auditoría Biofísica SEIA 2.0 & ROI',
-      tag: 'HIPÓTESIS PRE-INVERSIÓN & TRACCIÓN',
-      desc: 'Evalúa tu propio territorio o conecta la telemetría de AgriTwin, somete proyectos al Ensayo de Tracción y calcula el ROI Sintrópico frente al gasto paliativo.',
+      tag: 'AUDITORÍA CONTRACÍCLICA DE PROYECTOS',
+      desc: 'Mide la huella hídrica neta, la deuda fotosintética y el balance de entropía de inversiones inmobiliarias e industriales.',
       icon: Shield,
-      btnText: 'Auditar Cuenca',
+      btnText: 'Auditar un Proyecto',
     },
     {
-      id: 'theory',
+      id: 'agritwin',
       number: '05',
-      title: 'Marco Epistémico',
-      tag: 'SOBRE HOMBROS DE GIGANTES',
-      desc: 'Genealogía conceptual: bioeconomía de Georgescu-Roegen, cibernética de Stafford Beer, buen vivir y ecología política latinoamericana.',
-      icon: BookOpen,
-      btnText: 'Leer Manifiesto',
+      title: 'AgriTwin Cuenca Vecinal',
+      tag: 'GEMELO DIGITAL & AGROECOLOGÍA',
+      desc: 'Diagnóstico satelital de microcuencas, estimación de escorrentía, balance de carbono y diseño de parches agroecológicos regenerativos.',
+      icon: Trees,
+      btnText: 'Diseñar en AgriTwin',
     },
     {
       id: 'scenarios',
@@ -75,8 +74,8 @@ export default function LandingView({ onNavigate, onNavigateCustomAudit }) {
       transition={{ duration: 0.4 }}
       className="space-y-12"
     >
-      {/* 1. HERO INSTITUCIONAL PRINCIPAL */}
-      <NewLandingHero 
+      {/* 1. HERO MONUMENTAL INTERACTIVO: DIOSA OLÍMPICA ASCENDIENDO CON LA ESFERA CÓSMICA Y HUD DE HOMBROS */}
+      <LandingHeroBanner 
         onNavigate={onNavigate} 
         onNavigateCustomAudit={onNavigateCustomAudit} 
       />
@@ -154,9 +153,6 @@ export default function LandingView({ onNavigate, onNavigateCustomAudit }) {
           })}
         </div>
       </div>
-
-      {/* 5. CIERRE CON EL BANNER DE LA MUJER SUBIENDO LAS ESCALERAS (FILOSOFÍA DE LOS HOMBROS) */}
-      <FilosofiaHombrosClosingBanner />
     </motion.div>
   );
 }
