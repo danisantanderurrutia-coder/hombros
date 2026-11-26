@@ -1,0 +1,161 @@
+{
+  "hero": {
+    "badge": "THINK TANK & TERRITORIAL INCUBATOR",
+    "sub_badge": "GLOBAL SOUTH · TRANSDISCIPLINARY",
+    "title_main": "Biophysical Sovereignty, Watershed Governance and",
+    "title_gradient": "Regenerative Action",
+    "description": "The first research, public policy, and territorial acceleration center integrating complex systems geophysics, community psychology in extractive conflicts, and neighborhood security sociology to replace environmental autopsies with binding safeguards and real productive projects.",
+    "btn_think_tank": "Explore the Think Tank",
+    "btn_audit": "Audit Your Watershed Kit (EIA 2.0)",
+    "btn_pdf": "Official PDF Dossier",
+    "metrics": {
+      "cuencas": {
+        "value": "25",
+        "label": "Calibrated Basins & Nodes",
+        "sub": "Central Chile & Europe"
+      },
+      "axes": {
+        "value": "4",
+        "label": "Transdisciplinary Axes",
+        "sub": "Geophysics, Psychology, Sociology, Ecotecnics"
+      },
+      "seia": {
+        "value": "Binding",
+        "label": "EIA 2.0 Protocol",
+        "sub": "Pre-Investment Safeguard Clause"
+      },
+      "open_science": {
+        "value": "100% R",
+        "label": "Open Science",
+        "sub": "Canonical reproducible scripts"
+      }
+    },
+    "gateways": {
+      "section_badge": "OPERATING ECOSYSTEM",
+      "section_title": "Platform Access Gateways",
+      "section_sub": "Select an area to enter directly into the working module",
+      "think_tank": {
+        "title": "The Think Tank & Incubator",
+        "tag": "MISSION, VISION & ACTION",
+        "desc": "Hub of biophysical sovereignty, community psychology in forestry conflicts, neighborhood security, and ground projects.",
+        "btn": "Discover the Institute"
+      },
+      "audit": {
+        "title": "Biophysical Watershed Audit",
+        "tag": "EIA 2.0 & TELEMETRY",
+        "desc": "Pre-investment traction test, real-time AgriTwin connector, and Cost of Inaction vs. Regeneration calculation.",
+        "btn": "Audit Watershed"
+      },
+      "core": {
+        "title": "CORE Mathematical Engine",
+        "tag": "PHYSICAL LAWS & RHEOLOGY",
+        "desc": "Non-compensatory biophysical laws: Liebig Carrying Capacity (H), Systemic Stress (σ = D/H), and Syntropic Rate (Γ).",
+        "btn": "View Equations"
+      },
+      "world_map": {
+        "title": "Global Territorial Atlas",
+        "tag": "CITIES OBSERVATORY",
+        "desc": "Biophysical traffic light of 25 contrasted territories, Scope 3 Entropic Debt (Chile vs. Europe), and APR Honeycomb Network.",
+        "btn": "Open Atlas"
+      }
+    }
+  },
+  "visual_tools": {
+    "section_badge": "LIVE INTERACTIVE DIRECT ACCESS",
+    "section_title": "Visual Platform Engines",
+    "section_sub": "Test the visual engines right here or launch them to explore the full platform",
+    "atlas": {
+      "badge": "Satellite Watershed Cartography",
+      "btn_top": "View Atlas",
+      "title": "Territorial Atlas & Orbital Telemetry",
+      "description": "Situated observatory of 25 global basins and territories across Central Chile (Maule, Aconcagua, Quintero, Petorca, Valparaíso) and Europe (Bilbao, Copenhagen, Berlin, Amsterdam). Integrates continuous orbital remote sensing, Biophysical Traffic Light, metabolic flow tracking, and drought balance.",
+      "pill_nodos": "25 Calibrated Nodes",
+      "pill_semaforo": "Water Stress Indicator",
+      "pill_scope3": "Scope 3 Debt",
+      "floating_cta": "Click here to test the satellite map live!",
+      "floating_sub": "25 Calibrated Basins",
+      "bottom_overlay": "Sentinel & Esri HD Orbital · Transoceanic Coverage",
+      "bottom_open": "Open Atlas",
+      "footer_text": "Open Complete Satellite Cartography Map",
+      "footer_sub": "(25 Basins)"
+    },
+    "tripod": {
+      "badge": "Interactive Carrying Capacity Tripod",
+      "btn_top": "Open CORE",
+      "title": "Biophysical Tripod: H = (S · E · K)¹/³",
+      "description": "Liebig's non-compensatory rule: drag the 3 vertices in the figure to observe how the collapse of a single pillar brings total carrying capacity down to zero.",
+      "floating_cta": "Click here or drag vertices to test the tripod!",
+      "floating_sub": "Interactive",
+      "footer_text": "Experiment in Full CORE Simulator",
+      "footer_sub": "(12 Variables)"
+    }
+  },
+  "modules": {
+    "section_badge": "INTEGRAL CYBERNETIC PLATFORM",
+    "section_title": "Territorial System Modules",
+    "section_sub": "Click any module to enter directly",
+    "articles": {
+      "title": "Instruments, Regulation & Policy",
+      "tag": "THINK TANK & TERRITORIAL GOVERNANCE",
+      "desc": "Regulatory modernization proposals (Master Plans, EIA, watershed protection ordinances) and biophysical sovereignty Policy Briefs.",
+      "btn": "Read Proposals & Policy"
+    },
+    "core": {
+      "title": "CORE: The Model Engine",
+      "tag": "BIOPHYSICAL LAWS & CARRYING CAPACITY",
+      "desc": "The mathematical core of the HOMBROS model: Carrying Capacity (H), Systemic Stress (σ = D/H), Syntropic Rate (Γ), Forecasting, and Integrated Organism.",
+      "btn": "Open CORE"
+    },
+    "world_map": {
+      "title": "Territorial Atlas & Traffic Light",
+      "tag": "SITUATED BASIN OBSERVATORY",
+      "desc": "Orbital cartography, Biophysical Traffic Light in 25 cities (Central Chile and Europe), Model Comparison, Scope 3 Debt, and Honeycomb Network.",
+      "btn": "View Territorial Atlas"
+    },
+    "audit": {
+      "title": "Biophysical Audit EIA 2.0 & ROI",
+      "tag": "PRE-INVESTMENT HYPOTHESES & TRACTION",
+      "desc": "Evaluate your own territory or connect AgriTwin telemetry, subject projects to the Traction Test, and compute Syntropic ROI vs. palliative spending.",
+      "btn": "Audit Watershed"
+    },
+    "agritwin": {
+      "title": "AgriTwin Community Watershed",
+      "tag": "DIGITAL TWIN & AGROECOLOGY",
+      "desc": "Satellite diagnosis of micro-watersheds, runoff estimation, carbon balance, and design of regenerative agroecological patches.",
+      "btn": "Design in AgriTwin"
+    },
+    "theory": {
+      "title": "Epistemic Framework",
+      "tag": "STANDING ON THE SHOULDERS OF GIANTS",
+      "desc": "Conceptual genealogy: Georgescu-Roegen's bioeconomics, Stafford Beer's cybernetics, buen vivir, and Latin American political ecology.",
+      "btn": "Read Manifesto"
+    },
+    "scenarios": {
+      "title": "Forecasting Simulator",
+      "tag": "STOCHASTIC PROJECTIONS",
+      "desc": "Test any territory against megadroughts, supply chain breakdowns, and syntropic agroecological transitions.",
+      "btn": "Simulate Futures"
+    }
+  },
+  "closing_stairs": {
+    "badge": "PHILOSOPHY OF SHOULDERS · FOUNDATIONAL ALLEGORY",
+    "title_main": "From Sisyphus to Atlas:",
+    "title_gradient": "The Territorial Ascent",
+    "description": "The curse is not the weight of the world, but the atrophy of the foundational pillars. If a territory harmoniously develops its three shoulders —the ecological basin (E), the caring community (S), and regenerative capital (K)— the rock stops rolling down toward the abyss and becomes a celestial sphere ascending steadily up the marble stairs toward sovereignty.",
+    "btn_full_philosophy": "Explore Full Philosophy",
+    "presets": {
+      "collapse": "Collapse",
+      "basal": "Basal",
+      "syntropy": "Syntropy"
+    },
+    "control_title": "Real-Time Territorial Muscular Control",
+    "carrying_capacity": "Carrying Capacity:",
+    "liebig_penalty": "Liebig Penalty:",
+    "e_shoulder": "Ecological Shoulder (E)",
+    "e_sub": "Living water, soil and photosynthesis",
+    "s_shoulder": "Social Shoulder (S)",
+    "s_sub": "Community care and civic cohesion",
+    "k_shoulder": "Capital Shoulder (K)",
+    "k_sub": "Productive sovereignty and ecotechnology"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "brand": {
+    "name": "HOMBROS",
+    "tagline": "Think Tank & Incubator",
+    "subtitle": "Think Tank and Project Incubator"
+  },
+  "nav": {
+    "think_tank": "Think Tank",
+    "articles": "Articles & Policy",
+    "core": "CORE",
+    "world_map": "Territorial Atlas",
+    "audit": "Biophysical Audit",
+    "theory": "Epistemic Framework",
+    "dossier_pdf": "PDF Dossier",
+    "go_home": "HOMBROS · Go to Home"
+  },
+  "actions": {
+    "explore": "Explore",
+    "open": "Open",
+    "learn_more": "Learn more",
+    "read_more": "Read more",
+    "download_pdf": "Download PDF",
+    "close": "Close",
+    "back": "Back"
+  },
+  "footer": {
+    "description": "Research Program in Biophysical Economics, Territorial Mechanics & Syntropic Governance",
+    "badge": "[ Laboratory of Biophysical Hypotheses & Public Policy · Southern Cone & Europe ]"
+  },
+  "languages": {
+    "es": "Spanish",
+    "en": "English"
+  }
+}

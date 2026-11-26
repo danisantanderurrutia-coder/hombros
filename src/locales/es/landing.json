@@ -1,0 +1,161 @@
+{
+  "hero": {
+    "badge": "THINK TANK & INCUBADORA TERRITORIAL",
+    "sub_badge": "SUR GLOBAL · TRANSDISCIPLINAR",
+    "title_main": "Soberanía Biofísica, Gobernanza de Cuencas y",
+    "title_gradient": "Acción Regenerativa",
+    "description": "El primer centro de investigación, política pública y aceleración territorial que integra la geofísica de sistemas complejos, la psicología comunitaria en conflictos extractivos y la sociología de la seguridad vecinal para reemplazar la autopsia ambiental por salvaguardas vinculantes y proyectos productivos reales.",
+    "btn_think_tank": "Explorar el Think Tank",
+    "btn_audit": "Kit Audita tu Cuenca (SEIA 2.0)",
+    "btn_pdf": "Dossier Oficial en PDF",
+    "metrics": {
+      "cuencas": {
+        "value": "25",
+        "label": "Cuencas & Nodos Calibrados",
+        "sub": "Chile Central & Europa"
+      },
+      "axes": {
+        "value": "4",
+        "label": "Ejes Transdisciplinares",
+        "sub": "Geofísica, Psicología, Sociología, Ecotecnias"
+      },
+      "seia": {
+        "value": "Vinculante",
+        "label": "Protocolo SEIA 2.0",
+        "sub": "Cláusula Pre-Inversional de Salvaguarda"
+      },
+      "open_science": {
+        "value": "100% R",
+        "label": "Ciencia Abierta",
+        "sub": "Scripts canónicos reproducibles"
+      }
+    },
+    "gateways": {
+      "section_badge": "ECOSISTEMA OPERATIVO",
+      "section_title": "Puertas de Acceso a la Plataforma",
+      "section_sub": "Selecciona un área para ingresar directamente al módulo de trabajo",
+      "think_tank": {
+        "title": "El Think Tank & Incubadora",
+        "tag": "MISIÓN, VISIÓN & ACCIÓN",
+        "desc": "Centro de soberanía biofísica, psicología comunitaria en conflictos forestales, seguridad vecinal y proyectos en terreno.",
+        "btn": "Conocer Institución"
+      },
+      "audit": {
+        "title": "Auditoría Biofísica de Cuencas",
+        "tag": "SEIA 2.0 & TELEMETRÍA",
+        "desc": "Ensayo de tracción pre-inversión, conector AgriTwin en tiempo real y cálculo del Costo de Inacción vs. Regeneración.",
+        "btn": "Auditar Cuenca"
+      },
+      "core": {
+        "title": "Motor Matemático CORE",
+        "tag": "LEYES FÍSICAS & REOLOGÍA",
+        "desc": "Leyes biofísicas no compensatorias: Capacidad Portante de Liebig (H), Tensión Sistémica (σ = D/H) y Tasa Sintrópica (Γ).",
+        "btn": "Ver Ecuaciones"
+      },
+      "world_map": {
+        "title": "Atlas Territorial Global",
+        "tag": "OBSERVATORIO DE CIUDADES",
+        "desc": "Semáforo biofísico de 25 territorios contrastados, Deuda Entrópica Scope 3 (Chile vs. Europa) y Red Panal de APRs.",
+        "btn": "Abrir Atlas"
+      }
+    }
+  },
+  "visual_tools": {
+    "section_badge": "ACCESOS DIRECTOS INTERACTIVOS EN VIVO",
+    "section_title": "Herramientas Visuales de la Plataforma",
+    "section_sub": "Prueba los motores visuales aquí o ábrelos para explorar la plataforma",
+    "atlas": {
+      "badge": "Cartografía Satelital de Cuencas",
+      "btn_top": "Ver Atlas",
+      "title": "Atlas Territorial & Telemetría Orbital",
+      "description": "Observatorio situado de 25 cuencas y territorios globales en Chile Central (Maule, Aconcagua, Quintero, Petorca, Valparaíso) y Europa (Bilbao, Copenhague, Berlín, Ámsterdam). Integra teledetección orbital continua, Semáforo Biofísico, trazado de flujos metabólicos y balance de sequía.",
+      "pill_nodos": "25 Nodos Calibrados",
+      "pill_semaforo": "Semáforo Hídrico",
+      "pill_scope3": "Deuda Scope 3",
+      "floating_cta": "¡Aprieta aquí para probar el mapa satelital!",
+      "floating_sub": "25 Cuencas Calibradas",
+      "bottom_overlay": "Sentinel & Esri HD Orbital · Cobertura Transoceánica",
+      "bottom_open": "Abrir Atlas",
+      "footer_text": "Abrir Mapa de Cartografía Satelital Completo",
+      "footer_sub": "(25 Cuencas)"
+    },
+    "tripod": {
+      "badge": "Trípode Interactivo de Capacidad Portante",
+      "btn_top": "Abrir CORE",
+      "title": "Trípode Biofísico: H = (S · E · K)¹/³",
+      "description": "La regla no compensatoria de Liebig: arrastra los 3 vértices en la figura para observar cómo la pérdida de un solo pilar arrastra a cero la capacidad portante total.",
+      "floating_cta": "¡Aprieta aquí o arrastra los vértices para probar el trípode!",
+      "floating_sub": "Interactivo",
+      "footer_text": "Experimentar en el Simulador Completo CORE",
+      "footer_sub": "(12 Variables)"
+    }
+  },
+  "modules": {
+    "section_badge": "PLATAFORMA CIBERNÉTICA INTEGRAL",
+    "section_title": "Módulos del Sistema Territorial",
+    "section_sub": "Haz clic en cualquier módulo para ingresar directamente",
+    "articles": {
+      "title": "Instrumentos, Normativa & Policy",
+      "tag": "THINK TANK & GOBERNANZA TERRITORIAL",
+      "desc": "Propuestas de modernización regulatoria (Planes Reguladores, SEIA, ordenanzas de protección) y Policy Briefs de soberanía biofísica.",
+      "btn": "Leer Propuestas & Policy"
+    },
+    "core": {
+      "title": "CORE: El Motor del Modelo",
+      "tag": "LEYES BIOFÍSICAS & CAPACIDAD PORTANTE",
+      "desc": "El corazón matemático del modelo HOMBROS: Capacidad Portante (H), Tensión Sistémica (σ = D/H), Tasa Sintrópica (Γ), Prospectiva y Organismo Integrado.",
+      "btn": "Abrir CORE"
+    },
+    "world_map": {
+      "title": "Atlas Territorial & Semáforo",
+      "tag": "OBSERVATORIO SITUADO DE CUENCAS",
+      "desc": "Cartografía orbital, Semáforo Biofísico en 25 ciudades (Chile Central y Europa), Contraste de Modelos, Deuda Scope 3 y Red Panal.",
+      "btn": "Ver Atlas Territorial"
+    },
+    "audit": {
+      "title": "Auditoría Biofísica SEIA 2.0 & ROI",
+      "tag": "HIPÓTESIS PRE-INVERSIÓN & TRACCIÓN",
+      "desc": "Evalúa tu propio territorio o conecta la telemetría de AgriTwin, somete proyectos al Ensayo de Tracción y calcula el ROI Sintrópico frente al gasto paliativo.",
+      "btn": "Auditar Cuenca"
+    },
+    "agritwin": {
+      "title": "AgriTwin Cuenca Vecinal",
+      "tag": "GEMELO DIGITAL & AGROECOLOGÍA",
+      "desc": "Diagnóstico satelital de microcuencas, estimación de escorrentía, balance de carbono y diseño de parches agroecológicos regenerativos.",
+      "btn": "Diseñar en AgriTwin"
+    },
+    "theory": {
+      "title": "Marco Epistémico",
+      "tag": "SOBRE HOMBROS DE GIGANTES",
+      "desc": "Genealogía conceptual: bioeconomía de Georgescu-Roegen, cibernética de Stafford Beer, buen vivir y ecología política latinoamericana.",
+      "btn": "Leer Manifiesto"
+    },
+    "scenarios": {
+      "title": "Simulador Prospectivo",
+      "tag": "PROYECCIONES ESTOCÁSTICAS",
+      "desc": "Pon a prueba cualquier territorio ante megasequías, colapsos de cadenas de suministro y transición agroecológica sintrópica.",
+      "btn": "Simular Futuros"
+    }
+  },
+  "closing_stairs": {
+    "badge": "FILOSOFÍA DE LOS HOMBROS · ALEGORÍA FUNDACIONAL",
+    "title_main": "De Sísifo a Atlas:",
+    "title_gradient": "El Ascenso Territorial",
+    "description": "La condena no es el peso del mundo, sino la atrofia de los pilares basales. Si el territorio cultiva armónicamente sus tres hombros —la cuenca ecológica (E), la comunidad cuidadora (S) y el capital regenerativo (K)— la roca deja de rodar hacia el abismo y se transforma en una esfera celeste que asciende con paso firme por la escalinata hacia la soberanía.",
+    "btn_full_philosophy": "Explorar Filosofía Completa",
+    "presets": {
+      "collapse": "Colapso",
+      "basal": "Basal",
+      "syntropy": "Sintropía"
+    },
+    "control_title": "Control Muscular Territorial en Tiempo Real",
+    "carrying_capacity": "Capacidad Portante:",
+    "liebig_penalty": "Castigo Liebig:",
+    "e_shoulder": "Hombro Ecológico (E)",
+    "e_sub": "Agua viva, suelo y fotosíntesis",
+    "s_shoulder": "Hombro Social (S)",
+    "s_sub": "Cuidados comunitarios y cohesión cívica",
+    "k_shoulder": "Hombro Capital (K)",
+    "k_sub": "Soberanía productiva y ecotecnología"
+  }
+}

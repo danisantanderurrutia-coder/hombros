@@ -1,0 +1,34 @@
+{
+  "brand": {
+    "name": "HOMBROS",
+    "tagline": "Think Tank & Incubadora",
+    "subtitle": "Think Tank e Incubadora de Proyectos"
+  },
+  "nav": {
+    "think_tank": "Think Tank",
+    "articles": "Artículos & Policy",
+    "core": "CORE",
+    "world_map": "Atlas Territorial",
+    "audit": "Auditoría Biofísica",
+    "theory": "Marco Epistémico",
+    "dossier_pdf": "Dossier PDF",
+    "go_home": "HOMBROS · Ir al Inicio"
+  },
+  "actions": {
+    "explore": "Explorar",
+    "open": "Abrir",
+    "learn_more": "Saber más",
+    "read_more": "Leer más",
+    "download_pdf": "Descargar PDF",
+    "close": "Cerrar",
+    "back": "Volver"
+  },
+  "footer": {
+    "description": "Programa de Investigación en Economía Biofísica, Mecánica Territorial & Gobernanza Sintrópica",
+    "badge": "[ Laboratorio de Hipótesis Biofísicas & Incidencia Pública · Cono Sur & Europa ]"
+  },
+  "languages": {
+    "es": "Español",
+    "en": "English"
+  }
+}

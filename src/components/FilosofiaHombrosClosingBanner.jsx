@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Sliders, RotateCcw, Mountain, ArrowRight, Sparkles, ShieldCheck } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import GoldenAtlasHillAscent from './GoldenAtlasHillAscent';
 import FilosofiaHombrosModal from './FilosofiaHombrosModal';
 
 export default function FilosofiaHombrosClosingBanner() {
+  const { t } = useTranslation(['landing', 'common']);
   const [E, setE] = useState(0.72);
   const [S, setS] = useState(0.68);
   const [K, setK] = useState(0.70);
@@ -32,28 +34,28 @@ export default function FilosofiaHombrosClosingBanner() {
             <div className="space-y-3 max-w-3xl">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-[#EDE8DC] text-[#78350F] border border-[#D4A373]/50">
                 <Mountain className="w-3.5 h-3.5 text-[#78350F]" />
-                <span>FILOSOFÍA DE LOS HOMBROS · ALEGORÍA FUNDACIONAL</span>
+                <span>{t('closing_stairs.badge')}</span>
               </div>
 
               <h2 className="text-2xl sm:text-4xl font-serif font-extrabold tracking-tight text-slate-900 leading-tight">
-                De Sísifo a Atlas:{' '}
+                {t('closing_stairs.title_main')}{' '}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1B4332] via-[#28475A] to-[#C86D51]">
-                  El Ascenso Territorial
+                  {t('closing_stairs.title_gradient')}
                 </span>
               </h2>
 
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-sans">
-                La condena no es el peso del mundo, sino la atrofia de los pilares basales. Si el territorio cultiva armónicamente sus tres hombros —la cuenca ecológica (<strong className="text-[#1B4332]">E</strong>), la comunidad cuidadora (<strong className="text-[#C86D51]">S</strong>) y el capital regenerativo (<strong className="text-[#927660]">K</strong>)— la roca deja de rodar hacia el abismo y se transforma en una esfera celeste que asciende con paso firme por la escalinata hacia la soberanía.
+                {t('closing_stairs.description')}
               </p>
             </div>
 
             {/* Quick Presets & Full Philosophy Button */}
-            <div className="flex flex-col sm:flex-row lg:flex-col gap-2.5 shrink-0">
+            <div className="flex flex-col sm:flex-row lg:col gap-2.5 shrink-0">
               <button
                 onClick={() => setIsModalOpen(true)}
                 className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-xs font-serif font-bold bg-[#28475A] hover:bg-[#1E293B] text-white shadow-sm transition-all"
               >
-                <span>Explorar Filosofía Completa</span>
+                <span>{t('closing_stairs.btn_full_philosophy')}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 
@@ -63,21 +65,21 @@ export default function FilosofiaHombrosClosingBanner() {
                   className="px-2.5 py-1 text-[11px] font-mono rounded-lg hover:bg-rose-100 text-rose-800 transition"
                   title="Simular colapso extractivo"
                 >
-                  Colapso
+                  {t('closing_stairs.presets.collapse')}
                 </button>
                 <button
                   onClick={() => applyPreset(0.55, 0.55, 0.55)}
                   className="px-2.5 py-1 text-[11px] font-mono rounded-lg hover:bg-amber-100 text-amber-800 transition"
                   title="Simular equilibrio basal"
                 >
-                  Basal
+                  {t('closing_stairs.presets.basal')}
                 </button>
                 <button
                   onClick={() => applyPreset(0.85, 0.85, 0.85)}
                   className="px-2.5 py-1 text-[11px] font-mono rounded-lg hover:bg-emerald-100 text-emerald-800 font-bold transition"
                   title="Simular sintropía plena"
                 >
-                  Sintropía
+                  {t('closing_stairs.presets.syntropy')}
                 </button>
               </div>
             </div>
@@ -94,13 +96,13 @@ export default function FilosofiaHombrosClosingBanner() {
               <div className="flex items-center gap-2">
                 <Sliders className="w-4 h-4 text-[#28475A]" />
                 <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-800">
-                  Control Muscular Territorial en Tiempo Real
+                  {t('closing_stairs.control_title')}
                 </span>
               </div>
               <div className="flex items-center gap-3 text-xs font-mono">
-                <span className="text-slate-600">Capacidad Portante:</span>
+                <span className="text-slate-600">{t('closing_stairs.carrying_capacity')}</span>
                 <span className="text-[#1B4332] font-extrabold text-sm font-mono">H = {H.toFixed(3)}</span>
-                <span className="text-slate-500 text-[11px]">(Castigo Liebig: -{liebigPenalty})</span>
+                <span className="text-slate-500 text-[11px]">({t('closing_stairs.liebig_penalty')} -{liebigPenalty})</span>
               </div>
             </div>
 
@@ -108,7 +110,7 @@ export default function FilosofiaHombrosClosingBanner() {
               {/* E */}
               <div className="space-y-1.5 p-3 rounded-xl bg-white border border-[#D4C9B8]/60">
                 <div className="flex justify-between text-xs">
-                  <span className="font-mono font-bold text-[#487075]">Hombro Ecológico (E)</span>
+                  <span className="font-mono font-bold text-[#487075]">{t('closing_stairs.e_shoulder')}</span>
                   <span className="font-mono font-bold text-slate-800">{(E * 100).toFixed(0)}%</span>
                 </div>
                 <input
@@ -120,13 +122,13 @@ export default function FilosofiaHombrosClosingBanner() {
                   onChange={(e) => setE(parseFloat(e.target.value))}
                   className="w-full accent-[#487075] cursor-pointer h-1.5 bg-slate-200 rounded"
                 />
-                <span className="text-[10px] text-slate-500 block truncate">Agua viva, suelo y fotosíntesis</span>
+                <span className="text-[10px] text-slate-500 block truncate">{t('closing_stairs.e_sub')}</span>
               </div>
 
               {/* S */}
               <div className="space-y-1.5 p-3 rounded-xl bg-white border border-[#D4C9B8]/60">
                 <div className="flex justify-between text-xs">
-                  <span className="font-mono font-bold text-[#C86D51]">Hombro Social (S)</span>
+                  <span className="font-mono font-bold text-[#C86D51]">{t('closing_stairs.s_shoulder')}</span>
                   <span className="font-mono font-bold text-slate-800">{(S * 100).toFixed(0)}%</span>
                 </div>
                 <input
@@ -138,13 +140,13 @@ export default function FilosofiaHombrosClosingBanner() {
                   onChange={(e) => setS(parseFloat(e.target.value))}
                   className="w-full accent-[#C86D51] cursor-pointer h-1.5 bg-slate-200 rounded"
                 />
-                <span className="text-[10px] text-slate-500 block truncate">Cuidados comunitarios y cohesión cívica</span>
+                <span className="text-[10px] text-slate-500 block truncate">{t('closing_stairs.s_sub')}</span>
               </div>
 
               {/* K */}
               <div className="space-y-1.5 p-3 rounded-xl bg-white border border-[#D4C9B8]/60">
                 <div className="flex justify-between text-xs">
-                  <span className="font-mono font-bold text-[#927660]">Hombro Capital (K)</span>
+                  <span className="font-mono font-bold text-[#927660]">{t('closing_stairs.k_shoulder')}</span>
                   <span className="font-mono font-bold text-slate-800">{(K * 100).toFixed(0)}%</span>
                 </div>
                 <input
@@ -156,7 +158,7 @@ export default function FilosofiaHombrosClosingBanner() {
                   onChange={(e) => setK(parseFloat(e.target.value))}
                   className="w-full accent-[#927660] cursor-pointer h-1.5 bg-slate-200 rounded"
                 />
-                <span className="text-[10px] text-slate-500 block truncate">Soberanía productiva y ecotecnología</span>
+                <span className="text-[10px] text-slate-500 block truncate">{t('closing_stairs.k_sub')}</span>
               </div>
             </div>
           </div>

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Satellite, Sparkles, ArrowRight, Activity, MapPin } from 'lucide-react';
@@ -13,6 +14,7 @@ const PREVIEW_TERRITORIES = [
 ];
 
 export default function LandingSatelliteMapPreview({ onNavigate }) {
+  const { t } = useTranslation(['landing', 'common']);
   const mapContainerRef = useRef(null);
   const mapInstanceRef = useRef(null);
 
@@ -112,10 +114,10 @@ export default function LandingSatelliteMapPreview({ onNavigate }) {
         <div className="p-2 sm:p-2.5 rounded-xl bg-slate-950/85 backdrop-blur-md border border-[#487075] text-white shadow-xl flex items-center justify-between hover:bg-slate-900 transition-all">
           <div className="flex items-center gap-2 text-xs font-mono">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
-            <span className="font-bold text-emerald-300">¡Aprieta aquí para probar el mapa satelital!</span>
+            <span className="font-bold text-emerald-300">{t('visual_tools.atlas.floating_cta')}</span>
           </div>
           <span className="text-[11px] font-mono text-slate-300 hidden sm:flex items-center gap-1">
-            <span>25 Cuencas Calibradas</span>
+            <span>{t('visual_tools.atlas.floating_sub')}</span>
             <ArrowRight className="w-3.5 h-3.5 text-emerald-400" />
           </span>
         </div>
@@ -128,10 +130,10 @@ export default function LandingSatelliteMapPreview({ onNavigate }) {
       >
         <div className="flex items-center gap-2">
           <Satellite className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
-          <span className="text-slate-300">Sentinel & Esri HD Orbital · Cobertura Transoceánica</span>
+          <span className="text-slate-300">{t('visual_tools.atlas.bottom_overlay')}</span>
         </div>
         <span className="text-emerald-400 font-bold flex items-center gap-1">
-          <span>Abrir Atlas</span>
+          <span>{t('visual_tools.atlas.bottom_open')}</span>
           <ArrowRight className="w-3 h-3" />
         </span>
       </div>

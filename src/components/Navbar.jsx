@@ -1,15 +1,19 @@
 import React from 'react';
 import { Activity, Globe, Layers, Database, BookOpen, GitCompare, Sparkles, ShieldCheck, FileText, Download, Landmark } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { getAssetUrl } from '../utils/assets';
+import LanguageSwitcher from './LanguageSwitcher';
 
 export default function Navbar({ activeTab, setActiveTab, onNavigateCustomAudit }) {
+  const { t } = useTranslation(['common']);
+
   const navItems = [
-    { id: 'think_tank', label: 'Think Tank', icon: Landmark },
-    { id: 'articles', label: 'Artículos & Policy', icon: FileText },
-    { id: 'core', label: 'CORE', icon: Activity },
-    { id: 'world_map', label: 'Atlas Territorial', icon: Globe },
-    { id: 'audit', label: 'Auditoría Biofísica', icon: ShieldCheck },
-    { id: 'theory', label: 'Marco Epistémico', icon: BookOpen },
+    { id: 'think_tank', label: t('nav.think_tank'), icon: Landmark },
+    { id: 'articles', label: t('nav.articles'), icon: FileText },
+    { id: 'core', label: t('nav.core'), icon: Activity },
+    { id: 'world_map', label: t('nav.world_map'), icon: Globe },
+    { id: 'audit', label: t('nav.audit'), icon: ShieldCheck },
+    { id: 'theory', label: t('nav.theory'), icon: BookOpen },
   ];
 
   return (
@@ -21,7 +25,7 @@ export default function Navbar({ activeTab, setActiveTab, onNavigateCustomAudit 
           <div 
             onClick={() => setActiveTab('landing')}
             className="flex items-center gap-3.5 cursor-pointer group"
-            title="HOMBROS · Ir al Inicio"
+            title={t('nav.go_home')}
           >
             <div className="relative flex items-center justify-center">
               <img 
@@ -34,14 +38,14 @@ export default function Navbar({ activeTab, setActiveTab, onNavigateCustomAudit 
             <div>
               <div className="flex items-center gap-2">
                 <span className="tracking-wide text-2xl font-bold font-serif text-slate-900 tracking-tight">
-                  HOMBROS
+                  {t('brand.name')}
                 </span>
                 <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full uppercase tracking-wider font-bold bg-[#1B4332]/15 text-[#1B4332] border border-[#1B4332]/40">
-                  Think Tank & Incubadora
+                  {t('brand.tagline')}
                 </span>
               </div>
               <p className="text-[11px] hidden sm:block text-[#64748B] font-mono font-medium">
-                Think Tank e Incubadora de Proyectos
+                {t('brand.subtitle')}
               </p>
             </div>
           </div>
@@ -91,19 +95,23 @@ export default function Navbar({ activeTab, setActiveTab, onNavigateCustomAudit 
             })}
           </nav>
 
-          {/* Dossier PDF Download (Desktop) */}
-          <div className="hidden xl:flex items-center">
-            <a
-              href={getAssetUrl('docs/HOMBROS_Presentacion_Oficial.pdf')}
-              download="HOMBROS_Presentacion_Oficial.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-serif font-bold text-[#28475A] bg-[#EDE8DC] hover:bg-[#D4C9B8] border border-[#D4C9B8] shadow-xs transition-all group"
-              title="Descargar Dossier / Presentación Oficial en PDF"
-            >
-              <Download className="w-3.5 h-3.5 text-[#487075] group-hover:-translate-y-0.5 transition-transform" />
-              <span>Dossier PDF</span>
-            </a>
+          {/* Right Header Actions: Language Switcher + Dossier PDF */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            <LanguageSwitcher />
+
+            <div className="hidden xl:flex items-center">
+              <a
+                href={getAssetUrl('docs/HOMBROS_Presentacion_Oficial.pdf')}
+                download="HOMBROS_Presentacion_Oficial.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-serif font-bold text-[#28475A] bg-[#EDE8DC] hover:bg-[#D4C9B8] border border-[#D4C9B8] shadow-xs transition-all group"
+                title={t('actions.download_pdf')}
+              >
+                <Download className="w-3.5 h-3.5 text-[#487075] group-hover:-translate-y-0.5 transition-transform" />
+                <span>{t('nav.dossier_pdf')}</span>
+              </a>
+            </div>
           </div>
 
         </div>

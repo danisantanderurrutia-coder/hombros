@@ -5,65 +5,69 @@ import {
   ArrowRight, Sparkles, Shield, Cpu, Flame, Trees, Users, Coins,
   Mountain, Compass, CheckCircle2, ChevronRight, HelpCircle
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import LandingHeroBanner from './LandingHeroBanner';
 import VisualToolsShowcase from './VisualToolsShowcase';
 import KitAuditaTuCuencaBanner from './KitAuditaTuCuencaBanner';
+import FilosofiaHombrosClosingBanner from './FilosofiaHombrosClosingBanner';
 
 export default function LandingView({ onNavigate, onNavigateCustomAudit }) {
+  const { t } = useTranslation(['landing', 'common']);
+
   const modules = [
     {
       id: 'articles',
       number: '01',
-      title: 'Instrumentos, Normativa & Policy',
-      tag: 'THINK TANK & GOBERNANZA TERRITORIAL',
-      desc: 'Propuestas de modernización regulatoria (Planes Reguladores, SEIA, ordenanzas de protección) y Policy Briefs de soberanía biofísica.',
+      title: t('modules.articles.title'),
+      tag: t('modules.articles.tag'),
+      desc: t('modules.articles.desc'),
       icon: BookOpen,
-      btnText: 'Leer Propuestas & Policy',
+      btnText: t('modules.articles.btn'),
     },
     {
       id: 'core',
       number: '02',
-      title: 'CORE: El Motor del Modelo',
-      tag: 'LEYES BIOFÍSICAS & CAPACIDAD PORTANTE',
-      desc: 'El corazón matemático del modelo HOMBROS: Capacidad Portante (H), Tensión Sistémica (σ = D/H), Tasa Sintrópica (Γ), Prospectiva y Organismo Integrado.',
+      title: t('modules.core.title'),
+      tag: t('modules.core.tag'),
+      desc: t('modules.core.desc'),
       icon: Activity,
-      btnText: 'Abrir CORE',
+      btnText: t('modules.core.btn'),
     },
     {
       id: 'world_map',
       number: '03',
-      title: 'Atlas Territorial & Semáforo',
-      tag: 'OBSERVATORIO SITUADO DE CUENCAS',
-      desc: 'Cartografía orbital, Semáforo Biofísico en 25 ciudades (Chile Central y Europa), Contraste de Modelos, Deuda Scope 3 y Red Panal.',
+      title: t('modules.world_map.title'),
+      tag: t('modules.world_map.tag'),
+      desc: t('modules.world_map.desc'),
       icon: Globe,
-      btnText: 'Ver Atlas Territorial',
+      btnText: t('modules.world_map.btn'),
     },
     {
       id: 'audit',
       number: '04',
-      title: 'Auditoría Biofísica SEIA 2.0 & ROI',
-      tag: 'AUDITORÍA CONTRACÍCLICA DE PROYECTOS',
-      desc: 'Mide la huella hídrica neta, la deuda fotosintética y el balance de entropía de inversiones inmobiliarias e industriales.',
+      title: t('modules.audit.title'),
+      tag: t('modules.audit.tag'),
+      desc: t('modules.audit.desc'),
       icon: Shield,
-      btnText: 'Auditar un Proyecto',
+      btnText: t('modules.audit.btn'),
     },
     {
       id: 'agritwin',
       number: '05',
-      title: 'AgriTwin Cuenca Vecinal',
-      tag: 'GEMELO DIGITAL & AGROECOLOGÍA',
-      desc: 'Diagnóstico satelital de microcuencas, estimación de escorrentía, balance de carbono y diseño de parches agroecológicos regenerativos.',
+      title: t('modules.agritwin.title'),
+      tag: t('modules.agritwin.tag'),
+      desc: t('modules.agritwin.desc'),
       icon: Trees,
-      btnText: 'Diseñar en AgriTwin',
+      btnText: t('modules.agritwin.btn'),
     },
     {
       id: 'scenarios',
       number: '06',
-      title: 'Simulador Prospectivo',
-      tag: 'PROYECCIONES ESTOCÁSTICAS',
-      desc: 'Pon a prueba cualquier territorio ante megasequías, colapsos de cadenas de suministro y transición agroecológica sintrópica.',
+      title: t('modules.scenarios.title'),
+      tag: t('modules.scenarios.tag'),
+      desc: t('modules.scenarios.desc'),
       icon: Layers,
-      btnText: 'Simular Futuros',
+      btnText: t('modules.scenarios.btn'),
     },
   ];
 
@@ -100,14 +104,14 @@ export default function LandingView({ onNavigate, onNavigateCustomAudit }) {
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
           <div>
             <span className="text-[10px] font-mono uppercase tracking-wider text-[#487075] font-bold block">
-              PLATAFORMA CIBERNÉTICA INTEGRAL
+              {t('modules.section_badge')}
             </span>
             <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 tracking-tight">
-              Módulos del Sistema Territorial
+              {t('modules.section_title')}
             </h2>
           </div>
           <p className="text-xs text-slate-500 font-mono">
-            Haz clic en cualquier módulo para ingresar directamente
+            {t('modules.section_sub')}
           </p>
         </div>
 
@@ -153,6 +157,9 @@ export default function LandingView({ onNavigate, onNavigateCustomAudit }) {
           })}
         </div>
       </div>
+
+      {/* 5. CIERRE CON EL BANNER DE LA FILOSOFÍA DE LOS HOMBROS (ASCENSO TERRITORIAL) */}
+      <FilosofiaHombrosClosingBanner />
     </motion.div>
   );
 }

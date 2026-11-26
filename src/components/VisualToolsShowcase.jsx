@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Globe, Compass, ArrowRight, ShieldCheck, Activity, Satellite, Sparkles, Sliders, Move } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import LandingSatelliteMapPreview from './LandingSatelliteMapPreview';
 import ShouldersRadarTripod from './ShouldersRadarTripod';
 
 export default function VisualToolsShowcase({ onNavigate }) {
+  const { t } = useTranslation(['landing', 'common']);
+
   // Estado local para el Trípode interactivo en vivo en la landing
   const [S, setS] = useState(0.70); // Social
   const [E, setE] = useState(0.75); // Ambiental
@@ -25,14 +28,14 @@ export default function VisualToolsShowcase({ onNavigate }) {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
         <div>
           <span className="text-[10px] font-mono uppercase tracking-wider text-[#1B4332] font-bold block">
-            ACCESOS DIRECTOS INTERACTIVOS EN VIVO
+            {t('visual_tools.section_badge')}
           </span>
           <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 tracking-tight">
-            Herramientas Visuales de la Plataforma
+            {t('visual_tools.section_title')}
           </h2>
         </div>
         <p className="text-xs text-slate-600 font-mono">
-          Prueba los motores visuales aquí o ábrelos para explorar la plataforma
+          {t('visual_tools.section_sub')}
         </p>
       </div>
 
@@ -48,38 +51,38 @@ export default function VisualToolsShowcase({ onNavigate }) {
             <div className="flex items-center justify-between">
               <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-[#487075]/10 text-[#487075] border border-[#487075]/30">
                 <Satellite className="w-3.5 h-3.5 text-[#487075]" />
-                Cartografía Satelital de Cuencas
+                {t('visual_tools.atlas.badge')}
               </span>
               <button
                 onClick={() => onNavigate('world_map')}
                 className="px-3 py-1 rounded-xl text-xs font-mono font-bold bg-[#FAF7F0] hover:bg-[#487075] hover:text-white border border-[#D4C9B8] text-slate-800 transition-colors flex items-center gap-1.5 shadow-2xs"
               >
-                <span>Ver Atlas</span>
+                <span>{t('visual_tools.atlas.btn_top')}</span>
                 <ArrowRight className="w-3 h-3" />
               </button>
             </div>
 
             <div>
               <h3 className="text-xl sm:text-2xl font-serif font-bold text-slate-900">
-                Atlas Territorial & Telemetría Orbital
+                {t('visual_tools.atlas.title')}
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 font-sans mt-1 leading-relaxed">
-                Observatorio situado de <strong>25 cuencas y territorios globales</strong> en Chile Central (Maule, Aconcagua, Quintero, Petorca, Valparaíso) y Europa (Bilbao, Copenhague, Berlín, Ámsterdam). Integra <strong>teledetección orbital continua</strong>, Semáforo Biofísico, trazado de flujos metabólicos y balance de sequía.
+                {t('visual_tools.atlas.description')}
               </p>
 
               {/* Informative Feature Badges */}
               <div className="flex flex-wrap items-center gap-2 pt-2.5 text-[11px] font-mono text-slate-700">
                 <span className="px-2.5 py-1 rounded-lg bg-[#FAF7F0] border border-[#D4C9B8] flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                  <strong>25 Nodos Calibrados</strong>
+                  <strong>{t('visual_tools.atlas.pill_nodos')}</strong>
                 </span>
                 <span className="px-2.5 py-1 rounded-lg bg-[#FAF7F0] border border-[#D4C9B8] flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-sky-500" />
-                  <span>Semáforo Hídrico</span>
+                  <span>{t('visual_tools.atlas.pill_semaforo')}</span>
                 </span>
                 <span className="px-2.5 py-1 rounded-lg bg-[#FAF7F0] border border-[#D4C9B8] flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-amber-500" />
-                  <span>Deuda Scope 3</span>
+                  <span>{t('visual_tools.atlas.pill_scope3')}</span>
                 </span>
               </div>
             </div>
@@ -94,8 +97,8 @@ export default function VisualToolsShowcase({ onNavigate }) {
             className="p-3.5 sm:p-4 bg-[#FAF7F0] border-t border-[#D4C9B8]/60 flex items-center justify-between text-xs font-serif font-bold text-[#487075] hover:text-[#28475A] cursor-pointer transition-colors"
           >
             <span className="flex items-center gap-2">
-              <span>Abrir Mapa de Cartografía Satelital Completo</span>
-              <span className="text-[10px] font-mono font-normal text-slate-500">(25 Cuencas)</span>
+              <span>{t('visual_tools.atlas.footer_text')}</span>
+              <span className="text-[10px] font-mono font-normal text-slate-500">{t('visual_tools.atlas.footer_sub')}</span>
             </span>
             <ArrowRight className="w-4 h-4" />
           </div>
@@ -110,23 +113,23 @@ export default function VisualToolsShowcase({ onNavigate }) {
             <div className="flex items-center justify-between">
               <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-[#C86D51]/10 text-[#C86D51] border border-[#C86D51]/30">
                 <Activity className="w-3.5 h-3.5 text-[#C86D51]" />
-                Trípode Interactivo de Capacidad Portante
+                {t('visual_tools.tripod.badge')}
               </span>
               <button
                 onClick={() => onNavigate('core')}
                 className="px-3 py-1 rounded-xl text-xs font-mono font-bold bg-[#FAF7F0] hover:bg-[#C86D51] hover:text-white border border-[#D4C9B8] text-slate-800 transition-colors flex items-center gap-1.5 shadow-2xs"
               >
-                <span>Abrir CORE</span>
+                <span>{t('visual_tools.tripod.btn_top')}</span>
                 <ArrowRight className="w-3 h-3" />
               </button>
             </div>
 
             <div>
               <h3 className="text-xl sm:text-2xl font-serif font-bold text-slate-900">
-                Trípode Biofísico: H = (S · E · K)<sup>1/3</sup>
+                {t('visual_tools.tripod.title')}
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 font-sans mt-1 leading-relaxed">
-                La regla no compensatoria de Liebig: arrastra los 3 vértices en la figura para observar cómo la pérdida de un solo pilar arrastra a cero la capacidad portante total.
+                {t('visual_tools.tripod.description')}
               </p>
             </div>
 
@@ -137,11 +140,11 @@ export default function VisualToolsShowcase({ onNavigate }) {
             >
               <div className="flex items-center gap-2 text-xs font-mono">
                 <span className="w-2.5 h-2.5 rounded-full bg-[#C86D51] animate-ping" />
-                <span className="font-bold text-[#DA7B93]">¡Aprieta aquí o arrastra los vértices para probar el trípode!</span>
+                <span className="font-bold text-[#DA7B93]">{t('visual_tools.tripod.floating_cta')}</span>
               </div>
               <span className="text-[11px] font-mono text-slate-300 hidden sm:flex items-center gap-1">
                 <Move className="w-3 h-3 text-[#DA7B93]" />
-                <span>Interactivo</span>
+                <span>{t('visual_tools.tripod.floating_sub')}</span>
               </span>
             </div>
 
@@ -165,8 +168,8 @@ export default function VisualToolsShowcase({ onNavigate }) {
             className="p-3.5 sm:p-4 bg-[#FAF7F0] border-t border-[#D4C9B8]/60 flex items-center justify-between text-xs font-serif font-bold text-[#C86D51] hover:text-[#927660] cursor-pointer transition-colors"
           >
             <span className="flex items-center gap-2">
-              <span>Experimentar en el Simulador Completo CORE</span>
-              <span className="text-[10px] font-mono font-normal text-slate-500">(12 Variables)</span>
+              <span>{t('visual_tools.tripod.footer_text')}</span>
+              <span className="text-[10px] font-mono font-normal text-slate-500">{t('visual_tools.tripod.footer_sub')}</span>
             </span>
             <ArrowRight className="w-4 h-4" />
           </div>
