@@ -4,9 +4,11 @@ import {
   X, Sliders, RotateCcw, Trees, Users, Coins, 
   Sparkles, ShieldCheck, Mountain, Compass, Info
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import GoldenAtlasHillAscent from './GoldenAtlasHillAscent';
 
 export default function FilosofiaHombrosModal({ isOpen, onClose }) {
+  const { t } = useTranslation(['landing', 'common']);
   const [E, setE] = useState(0.72); // Ecológico
   const [S, setS] = useState(0.68); // Social
   const [K, setK] = useState(0.70); // Económico / Capital
@@ -42,14 +44,14 @@ export default function FilosofiaHombrosModal({ isOpen, onClose }) {
               <div>
                 <div className="flex items-center gap-2">
                   <h3 className="text-lg sm:text-xl font-serif font-bold text-white tracking-wide">
-                    Filosofía de los Hombros: De Sísifo a Atlas
+                    {t('philosophy_modal.title')}
                   </h3>
                   <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-500/40">
-                    ALEGORÍA FUNDACIONAL
+                    {t('philosophy_modal.badge')}
                   </span>
                 </div>
                 <p className="text-xs text-slate-400 font-sans">
-                  La condena no es el peso del mundo, sino la atrofia de los pilares basales.
+                  {t('philosophy_modal.subtitle')}
                 </p>
               </div>
             </div>
@@ -57,7 +59,7 @@ export default function FilosofiaHombrosModal({ isOpen, onClose }) {
             <button
               onClick={onClose}
               className="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white transition-colors"
-              title="Cerrar modal"
+              title={t('philosophy_modal.close_title')}
             >
               <X className="w-5 h-5" />
             </button>
@@ -68,10 +70,10 @@ export default function FilosofiaHombrosModal({ isOpen, onClose }) {
             {/* Manifiesto Breve */}
             <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-xs sm:text-sm text-slate-300 font-sans leading-relaxed space-y-2">
               <p>
-                <strong>¿Por qué Sísifo empuja la roca mientras Atlas sostiene el mundo?</strong> La economía tradicional concibe el desarrollo como una piedra rodante: extracción acelerada, consumo entrópico y reconstrucción perpetua tras el colapso. Es la condena de Sísifo.
+                <strong>{t('philosophy_modal.p1_bold')}</strong> {t('philosophy_modal.p1_rest')}
               </p>
               <p>
-                <strong>HOMBROS</strong> postula que si el territorio desarrolla armónicamente sus tres hombros —la cuenca ecológica (<strong className="text-emerald-300">E</strong>), la comunidad cuidadora (<strong className="text-rose-300">S</strong>) y el capital regenerativo (<strong className="text-amber-300">K</strong>)— la roca deja de rodar hacia el abismo y se transforma en una esfera celeste que asciende con paso firme por la escalinata hacia la soberanía.
+                {t('philosophy_modal.p2')}
               </p>
             </div>
 
@@ -86,11 +88,11 @@ export default function FilosofiaHombrosModal({ isOpen, onClose }) {
                 <div className="flex items-center gap-2">
                   <Sliders className="w-4 h-4 text-emerald-400" />
                   <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-200">
-                    Palancas de Capacidad Muscular Territorial
+                    {t('philosophy_modal.controls_title')}
                   </span>
                 </div>
                 <div className="flex items-center gap-2 text-xs font-mono">
-                  <span className="text-slate-400">Capacidad H = </span>
+                  <span className="text-slate-400">{t('philosophy_modal.capacity_h')}</span>
                   <span className="text-emerald-400 font-bold">{H.toFixed(3)}</span>
                   <span className="text-slate-500">(Liebig: -{liebigPenalty})</span>
                 </div>
@@ -102,7 +104,7 @@ export default function FilosofiaHombrosModal({ isOpen, onClose }) {
                 <div className="p-3.5 rounded-xl bg-black/40 border border-emerald-500/30 space-y-2">
                   <div className="flex items-center justify-between text-xs">
                     <span className="font-mono text-emerald-300 flex items-center gap-1.5 font-bold">
-                      <Trees className="w-3.5 h-3.5" /> Hombro E (Ecológico)
+                      <Trees className="w-3.5 h-3.5" /> {t('philosophy_modal.shoulder_e_title')}
                     </span>
                     <span className="font-mono text-emerald-300 font-bold">{E.toFixed(2)}</span>
                   </div>
@@ -116,7 +118,7 @@ export default function FilosofiaHombrosModal({ isOpen, onClose }) {
                     className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-400"
                   />
                   <p className="text-[10px] text-slate-400 font-sans leading-tight">
-                    Agua limpia, salud del suelo vivo y fotosíntesis de cuenca.
+                    {t('philosophy_modal.shoulder_e_desc')}
                   </p>
                 </div>
 
@@ -124,7 +126,7 @@ export default function FilosofiaHombrosModal({ isOpen, onClose }) {
                 <div className="p-3.5 rounded-xl bg-black/40 border border-rose-500/30 space-y-2">
                   <div className="flex items-center justify-between text-xs">
                     <span className="font-mono text-rose-300 flex items-center gap-1.5 font-bold">
-                      <Users className="w-3.5 h-3.5" /> Hombro S (Social)
+                      <Users className="w-3.5 h-3.5" /> {t('philosophy_modal.shoulder_s_title')}
                     </span>
                     <span className="font-mono text-rose-300 font-bold">{S.toFixed(2)}</span>
                   </div>
@@ -138,7 +140,7 @@ export default function FilosofiaHombrosModal({ isOpen, onClose }) {
                     className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-rose-400"
                   />
                   <p className="text-[10px] text-slate-400 font-sans leading-tight">
-                    Cohesión vecinal, cuidados mutuos y paz territorial sin violencia.
+                    {t('philosophy_modal.shoulder_s_desc')}
                   </p>
                 </div>
 
@@ -146,7 +148,7 @@ export default function FilosofiaHombrosModal({ isOpen, onClose }) {
                 <div className="p-3.5 rounded-xl bg-black/40 border border-amber-500/30 space-y-2">
                   <div className="flex items-center justify-between text-xs">
                     <span className="font-mono text-amber-300 flex items-center gap-1.5 font-bold">
-                      <Coins className="w-3.5 h-3.5" /> Hombro K (Económico)
+                      <Coins className="w-3.5 h-3.5" /> {t('philosophy_modal.shoulder_k_title')}
                     </span>
                     <span className="font-mono text-amber-300 font-bold">{K.toFixed(2)}</span>
                   </div>
@@ -160,32 +162,32 @@ export default function FilosofiaHombrosModal({ isOpen, onClose }) {
                     className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-400"
                   />
                   <p className="text-[10px] text-slate-400 font-sans leading-tight">
-                    Autonomía productiva, ausencia de usura y capital regenerativo.
+                    {t('philosophy_modal.shoulder_k_desc')}
                   </p>
                 </div>
               </div>
 
               {/* Presets Rápidos */}
               <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-white/10 text-xs">
-                <span className="text-[11px] font-mono text-slate-400">Escenarios típicos:</span>
+                <span className="text-[11px] font-mono text-slate-400">{t('philosophy_modal.typical_scenarios')}</span>
                 <div className="flex flex-wrap items-center gap-1.5">
                   <button
                     onClick={() => applyPreset(0.85, 0.80, 0.82)}
                     className="px-2.5 py-1 rounded-lg bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-500/40 text-emerald-300 font-mono text-[11px]"
                   >
-                    Sintrópico Pleno
+                    {t('philosophy_modal.preset_full_syntropy')}
                   </button>
                   <button
                     onClick={() => applyPreset(0.25, 0.80, 0.85)}
                     className="px-2.5 py-1 rounded-lg bg-rose-950/80 hover:bg-rose-900 border border-rose-500/40 text-rose-300 font-mono text-[11px]"
                   >
-                    Colapso de Cuenca (E=0.25)
+                    {t('philosophy_modal.preset_basin_collapse')}
                   </button>
                   <button
                     onClick={() => applyPreset(0.72, 0.68, 0.70)}
                     className="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 text-slate-200 font-mono text-[11px] flex items-center gap-1"
                   >
-                    <RotateCcw className="w-3 h-3" /> Reiniciar
+                    <RotateCcw className="w-3 h-3" /> {t('philosophy_modal.btn_reset')}
                   </button>
                 </div>
               </div>

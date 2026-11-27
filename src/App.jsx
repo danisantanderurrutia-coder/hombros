@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import Navbar from './components/Navbar';
 import LandingView from './components/LandingView';
 import TabHeaderBanner from './components/TabHeaderBanner';
@@ -15,6 +16,7 @@ import SolarpunkAtlasCanvas from './components/SolarpunkAtlasCanvas';
 import { INITIAL_TERRITORIES } from './models/territories';
 import { evaluateTerritoryState } from './models/mechanics';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
+import { applyDomTranslation } from './utils/domTranslator';
 
 const TAB_SLUGS = {
   landing: 'inicio',
@@ -87,6 +89,7 @@ function parseHashRoute() {
 }
 
 function AppContent() {
+  const { t, i18n } = useTranslation(['common']);
   const [territories] = useState(INITIAL_TERRITORIES);
   const [selectedTerritoryId, setSelectedTerritoryId] = useState('chanco');
   const initialRoute = useMemo(() => parseHashRoute(), []);
@@ -94,6 +97,50 @@ function AppContent() {
   const [customAuditMode, setCustomAuditMode] = useState(() => {
     return window.location.hash.includes('auditoria-cuenca') ? 'kit_cuenca' : null;
   });
+
+  // Sincronización reactiva del título de la página (<title>), atributo lang y traducción global del DOM
+  useEffect(() => {
+    const currentLang = i18n.language ? i18n.language.slice(0, 2) : 'es';
+    document.documentElement.lang = currentLang;
+    const pageTitle = t(`page_titles.${activeTab}`, {
+      defaultValue: t('page_titles.default', 'HOMBROS · Territorial Metabolic System')
+    });
+    document.title = pageTitle;
+
+    let isApplying = false;
+    const runPass = () => {
+      if (isApplying) return;
+      isApplying = true;
+      try {
+        applyDomTranslation(currentLang);
+      } finally {
+        isApplying = false;
+      }
+    };
+
+    runPass();
+    const timer = setTimeout(runPass, 120);
+
+    if (currentLang === 'en') {
+      const rootEl = document.getElementById('root');
+      if (rootEl) {
+        const observer = new MutationObserver(() => {
+          runPass();
+        });
+        observer.observe(rootEl, {
+          childList: true,
+          subtree: true,
+          characterData: true
+        });
+        return () => {
+          clearTimeout(timer);
+          observer.disconnect();
+        };
+      }
+    }
+
+    return () => clearTimeout(timer);
+  }, [activeTab, i18n.language, t]);
 
   // Función de navegación con actualización de slugs en la URL
   const handleSelectTab = (tab, targetAnchor = null) => {
@@ -228,11 +275,11 @@ function AppContent() {
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full inline-block bg-[#487075] animate-pulse"></span>
             <span>
-              <strong className="font-serif font-bold text-slate-900 tracking-wide">HOMBROS</strong> · Programa de Investigación en Economía Biofísica, Mecánica Territorial & Gobernanza Sintrópica
+              <strong className="font-serif font-bold text-slate-900 tracking-wide">{t('brand.name')}</strong> · {t('footer.description')}
             </span>
           </div>
           <div className="text-[11px] font-mono text-[#28475A] font-bold">
-            [ Laboratorio de Hipótesis Biofísicas & Incidencia Pública · Cono Sur & Europa ]
+            {t('footer.badge')}
           </div>
         </div>
       </footer>

@@ -1,8 +1,10 @@
 import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Users, Trees, Coins, ShieldCheck, Sparkles, Move } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function ShouldersRadarTripod({ S, E, K, H, hasCriticalShoulder, criticalDetails, onShoulderChange }) {
+  const { t } = useTranslation(['landing', 'common']);
   const svgRef = useRef(null);
   const [activeDragging, setActiveDragging] = useState(null); // 'S' | 'E' | 'K' | null
 
@@ -109,17 +111,17 @@ export default function ShouldersRadarTripod({ S, E, K, H, hasCriticalShoulder, 
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-5 h-5 text-[#C86D51]" />
             <h3 className="font-serif font-bold text-slate-900 text-base">
-              Trípode de Capacidad Portante (Interactivo)
+              {t('tripod_widget.title')}
             </h3>
           </div>
           <p className="text-xs text-slate-600 mt-0.5 flex items-center gap-1.5">
             <Move className="w-3.5 h-3.5 text-[#C86D51]" />
-            <strong className="text-slate-800">Arrastra los 3 vértices</strong> para modelar el soporte biofísico directamente
+            <strong className="text-slate-800">{t('tripod_widget.subtitle_strong')}</strong> {t('tripod_widget.subtitle_rest')}
           </p>
         </div>
 
         <div className="flex items-center gap-2 text-xs font-mono px-3.5 py-1.5 rounded-2xl bg-[#FAF7F0] border border-[#D4C9B8] shadow-2xs">
-          <span className="text-slate-600">Domo H:</span>
+          <span className="text-slate-600">{t('tripod_widget.dome_h')}</span>
           <strong className={`text-base ${hasCriticalShoulder ? 'text-rose-600 animate-pulse' : 'text-[#1B4332]'}`}>
             {H.toFixed(3)}
           </strong>
@@ -172,7 +174,7 @@ export default function ShouldersRadarTripod({ S, E, K, H, hasCriticalShoulder, 
             strokeDasharray="5 4" 
           />
           <text x={cx + 10} y={cy - maxR * 0.25 - 6} className="text-[10px] font-mono fill-rose-600 font-bold tracking-wider">
-            UMBRAL DE COLAPSO LIEBIG (0.25)
+            {t('tripod_widget.liebig_threshold')}
           </text>
 
           {/* Axis Scale Markers */}
@@ -245,7 +247,7 @@ export default function ShouldersRadarTripod({ S, E, K, H, hasCriticalShoulder, 
             textAnchor="middle"
             className="text-[13px] font-serif font-bold fill-[#C86D51]"
           >
-            Hombro Social (S): {S.toFixed(2)}
+            {t('tripod_widget.vertex_s')} {S.toFixed(2)}
           </text>
 
           {/* =================================================================
@@ -280,7 +282,7 @@ export default function ShouldersRadarTripod({ S, E, K, H, hasCriticalShoulder, 
             textAnchor="start"
             className="text-[13px] font-serif font-bold fill-[#487075]"
           >
-            Ambiental (E): {E.toFixed(2)}
+            {t('tripod_widget.vertex_e')} {E.toFixed(2)}
           </text>
 
           {/* =================================================================
@@ -315,7 +317,7 @@ export default function ShouldersRadarTripod({ S, E, K, H, hasCriticalShoulder, 
             textAnchor="end"
             className="text-[13px] font-serif font-bold fill-[#927660]"
           >
-            Económico (K): {K.toFixed(2)}
+            {t('tripod_widget.vertex_k')} {K.toFixed(2)}
           </text>
         </svg>
       </div>
@@ -327,9 +329,9 @@ export default function ShouldersRadarTripod({ S, E, K, H, hasCriticalShoulder, 
           : 'bg-[#FAF7F0] border border-[#D4C9B8] text-slate-700'
       }`}>
         {hasCriticalShoulder ? (
-          <span>🚨 <strong>COLAPSO POR LEY DE LIEBIG:</strong> {criticalDetails.join(' y ')}. El territorio no puede mantenerse en pie.</span>
+          <span>🚨 <strong>{t('tripod_widget.collapse_alert_title')}</strong> {Array.isArray(criticalDetails) ? criticalDetails.join(' & ') : ''}. {t('tripod_widget.collapse_alert_suffix')}</span>
         ) : (
-          <span>Soporte Biofísico: <strong>{(H * 100).toFixed(0)}%</strong> de solvencia simétrica armónica</span>
+          <span>{t('tripod_widget.support_prefix')} <strong>{(H * 100).toFixed(0)}%</strong> {t('tripod_widget.support_suffix')}</span>
         )}
       </div>
     </div>

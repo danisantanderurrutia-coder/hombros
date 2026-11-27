@@ -5,6 +5,7 @@ import {
   ArrowRight, Compass, FileText, Mountain, CheckCircle2,
   Sliders, RotateCcw, AlertTriangle, Layers, BookOpen
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { getAssetUrl } from '../utils/assets';
 
 export default function KitAuditaTuCuencaBanner({ 
@@ -14,6 +15,7 @@ export default function KitAuditaTuCuencaBanner({
   onResetToBenchmark,
   variant = 'full' // 'full' (for MetabolicAuditView) | 'compact' (for Landing / Atlas)
 }) {
+  const { t } = useTranslation(['landing', 'common']);
   const isAgriTwin = customMeta?.agritwinLinked;
 
   return (
@@ -45,14 +47,14 @@ export default function KitAuditaTuCuencaBanner({
           <div className="flex flex-wrap items-center gap-2">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-400/40">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping inline-block" />
-              Kit Ciudadano & Municipal Abierto
+              {t('kit_banner.badge_citizen')}
             </span>
             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-white/10 text-amber-300 border border-white/15">
               <Radio className="w-3 h-3 text-amber-300" />
-              Telemetría Satelital Sentinel-2 STAC/COG
+              {t('kit_banner.badge_telemetry')}
             </span>
             <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-[#28475A]/60 text-slate-200 border border-white/10">
-              Protocolo SEIA 2.0
+              {t('kit_banner.badge_protocol')}
             </span>
             <a 
               href={getAssetUrl('docs/PAPER_PRACTICO_AUDITA_TU_CUENCA.md')}
@@ -61,20 +63,20 @@ export default function KitAuditaTuCuencaBanner({
               className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-amber-500/25 hover:bg-amber-500/40 text-amber-200 border border-amber-400/50 transition-all shadow-sm"
             >
               <BookOpen className="w-3 h-3 text-amber-300" />
-              <span>Paper Práctico N° 2 (Manual Comunal)</span>
+              <span>{t('kit_banner.badge_paper')}</span>
             </a>
           </div>
 
           {/* Banner Heading */}
           <div>
             <h2 className="text-2xl sm:text-3xl font-serif font-black text-white tracking-tight leading-tight flex flex-wrap items-center gap-2">
-              <span>Kit: Audita tu Propia Cuenca</span>
+              <span>{t('kit_banner.title_main')}</span>
               <span className="text-amber-300 font-serif italic text-xl sm:text-2xl font-normal">
-                · Modelación y Tracción Territorial
+                {t('kit_banner.title_sub')}
               </span>
             </h2>
             <p className="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed font-sans font-normal">
-              No dependas de consultoras extractivas ni informes burocráticos cerrados. Modela los <strong>Tres Hombros basales (Social, Ambiental y Económico)</strong> de tu comuna, o acopla con un solo clic el <strong>Gemelo Digital de la Cuenca del Río Longaví</strong> (telemetría Sentinel-2, balance de embalse y Comités APR) para someter cualquier proyecto al <strong>Ensayo de Tracción SEIA 2.0</strong> y calcular su dictamen pre-inversional vinculante.
+              {t('kit_banner.description')}
             </p>
           </div>
 
@@ -82,15 +84,15 @@ export default function KitAuditaTuCuencaBanner({
           <div className="flex flex-wrap items-center gap-3 pt-1 text-[11px] font-mono text-slate-300">
             <div className="flex items-center gap-1.5 bg-black/30 px-3 py-1 rounded-xl border border-white/10">
               <Droplets className="w-3.5 h-3.5 text-[#7DB2B2]" />
-              <span>12 Variables Físicas Normalizadas [0, 1]</span>
+              <span>{t('kit_banner.pill_vars')}</span>
             </div>
             <div className="flex items-center gap-1.5 bg-black/30 px-3 py-1 rounded-xl border border-white/10">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Corte No-Compensatorio de Liebig (H &lt; 0.25)</span>
+              <span>{t('kit_banner.pill_liebig')}</span>
             </div>
             <div className="flex items-center gap-1.5 bg-black/30 px-3 py-1 rounded-xl border border-white/10">
               <FileText className="w-3.5 h-3.5 text-amber-300" />
-              <span>Acta Imprimible & Ficha JSON Abierta</span>
+              <span>{t('kit_banner.pill_json')}</span>
             </div>
           </div>
         </div>
@@ -104,19 +106,19 @@ export default function KitAuditaTuCuencaBanner({
               <div className="flex items-center justify-between">
                 <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-                  Auditoría Personalizada Activa
+                  {t('kit_banner.active_badge')}
                 </span>
                 <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-200 border border-amber-400/30">
-                  {isAgriTwin ? 'Preset AgriTwin' : 'Plantilla Comunal'}
+                  {isAgriTwin ? t('kit_banner.preset_agritwin') : t('kit_banner.preset_municipal')}
                 </span>
               </div>
 
               <div>
                 <strong className="text-sm font-serif block text-white">
-                  {customMeta.name || 'Mi Cuenca Personalizada'}
+                  {customMeta.name || t('kit_banner.default_basin_name')}
                 </strong>
                 <span className="text-[11px] font-mono text-slate-300 block">
-                  {customMeta.region || 'Territorio en Estudio'} · {customMeta.population?.toLocaleString() || '15.000'} hab.
+                  {customMeta.region || t('kit_banner.default_region')} · {customMeta.population?.toLocaleString() || '15.000'} {t('kit_banner.pop_unit')}
                 </span>
               </div>
 
@@ -126,7 +128,7 @@ export default function KitAuditaTuCuencaBanner({
                   className="px-3 py-1.5 rounded-xl text-[11px] font-mono font-bold bg-white/10 hover:bg-white/20 text-slate-200 border border-white/20 transition-all flex items-center gap-1.5"
                 >
                   <RotateCcw className="w-3 h-3 text-amber-300" />
-                  <span>{isAgriTwin ? 'Cambiar a Plantilla en Blanco' : 'Cargar Preset AgriTwin'}</span>
+                  <span>{isAgriTwin ? t('kit_banner.switch_to_blank') : t('kit_banner.load_agritwin_preset')}</span>
                 </button>
 
                 {onResetToBenchmark && (
@@ -134,7 +136,7 @@ export default function KitAuditaTuCuencaBanner({
                     onClick={onResetToBenchmark}
                     className="px-3 py-1.5 rounded-xl text-[11px] font-mono font-bold text-slate-400 hover:text-white hover:bg-white/5 transition-all"
                   >
-                    Volver a Cuencas de Referencia
+                    {t('kit_banner.back_to_benchmarks')}
                   </button>
                 )}
               </div>
@@ -154,10 +156,10 @@ export default function KitAuditaTuCuencaBanner({
                   </div>
                   <div>
                     <span className="block leading-tight font-extrabold text-white">
-                      Cargar Gemelo AgriTwin
+                      {t('kit_banner.btn_agritwin_title')}
                     </span>
                     <span className="block text-[10px] font-mono font-normal text-emerald-200 opacity-90 mt-0.5">
-                      Río Longaví · Sentinel-2 + 5 APRs
+                      {t('kit_banner.btn_agritwin_sub')}
                     </span>
                   </div>
                 </div>
@@ -175,10 +177,10 @@ export default function KitAuditaTuCuencaBanner({
                   </div>
                   <div>
                     <span className="block leading-tight font-extrabold text-white">
-                      Auditar Nueva Cuenca en Blanco
+                      {t('kit_banner.btn_blank_title')}
                     </span>
                     <span className="block text-[10px] font-mono font-normal text-amber-200 opacity-90 mt-0.5">
-                      Ingresa tu Comuna / Cuenca Local
+                      {t('kit_banner.btn_blank_sub')}
                     </span>
                   </div>
                 </div>

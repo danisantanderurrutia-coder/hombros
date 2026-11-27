@@ -1,5 +1,6 @@
 import React from 'react';
 import { Activity, Globe, GitCompare, Layers, Database, BookOpen, Compass, Sparkles, Landmark } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { getAssetUrl } from '../utils/assets';
 
 const TAB_METADATA = {
@@ -78,8 +79,14 @@ const TAB_METADATA = {
 };
 
 export default function TabHeaderBanner({ activeTab }) {
-  const meta = TAB_METADATA[activeTab] || TAB_METADATA.core;
+  const { t } = useTranslation(['common']);
+  const metaKey = TAB_METADATA[activeTab] ? activeTab : 'core';
+  const meta = TAB_METADATA[metaKey];
   const Icon = meta.icon;
+
+  const tag = t(`tab_headers.${metaKey}.tag`, meta.tag);
+  const title = t(`tab_headers.${metaKey}.title`, meta.title);
+  const subtitle = t(`tab_headers.${metaKey}.subtitle`, meta.subtitle);
 
   return (
     <div className="relative w-full rounded-3xl overflow-hidden border border-[#D4C9B8]/80 shadow-md mb-8 group bg-[#EDE8DC]">
@@ -87,7 +94,7 @@ export default function TabHeaderBanner({ activeTab }) {
       <div className="relative h-44 sm:h-52 md:h-60 w-full overflow-hidden">
         <img 
           src={meta.image} 
-          alt={meta.title} 
+          alt={title} 
           className="w-full h-full object-cover filter brightness-[0.98] contrast-[1.05] group-hover:scale-102 transition-transform duration-700"
           onError={(e) => {
             const fallback = getAssetUrl('art/header_core_agroecology.jpg');
@@ -107,16 +114,16 @@ export default function TabHeaderBanner({ activeTab }) {
         <div className="flex items-center gap-2 mb-2">
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-mono font-bold tracking-wider uppercase bg-black/40 backdrop-blur-md border border-white/20 text-[#7FDBDA] shadow-sm">
             <Icon className="w-3 h-3 text-[#7FDBDA]" />
-            {meta.tag}
+            {tag}
           </span>
         </div>
 
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
-          {meta.title}
+          {title}
         </h1>
 
         <p className="mt-1.5 text-xs sm:text-sm text-slate-200/90 max-w-2xl leading-relaxed font-sans hidden sm:block drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]">
-          {meta.subtitle}
+          {subtitle}
         </p>
       </div>
 

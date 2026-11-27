@@ -4,6 +4,19 @@
     "tagline": "Think Tank & Incubator",
     "subtitle": "Think Tank and Project Incubator"
   },
+  "page_titles": {
+    "default": "HOMBROS · Territorial Metabolic System",
+    "landing": "HOMBROS · Territorial Metabolic System | Think Tank & Incubator",
+    "think_tank": "HOMBROS · Territorial Think Tank & Incubator",
+    "articles": "HOMBROS · Articles, EIA 2.0 Reform & Policy",
+    "core": "HOMBROS · CORE Mathematical Engine & Carrying Capacity",
+    "world_map": "HOMBROS · Territorial Atlas & Biophysical Traffic Light",
+    "audit": "HOMBROS · Biophysical Watershed Audit (EIA 2.0)",
+    "theory": "HOMBROS · Epistemic Framework & Genealogy",
+    "cases": "HOMBROS · Multi-Model Comparison & Resilience",
+    "scenarios": "HOMBROS · Forecasting Simulator",
+    "data_sources": "HOMBROS · Open Data Sources"
+  },
   "nav": {
     "think_tank": "Think Tank",
     "articles": "Articles & Policy",
@@ -26,6 +39,53 @@
   "footer": {
     "description": "Research Program in Biophysical Economics, Territorial Mechanics & Syntropic Governance",
     "badge": "[ Laboratory of Biophysical Hypotheses & Public Policy · Southern Cone & Europe ]"
+  },
+  "tab_headers": {
+    "think_tank": {
+      "tag": "TERRITORIAL THINK TANK & INCUBATOR · GLOBAL SOUTH",
+      "title": "HOMBROS · Center for Biophysical Sovereignty, Community Care & Ecotechnologies",
+      "subtitle": "Transdisciplinary convergence between watershed geophysics, community psychology in socio-environmental conflicts, and neighborhood security sociology. From extractive autopsy to self-governance and the regeneration of life."
+    },
+    "core": {
+      "tag": "MATHEMATICAL & RHEOLOGICAL ENGINE OF THE HOMBROS MODEL",
+      "title": "CORE · The Constitutive Heart of the Territorial Model",
+      "subtitle": "This is the CORE of the HOMBROS model where its fundamental biophysical equations operate. It includes: (1) Carrying Capacity & Liebig Tripod (H), (2) Systemic Stress & Stress-Strain Curve (σ), (3) Syntropic Rate (Γ), (4) 36-Month Forecasting Simulator, and (5) Integrated Organism View."
+    },
+    "audit": {
+      "tag": "EIA 2.0 PROTOCOL, WATERSHED HYPOTHESES & BIOPHYSICAL ROI",
+      "title": "Territorial Traction Audit, Shoulder Hypotheses & Pre-Investment Ruling",
+      "subtitle": "Parametric hypothesis formulation [0, 1], pre-investment traction testing (σ₀ → σ_proj), AgriTwin telemetry connector, and Cost of Inaction vs. Syntropic Investment calculator."
+    },
+    "articles": {
+      "tag": "LEGISLATIVE ADVOCACY, EIA REFORM & OLCA ESSAYS",
+      "title": "Public Policy Articles, EIA 2.0 Reform & OLCA Tetralogy",
+      "subtitle": "Flagship proposal for Structural Reform of Law 19.300 (Pre-Investment Safeguard Clause), 4 Policy Briefs adapted from essays published in OLCA, and AgriTwin integration architecture."
+    },
+    "world_map": {
+      "tag": "GEODETIC ATLAS, CITIES TRAFFIC LIGHT & GLOBAL COMPARISON",
+      "title": "Territorial Atlas, Situated Operational Traffic Light & Metabolism",
+      "subtitle": "Orbital cartography, Biophysical Traffic Light across 25 cities in Central Chile and Europe, multi-site empirical comparison, Scope 1-3 emissions displacement, Honeycomb Network, and open data sources."
+    },
+    "cases": {
+      "tag": "ECOLOGICAL ENGINEERING WORKSHOP",
+      "title": "Multi-Model Comparison and Resilience Diagnosis",
+      "subtitle": "Comparative evaluation between traditional vulnerability models and HOMBROS continuum mechanics."
+    },
+    "scenarios": {
+      "tag": "FORESIGHT AND LANDSCAPE RESTORATION",
+      "title": "Scenario Simulator and Regenerative Transition",
+      "subtitle": "Stochastic projections under climate shocks, precipitation shifts, and extractive de-escalation."
+    },
+    "data_sources": {
+      "tag": "HYDROLOGICAL AND ENVIRONMENTAL STATION",
+      "title": "Open Data Sources and Empirical Traceability",
+      "subtitle": "Grounded territorial monitoring: climate records, watershed sensors, and verified metadata."
+    },
+    "theory": {
+      "tag": "LIVING FOREST LIBRARY",
+      "title": "Epistemic Framework and Genealogy of Thought",
+      "subtitle": "Conceptual foundation on the shoulders of giants: bioeconomics, open thermodynamics, buen vivir, and political ecology."
+    }
   },
   "languages": {
     "es": "Spanish",

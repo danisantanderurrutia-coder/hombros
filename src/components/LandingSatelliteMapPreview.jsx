@@ -14,9 +14,10 @@ const PREVIEW_TERRITORIES = [
 ];
 
 export default function LandingSatelliteMapPreview({ onNavigate }) {
-  const { t } = useTranslation(['landing', 'common']);
+  const { t, i18n } = useTranslation(['landing', 'common']);
   const mapContainerRef = useRef(null);
   const mapInstanceRef = useRef(null);
+  const markersRef = useRef([]);
 
   useEffect(() => {
     if (!mapContainerRef.current) return;
@@ -44,12 +45,12 @@ export default function LandingSatelliteMapPreview({ onNavigate }) {
     }).addTo(map);
 
     // Add Glowing Bioluminescent Markers
-    PREVIEW_TERRITORIES.forEach(t => {
+    markersRef.current = PREVIEW_TERRITORIES.map(terr => {
       const markerHtml = `
         <div style="position: relative; display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; cursor: pointer;">
-          <div style="position: absolute; inset: -6px; border-radius: 9999px; background-color: ${t.color}; opacity: 0.45; filter: blur(3px); animation: pulse 2s infinite;"></div>
-          <div style="width: 14px; height: 14px; border-radius: 9999px; background-color: rgba(15, 23, 42, 0.9); border: 2px solid ${t.color}; box-shadow: 0 0 10px ${t.color}; display: flex; align-items: center; justify-content: center;">
-            <div style="width: 5px; height: 5px; border-radius: 9999px; background-color: ${t.color};"></div>
+          <div style="position: absolute; inset: -6px; border-radius: 9999px; background-color: ${terr.color}; opacity: 0.45; filter: blur(3px); animation: pulse 2s infinite;"></div>
+          <div style="width: 14px; height: 14px; border-radius: 9999px; background-color: rgba(15, 23, 42, 0.9); border: 2px solid ${terr.color}; box-shadow: 0 0 10px ${terr.color}; display: flex; align-items: center; justify-content: center;">
+            <div style="width: 5px; height: 5px; border-radius: 9999px; background-color: ${terr.color};"></div>
           </div>
         </div>
       `;
@@ -61,12 +62,14 @@ export default function LandingSatelliteMapPreview({ onNavigate }) {
         iconAnchor: [12, 12]
       });
 
-      const marker = L.marker(t.coords, { icon: customIcon }).addTo(map);
-      marker.bindTooltip(`<strong>${t.name}</strong><br/><span style="font-size: 10px; color: ${t.color};">${t.regime}</span>`, {
+      const marker = L.marker(terr.coords, { icon: customIcon }).addTo(map);
+      const regimeLabel = t(`map_preview_regimes.${terr.id}`, terr.regime);
+      marker.bindTooltip(`<strong>${terr.name}</strong><br/><span style="font-size: 10px; color: ${terr.color};">${regimeLabel}</span>`, {
         direction: 'top',
         className: 'font-mono'
       });
       marker.on('click', () => onNavigate('world_map'));
+      return { marker, terr };
     });
 
     // Draw Metabolic Arc (Chile -> Europe)
@@ -100,6 +103,14 @@ export default function LandingSatelliteMapPreview({ onNavigate }) {
       }
     };
   }, [onNavigate]);
+
+  // Update marker tooltips dynamically when language changes
+  useEffect(() => {
+    markersRef.current.forEach(({ marker, terr }) => {
+      const regimeLabel = t(`map_preview_regimes.${terr.id}`, terr.regime);
+      marker.setTooltipContent(`<strong>${terr.name}</strong><br/><span style="font-size: 10px; color: ${terr.color};">${regimeLabel}</span>`);
+    });
+  }, [i18n.language, t]);
 
   return (
     <div className="relative w-full h-[420px] sm:h-[450px] rounded-2xl overflow-hidden border border-[#D4C9B8]/80 bg-slate-950 shadow-inner group">

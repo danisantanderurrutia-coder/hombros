@@ -6,10 +6,13 @@ import {
   ChevronRight, Compass, Flame, Info, CheckCircle2,
   TrendingUp, Award, Layers, Mountain, BookOpen, Globe
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import GoldenAtlasHillAscent from './GoldenAtlasHillAscent';
 import FilosofiaHombrosModal from './FilosofiaHombrosModal';
 
 export default function LandingHeroBanner({ onNavigate, onNavigateCustomAudit }) {
+  const { t } = useTranslation(['landing', 'common']);
+
   // Variables E, S, K state (starting at a balanced inspiring state)
   const [E, setE] = useState(0.72); // Ecológico
   const [S, setS] = useState(0.68); // Social
@@ -21,49 +24,49 @@ export default function LandingHeroBanner({ onNavigate, onNavigateCustomAudit })
   const aritH = (E + S + K) / 3;
   const liebigPenalty = (aritH - H).toFixed(3);
 
-  // Muscle bulk and elevation percentage
-  const musclePercent = Math.round(((E + S + K) / 3) * 100);
-  const liftElevationPercent = Math.round(H * 100);
-
   // Identify bottleneck shoulder
   const minVal = Math.min(E, S, K);
-  const bottleneckName = minVal === E ? 'Ecológico (E)' : minVal === S ? 'Social (S)' : 'Económico (K)';
+  const bottleneckName = minVal === E
+    ? t('atlas_hero.bottleneck_e')
+    : minVal === S
+      ? t('atlas_hero.bottleneck_s')
+      : t('atlas_hero.bottleneck_k');
 
   // Status diagnostics
   const getRegimeStatus = () => {
     if (minVal < 0.3) {
       return {
-        title: 'Asimetría Crítica · Cuello de Botella',
+        title: t('atlas_hero.regimes.critical_title'),
         badgeColor: 'bg-rose-950/80 text-rose-300 border-rose-500/50',
         glowColor: 'shadow-rose-500/20',
         dotColor: 'bg-rose-400',
-        desc: `El hombro ${bottleneckName} está colapsado y bloquea el ascenso del territorio, sin importar cuánto crezcan los otros dos.`,
+        desc: `${t('atlas_hero.regimes.critical_desc_prefix')} ${bottleneckName} ${t('atlas_hero.regimes.critical_desc_suffix')}`,
       };
     }
     if (H < 0.5) {
       return {
-        title: 'Fatiga de Ascenso · Capacidad Limitada',
+        title: t('atlas_hero.regimes.fatigue_title'),
         badgeColor: 'bg-amber-950/80 text-amber-200 border-amber-500/50',
         glowColor: 'shadow-amber-500/20',
         dotColor: 'bg-amber-400',
-        desc: 'La esfera se siente pesada y la musculatura comunitaria se fatiga en la pendiente.',
+        desc: t('atlas_hero.regimes.fatigue_desc'),
       };
     }
     if (H >= 0.8) {
       return {
-        title: 'Autosustento Sintrópico Pleno',
+        title: t('atlas_hero.regimes.syntropic_title'),
         badgeColor: 'bg-emerald-950/80 text-emerald-300 border-emerald-400/50',
         glowColor: 'shadow-emerald-500/30',
         dotColor: 'bg-emerald-400',
-        desc: 'Hombros gigantescos elevan la biosfera hacia las estrellas con solidez inquebrantable.',
+        desc: t('atlas_hero.regimes.syntropic_desc'),
       };
     }
     return {
-      title: 'Desarrollo en Equilibrio Elástico',
+      title: t('atlas_hero.regimes.elastic_title'),
       badgeColor: 'bg-[#0E2A38]/90 text-teal-200 border-teal-400/40',
       glowColor: 'shadow-teal-500/20',
       dotColor: 'bg-teal-400',
-      desc: 'Capacidad portante suficiente para sostener la carga territorial y continuar el ascenso continuo.',
+      desc: t('atlas_hero.regimes.elastic_desc'),
     };
   };
 
@@ -94,30 +97,30 @@ export default function LandingHeroBanner({ onNavigate, onNavigateCustomAudit })
           <div className="flex flex-wrap items-center justify-center gap-2">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-black/60 text-emerald-300 border border-emerald-400/40 shadow-lg backdrop-blur-md">
               <Sparkles className="w-3.5 h-3.5 text-emerald-300 animate-pulse" />
-              <span>SISTEMA METABÓLICO TERRITORIAL · LEY DE LIEBIG & CAUCHY</span>
+              <span>{t('atlas_hero.badge')}</span>
             </div>
             <button
               onClick={() => setIsModalOpen(true)}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-200 border border-emerald-400/30 backdrop-blur-md transition-all cursor-pointer"
             >
               <Mountain className="w-3 h-3 text-emerald-300" />
-              <span>Alegoría de los Hombros</span>
+              <span>{t('atlas_hero.allegory_btn')}</span>
               <ChevronRight className="w-3 h-3 text-emerald-300" />
             </button>
           </div>
 
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-serif font-extrabold tracking-tight text-white leading-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
-            Desarrollar los hombros, <br className="hidden sm:inline" />
+            {t('atlas_hero.title_line1')} <br className="hidden sm:inline" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#7DB2B2] to-[#C86D51]">
-              autosustentar el desarrollo
+              {t('atlas_hero.title_line2')}
             </span>
           </h1>
 
           <p className="text-sm sm:text-base md:text-lg text-slate-200 max-w-2xl mx-auto font-sans leading-relaxed drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)]">
-            El peso del porvenir no se aligera disminuyendo aspiraciones, sino ensanchando la capacidad portante territorial: los tres hombros inseparables{' '}
-            <strong className="text-emerald-300 font-semibold">Ecológico (E)</strong>,{' '}
-            <strong className="text-rose-300 font-semibold">Social (S)</strong> y{' '}
-            <strong className="text-amber-300 font-semibold">Económico o Capital (K)</strong>.
+            {t('atlas_hero.subtitle_prefix')}{' '}
+            <strong className="text-emerald-300 font-semibold">{t('atlas_hero.shoulder_e_highlight')}</strong>,{' '}
+            <strong className="text-rose-300 font-semibold">{t('atlas_hero.shoulder_s_highlight')}</strong> {t('atlas_hero.conjunction_and')}{' '}
+            <strong className="text-amber-300 font-semibold">{t('atlas_hero.shoulder_k_highlight')}</strong>.
           </p>
         </div>
 
@@ -155,7 +158,7 @@ export default function LandingHeroBanner({ onNavigate, onNavigateCustomAudit })
                   <span>{status.title}</span>
                 </div>
                 <div className="hidden sm:inline-flex items-center gap-2 px-2.5 py-1 rounded-lg bg-black/40 border border-white/10 text-xs font-mono">
-                  <span className="text-slate-400">Capacidad Portante H:</span>
+                  <span className="text-slate-400">{t('atlas_hero.carrying_capacity_h')}</span>
                   <span className="text-cyan-300 font-bold">{H.toFixed(3)}</span>
                 </div>
               </div>
@@ -167,7 +170,7 @@ export default function LandingHeroBanner({ onNavigate, onNavigateCustomAudit })
             {/* Presets de Arquetipos Territoriales */}
             <div className="flex flex-wrap items-center gap-2">
               <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 font-semibold mr-1">
-                Arquetipos:
+                {t('atlas_hero.archetypes_label')}
               </span>
               <button
                 onClick={() => applyPreset(0.20, 0.35, 0.90)}
@@ -177,7 +180,7 @@ export default function LandingHeroBanner({ onNavigate, onNavigateCustomAudit })
                     : 'bg-black/40 text-slate-300 border-white/10 hover:bg-rose-950/40 hover:text-rose-300 hover:border-rose-500/40'
                 }`}
               >
-                ⚡ Colapso Extractivo
+                {t('atlas_hero.preset_collapse')}
               </button>
               <button
                 onClick={() => applyPreset(0.55, 0.55, 0.55)}
@@ -187,7 +190,7 @@ export default function LandingHeroBanner({ onNavigate, onNavigateCustomAudit })
                     : 'bg-black/40 text-slate-300 border-white/10 hover:bg-slate-800 hover:text-white hover:border-slate-500/50'
                 }`}
               >
-                ⚖️ Equilibrio Basal
+                {t('atlas_hero.preset_basal')}
               </button>
               <button
                 onClick={() => applyPreset(0.85, 0.90, 0.65)}
@@ -197,7 +200,7 @@ export default function LandingHeroBanner({ onNavigate, onNavigateCustomAudit })
                     : 'bg-black/40 text-slate-300 border-white/10 hover:bg-teal-950/40 hover:text-teal-300 hover:border-teal-500/40'
                 }`}
               >
-                🌿 Resiliencia Territorial
+                {t('atlas_hero.preset_resilience')}
               </button>
               <button
                 onClick={() => applyPreset(0.95, 0.92, 0.96)}
@@ -207,7 +210,7 @@ export default function LandingHeroBanner({ onNavigate, onNavigateCustomAudit })
                     : 'bg-black/40 text-slate-300 border-white/10 hover:bg-white/10 hover:text-white hover:border-amber-400/50'
                 }`}
               >
-                🌟 Plenitud Sintrópica
+                {t('atlas_hero.preset_syntropy')}
               </button>
             </div>
           </div>
@@ -222,7 +225,7 @@ export default function LandingHeroBanner({ onNavigate, onNavigateCustomAudit })
                   <span className="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-300 flex items-center justify-center border border-emerald-500/40">
                     <Trees className="w-3.5 h-3.5" />
                   </span>
-                  Hombro Ecológico (E)
+                  {t('atlas_hero.card_e_title')}
                 </span>
                 <span className="font-mono text-base font-bold text-emerald-300 px-2 py-0.5 rounded-md bg-emerald-950/80 border border-emerald-500/40">
                   {E.toFixed(2)}
@@ -241,11 +244,11 @@ export default function LandingHeroBanner({ onNavigate, onNavigateCustomAudit })
 
               <div className="text-[11px] text-slate-300 space-y-1 mt-3 pt-3 border-t border-white/5">
                 <p className="flex items-center justify-between font-mono text-[10px] text-emerald-400">
-                  <span>MÚSCULO: DELTOIDES</span>
+                  <span>{t('atlas_hero.card_e_muscle')}</span>
                   <span>{Math.round(E * 100)}%</span>
                 </p>
                 <p className="text-slate-400 text-[11px] leading-relaxed">
-                  Cuenca hídrica, suelo vivo, biomasa activa y regeneración fotosintética.
+                  {t('atlas_hero.card_e_desc')}
                 </p>
               </div>
             </div>
@@ -257,7 +260,7 @@ export default function LandingHeroBanner({ onNavigate, onNavigateCustomAudit })
                   <span className="w-6 h-6 rounded-lg bg-rose-500/20 text-rose-300 flex items-center justify-center border border-rose-500/40">
                     <Users className="w-3.5 h-3.5" />
                   </span>
-                  Hombro Social (S)
+                  {t('atlas_hero.card_s_title')}
                 </span>
                 <span className="font-mono text-base font-bold text-rose-300 px-2 py-0.5 rounded-md bg-rose-950/80 border border-rose-500/40">
                   {S.toFixed(2)}
@@ -276,11 +279,11 @@ export default function LandingHeroBanner({ onNavigate, onNavigateCustomAudit })
 
               <div className="text-[11px] text-slate-300 space-y-1 mt-3 pt-3 border-t border-white/5">
                 <p className="flex items-center justify-between font-mono text-[10px] text-rose-400">
-                  <span>MÚSCULO: BÍCEPS & AGARRE</span>
+                  <span>{t('atlas_hero.card_s_muscle')}</span>
                   <span>{Math.round(S * 100)}%</span>
                 </p>
                 <p className="text-slate-400 text-[11px] leading-relaxed">
-                  Cohesión comunitaria, redes de cuidado, equidad vecinal y salud colectiva.
+                  {t('atlas_hero.card_s_desc')}
                 </p>
               </div>
             </div>
@@ -292,7 +295,7 @@ export default function LandingHeroBanner({ onNavigate, onNavigateCustomAudit })
                   <span className="w-6 h-6 rounded-lg bg-cyan-500/20 text-cyan-300 flex items-center justify-center border border-cyan-500/40">
                     <Coins className="w-3.5 h-3.5" />
                   </span>
-                  Hombro Económico (K)
+                  {t('atlas_hero.card_k_title')}
                 </span>
                 <span className="font-mono text-base font-bold text-cyan-300 px-2 py-0.5 rounded-md bg-cyan-950/80 border border-cyan-500/40">
                   {K.toFixed(2)}
@@ -311,11 +314,11 @@ export default function LandingHeroBanner({ onNavigate, onNavigateCustomAudit })
 
               <div className="text-[11px] text-slate-300 space-y-1 mt-3 pt-3 border-t border-white/5">
                 <p className="flex items-center justify-between font-mono text-[10px] text-cyan-400">
-                  <span>MÚSCULO: TORSO & COLUMNA</span>
+                  <span>{t('atlas_hero.card_k_muscle')}</span>
                   <span>{Math.round(K * 100)}%</span>
                 </p>
                 <p className="text-slate-400 text-[11px] leading-relaxed">
-                  Capital regenerativo, diversificación productiva y soberanía material.
+                  {t('atlas_hero.card_k_desc')}
                 </p>
               </div>
             </div>
@@ -329,7 +332,7 @@ export default function LandingHeroBanner({ onNavigate, onNavigateCustomAudit })
               <div className="w-3 h-3 rounded-full bg-cyan-400 animate-ping shrink-0" />
               <div>
                 <span className="text-slate-400 block text-[10px] uppercase font-bold tracking-wider">
-                  Fórmula de Liebig (Media Geométrica):
+                  {t('atlas_hero.liebig_formula_label')}
                 </span>
                 <span className="text-white font-bold text-sm">
                   H = (E · S · K)<sup>1/3</sup> = <strong className="text-cyan-300 text-base">{H.toFixed(3)}</strong>
@@ -340,13 +343,13 @@ export default function LandingHeroBanner({ onNavigate, onNavigateCustomAudit })
             <div className="text-slate-300 text-left text-[11px] max-w-md font-sans">
               {parseFloat(liebigPenalty) > 0.08 ? (
                 <span className="text-rose-300 flex items-center gap-1.5 font-medium">
-                  <span className="text-rose-400 font-bold">⚠️ Asimetría:</span>
-                  El hombro más rezagado ({bottleneckName}) limita toda la capacidad portante (penalización Liebig: -{liebigPenalty}).
+                  <span className="text-rose-400 font-bold">{t('atlas_hero.asymmetry_title')}</span>
+                  {t('atlas_hero.asymmetry_prefix')} ({bottleneckName}) {t('atlas_hero.asymmetry_mid')} -{liebigPenalty}).
                 </span>
               ) : (
                 <span className="text-emerald-300 flex items-center gap-1.5 font-medium">
-                  <span className="text-emerald-400 font-bold">✨ Armonía de Trípode:</span>
-                  Los tres hombros equilibran la carga de manera eficiente y sin fisuras metabólicas.
+                  <span className="text-emerald-400 font-bold">{t('atlas_hero.harmony_title')}</span>
+                  {t('atlas_hero.harmony_desc')}
                 </span>
               )}
             </div>
@@ -358,7 +361,7 @@ export default function LandingHeroBanner({ onNavigate, onNavigateCustomAudit })
                 className="flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl font-serif font-bold text-xs bg-slate-800/90 text-slate-200 hover:bg-slate-700 hover:text-white transition-all border border-white/10 shadow"
               >
                 <BookOpen className="w-3.5 h-3.5 text-amber-300" />
-                <span>Alegoría Completa</span>
+                <span>{t('atlas_hero.btn_full_allegory')}</span>
               </button>
 
               {onNavigate && (
@@ -368,7 +371,7 @@ export default function LandingHeroBanner({ onNavigate, onNavigateCustomAudit })
                     className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl font-serif font-bold text-xs bg-gradient-to-r from-[#28475A] to-[#487075] text-white hover:brightness-110 shadow-lg shadow-[#487075]/20 transition-all border border-white/20"
                   >
                     <Activity className="w-3.5 h-3.5 text-cyan-300" />
-                    <span>Entrar a CORE</span>
+                    <span>{t('atlas_hero.btn_enter_core')}</span>
                     <ArrowRight className="w-3.5 h-3.5 text-white" />
                   </button>
 
@@ -377,7 +380,7 @@ export default function LandingHeroBanner({ onNavigate, onNavigateCustomAudit })
                     className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl font-serif font-bold text-xs bg-gradient-to-r from-emerald-700 to-teal-600 text-white hover:brightness-110 shadow-lg shadow-emerald-700/20 transition-all border border-white/20"
                   >
                     <Globe className="w-3.5 h-3.5 text-emerald-200" />
-                    <span>Atlas Territorial</span>
+                    <span>{t('atlas_hero.btn_atlas')}</span>
                   </button>
                 </>
               )}

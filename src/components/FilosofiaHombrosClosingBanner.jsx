@@ -50,7 +50,7 @@ export default function FilosofiaHombrosClosingBanner() {
             </div>
 
             {/* Quick Presets & Full Philosophy Button */}
-            <div className="flex flex-col sm:flex-row lg:col gap-2.5 shrink-0">
+            <div className="flex flex-col sm:flex-row lg:flex-col gap-2.5 shrink-0">
               <button
                 onClick={() => setIsModalOpen(true)}
                 className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-xs font-serif font-bold bg-[#28475A] hover:bg-[#1E293B] text-white shadow-sm transition-all"

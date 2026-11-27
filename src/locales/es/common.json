@@ -4,6 +4,19 @@
     "tagline": "Think Tank & Incubadora",
     "subtitle": "Think Tank e Incubadora de Proyectos"
   },
+  "page_titles": {
+    "default": "HOMBROS · Sistema Metabólico Territorial",
+    "landing": "HOMBROS · Sistema Metabólico Territorial | Think Tank & Incubadora",
+    "think_tank": "HOMBROS · Think Tank & Incubadora Territorial",
+    "articles": "HOMBROS · Artículos, Reforma SEIA 2.0 & Policy",
+    "core": "HOMBROS · CORE Motor Matemático & Capacidad Portante",
+    "world_map": "HOMBROS · Atlas Territorial & Semáforo Biofísico",
+    "audit": "HOMBROS · Auditoría Biofísica de Cuencas (SEIA 2.0)",
+    "theory": "HOMBROS · Marco Epistémico & Genealogía",
+    "cases": "HOMBROS · Contraste Multimodelo & Resiliencia",
+    "scenarios": "HOMBROS · Simulador Prospectivo",
+    "data_sources": "HOMBROS · Fuentes de Datos Abiertos"
+  },
   "nav": {
     "think_tank": "Think Tank",
     "articles": "Artículos & Policy",
@@ -26,6 +39,53 @@
   "footer": {
     "description": "Programa de Investigación en Economía Biofísica, Mecánica Territorial & Gobernanza Sintrópica",
     "badge": "[ Laboratorio de Hipótesis Biofísicas & Incidencia Pública · Cono Sur & Europa ]"
+  },
+  "tab_headers": {
+    "think_tank": {
+      "tag": "THINK TANK & INCUBADORA TERRITORIAL · SUR GLOBAL",
+      "title": "HOMBROS · Centro de Soberanía Biofísica, Cuidado Comunitario & Ecotecnologías",
+      "subtitle": "Convergencia transdisciplinar entre geofísica de cuencas, psicología comunitaria en conflictos socioambientales y sociología de la seguridad vecinal. De la autopsia extractiva al autogobierno y la regeneración de la vida."
+    },
+    "core": {
+      "tag": "MOTOR MATEMÁTICO & REOLÓGICO DEL MODELO HOMBROS",
+      "title": "CORE · El Corazón Constitutivo del Modelo Territorial",
+      "subtitle": "Este es el CORE del modelo HOMBROS donde operan sus ecuaciones biofísicas fundamentales. Incluye brevemente: (1) Capacidad Portante y Trípode de Liebig (H), (2) Tensión Sistémica y Curva Esfuerzo-Deformación (σ), (3) Tasa Sintrópica (Γ), (4) Simulador Prospectivo a 36 meses y (5) Vista del Organismo Integrado."
+    },
+    "audit": {
+      "tag": "PROTOCOLO SEIA 2.0, HIPÓTESIS DE CUENCA & ROI BIOFÍSICO",
+      "title": "Auditoría de Tracción Territorial, Hipótesis de Hombros & Dictamen Pre-Inversional",
+      "subtitle": "Formulación de hipótesis paramétricas [0, 1], ensayo de tracción pre-inversión (σ₀ → σ_proj), conector de telemetría AgriTwin y calculadora de Costo de Inacción vs. Inversión Sintrópica."
+    },
+    "articles": {
+      "tag": "INCIDENCIA LEGISLATIVA, REFORMA AL SEIA & ENSAYOS OLCA",
+      "title": "Artículos de Política Pública, Reforma al SEIA 2.0 & Tetralogía OLCA",
+      "subtitle": "Propuesta estrella de Reforma Estructural a la Ley 19.300 (Cláusula de Salvaguarda Pre-Inversional), 4 Policy Briefs adaptados de los ensayos publicados en el OLCA y arquitectura de integración con AgriTwin."
+    },
+    "world_map": {
+      "tag": "ATLAS GEODÉSICO, SEMÁFORO DE CIUDADES & CONTRASTE GLOBAL",
+      "title": "Atlas Territorial, Semáforo Operativo Situado & Metabolismo",
+      "subtitle": "Cartografía orbital, Semáforo Biofísico en 25 ciudades de Chile Central y Europa, contraste empírico multi-sitio, desplazamiento de emisiones Scope 1-3, Red Panal y fuentes de datos abiertas."
+    },
+    "cases": {
+      "tag": "TALLER DE INGENIERÍA ECOLÓGICA",
+      "title": "Contraste Multimodelo y Diagnóstico de Resiliencia",
+      "subtitle": "Evaluación comparativa entre modelos tradicionales de vulnerabilidad y la mecánica de medios continuos de Hombros."
+    },
+    "scenarios": {
+      "tag": "PROSPECTIVA Y RESTAURACIÓN DE PAISAJES",
+      "title": "Simulador de Escenarios y Transición Regenerativa",
+      "subtitle": "Proyecciones estocásticas ante shocks climáticos, variación de precipitaciones y desescalada extractiva."
+    },
+    "data_sources": {
+      "tag": "ESTACIÓN HIDROLÓGICA Y AMBIENTAL",
+      "title": "Fuentes de Datos Abiertos y Trazabilidad Empírica",
+      "subtitle": "Monitoreo territorial grounded: registros climáticos, sensores de cuenca y metadatos verificados."
+    },
+    "theory": {
+      "tag": "BIBLIOTECA VIVA DEL BOSQUE",
+      "title": "Marco Epistémico y Genealogía de Pensamiento",
+      "subtitle": "Sustento conceptual sobre hombros de gigantes: bioeconomía, termodinámica abierta, buen vivir y ecología política."
+    }
   },
   "languages": {
     "es": "Español",
